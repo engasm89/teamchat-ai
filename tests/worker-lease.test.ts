@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {fencedUpdate,failExhaustedJob} from "../src/server/ai-jobs.ts";
+import {fencedUpdate,failExhaustedJob,recoverableJobs} from "../src/server/ai-jobs.ts";
 import {resolvedContext} from "../src/tenant.ts";
 import type {SqlClient,SqlPool,QueryResult} from "../src/persistence/postgres.ts";
 const ctx=resolvedContext("worker-author","northside-outfitters");
@@ -24,9 +24,18 @@ test("fenced write extends live lease before data mutation",async()=>{
  assert.equal(m.trace.at(-1),"COMMIT");
 });
 test("exhausted AI job produces one durable failure event and terminal state",async()=>{
- const m=new Mock(sql=>sql.includes("attempts>=5 AND state='running'")?[{room_id:"assortment-review"}]:sql.includes("SELECT next_sequence")?[{next_sequence:"17"}]:[]);
+ const m=new Mock(sql=>sql.includes("attempts>=5")?[{room_id:"assortment-review"}]:sql.includes("SELECT next_sequence")?[{next_sequence:"17"}]:[]);
  assert.equal(await failExhaustedJob(pool(m),ctx,turn),true);
  assert.ok(m.trace.some(s=>s.includes("'ai_failed'"))===false); // event type is parameterized
  assert.ok(m.trace.some(s=>s.includes("INSERT INTO teamchat.room_events")));
  assert.ok(m.trace.some(s=>s.includes("SET state='failed'")));
+});
+test("scheduler retries expired running jobs and ignores active workers",async()=>{
+ const m=new Mock(sql=>sql.includes("SELECT o.turn_id::text")?[{turn_id:turn}]:[]);
+ const rows=await recoverableJobs(pool(m),ctx);
+ assert.deepEqual(rows,[turn]);
+ const query=m.trace.find(x=>x.includes("SELECT o.turn_id::text"))!;
+ assert.match(query,/j\.state='queued'/);
+ assert.match(query,/j\.state='running' AND j\.lease_expires_at<now\(\)/);
+ assert.match(query,/o\.next_retry_at<=now\(\)/);
 });

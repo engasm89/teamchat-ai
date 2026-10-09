@@ -43,3 +43,43 @@ test("browser does not send room commands before Firebase authentication succeed
   assert.equal(saved.size,0);
  }finally{(globalThis as any).WebSocket=original;(globalThis as any).sessionStorage=originalStorage;}
 });
+
+test("switching rooms unsubscribes the old room and replays only active subscriptions on reconnect",async()=>{
+ const original=(globalThis as any).WebSocket;
+ const originalStorage=(globalThis as any).sessionStorage;
+ (globalThis as any).WebSocket=FakeSocket;
+ (globalThis as any).sessionStorage={getItem:()=>null,setItem(){},removeItem(){}};
+ try{
+  FakeSocket.instances=[];
+  const socket=new TeamSocket("wss://test.invalid/ws",()=>{},()=>{},()=>{},"user-2");
+  socket.connect("verified-token");socket.subscribe("assortment-review");
+  const first=FakeSocket.instances.at(-1)!;first.open();first.frame({type:"auth_ok"});
+  socket.unsubscribe("assortment-review");socket.subscribe("category-strategy");
+  assert.deepEqual(first.sent.map(x=>x.type),["auth","subscribe","unsubscribe","subscribe"]);
+  first.close();
+  // Reconnect immediately using the private open method to avoid time waits.
+  (socket as any).open(true);
+  const next=FakeSocket.instances.at(-1)!;next.open();next.frame({type:"auth_ok"});
+  assert.deepEqual(next.sent.filter(x=>x.type==="subscribe").map(x=>x.roomId),["category-strategy"]);
+  socket.close(true);
+ }finally{(globalThis as any).WebSocket=original;(globalThis as any).sessionStorage=originalStorage;}
+});
+
+test("late frames from a logged-out or replaced socket cannot restore session state",async()=>{
+ const orig=(globalThis as any).WebSocket;
+ const origStorage=(globalThis as any).sessionStorage;
+ (globalThis as any).WebSocket=FakeSocket;
+ (globalThis as any).sessionStorage={getItem:()=>null,setItem(){},removeItem(){}};
+ try{
+  FakeSocket.instances=[];
+  const seen:unknown[]=[];const states:string[]=[];
+  const socket=new TeamSocket("wss://test.invalid/ws",event=>seen.push(event),s=>states.push(s),()=>{},"member-a");
+  socket.connect("token");socket.subscribe("assortment-review");
+  const first=FakeSocket.instances.at(-1)!;first.open();
+  socket.close(true);
+  first.frame({type:"auth_ok"});
+  first.frame({type:"event",event:{eventId:"late",roomId:"assortment-review",sequence:1,payload:{secret:"old"}}});
+  assert.equal(seen.length,0);
+  assert.equal(states.at(-1),"offline");
+ }finally{(globalThis as any).WebSocket=orig;(globalThis as any).sessionStorage=origStorage;}
+});

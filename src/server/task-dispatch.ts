@@ -1,11 +1,18 @@
 import {inTenantTransaction,type SqlPool} from "../persistence/postgres.ts";
 import type {TenantContext} from "../tenant.ts";
+export function validateDispatchConfig(env:NodeJS.ProcessEnv=process.env){
+ const queue=env.CLOUD_TASKS_QUEUE_PATH,worker=env.CLOUD_TASKS_WORKER_URL,
+  serviceAccount=env.CLOUD_TASKS_INVOKER_EMAIL,audience=env.CLOUD_TASKS_AUDIENCE;
+ if(!queue||!/^projects\/[^/]+\/locations\/[^/]+\/queues\/[^/]+$/.test(queue)||
+  !worker||!/^https:\/\/[^/]+$/.test(worker)||
+  !serviceAccount||!/^[^\s@]+@[^\s@]+$/.test(serviceAccount)||
+  !audience||!/^https:\/\/[^/]+$/.test(audience))
+  throw Error("Cloud Tasks queue, HTTPS private worker, OIDC service account and audience are required");
+ return {queue,worker,serviceAccount,audience};
+}
 /** Dispatches only opaque job IDs; Cloud Tasks OIDC signs requests to a private worker. */
 export async function dispatchJob(pool:SqlPool,ctx:TenantContext,turnId:string){
- const queue=process.env.CLOUD_TASKS_QUEUE_PATH,worker=process.env.CLOUD_TASKS_WORKER_URL,
-  serviceAccount=process.env.CLOUD_TASKS_INVOKER_EMAIL,audience=process.env.CLOUD_TASKS_AUDIENCE;
- if(!queue||!worker||!serviceAccount||!audience)throw Error("Cloud Tasks configuration missing");
- if(!/^https:\/\//.test(worker))throw Error("Worker must use HTTPS");
+ const {queue,worker,serviceAccount,audience}=validateDispatchConfig();
  const moduleName="@google-cloud/tasks";const imported=await import(moduleName);
  const CloudTasksClient=imported.CloudTasksClient??imported.default?.CloudTasksClient;
  if(!CloudTasksClient)throw Error("CloudTasksClient export unavailable");

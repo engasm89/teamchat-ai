@@ -1,4 +1,4 @@
-# Mandatory live release gate — TeamChat AI v4
+# Mandatory live release gate — TeamChat AI v5
 
 **No deployment or cloud test is claimed complete by this checklist.** Follow this order in an authorized Google Cloud project.
 
@@ -13,4 +13,6 @@
 9. **Firebase Hosting:** Build React client with real Firebase/API/WebSocket endpoints and deploy. Use two logged-in browsers, verify access boundary, messages, typing/presence, transcript restore, and idle network free of polling.
 10. **Evaluation:** Test every employer scenario; investigate semantic paraphrase similarity threshold and no-match behavior. Capture tests/logs; provide public URL, GitHub URL/commits, controlled credentials, README and under-five-minute demo by October 16, 2026 (exact time unconfirmed).
 
-**Stop release on ANY failed or skipped tenant-isolation, grounding, live PostgreSQL, or browser/worker acceptance check.** See `2026-10-09_END_TO_END_PRELIVE_AUDIT_v4.md` for limitations and changed code.
+**Stop release on ANY failed or skipped tenant-isolation, grounding, live PostgreSQL, or browser/worker acceptance check.** See `2026-10-09_END_TO_END_PRELIVE_AUDIT_v5.md` for limitations and changed code.
+
+**v5 source review:** See `2026-10-09_END_TO_END_PRELIVE_AUDIT_v5.md`. Test expired-running Cloud Task recovery, room unsubscribe, stale browser sockets, and graceful shutdown before signoff.

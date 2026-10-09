@@ -108,12 +108,25 @@ export async function finishJob(pool:SqlPool,ctx:TenantContext,room:string,turnI
 export async function failExhaustedJob(pool:SqlPool,ctx:TenantContext,turnId:string):Promise<boolean>{
  return inTenantTransaction(pool,ctx,async c=>{
   const row=await c.query<{room_id:string}>(`SELECT room_id FROM teamchat.ai_jobs
-   WHERE tenant_id=$1 AND turn_id=$2::uuid AND attempts>=5 AND state='running'
-   AND lease_expires_at<now() FOR UPDATE`,[ctx.tenantId,turnId]);
+   WHERE tenant_id=$1 AND turn_id=$2::uuid AND attempts>=5
+   AND (state='queued' OR (state='running' AND lease_expires_at<now())) FOR UPDATE`,[ctx.tenantId,turnId]);
   if(row.rows.length!==1)return false;
   await appendWithinTransaction(c,ctx,row.rows[0]!.room_id,"ai_failed",{status:"failed",reason:"AI processing retry limit reached"},turnId);
   await c.query("UPDATE teamchat.ai_jobs SET state='failed',lease_expires_at=NULL,updated_at=now() WHERE tenant_id=$1 AND turn_id=$2::uuid",[ctx.tenantId,turnId]);
   return true;
+ });
+}
+
+/** A Cloud Tasks delivery may be exhausted or dropped after a worker dies.
+ * Recover expired running leases as well as never-started queued jobs. */
+export async function recoverableJobs(pool:SqlPool,ctx:TenantContext):Promise<string[]>{
+ return inTenantTransaction(pool,ctx,async c=>{
+  const r=await c.query<{turn_id:string}>(`SELECT o.turn_id::text FROM teamchat.task_outbox o
+   JOIN teamchat.ai_jobs j ON j.tenant_id=o.tenant_id AND j.turn_id=o.turn_id
+   WHERE o.tenant_id=$1 AND o.state IN ('pending','dispatched')
+   AND (j.state='queued' OR (j.state='running' AND j.lease_expires_at<now()))
+   AND o.next_retry_at<=now() ORDER BY o.next_retry_at LIMIT 20`,[ctx.tenantId]);
+  return r.rows.map(row=>row.turn_id);
  });
 }
 
@@ -123,7 +136,8 @@ export async function failExhaustedDispatch(pool:SqlPool,ctx:TenantContext,turnI
  return inTenantTransaction(pool,ctx,async c=>{
   const r=await c.query<{room_id:string}>(`SELECT j.room_id FROM teamchat.ai_jobs j
    JOIN teamchat.task_outbox o ON o.tenant_id=j.tenant_id AND o.turn_id=j.turn_id
-   WHERE j.tenant_id=$1 AND j.turn_id=$2::uuid AND j.state='queued'
+   WHERE j.tenant_id=$1 AND j.turn_id=$2::uuid
+   AND (j.state='queued' OR (j.state='running' AND j.lease_expires_at<now()))
    AND o.dispatch_attempts>=12 FOR UPDATE OF j,o`,[ctx.tenantId,turnId]);
   if(r.rows.length!==1)return false;
   await appendWithinTransaction(c,ctx,r.rows[0]!.room_id,"ai_failed",

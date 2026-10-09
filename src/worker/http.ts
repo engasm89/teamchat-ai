@@ -1,9 +1,9 @@
-import {failExhaustedDispatch} from "../server/ai-jobs.ts";
+import {failExhaustedDispatch,failExhaustedJob,recoverableJobs} from "../server/ai-jobs.ts";
 import {createVertexEmbedder} from "./embeddings.ts";
 import {createServer} from "node:http";
 import {createPgPool,assertRuntimeDbRole} from "../server/database.ts";
 import {executeAiJob,createGeminiProvider} from "./gemini.ts";
-import {dispatchJob} from "../server/task-dispatch.ts";
+import {dispatchJob,validateDispatchConfig} from "../server/task-dispatch.ts";
 import {inTenantTransaction} from "../persistence/postgres.ts";
 import {resolvedContext} from "../tenant.ts";
 import {TENANTS} from "../types.ts";
@@ -21,6 +21,7 @@ async function verifyTaskIdentity(authHeader:string|undefined):Promise<void>{
  if(payload?.email!==expected||payload.email_verified!==true)throw Error("Unauthorized");
 }
 export async function startWorker(){
+ validateDispatchConfig();
  const pool=await createPgPool();
  try{
  await assertRuntimeDbRole(pool);
@@ -43,10 +44,9 @@ export async function startWorker(){
     // Trusted scheduler triggers outbox recovery. Enumerate only the two assessment tenants.
     for(const tenant of TENANTS){
      const ctx=resolvedContext("internal-dispatch",tenant);
-     const due=await inTenantTransaction(pool,ctx,async c=>{
-      const q=await c.query<{turn_id:string}>("SELECT o.turn_id::text FROM teamchat.task_outbox o JOIN teamchat.ai_jobs j ON j.tenant_id=o.tenant_id AND j.turn_id=o.turn_id WHERE o.tenant_id=$1 AND o.state IN ('pending','dispatched') AND j.state='queued' AND o.next_retry_at<=now() ORDER BY o.next_retry_at LIMIT 20",[tenant]);return q.rows;
-     });
-     for(const {turn_id} of due){
+     const due=await recoverableJobs(pool,ctx);
+     for(const turn_id of due){
+      if(await failExhaustedJob(pool,ctx,turn_id))continue;
       if(await failExhaustedDispatch(pool,ctx,turn_id))continue;
       try{await dispatchJob(pool,ctx,turn_id);}catch{/* next scheduled recovery */}
      }

@@ -2,10 +2,11 @@
 export interface LiveEvent {eventId:string;tenantId:string;roomId:string;sequence:number;type:string;payload:Record<string,unknown>;}
 export type SocketStatus="offline"|"connecting"|"online"|"reconnecting";
 export class TeamSocket {
-  private ws:WebSocket|null=null;private retries=0;private retryTimer:number|undefined;
+  private ws:WebSocket|null=null;private retries=0;private retryTimer:ReturnType<typeof setTimeout>|undefined;
   private authenticated=false;
   private authToken="";private tokenProvider:(()=>Promise<string>)|null=null;private deliberatelyClosed=false;
   private readonly cursor=new Map<string,number>();private readonly seen=new Set<string>();
+  private readonly rooms=new Set<string>();
   private readonly outbound=new Map<string,{roomId:string;clientMessageId:string;body:string;allowSharedMemorySave:boolean}>();
   private readonly url:string;
   private readonly onEvent:(event:LiveEvent)=>void;
@@ -57,13 +58,14 @@ export class TeamSocket {
       };void authenticate();
     });
     sock.addEventListener("message",(m)=>{
+      if(this.deliberatelyClosed||this.ws!==sock||sock.readyState!==WebSocket.OPEN)return;
       let payload:unknown;try{payload=JSON.parse(String(m.data));}catch{this.onError("Invalid server frame");return;}
       if(!payload||typeof payload!=="object")return;
       const frame=payload as Record<string,unknown>;
       if(frame.type==="auth_ok"){
         this.authenticated=true;
         this.retries=0;this.onStatus("online");
-        for(const [roomId,after] of this.cursor)sock.send(JSON.stringify({v:1,type:"subscribe",roomId,after}));
+        for(const roomId of this.rooms)sock.send(JSON.stringify({v:1,type:"subscribe",roomId,after:this.cursor.get(roomId)??0}));
         for(const send of this.outbound.values())sock.send(JSON.stringify({v:1,type:"send_message",...send}));
       } else if(frame.type==="message_ack"){
         if(typeof frame.clientMessageId==="string"){this.outbound.delete(frame.clientMessageId);this.persistState();}
@@ -85,21 +87,28 @@ export class TeamSocket {
       } else if(frame.type==="error") this.onError(String(frame.message??"Request failed"));
     });
     sock.addEventListener("close",()=>{
-      if(this.ws===sock)this.authenticated=false;
-      if(this.ws===sock)this.ws=null;
+      if(this.ws!==sock)return; // ignore delayed close from an older transport
+      this.authenticated=false;
+      this.ws=null;
       if(this.deliberatelyClosed){this.onStatus("offline");return;}
       this.onStatus("reconnecting");this.scheduleReconnect();
     });
-    sock.addEventListener("error",()=>this.onError("WebSocket transport error"));
+    sock.addEventListener("error",()=>{if(this.ws===sock&&!this.deliberatelyClosed)this.onError("WebSocket transport error");});
   }
   private scheduleReconnect():void{
     if(this.retryTimer!==undefined)clearTimeout(this.retryTimer);
     const backoff=Math.min(250*2**Math.min(this.retries++,6),15000);
-    this.retryTimer=window.setTimeout(()=>{this.retryTimer=undefined;this.open(true);},backoff*(.7+Math.random()*.6));
+    this.retryTimer=setTimeout(()=>{this.retryTimer=undefined;this.open(true);},backoff*(.7+Math.random()*.6));
   }
   subscribe(roomId:string):void {
+    if(this.rooms.has(roomId))return;
+    this.rooms.add(roomId);
     if(!this.cursor.has(roomId)){this.cursor.set(roomId,0);this.persistState();}
     if(this.authenticated&&this.ws?.readyState===WebSocket.OPEN)this.ws.send(JSON.stringify({v:1,type:"subscribe",roomId,after:this.cursor.get(roomId)??0}));
+  }
+  unsubscribe(roomId:string):void {
+    if(!this.rooms.delete(roomId))return;
+    if(this.authenticated&&this.ws?.readyState===WebSocket.OPEN)this.ws.send(JSON.stringify({v:1,type:"unsubscribe",roomId}));
   }
   sendMessage(roomId:string,body:string,allowSharedMemorySave=false):string {
     const clientMessageId=crypto.randomUUID();const message={roomId,clientMessageId,body,allowSharedMemorySave};
@@ -117,6 +126,6 @@ export class TeamSocket {
   close(clearStored=false):void {
     this.deliberatelyClosed=true;this.authToken="";this.tokenProvider=null;this.authenticated=false;
     if(this.retryTimer!==undefined){clearTimeout(this.retryTimer);this.retryTimer=undefined;}
-    this.ws?.close();this.ws=null;this.outbound.clear();this.cursor.clear();this.seen.clear();if(clearStored&&this.accountUid)try{sessionStorage.removeItem(this.storageKey);}catch{}this.onStatus("offline");
+    this.ws?.close();this.ws=null;this.outbound.clear();this.rooms.clear();this.cursor.clear();this.seen.clear();if(clearStored&&this.accountUid)try{sessionStorage.removeItem(this.storageKey);}catch{}this.onStatus("offline");
   }
 }

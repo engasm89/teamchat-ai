@@ -128,7 +128,10 @@ export class SqlToolExecutor{
       if(old&&old.created_by===ctx.uid&&old.source_room_id===roomId)return {saved:true,reused:true,ref:ledger.add("memory",String(old.memory_id),old),memory:old};
       return {saved:false,error:"Memory key already exists; revision required"};
      }
-     const memory=r.rows[0]!;return {saved:true,ref:ledger.add("memory",String(memory.memory_id),memory),memory};
+     const memory=r.rows[0]!;
+     await c.query("INSERT INTO teamchat.memory_versions(tenant_id,memory_id,version,value,changed_by) VALUES($1,$2,1,$3::jsonb,$4)",
+      [ctx.tenantId,memory.memory_id,JSON.stringify(valid.value),ctx.uid]);
+     return {saved:true,ref:ledger.add("memory",String(memory.memory_id),memory),memory};
     }
    }
   });

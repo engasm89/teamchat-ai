@@ -1,6 +1,6 @@
 # TeamChat AI — Controlease technical assessment
 
-**v4 source remediation | 9 October 2026.** The six-page Technical Brief was sent on 8 October 2026. This archive contains runnable source and offline evidence, **not a live-tested application**.
+**v5 source remediation | 9 October 2026.** The six-page Technical Brief was sent on 8 October 2026. This archive contains runnable source and offline evidence, **not a live-tested application**.
 
 ## Architecture
 
@@ -12,6 +12,7 @@ React + TypeScript Firebase Hosting client; Firebase Authentication; Node.js/Typ
 
 ```bash
 npm install                      # network and package registry required
+npm run verify:packaging        # FAILS until real root + web npm lockfiles exist
 npm run check                   # TypeScript core check
 npm test                        # offline domain/mocked integration tests
 npm run verify:fixtures         # employer dataset hash and shape checks
@@ -37,8 +38,12 @@ cd apps/web && npm install && npm run build
 
 ## Verification
 
-The v4 offline suite contains **53 passing tests** including cross-tenant contracts, catalog rankings, source grounding, memory embedding query scope, job fencing, Cloud Tasks terminal handling and socket cleanup races. Backend TypeScript check passes in the available local environment. Five original dataset hashes were checked; the seed generates 2,753 inserts.
+The v5 offline suite contains **62 passing tests** including cross-tenant contracts, catalog rankings, source grounding, memory embedding query scope, job fencing, Cloud Tasks terminal handling and socket cleanup races. Backend TypeScript check passes in the available local environment. Five original dataset hashes were checked; the seed generates 2,753 inserts.
 
-**Not yet verified:** real SQL RLS, browser production build, Firebase tokens, live Vertex models, Cloud Tasks retry semantics, WebSockets on multiple Cloud Run instances, deployed UI, performance and full end-to-end behavior. `npm run test:postgres` reports one SKIP locally; the new strict command fails closed without credentials. See `docs/2026-10-09_END_TO_END_PRELIVE_AUDIT_v4.md` and `docs/DEPLOYMENT_CHECKLIST.md`.
+**Not yet verified:** real SQL RLS, browser production build, Firebase tokens, live Vertex models, Cloud Tasks retry semantics, WebSockets on multiple Cloud Run instances, deployed UI, performance and full end-to-end behavior. `npm run test:postgres` reports one SKIP locally; the new strict command fails closed without credentials. See `docs/2026-10-09_END_TO_END_PRELIVE_AUDIT_v5.md` and `docs/DEPLOYMENT_CHECKLIST.md`.
 
 The reference financial formula is an explicitly disclosed engineering assumption, **not** an estimate of actual sales or revenue. Data integrity, tenant confidentiality and grounding take priority over polish.
+
+## v5 important fixes
+
+Expired-running jobs are recovered by Cloud Scheduler; duplicate sends do not requeue existing tasks; switching rooms unsubscribes and removes stale presence; late WebSocket frames after logout are ignored; all upgraded WebSockets are terminated at service shutdown; memories receive atomic version-one history; Gemini call IDs are preserved; and Firebase Admin plus Cloud Tasks config fail closed. A strict packaging/React-build gate was added. The missing npm lockfiles remain a real blocker until generated against the public registry.

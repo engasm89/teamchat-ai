@@ -51,13 +51,21 @@ export async function resolveVerifiedIdentity(pool:SqlPool,uid:string):Promise<T
  }finally{client.release();}
 }
 export interface FirebaseIdentityVerifier {verify(token:string):Promise<string>}
+export function firebaseProjectId(value=process.env.FIREBASE_PROJECT_ID):string{
+ if(typeof value!=="string"||!/^([a-z][a-z0-9-]{4,28}[a-z0-9])$/.test(value))
+  throw Error("An explicit FIREBASE_PROJECT_ID is required for token verification");
+ return value;
+}
 export async function createFirebaseVerifier():Promise<FirebaseIdentityVerifier>{
+ const projectId=firebaseProjectId();
  const path="firebase-admin/app", authPath="firebase-admin/auth";
  const importedApp=await import(path), importedAuth=await import(authPath);
  const app=importedApp.getApps?importedApp:importedApp.default;
  const auth=importedAuth.getAuth?importedAuth:importedAuth.default;
  if(!app?.getApps||!auth?.getAuth)throw Error("Firebase Admin exports unavailable");
- if(!app.getApps().length)app.initializeApp();
+ const active=app.getApps().find((x:{name:string})=>x.name==="[DEFAULT]");
+ if(!active)app.initializeApp({projectId});
+ else if(active.options?.projectId!==projectId)throw Error("Firebase Admin project does not match FIREBASE_PROJECT_ID");
  const instance=auth.getAuth();
  return {async verify(token:string){
   if(typeof token!=="string"||token.length>10000||!token)throw new Error("Unauthorized");

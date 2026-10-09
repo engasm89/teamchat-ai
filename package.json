@@ -17,7 +17,8 @@
     "start:worker": "node --experimental-strip-types src/worker/start.ts",
     "embed:backfill": "node --experimental-strip-types scripts/backfill-memory-embeddings.ts",
     "test:postgres:required": "REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts",
-    "verify:release": "npm run check && npm test && npm run verify:fixtures && npm run test:postgres:required"
+    "verify:packaging": "node --experimental-strip-types scripts/verify-package-locks.ts",
+    "verify:release": "npm run verify:packaging && npm run check && npm test && npm run verify:fixtures && npm run test:postgres:required && npm --prefix apps/web run build"
   },
   "description": "Phase 2 assessed implementation, source data and security foundation; deployment integrations pending",
   "devDependencies": {

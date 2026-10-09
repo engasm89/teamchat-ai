@@ -41,7 +41,12 @@ export function App(){
    .catch(()=>{if(active)setError("Cannot load workspace rooms");});
   return ()=>{active=false;controller.abort();socket.close();if(socketRef.current===socket)socketRef.current=null;};
  },[user]);
- useEffect(()=>{if(user)socketRef.current?.subscribe(room);},[room,user]);
+ useEffect(()=>{
+  if(!user)return;
+  const socket=socketRef.current;
+  socket?.subscribe(room);
+  return ()=>socket?.unsubscribe(room);
+ },[room,user]);
  const safeOwner=dataOwnerUid!==null&&dataOwnerUid===user?.uid;
  const online=(safeOwner?presence[room]??[]:[]).filter(x=>new Date(x.expires_at).getTime()>now);
  const activeTyping=(safeOwner?typing[room]??[]:[]).filter(x=>x.firebase_uid!==user?.uid&&new Date(x.expires_at).getTime()>now);

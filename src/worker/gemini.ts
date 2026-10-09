@@ -7,7 +7,7 @@ import {SqlToolExecutor} from "../server/sql-tools.ts";
 import {resolveJob,claimJob,persistAnswer,persistTool,getPersistedTool,finishJob,failExhaustedJob,renewJobLease,requeueJob} from "../server/ai-jobs.ts";
 import {inTenantTransaction,type SqlPool} from "../persistence/postgres.ts";
 
-export interface GeminiResponse {functionCalls?:Array<{name?:string;args?:Record<string,unknown>}>;candidates?:Array<{content?:{role?:string;parts?:unknown[]}}>};
+export interface GeminiResponse {functionCalls?:Array<{id?:string;name?:string;args?:Record<string,unknown>}>;candidates?:Array<{content?:{role?:string;parts?:unknown[]}}>};
 export interface GeminiProvider {generate(contents:Array<Record<string,unknown>>,firstRound:boolean,signal?:AbortSignal):Promise<GeminiResponse>}
 
 function canonicalJson(value:unknown):string{
@@ -102,7 +102,9 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
     // Values are structured outputs of authorized DB tools, not model-written claims.
     if(blocks>=20)throw Error("Answer block budget exceeded");
     await persistAnswer(pool,ctx,room,turnId,fence,blocks++,{template:name,result,source:"verified_database_tool"});
-    answerParts.push({functionResponse:{name,response:{data:result}}});
+    // Gemini may assign IDs to parallel function calls. Pair each response
+    // with the corresponding call rather than relying on name/order alone.
+    answerParts.push({functionResponse:{name,...(typeof call.id==="string"?{id:call.id}:{}),response:{data:result}}});
    }
    contents.push({role:"user",parts:answerParts});
   }

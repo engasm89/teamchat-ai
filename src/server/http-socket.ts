@@ -4,7 +4,7 @@ import {createPgPool,assertRuntimeDbRole,createFirebaseVerifier,resolveVerifiedI
 import {sendDurableMessage,replayRoom,inTenantTransaction,type SqlPool} from "../persistence/postgres.ts";
 import {NO_MATCH,type TenantContext} from "../tenant.ts";
 import type {PersistedEvent} from "../persistence/postgres.ts";
-import {dispatchJob} from "./task-dispatch.ts";
+import {dispatchJob,validateDispatchConfig} from "./task-dispatch.ts";
 
 interface Socket {readyState:number;bufferedAmount:number;send(data:string):void;close(code?:number,reason?:string):void;ping():void;on(name:string,callback:(...args:any[])=>void):void;}
 interface Subscription {roomId:string;token:string;ctx:TenantContext;socket:Socket;cursor:number;busy:boolean;pending:boolean;}
@@ -47,6 +47,21 @@ export class RoomHub {
    }).catch(()=>{});
   }
   this.subscriptions.delete(socket);
+ }
+ /** A room switch must stop presence renewals and fanout for the old room,
+  * without closing the authenticated transport for the remaining rooms. */
+ async unsubscribe(socket:Socket,roomId:string){
+  const subs=this.subscriptions.get(socket);
+  const sub=subs?.get(roomId);
+  if(!sub)return;
+  subs!.delete(roomId);
+  this.detach(sub);
+  const connectionId=this.connectionIds.get(socket);
+  if(!connectionId)return;
+  await inTenantTransaction(this.pool,sub.ctx,async c=>{
+   await c.query("DELETE FROM teamchat.presence_leases WHERE tenant_id=$1 AND room_id=$2 AND connection_id=$3::uuid",[sub.ctx.tenantId,roomId,connectionId]);
+   await c.query("DELETE FROM teamchat.typing_leases WHERE tenant_id=$1 AND room_id=$2 AND connection_id=$3::uuid",[sub.ctx.tenantId,roomId,connectionId]);
+  });
  }
  async subscribe(socket:Socket,ctx:TenantContext,roomId:string,after:number){
   if(this.closedSockets.has(socket)||socket.readyState!==1)throw Error("Closed socket");
@@ -192,8 +207,11 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
   }catch{res.writeHead(401);res.end(JSON.stringify({error:"Unauthorized"}));}
  })();});
  const wss=new WebSocketServer({noServer:true,maxPayload:16_384,perMessageDeflate:false});
+ const maxSockets=Number(process.env.MAX_WS_CONNECTIONS??200);
+ if(!Number.isSafeInteger(maxSockets)||maxSockets<1||maxSockets>5000)throw Error("MAX_WS_CONNECTIONS must be between 1 and 5000");
  server.on("upgrade",(req,socket,head)=>{
   if(!healthy||req.url!=="/ws"||!origins.includes(req.headers.origin??"")){socket.write("HTTP/1.1 403 Forbidden\r\n\r\n");socket.destroy();return;}
+  if(wss.clients.size>=maxSockets){socket.write("HTTP/1.1 503 Service Unavailable\r\n\r\n");socket.destroy();return;}
   wss.handleUpgrade(req,socket,head,(ws:any)=>wss.emit("connection",ws,req));
  });
  listener.client.on("notification",(message:{channel:string;payload?:string})=>{
@@ -225,12 +243,16 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
     }
     if(!ctx)throw Error("Unauthorized");
     if(frame.type==="subscribe")await hub.subscribe(socket,ctx,frame.roomId,frame.after??0);
+    else if(frame.type==="unsubscribe"){
+     if(!id(frame.roomId))throw Error("Invalid room");
+     await hub.unsubscribe(socket,frame.roomId);
+    }
     else if(frame.type==="replay")await hub.replay(socket,frame.roomId,frame.after);
     else if(frame.type==="send_message"){
      const result=await sendDurableMessage(pool,ctx,{roomId:frame.roomId,clientMessageId:frame.clientMessageId,body:frame.body,allowSharedMemorySave:frame.allowSharedMemorySave===true});
      if("found" in result)throw Error("Room unavailable");
      send(socket,{type:"message_ack",clientMessageId:frame.clientMessageId,sequence:result.sequence,aiTurnId:result.aiTurnId});
-     if(result.aiTurnId)void dispatchJob(pool,ctx,result.aiTurnId).catch(error=>{
+     if(result.aiTurnId&&!result.duplicate)void dispatchJob(pool,ctx,result.aiTurnId).catch(error=>{
       // Task outbox is durable; authenticated Cloud Scheduler dispatch endpoint retries later.
       console.error("AI task dispatch pending",result.aiTurnId,String(error));
       send(socket,{type:"error",message:"AI queued; dispatcher unavailable"});
@@ -247,9 +269,18 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
   })();});
  });
  await new Promise<void>((resolve,reject)=>server.listen(port,()=>resolve()).once("error",reject));
- return {server,wss,hub,async close(){hub.closeAll();await new Promise<void>(r=>server.close(()=>r()));}};
+ return {server,wss,hub,async close(){
+  healthy=false;
+  hub.closeAll();
+  // Include unauthenticated sockets: server.close() alone does not close
+  // upgraded WebSockets and could hang indefinitely during a deployment.
+  for(const client of wss.clients){try{client.terminate();}catch{}}
+  await new Promise<void>(resolve=>wss.close(()=>resolve()));
+  await new Promise<void>(resolve=>server.close(()=>resolve()));
+ }};
 }
 export async function startApi(){
+ validateDispatchConfig(); // fail before admitting chats whose AI tasks cannot be dispatched
  const pool=await createPgPool();
  let listener:Awaited<ReturnType<typeof connectEventListener>>|undefined;
  try{

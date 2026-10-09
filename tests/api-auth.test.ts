@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {resolveVerifiedIdentity,assertRuntimeDbRole} from "../src/server/database.ts";
+import {resolveVerifiedIdentity,assertRuntimeDbRole,firebaseProjectId} from "../src/server/database.ts";
 import {resolvedContext} from "../src/tenant.ts";
 import {RoomHub} from "../src/server/http-socket.ts";
 import type {SqlPool,SqlClient,QueryResult} from "../src/persistence/postgres.ts";
@@ -15,6 +15,11 @@ class Mock implements SqlClient{
  release(){}
 }
 const pool=(m:Mock):SqlPool=>({connect:async()=>m});
+test("Firebase token verification requires an explicitly configured project",()=>{
+ assert.throws(()=>firebaseProjectId(""),/FIREBASE_PROJECT_ID/);
+ assert.throws(()=>firebaseProjectId("missing dots.invalid"),/FIREBASE_PROJECT_ID/);
+ assert.equal(firebaseProjectId("assessment-teamchat-123"),"assessment-teamchat-123");
+});
 test("verified UID maps through restricted function and checks active membership",async()=>{
  const m=new Mock((sql)=>sql.includes("resolve_tenant_for_uid")?[{tenant_id:"northside-outfitters"}]:sql.includes("user_memberships")?[{ok:1}]:[]);
  const ctx=await resolveVerifiedIdentity(pool(m),"signed-user");
@@ -61,4 +66,16 @@ test("socket replay denied room never leaks message data",async()=>{
  const hub=new RoomHub(pool(m));
  await assert.rejects(hub.subscribe({readyState:1} as any,resolvedContext("signed-user","northside-outfitters"),"foreign-room",0),/Room unavailable/);
  assert.equal(m.operations.some(x=>x.sql.includes("FROM teamchat.room_events")),false);
+});
+test("unsubscribing a room removes fanout and database presence/typing leases",async()=>{
+ const m=new Mock((sql,args)=>sql.includes("SELECT r.notify_token")?[{notify_token:"opaque-room"}]:sql.includes("FROM teamchat.room_memberships")?[{ok:1}]:sql.includes("JOIN teamchat.user_memberships")?[{ok:1}]:[]);
+ const hub=new RoomHub(pool(m));
+ const sock:any={readyState:1,bufferedAmount:0,send(){},close(){}};
+ await hub.subscribe(sock,resolvedContext("signed-user","northside-outfitters"),"assortment-review",0);
+ assert.equal((hub as any).byOpaque.size,1);
+ await hub.unsubscribe(sock,"assortment-review");
+ assert.equal((hub as any).byOpaque.size,0);
+ assert.ok(m.operations.some(x=>x.sql.includes("DELETE FROM teamchat.presence_leases")));
+ assert.ok(m.operations.some(x=>x.sql.includes("DELETE FROM teamchat.typing_leases")));
+ hub.remove(sock);
 });

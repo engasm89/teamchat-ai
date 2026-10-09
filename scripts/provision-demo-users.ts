@@ -1,6 +1,6 @@
 /** Opt-in provisioning for six REAL Firebase Auth users and tenant-scoped DB memberships.
  * Run only in an authorized assessment project. Never log plaintext passwords. */
-import {createPgPool} from "../src/server/database.ts";
+import {createPgPool,firebaseProjectId} from "../src/server/database.ts";
 import {resolvedContext} from "../src/tenant.ts";
 import {inTenantTransaction} from "../src/persistence/postgres.ts";
 import {TENANTS,type TenantId} from "../src/types.ts";
@@ -14,7 +14,10 @@ const loadedApp=await import(appPath),loadedAuth=await import(authPath);
 const app=loadedApp.getApps?loadedApp:loadedApp.default;
 const api=loadedAuth.getAuth?loadedAuth:loadedAuth.default;
 if(!app?.getApps||!api?.getAuth)throw Error("Firebase Admin exports unavailable");
-if(!app.getApps().length)app.initializeApp();
+const expectedProject=firebaseProjectId();
+const defaultApp=app.getApps().find((x:{name:string})=>x.name==="[DEFAULT]");
+if(!defaultApp)app.initializeApp({projectId:expectedProject});
+else if(defaultApp.options?.projectId!==expectedProject)throw Error("Firebase project mismatch");
 const auth=api.getAuth();
 // This script uses DBA credentials, NEVER runtime DATABASE_URL or the non-owner teamchat_api role.
 const adminUrl=process.env.DATABASE_ADMIN_URL;if(!adminUrl)throw Error("DATABASE_ADMIN_URL required");
