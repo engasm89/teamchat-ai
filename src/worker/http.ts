@@ -1,5 +1,5 @@
 import {createServer} from "node:http";
-import {createPgPool} from "../server/database.ts";
+import {createPgPool,assertRuntimeDbRole} from "../server/database.ts";
 import {executeAiJob,createGeminiProvider} from "./gemini.ts";
 import {dispatchJob} from "../server/task-dispatch.ts";
 import {inTenantTransaction} from "../persistence/postgres.ts";
@@ -17,7 +17,8 @@ async function verifyTaskIdentity(authHeader:string|undefined):Promise<void>{
  if(payload?.email!==expected||payload.email_verified!==true)throw Error("Unauthorized");
 }
 export async function startWorker(){
- const pool=await createPgPool(),provider=await createGeminiProvider();
+ const pool=await createPgPool();await assertRuntimeDbRole(pool);
+ const provider=await createGeminiProvider();
  const server=createServer(async(req,res)=>{
   if(req.url==="/healthz"){res.writeHead(200);res.end("ok");return;}
   if(req.method!=="POST"||!["/internal/turn","/internal/dispatch"].includes(req.url??"")){res.writeHead(404);res.end();return;}

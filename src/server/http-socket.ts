@@ -1,6 +1,6 @@
 import {createServer,type IncomingMessage,type ServerResponse} from "node:http";
 import {randomUUID} from "node:crypto";
-import {createPgPool,createFirebaseVerifier,resolveVerifiedIdentity,connectEventListener,type FirebaseIdentityVerifier} from "./database.ts";
+import {createPgPool,assertRuntimeDbRole,createFirebaseVerifier,resolveVerifiedIdentity,connectEventListener,type FirebaseIdentityVerifier} from "./database.ts";
 import {sendDurableMessage,replayRoom,inTenantTransaction,type SqlPool} from "../persistence/postgres.ts";
 import {NO_MATCH,type TenantContext} from "../tenant.ts";
 import type {PersistedEvent} from "../persistence/postgres.ts";
@@ -25,6 +25,15 @@ export class RoomHub {
  private detach(sub:Subscription){
   this.byOpaque.get(sub.token)?.delete(sub);
   if(this.byOpaque.get(sub.token)?.size===0)this.byOpaque.delete(sub.token);
+ }
+ private async hasAccess(sub:Subscription):Promise<boolean>{
+  return inTenantTransaction(this.pool,sub.ctx,async c=>{
+   const r=await c.query(`SELECT 1 FROM teamchat.room_memberships rm
+    JOIN teamchat.user_memberships m USING(tenant_id,firebase_uid)
+    WHERE rm.tenant_id=$1 AND rm.room_id=$2 AND rm.firebase_uid=$3 AND m.active=true`,
+    [sub.ctx.tenantId,sub.roomId,sub.ctx.uid]);
+   return r.rows.length===1;
+  });
  }
  remove(socket:Socket){
   for(const s of this.subscriptions.get(socket)?.values()??[]){
@@ -78,14 +87,22 @@ export class RoomHub {
   }
  }
  async publishPresence(sub:Subscription){
+  if(!await this.hasAccess(sub)){sub.socket.close(1008,"Membership revoked");return;}
   const users=await inTenantTransaction(this.pool,sub.ctx,async c=>{
-   const r=await c.query("SELECT l.firebase_uid,MAX(l.expires_at)::text AS expires_at FROM teamchat.presence_leases l WHERE l.tenant_id=$1 AND l.room_id=$2 AND l.expires_at>now() GROUP BY l.firebase_uid",[sub.ctx.tenantId,sub.roomId]);return r.rows;
+   const r=await c.query(`SELECT l.firebase_uid,MAX(l.expires_at)::text AS expires_at
+    FROM teamchat.presence_leases l JOIN teamchat.user_memberships m USING(tenant_id,firebase_uid)
+    WHERE l.tenant_id=$1 AND l.room_id=$2 AND l.expires_at>now() AND m.active=true
+    GROUP BY l.firebase_uid`,[sub.ctx.tenantId,sub.roomId]);return r.rows;
   });
   if(this.subscriptions.get(sub.socket)?.get(sub.roomId)===sub)send(sub.socket,{type:"presence",roomId:sub.roomId,users});
  }
  async publishTyping(sub:Subscription){
+  if(!await this.hasAccess(sub)){sub.socket.close(1008,"Membership revoked");return;}
   const users=await inTenantTransaction(this.pool,sub.ctx,async c=>{
-   const r=await c.query("SELECT l.firebase_uid,MAX(l.expires_at)::text AS expires_at FROM teamchat.typing_leases l WHERE l.tenant_id=$1 AND l.room_id=$2 AND l.expires_at>now() GROUP BY l.firebase_uid",[sub.ctx.tenantId,sub.roomId]);return r.rows;
+   const r=await c.query(`SELECT l.firebase_uid,MAX(l.expires_at)::text AS expires_at
+    FROM teamchat.typing_leases l JOIN teamchat.user_memberships m USING(tenant_id,firebase_uid)
+    WHERE l.tenant_id=$1 AND l.room_id=$2 AND l.expires_at>now() AND m.active=true
+    GROUP BY l.firebase_uid`,[sub.ctx.tenantId,sub.roomId]);return r.rows;
   });
   if(this.subscriptions.get(sub.socket)?.get(sub.roomId)===sub)send(sub.socket,{type:"typing",roomId:sub.roomId,users});
  }
@@ -110,12 +127,15 @@ export class RoomHub {
    do{
     s.pending=false;
     for(;;){
+     if(this.subscriptions.get(s.socket)?.get(s.roomId)!==s)return;
      const rows=await replayRoom(this.pool,s.ctx,s.roomId,s.cursor,100);
      if(!Array.isArray(rows)){s.socket.close(1008,"Authorization changed");return;}
      for(const row of rows){
+      if(this.subscriptions.get(s.socket)?.get(s.roomId)!==s)return;
       const sequence=Number(row.sequence);if(!Number.isSafeInteger(sequence))throw Error("Bad sequence");
       if(sequence<=s.cursor)continue;
       if(sequence!==s.cursor+1)throw Error("Event history gap");
+      if(s.socket.readyState!==1)return;
       send(s.socket,{type:"event",event:{eventId:row.event_id,tenantId:s.ctx.tenantId,roomId:s.roomId,sequence,type:row.type,payload:row.payload}});
       s.cursor=sequence;
      }
@@ -169,6 +189,7 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
  listener.client.on("error",()=>{healthy=false;hub.closeAll();});listener.client.on("end",()=>{healthy=false;hub.closeAll();});
  wss.on("connection",(socket:Socket)=>{
   let ctx:TenantContext|null=null;let alive=true;let authDeadline=setTimeout(()=>socket.close(1008,"Authentication required"),8000);
+  let authenticating=false;let activeCommands=0;let lastTypingAt=0;
   const lifespan=setTimeout(()=>socket.close(1001,"Reauthenticate"),45*60_000);
   const heartbeat=setInterval(()=>{if(!alive){socket.close(1001,"Heartbeat timeout");return;}alive=false;socket.ping();},25_000);
   const leaseRenewal=setInterval(()=>{if(ctx)void hub.heartbeat(socket).catch(()=>socket.close(1008,"Membership revoked"));},20_000);
@@ -176,9 +197,11 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
   socket.on("close",()=>{clearTimeout(authDeadline);clearTimeout(lifespan);clearInterval(heartbeat);clearInterval(leaseRenewal);hub.remove(socket);});
   socket.on("message",(data:unknown)=>{void (async()=>{
    try{
+    if(++activeCommands>8)throw Error("Too many concurrent commands");
     const frame=JSON.parse(String(data));if(!frame||typeof frame!=="object"||frame.v!==1)throw Error("Unsupported frame");
     if(frame.type==="auth"){
-     if(ctx)throw Error("Already authenticated");
+     if(ctx||authenticating)throw Error("Already authenticating or authenticated");
+     authenticating=true;
      const uid=await verifier.verify(frame.token);
      ctx=await resolveVerifiedIdentity(pool,uid);
      clearTimeout(authDeadline);send(socket,{type:"auth_ok"});return;
@@ -198,16 +221,20 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
     }else if(frame.type==="typing"){
      // Typing is ephemeral; clients must not treat it as durable transcript history.
      if(!id(frame.roomId))throw Error("Invalid room");
+     if(Date.now()-lastTypingAt<1500)return;
+     lastTypingAt=Date.now();
      await hub.typing(socket,ctx,frame.roomId);
     }else throw Error("Unsupported command");
    }catch(error){console.error("Socket command rejected",error instanceof Error?error.name:"UnknownError");send(socket,{type:"error",message:"Unable to complete request"});}
+   finally{activeCommands--;}
   })();});
  });
  await new Promise<void>((resolve,reject)=>server.listen(port,()=>resolve()).once("error",reject));
  return {server,wss,hub,async close(){hub.closeAll();await new Promise<void>(r=>server.close(()=>r()));}};
 }
 export async function startApi(){
- const pool=await createPgPool();const verifier=await createFirebaseVerifier();const listener=await connectEventListener();
+ const pool=await createPgPool();await assertRuntimeDbRole(pool);
+ const verifier=await createFirebaseVerifier();const listener=await connectEventListener();
  const origins=(process.env.ALLOWED_ORIGINS??"").split(",").map(x=>x.trim()).filter(Boolean);
  return createSocketServer({pool,verifier,listener,origins,port:Number(process.env.PORT||8080)});
 }

@@ -41,6 +41,9 @@ export async function fencedUpdate(pool:SqlPool,ctx:TenantContext,jobId:string,f
  return inTenantTransaction(pool,ctx,async c=>{
   const check=await c.query("SELECT 1 FROM teamchat.ai_jobs WHERE tenant_id=$1 AND turn_id=$2::uuid AND fencing_token=$3 AND state='running' AND lease_expires_at>now() FOR UPDATE",[ctx.tenantId,jobId,fence]);
   if(check.rows.length!==1)throw Error("AI job lease lost");
+  // Extend the lease with each committed progress event. A busy worker must not
+  // have its fenced writes stolen after four minutes while it is still active.
+  await c.query("UPDATE teamchat.ai_jobs SET lease_expires_at=now()+interval '4 minutes',updated_at=now() WHERE tenant_id=$1 AND turn_id=$2::uuid AND fencing_token=$3",[ctx.tenantId,jobId,fence]);
   await fn(c);
   if(state!=="running")await c.query("UPDATE teamchat.ai_jobs SET state=$4,lease_expires_at=NULL,updated_at=now() WHERE tenant_id=$1 AND turn_id=$2::uuid AND fencing_token=$3",[ctx.tenantId,jobId,fence,state]);
  });
@@ -55,8 +58,8 @@ export async function persistTool(pool:SqlPool,ctx:TenantContext,room:string,tur
 }
 export async function getPersistedTool(pool:SqlPool,ctx:TenantContext,turnId:string,operationId:string){
  return inTenantTransaction(pool,ctx,async c=>{
-  const r=await c.query<{result:unknown}>("SELECT result FROM teamchat.tool_calls WHERE tenant_id=$1 AND turn_id=$2::uuid AND operation_id=$3 AND status='completed'",[ctx.tenantId,turnId,operationId]);
-  return r.rows.length?{found:true as const,result:r.rows[0]!.result}:null;
+  const r=await c.query<{name:string;arguments:unknown;result:unknown}>("SELECT name,arguments,result FROM teamchat.tool_calls WHERE tenant_id=$1 AND turn_id=$2::uuid AND operation_id=$3 AND status='completed'",[ctx.tenantId,turnId,operationId]);
+  return r.rows.length?{found:true as const,...r.rows[0]!}:null;
  });
 }
 async function appendWithinTransaction(c:SqlClient,ctx:TenantContext,room:string,type:string,payload:unknown,turnId:string){
@@ -78,4 +81,18 @@ export async function finishJob(pool:SqlPool,ctx:TenantContext,room:string,turnI
  await fencedUpdate(pool,ctx,turnId,fence,async c=>{
   await appendWithinTransaction(c,ctx,room,status==="completed"?"ai_complete":"ai_failed",{status,...(reason?{reason}:{} )},turnId);
  },status);
+}
+
+/** A dead worker that exhausted its permitted attempts must not leave an
+ * invisible, permanently running turn. Preserve one durable terminal event. */
+export async function failExhaustedJob(pool:SqlPool,ctx:TenantContext,turnId:string):Promise<boolean>{
+ return inTenantTransaction(pool,ctx,async c=>{
+  const row=await c.query<{room_id:string}>(`SELECT room_id FROM teamchat.ai_jobs
+   WHERE tenant_id=$1 AND turn_id=$2::uuid AND attempts>=5 AND state='running'
+   AND lease_expires_at<now() FOR UPDATE`,[ctx.tenantId,turnId]);
+  if(row.rows.length!==1)return false;
+  await appendWithinTransaction(c,ctx,row.rows[0]!.room_id,"ai_failed",{status:"failed",reason:"AI processing retry limit reached"},turnId);
+  await c.query("UPDATE teamchat.ai_jobs SET state='failed',lease_expires_at=NULL,updated_at=now() WHERE tenant_id=$1 AND turn_id=$2::uuid",[ctx.tenantId,turnId]);
+  return true;
+ });
 }

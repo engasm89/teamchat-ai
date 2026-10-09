@@ -5,7 +5,7 @@
 ## Credentials and resources
 
 - Cloud SQL PostgreSQL instance, private connection preferred; create dedicated database and different migration/runtime users. `teamchat_api` is **nonowner / no BYPASSRLS / no superuser**.
-- Apply 001–005 migration SQL as schema owner and grants after role creation; verify DB roles. Run generated seed as owner with transaction-local tenant contexts.
+- Apply 001–006 migration SQL as schema owner and grants after role creation; verify DB roles. Run generated seed as owner with transaction-local tenant contexts.
 - Firebase Auth email/password enabled. Provision 3 users per company with server-controlled mapping via `scripts/provision-demo-users.ts`; credentials via secret manager, do not store in Git history.
 - Vertex AI authorized service account and tested specific model availability. No fallback to an unrelated provider.
 - Cloud Tasks queue and OIDC invoker service account, Cloud Scheduler job calling worker `/internal/dispatch` with identical OIDC audience; worker service must require Cloud Run IAM invocation.

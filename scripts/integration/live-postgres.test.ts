@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {createPgPool,resolveVerifiedIdentity} from "../../src/server/database.ts";
+import {createPgPool,resolveVerifiedIdentity,assertRuntimeDbRole} from "../../src/server/database.ts";
 import {inTenantTransaction,sendDurableMessage,replayRoom} from "../../src/persistence/postgres.ts";
 import {resolvedContext,NO_MATCH} from "../../src/tenant.ts";
 /** Run ONLY against a provisioned database using the NONOWNER app role.
@@ -10,6 +10,7 @@ const configured=Boolean(process.env.DATABASE_URL&&process.env.TEST_NORTHSIDE_UI
 test("real PostgreSQL role and FORCED RLS isolation, no tenant state leak",{skip:!configured},async()=>{
  const pool=await createPgPool();
  try{
+  await assertRuntimeDbRole(pool);
   const direct=await pool.connect();
   try{
    const role=await direct.query<{rolsuper:boolean;rolbypassrls:boolean}>("SELECT rolsuper,rolbypassrls FROM pg_roles WHERE rolname=current_user");

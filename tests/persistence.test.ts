@@ -56,6 +56,18 @@ test("retries same clientMessageId do not allocate new sequence",async()=>{
  assert.ok("duplicate" in result&&result.duplicate);
  assert.ok(!client.trace.some(x=>x.sql.includes("UPDATE teamchat.rooms")));
 });
+test("replaying an AI message cannot silently change shared-memory consent",async()=>{
+ const turnId="00000000-0000-4000-a000-000000000001";
+ const client=new FakeClient(sql=>{
+  if(sql.includes("FROM teamchat.room_memberships"))return [{one:1}];
+  if(sql.includes("FROM teamchat.messages m LEFT JOIN"))return [{room_id:"room-1",body:"@AI remember this",message_id:"msg-1",event_sequence:"7",turn_id:turnId,memory_consent:true}];
+  return [];
+ });
+ const same=await sendDurableMessage(poolFor(client),ctx,{roomId:"room-1",clientMessageId:"same-1",body:"@AI remember this",allowSharedMemorySave:true});
+ assert.ok("aiTurnId" in same&&same.aiTurnId===turnId);
+ await assert.rejects(sendDurableMessage(poolFor(client),ctx,{roomId:"room-1",clientMessageId:"same-1",body:"@AI remember this",allowSharedMemorySave:false}),/Conflicting duplicate/);
+ assert.equal(client.trace.filter(x=>x.sql.includes("INSERT INTO teamchat.ai_jobs")).length,0);
+});
 test("@AI message commits durable AI job and outbox atomically before acknowledgement",async()=>{
  const client=new FakeClient(sql=>{
   if(sql.includes("FROM teamchat.room_memberships"))return [{one:1}];

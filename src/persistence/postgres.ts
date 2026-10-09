@@ -29,12 +29,20 @@ export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{r
   if(!await authorizeRoom(client,ctx,roomId))return NO_MATCH;
   // Global per-author dedupe lock BEFORE room lock (also protects simultaneous sends in different rooms).
   await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",[`${ctx.tenantId}:${ctx.uid}:${clientMessageId}`]);
-  const existing=await client.query<{room_id:string;body:string;message_id:string;event_sequence:string}>(
-   "SELECT room_id,body,message_id::text,event_sequence::text FROM teamchat.messages WHERE tenant_id=$1 AND author_uid=$2 AND client_message_id=$3",
+  const existing=await client.query<{room_id:string;body:string;message_id:string;event_sequence:string;turn_id:string|null;memory_consent:boolean|null}>(
+   `SELECT m.room_id,m.body,m.message_id::text,m.event_sequence::text,
+           j.turn_id::text,j.memory_consent
+      FROM teamchat.messages m LEFT JOIN teamchat.ai_jobs j
+        ON j.tenant_id=m.tenant_id AND j.room_id=m.room_id
+       AND j.user_uid=m.author_uid AND j.transcript_cutoff=m.event_sequence
+     WHERE m.tenant_id=$1 AND m.author_uid=$2 AND m.client_message_id=$3`,
    [ctx.tenantId,ctx.uid,clientMessageId]);
   if(existing.rows.length){const old=existing.rows[0]!;
-   if(old.room_id!==roomId||old.body!==body)throw new Error("Conflicting duplicate client message ID");
-   return {roomId,messageId:old.message_id,sequence:Number(old.event_sequence),authorUid:ctx.uid,body,duplicate:true};
+   if(old.room_id!==roomId||old.body!==body||
+      (old.turn_id!=null && old.memory_consent!==(input.allowSharedMemorySave===true)))
+     throw new Error("Conflicting duplicate client message ID");
+   return {roomId,messageId:old.message_id,sequence:Number(old.event_sequence),authorUid:ctx.uid,body,duplicate:true,
+    ...(old.turn_id?{aiTurnId:old.turn_id}:{})};
   }
   const room=await client.query<{next_sequence:string}>("SELECT next_sequence::text FROM teamchat.rooms WHERE tenant_id=$1 AND room_id=$2 FOR UPDATE",[ctx.tenantId,roomId]);
   if(!room.rows.length)return NO_MATCH;

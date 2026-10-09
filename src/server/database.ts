@@ -6,9 +6,27 @@ export async function createPgPool(connectionString=process.env.DATABASE_URL):Pr
  if(!connectionString)throw new Error("DATABASE_URL is required");
  const moduleName="pg";
  const {Pool}=await import(moduleName);
- const raw=new Pool({connectionString,max:Math.max(1,Math.min(10,Number(process.env.PG_POOL_MAX||5))),
+ const requestedPoolSize=Number(process.env.PG_POOL_MAX??5);
+ if(!Number.isSafeInteger(requestedPoolSize)||requestedPoolSize<1||requestedPoolSize>10)throw Error("PG_POOL_MAX must be an integer between 1 and 10");
+ const raw=new Pool({connectionString,max:requestedPoolSize,
    connectionTimeoutMillis:5000,idleTimeoutMillis:15000,allowExitOnIdle:false});
  return raw as SqlPool & {end():Promise<void>};
+}
+
+/** Refuse to start public or worker services using migration-owner credentials.
+ * Checking a configured string is insufficient; inspect PostgreSQL's real role. */
+export async function assertRuntimeDbRole(pool:SqlPool):Promise<void>{
+ const client=await pool.connect();
+ try{
+  const row=await client.query<{role_name:string;rolsuper:boolean;rolbypassrls:boolean;table_owner:string}>(`
+   SELECT current_user AS role_name,r.rolsuper,r.rolbypassrls,
+    pg_get_userbyid(c.relowner) AS table_owner
+   FROM pg_roles r JOIN pg_class c ON c.oid='teamchat.stores'::regclass
+   WHERE r.rolname=current_user`);
+  const r=row.rows[0];
+  if(!r||r.role_name!=="teamchat_api"||r.rolsuper||r.rolbypassrls||r.table_owner===r.role_name)
+   throw Error("Refusing privileged or unexpected PostgreSQL application role");
+ }finally{client.release();}
 }
 
 /** Call ONLY with verified Firebase UID. The resolver function cannot receive a tenant override.

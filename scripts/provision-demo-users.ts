@@ -8,7 +8,7 @@ interface Spec{email:string;password:string;tenant:TenantId;name:string;rooms:st
 const input=process.env.ASSESSMENT_USERS_JSON;
 if(!input)throw Error("ASSESSMENT_USERS_JSON must contain exactly six designated users; no sample passwords are generated");
 const specs=JSON.parse(input) as Spec[];
-if(!Array.isArray(specs)||specs.length!==6||specs.some(s=>!s.email||!s.password||s.password.length<12||!TENANTS.includes(s.tenant)||!s.name||!Array.isArray(s.rooms)||!s.rooms.length)||TENANTS.some(t=>specs.filter(s=>s.tenant===t).length!==3))throw Error("Expected three users per tenant, each with a strong password and at least one room");
+if(!Array.isArray(specs)||specs.length!==6||specs.some(s=>typeof s.email!=="string"||!s.email.includes("@")||typeof s.password!=="string"||s.password.length<12||!TENANTS.includes(s.tenant)||typeof s.name!=="string"||!s.name||!Array.isArray(s.rooms)||!s.rooms.length||s.rooms.some(r=>typeof r!=="string"))||TENANTS.some(t=>specs.filter(s=>s.tenant===t).length!==3)||new Set(specs.map(s=>s.email.toLowerCase())).size!==6)throw Error("Require exactly three unique valid users per tenant with strong passwords and rooms");
 const authPath="firebase-admin/auth",appPath="firebase-admin/app";
 const app=await import(appPath),api=await import(authPath);
 if(!app.getApps().length)app.initializeApp();
@@ -23,7 +23,8 @@ try{
   catch(e:unknown){if(!(e&&typeof e==="object"&&"code" in e&&e.code==="auth/user-not-found"))throw e;uid=(await auth.createUser({email:s.email,password:s.password,displayName:s.name,emailVerified:false,disabled:false})).uid;}
   const ctx=resolvedContext(uid,s.tenant);
   await inTenantTransaction(db,ctx,async c=>{
-   await c.query("INSERT INTO teamchat.auth_directory(firebase_uid,tenant_id) VALUES($1,$2) ON CONFLICT (firebase_uid) DO UPDATE SET tenant_id=EXCLUDED.tenant_id WHERE teamchat.auth_directory.tenant_id=EXCLUDED.tenant_id",[uid,s.tenant]);
+   const directory=await c.query("INSERT INTO teamchat.auth_directory(firebase_uid,tenant_id) VALUES($1,$2) ON CONFLICT (firebase_uid) DO UPDATE SET tenant_id=EXCLUDED.tenant_id WHERE teamchat.auth_directory.tenant_id=EXCLUDED.tenant_id RETURNING tenant_id",[uid,s.tenant]);
+   if(directory.rows.length!==1)throw Error("Firebase UID is already assigned to a different tenant");
    await c.query("INSERT INTO teamchat.user_memberships(tenant_id,firebase_uid,display_name,role,active) VALUES($1,$2,$3,'member',true) ON CONFLICT (tenant_id,firebase_uid) DO UPDATE SET display_name=EXCLUDED.display_name,active=true",[s.tenant,uid,s.name]);
    for(const room of s.rooms){
     const check=await c.query("SELECT 1 FROM teamchat.rooms WHERE tenant_id=$1 AND room_id=$2",[s.tenant,room]);if(check.rows.length!==1)throw Error("Specified room missing");

@@ -49,3 +49,7 @@ Read `docs/PHASE2_CONTINUATION.md` and `docs/DEPLOYMENT_CHECKLIST.md` in order. 
 - AI worker retries, fencing, concurrent outputs and socket presence have not undergone actual Cloud SQL failure injection; operational bugs may remain.
 - The financial scoring formula is an explicitly disclosed assumption, not a sales/revenue forecast.
 - These are implementation modules, not a claim of passing the employer's acceptance checks.
+
+## 9 October pre-live source audit (v3)
+
+A second security/correctness audit corrected AI operation replay and memory-consent idempotence, privileged SQL startup credentials, worker lease expiration, stale account UI, unauthenticated socket sends and revocation-sensitive presence. See `docs/2026-10-09_PRELIVE_CODE_REVIEW.md` for exact changes and remaining live requirements. **This remains a pre-deployment checkpoint, not a final submission.**

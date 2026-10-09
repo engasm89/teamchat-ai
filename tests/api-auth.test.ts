@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {resolveVerifiedIdentity} from "../src/server/database.ts";
+import {resolveVerifiedIdentity,assertRuntimeDbRole} from "../src/server/database.ts";
 import {resolvedContext} from "../src/tenant.ts";
 import {RoomHub} from "../src/server/http-socket.ts";
 import type {SqlPool,SqlClient,QueryResult} from "../src/persistence/postgres.ts";
@@ -28,6 +28,16 @@ test("unknown and deactivated identities never obtain context",async()=>{
  const inactive=new Mock(sql=>sql.includes("resolve_tenant_for_uid")?[{tenant_id:"valley-home-goods"}]:[]);
  await assert.rejects(resolveVerifiedIdentity(pool(inactive),"disabled"),/Unauthorized/);
  assert.ok(inactive.operations.some(x=>x.sql==="ROLLBACK"));
+});
+test("API/worker startup fails closed on owner, superuser and bypassrls roles",async()=>{
+ for(const role of [
+  {role_name:"schema_owner",rolsuper:false,rolbypassrls:false,table_owner:"schema_owner"},
+  {role_name:"teamchat_api",rolsuper:true,rolbypassrls:false,table_owner:"migration_owner"},
+  {role_name:"teamchat_api",rolsuper:false,rolbypassrls:true,table_owner:"migration_owner"},
+ ]){
+  await assert.rejects(assertRuntimeDbRole(pool(new Mock(()=>[role]))),/Refusing privileged/);
+ }
+ await assert.doesNotReject(assertRuntimeDbRole(pool(new Mock(()=>[{role_name:"teamchat_api",rolsuper:false,rolbypassrls:false,table_owner:"migration_owner"}]))));
 });
 test("websocket fanout requires authorized subscription; different opaque room never receives data",async()=>{
  const m=new Mock((sql,args)=>{
