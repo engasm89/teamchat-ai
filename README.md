@@ -55,3 +55,10 @@ The v6 changes correct multicomponent catalog queries (AC and SSD), prevent irre
 ## v5 important fixes
 
 Expired-running jobs are recovered by Cloud Scheduler; duplicate sends do not requeue existing tasks; switching rooms unsubscribes and removes stale presence; late WebSocket frames after logout are ignored; all upgraded WebSockets are terminated at service shutdown; memories receive atomic version-one history; Gemini call IDs are preserved; and Firebase Admin plus Cloud Tasks config fail closed. A strict packaging/React-build gate was added. The missing npm lockfiles remain a real blocker until generated against the public registry.
+
+
+## v7 requirement-aligned source fixes (2026-10-09)
+
+This source includes an additional native tool, `compare_assortment_options`, which compares two additions for the same authorized store and returns a server-calculated B-minus-A coefficient-score difference with source references. The Gemini worker gets the server-verified memory-save consent and room through trusted system context. The database still enforces consent and tenant access separately. Catalog/store output remains evidence-backed and dimensionless; the model can no longer supply an unverified monetary baseline. This is an intentional limitation relative to the optional monetary scenario described in the submitted brief. Store-gap output is readable, records actual fixture evidence and never promotes a suspected gap into confirmed seasonal demand.
+
+See `docs/REQUIREMENTS_TRACEABILITY_v7.md` and `docs/2026-10-09_SOURCE_AUDIT_v7.md`. The original Technical Brief remains unchanged. **Do not claim the Cloud Run deployment, npm production builds, PostgreSQL isolation gate, Firebase auth, Gemini behavior or end-to-end UI tests have passed until they are actually executed.**

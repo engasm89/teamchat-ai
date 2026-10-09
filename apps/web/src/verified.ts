@@ -20,6 +20,19 @@ export function renderVerifiedBlock(raw:unknown):string{
   const r=result as Record<string,unknown>,p=r.product as Record<string,unknown>|undefined;
   if(p)return `${String(p.catalog_code??"")} — ${String(p.description??"")}\nMargin class: ${p.margin_class??"not mapped"}\nSource: ${String(r.ref??"")}`;
  }
+ if(verified.template==="get_store_assortment"&&result&&typeof result==="object"){
+  const r=result as Record<string,unknown>,s=r.store as Record<string,unknown>|undefined;
+  if(s){
+   const codes=Array.isArray(s.carried_categories_2026)?s.carried_categories_2026:[];
+   const gaps=Array.isArray(s.suspected_gaps)?s.suspected_gaps:[];
+   const summary=gaps.map(g=>{
+    if(!g||typeof g!=="object")return "";
+    const gap=g as Record<string,unknown>;
+    return `• ${String(gap.catalog_code??"")}: ${String(gap.description??"")} (evidence: ${String(gap.evidence??"not provided")})`;
+   }).filter(Boolean).join("\n");
+   return `${String(s.store_id??"")} — ${String(s.store_name??"")}\nChannel: ${String(s.channel??"")} · Format: ${String(s.store_format??"")} · Segment: ${String(s.segment??"")}\nCarried codes (${codes.length}): ${codes.join(", ")}\nSuspected assortment gaps (${gaps.length}; not confirmed demand):\n${summary||"No documented gaps"}\nSeasonal relevance has not been inferred beyond fixture labels.\nSource: ${String(r.ref??"")}`;
+  }
+ }
  if(verified.template==="search_memory"&&Array.isArray(result)){
   return result.map(entry=>{
    const row=entry as Record<string,unknown>,m=row.memory as Record<string,unknown>|undefined;
@@ -31,6 +44,11 @@ export function renderVerifiedBlock(raw:unknown):string{
   const x=result as Record<string,unknown>,before=x.before as Record<string,unknown>|undefined,
    after=x.after as Record<string,unknown>|undefined,r=x.result as Record<string,unknown>|undefined;
   if(before&&after&&r)return `Assortment coefficient score: ${String(before.score)} → ${String(after.score)}\nDifference: ${String(r.delta??"not calculated")}\nRetained classes: ${JSON.stringify(after.retained)}\nSuperseded classes: ${JSON.stringify(after.removed)}\nAssumption: each distinct mapped class counts once; segment-specific coefficients, then channel/format factor. This is not a sales forecast.\nSource: ${String(x.ref??"")}`;
+ }
+ if(verified.template==="compare_assortment_options"&&result&&typeof result==="object"){
+  const x=result as Record<string,unknown>,c=x.comparison as Record<string,unknown>|undefined;
+  const a=c?.option_a as Record<string,unknown>|undefined,b=c?.option_b as Record<string,unknown>|undefined;
+  if(c&&a&&b)return `Store ${String(x.store_id)} · original score ${String(c.baseline)}\nOption A: ${JSON.stringify(x.codes_a)} → score ${String(a.score)}, uplift ${String(a.uplift)}\nOption B: ${JSON.stringify(x.codes_b)} → score ${String(b.score)}, uplift ${String(b.uplift)}\nDifference (B − A): ${String(c.difference_b_minus_a)}\nA retained/superseded classes: ${JSON.stringify(a.retained)} / ${JSON.stringify(a.removed)}\nB retained/superseded classes: ${JSON.stringify(b.retained)} / ${JSON.stringify(b.removed)}\nAssumption: ${String(c.caveat)}\nSource: ${String(x.ref??"")}`;
  }
  // Other records are server-fetched and remain structured with source IDs.
  return JSON.stringify(verified,null,2);

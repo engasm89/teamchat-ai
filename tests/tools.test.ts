@@ -7,7 +7,7 @@ import {TOOL_DECLARATIONS,LocalToolExecutor} from "../src/tools.ts";
 const fixtures=loadFixtures();const executor=new LocalToolExecutor(fixtures);
 const north=resolvedContext("n1","northside-outfitters"),valley=resolvedContext("v1","valley-home-goods");
 test("Gemini tools declare no tenant override",()=>{
- assert.equal(TOOL_DECLARATIONS.length,6);
+ assert.equal(TOOL_DECLARATIONS.length,7);
  for(const d of TOOL_DECLARATIONS)assert.ok(!Object.keys(d.parameters.properties).some(x=>x.includes("tenant")));
 });
 test("catalog lookups return validated source references",async()=>{

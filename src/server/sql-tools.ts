@@ -2,7 +2,7 @@ import {rankCatalog,normalizeCatalogCode,normalizeStoreId} from "../catalog-sear
 import {inTenantTransaction,type SqlPool,type SqlClient} from "../persistence/postgres.ts";
 import {NO_MATCH,type TenantContext} from "../tenant.ts";
 import {validateMemoryValue} from "../memory.ts";
-import {decimalMicro,formatMicro,multiplyMicro,retainedClasses,compareScores,type Score} from "../retail.ts";
+import {decimalMicro,formatMicro,multiplyMicro,retainedClasses,compareScores,compareAlternatives,type Score} from "../retail.ts";
 import {TOOL_DECLARATIONS,type ToolName} from "../tools.ts";
 import {SourceLedger} from "../grounding.ts";
 
@@ -91,15 +91,33 @@ export class SqlToolExecutor{
      return store?{ref:ledger.add("store",id,store),store}:NO_MATCH;
     }
     case "calculate_uplift":{
-     const a=argsOf(raw,["store_id","add_codes","monetary_baseline"]);const id=normalizeStoreId(str(a.store_id,"store_id"));if(!id)return NO_MATCH;const store=await getStore(c,ctx,id);
+     const a=argsOf(raw,["store_id","add_codes"]);const id=normalizeStoreId(str(a.store_id,"store_id"));if(!id)return NO_MATCH;const store=await getStore(c,ctx,id);
      if(!store)return NO_MATCH;
      if(!Array.isArray(a.add_codes)||a.add_codes.length>30||a.add_codes.some(code=>typeof code!=="string"||!normalizeCatalogCode(code)))throw Error("Invalid add_codes");
      const add=(a.add_codes as string[]).map(code=>normalizeCatalogCode(code)!);
      for(const code of add){const p=await catalogCode(c,ctx,code);if(!p)return NO_MATCH;ledger.add("catalog",code,p);}
      const before=await storeScore(c,ctx,store,store.carried_categories_2026 as string[]);
      const after=await storeScore(c,ctx,store,[...(store.carried_categories_2026 as string[]),...add]);
-     const result=compareScores(before,after,a.monetary_baseline===undefined?undefined:str(a.monetary_baseline,"monetary_baseline"));
+     const result=compareScores(before,after);
      return {ref:ledger.add("calculation",id,{...result,store_id:id,before,after,assumed_rule_version:"1"}),result,before,after};
+    }
+    case "compare_assortment_options":{
+     const a=argsOf(raw,["store_id","option_a_codes","option_b_codes"]);
+     const id=normalizeStoreId(str(a.store_id,"store_id"));if(!id)return NO_MATCH;
+     const store=await getStore(c,ctx,id);if(!store)return NO_MATCH;
+     const readCodes=(rawCodes:unknown)=>{
+      if(!Array.isArray(rawCodes)||rawCodes.length>30||rawCodes.some(code=>typeof code!=="string"||!normalizeCatalogCode(code)))throw Error("Invalid option codes");
+      return [...new Set((rawCodes as string[]).map(code=>normalizeCatalogCode(code)!))];
+     };
+     const codesA=readCodes(a.option_a_codes),codesB=readCodes(a.option_b_codes);
+     for(const code of new Set([...codesA,...codesB])){const p=await catalogCode(c,ctx,code);if(!p)return NO_MATCH;ledger.add("catalog",code,p);}
+     const carried=store.carried_categories_2026 as string[];
+     const before=await storeScore(c,ctx,store,carried);
+     const optionA=await storeScore(c,ctx,store,[...carried,...codesA]);
+     const optionB=await storeScore(c,ctx,store,[...carried,...codesB]);
+     const comparison=compareAlternatives(before,optionA,optionB);
+     const ref=ledger.add("calculation",`${id}:alternatives`,{...comparison,store_id:id,codes_a:codesA,codes_b:codesB,assumed_rule_version:"1"});
+     return {ref,store_id:id,codes_a:codesA,codes_b:codesB,comparison};
     }
     case "search_memory":{
      const a=argsOf(raw,["query"]);const query=str(a.query,"query");

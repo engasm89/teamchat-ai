@@ -1,4 +1,5 @@
--- Execute separately as DBA after 003_auth_grants.sql.
+-- Execute separately as DBA AFTER migrations 001 through 007: the grants
+-- below reference tables created by 006_ephemeral.sql.
 -- FIRST: CREATE ROLE teamchat_api LOGIN PASSWORD '<use secret manager>'; never commit passwords.
 -- Use a dedicated runtime role. Fail if the role is missing / has BYPASSRLS.
 DO $guard$ BEGIN

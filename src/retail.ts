@@ -70,3 +70,15 @@ export function compareScores(baseline: Score, proposed: Score, monetaryBaseline
     ...(value === undefined ? {}:{scenarioValue:value}),
     caveat:"Dimensionless assortment coefficient score only; not sales, a percentage, or a forecast. Monetary baseline and linear scenario are user assumptions."};
 }
+/** Compare two alternative additions against the same original assortment.
+ * The difference is B minus A (not the sum of individual product uplifts).
+ * Keeping this calculation in the domain layer prevents a model from
+ * subtracting strings, silently treating scores as percentages or counting
+ * a superseded class twice. */
+export function compareAlternatives(baseline: Score, optionA: Score, optionB: Score) {
+ const a=compareScores(baseline,optionA),b=compareScores(baseline,optionB);
+ return {baseline:baseline.score,option_a:{score:optionA.score,uplift:a.delta,retained:optionA.retained,removed:optionA.removed,unmapped:optionA.unmapped},
+  option_b:{score:optionB.score,uplift:b.delta,retained:optionB.retained,removed:optionB.removed,unmapped:optionB.unmapped},
+  difference_b_minus_a:formatMicro(decimalMicro(optionB.score)-decimalMicro(optionA.score)),
+  caveat:"Dimensionless assortment coefficient scores only. B minus A is not monetary sales or a percentage."};
+}
