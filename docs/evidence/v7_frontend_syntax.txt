@@ -1,0 +1,4 @@
+apps/web/src/App.tsx: SYNTAX PASS
+apps/web/src/main.tsx: SYNTAX PASS
+apps/web/src/socket.ts: SYNTAX PASS
+apps/web/src/verified.ts: SYNTAX PASS

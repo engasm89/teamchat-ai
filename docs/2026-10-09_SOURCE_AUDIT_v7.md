@@ -13,7 +13,7 @@
 ## Local test evidence
 
 - TypeScript backend: PASS with the environment's pre-existing `@types/node` symlink used only for offline typechecking (not included in distribution; it is not an npm dependency lock).
-- Node native TypeScript tests: 84 PASS, 0 FAIL, 0 SKIPPED.
+- Node native TypeScript tests: 85 PASS, 0 FAIL, 0 SKIPPED.
 - Original 5 fixture hashes: identical to v6. Deterministic generated fixture SQL: 2,753 inserts.
 - Frontend verified-result formatter imported and tested via native Node test runner. Full React/Vite production build unavailable without npm registry access.
 - Release gate is intentionally incomplete: root and frontend `package-lock.json` do not exist; there is no live `DATABASE_URL`, Firebase Admin project, Vertex model, or Cloud Tasks credentials accessible here.
@@ -29,3 +29,15 @@
 ## Release verdict
 
 **NOT APPROVED FOR FINAL SUBMISSION.** v7 eliminates additional verifiable source defects but cannot be called fully end-to-end correct without executing the real systems. Do not overwrite or resend the original technical brief; document deviation around monetary baseline in delivery README. Employer deadline clarified separately as Friday 16 October 2026; original assessment PDF's February date is superseded by Gonzalo's email.
+
+### Additional message-context finding
+
+The original worker flattened earlier room events together with the newest request and truncated *every* message—including the triggering prompt—to 1,200 characters. Updated the planner input builder to distinguish previous room context from the latest authenticated message, preserve the latest 8,000-character bound, reject mismatched author/sequence, and add a regression test. This is also important for consent: old chat text cannot be treated as a new request to save memory.
+
+### Final rerun evidence
+
+- Native Node offline tests: **85/85 passed** (see `docs/evidence/v7_offline_tests.tap`).
+- Backend TypeScript `tsc --noEmit`: **PASS**, with a temporary symlink to a pre-existing global `@types/node`; link excluded from package.
+- Frontend TS/TSX source syntax: **PASS** for 4 files; not a complete React/Vite build.
+- Required PostgreSQL test: **BLOCKED/FAILS**, no test connection configured (see evidence). No fake success.
+- npm packaging gate: **BLOCKED/FAILS**, no genuine lockfiles; no networked npm install, no fabricated lockfile.
