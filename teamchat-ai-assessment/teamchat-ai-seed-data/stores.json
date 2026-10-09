@@ -1,0 +1,1519 @@
+{
+  "northside-outfitters": [
+    {
+      "store_id": "ST-4001",
+      "store_name": "Fairview",
+      "channel": "in_store",
+      "store_format": "compact",
+      "segment": "loyalty",
+      "opened": 2019,
+      "buyer": "S. Keane",
+      "last_review": "2026-08-18",
+      "carried_categories_2026": [
+        "APR-192.18",
+        "APR-215.14",
+        "APR-238.19",
+        "APR-307.12",
+        "ELC-100.13",
+        "ELC-100.17",
+        "ELC-238.12",
+        "HDW-146.18",
+        "HDW-192.13",
+        "HDW-261.13",
+        "HOM-192.15",
+        "OUT-123.11",
+        "OUT-123.12",
+        "OUT-123.16",
+        "SEA-100.16",
+        "SPT-100.17",
+        "SPT-192.18",
+        "SPT-261.18"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "GRO-215.19",
+          "description": "Pet supplies, grooming and health",
+          "last_carried": "never",
+          "evidence": "27% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "SEA-146.12",
+          "description": "Patio and garden furniture, dining sets, six seat and above",
+          "last_carried": "never",
+          "evidence": "category search volume up 9% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "APP-192.17",
+          "description": "Refrigerators and freezers, upright freezer",
+          "last_carried": "2024",
+          "evidence": "27% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "SPT-215.17",
+          "description": "Golf, trolleys and carts",
+          "last_carried": "2025",
+          "evidence": "competitor opened a 22,000 sq ft format within 4 miles in Q2"
+        },
+        {
+          "catalog_code": "HBA-261.11",
+          "description": "Cosmetics, foundation and base",
+          "last_carried": "never",
+          "evidence": "28% of basket-level demand met by click-and-collect from a sister store"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4002",
+      "store_name": "Brookline",
+      "channel": "in_store",
+      "store_format": "compact",
+      "segment": "loyalty",
+      "opened": 2012,
+      "buyer": "R. Nakamura",
+      "last_review": "2026-04-14",
+      "carried_categories_2026": [
+        "APP-100.11",
+        "APP-123.19",
+        "APP-169.14",
+        "APP-261.16",
+        "APP-261.19",
+        "APP-307.15",
+        "ELC-146.13",
+        "HBA-215.19",
+        "HBA-261.16",
+        "HDW-192.14",
+        "HDW-307.17",
+        "HOM-146.18",
+        "HOM-169.11",
+        "HOM-215.18",
+        "OUT-238.12",
+        "OUT-284.19",
+        "SEA-307.19",
+        "SPT-123.11"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "OUT-192.13",
+          "description": "Fishing equipment, fly rods",
+          "last_carried": "never",
+          "evidence": "footfall up 14% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "OUT-169.18",
+          "description": "Backpacks and carriers, duffels",
+          "last_carried": "2025",
+          "evidence": "category search volume up 17% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "APP-215.19",
+          "description": "Washers and dryers, pedestals and risers",
+          "last_carried": "2024",
+          "evidence": "32 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "APR-261.15",
+          "description": "Formal and outdoor footwear, ankle boots",
+          "last_carried": "2024",
+          "evidence": "30% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "HBA-192.17",
+          "description": "Oral care, denture care",
+          "last_carried": "2024",
+          "evidence": "category search volume up 22% year on year with no local fulfilment"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4003",
+      "store_name": "Kingsgate",
+      "channel": "omni",
+      "store_format": "standard",
+      "segment": "loyalty",
+      "opened": 2007,
+      "buyer": "M. Varga",
+      "last_review": "2026-04-16",
+      "carried_categories_2026": [
+        "APP-100.11",
+        "APP-100.99",
+        "APP-146.13",
+        "APR-123.18",
+        "ELC-123.14",
+        "ELC-169.13",
+        "HBA-215.16",
+        "HBA-238.18",
+        "HBA-238.19",
+        "HOM-100.17",
+        "HOM-192.16",
+        "OUT-123.13",
+        "OUT-169.19",
+        "OUT-192.12",
+        "SEA-169.11",
+        "SEA-169.13",
+        "SPT-146.16",
+        "SPT-215.14",
+        "SPT-238.15"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "APP-100.12",
+          "description": "Portable air conditioners, 8,000 to 10,000 BTU",
+          "last_carried": "never",
+          "evidence": "cooling category down 18% against a market up 6%; assortment sits on the unspecified line, which carries no margin class"
+        },
+        {
+          "catalog_code": "APP-192.18",
+          "description": "Refrigerators and freezers, beverage cooler",
+          "last_carried": "2025",
+          "evidence": "10 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "ELC-238.16",
+          "description": "Laptops and desktops, all-in-one desktops",
+          "last_carried": "2024",
+          "evidence": "26% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "OUT-192.13",
+          "description": "Fishing equipment, fly rods",
+          "last_carried": "2024",
+          "evidence": "returns rate 19% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "APR-192.13",
+          "description": "Women's ready-to-wear bottoms, jeans, wide leg",
+          "last_carried": "never",
+          "evidence": "12 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "OUT-307.14",
+          "description": "Technical outerwear, insulated jackets, down",
+          "last_carried": "never",
+          "evidence": "20% of basket-level demand met by click-and-collect from a sister store"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4004",
+      "store_name": "Ashford",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "standard",
+      "opened": 2002,
+      "buyer": "D. Brennan",
+      "last_review": "2026-06-26",
+      "carried_categories_2026": [
+        "APP-192.14",
+        "APP-215.14",
+        "APP-284.19",
+        "APR-123.19",
+        "APR-307.19",
+        "ELC-123.18",
+        "ELC-146.14",
+        "GRO-215.12",
+        "HBA-238.12",
+        "HBA-238.16",
+        "HDW-192.13",
+        "OUT-146.14",
+        "OUT-261.12",
+        "OUT-307.11",
+        "OUT-307.13",
+        "SEA-100.16",
+        "SPT-100.11",
+        "SPT-238.17"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "APR-123.18",
+          "description": "Men's ready-to-wear bottoms, joggers and sweatpants",
+          "last_carried": "2024",
+          "evidence": "25 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "SPT-215.18",
+          "description": "Golf, gloves and grips",
+          "last_carried": "2025",
+          "evidence": "14% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "HDW-100.18",
+          "description": "Cordless power tools, multi-tools",
+          "last_carried": "2024",
+          "evidence": "competitor opened a 21,000 sq ft format within 4 miles in Q4"
+        },
+        {
+          "catalog_code": "HOM-169.14",
+          "description": "Bedding, sheet sets, linen",
+          "last_carried": "2024",
+          "evidence": "category search volume up 9% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "HDW-215.12",
+          "description": "Plumbing, shower systems",
+          "last_carried": "2025",
+          "evidence": "competitor opened a 24,000 sq ft format within 4 miles in Q2"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4005",
+      "store_name": "Westmere",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "standard",
+      "opened": 2021,
+      "buyer": "L. Osei",
+      "last_review": "2026-07-28",
+      "carried_categories_2026": [
+        "APP-146.11",
+        "APP-146.14",
+        "APP-169.18",
+        "APP-169.19",
+        "APP-261.16",
+        "APP-284.13",
+        "APP-284.15",
+        "APP-284.16",
+        "APR-307.11",
+        "APR-307.18",
+        "ELC-215.15",
+        "HBA-146.17",
+        "HOM-215.14",
+        "HOM-215.15",
+        "HOM-238.13",
+        "SEA-146.14",
+        "SPT-215.12",
+        "SPT-238.11"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "APR-215.15",
+          "description": "Dresses and occasion wear, maxi dresses",
+          "last_carried": "never",
+          "evidence": "10 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "HDW-307.12",
+          "description": "Garage and vehicle care, battery chargers and jump starters",
+          "last_carried": "2024",
+          "evidence": "26 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "HBA-169.18",
+          "description": "Hair styling appliances, shavers",
+          "last_carried": "never",
+          "evidence": "footfall up 20% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "APP-215.11",
+          "description": "Washers and dryers, front-load washer",
+          "last_carried": "never",
+          "evidence": "category search volume up 27% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "ELC-192.17",
+          "description": "Home audio, turntables",
+          "last_carried": "2024",
+          "evidence": "category search volume up 28% year on year with no local fulfilment"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4006",
+      "store_name": "Linden Park",
+      "channel": "in_store",
+      "store_format": "compact",
+      "segment": "loyalty",
+      "opened": 2002,
+      "buyer": "D. Brennan",
+      "last_review": "2026-06-11",
+      "carried_categories_2026": [
+        "APP-146.15",
+        "APP-169.14",
+        "APP-307.15",
+        "APP-307.19",
+        "APR-192.12",
+        "APR-238.16",
+        "APR-307.17",
+        "ELC-146.18",
+        "HDW-100.13",
+        "HDW-123.16",
+        "HDW-192.15",
+        "HDW-215.11",
+        "HDW-261.16",
+        "HOM-215.13",
+        "OUT-238.12",
+        "SEA-261.11",
+        "SPT-238.14",
+        "SPT-261.19"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "OUT-307.11",
+          "description": "Technical outerwear, hardshell jackets",
+          "last_carried": "never",
+          "evidence": "32% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "APP-123.13",
+          "description": "Window and through-wall air conditioners, 13,000 BTU and above",
+          "last_carried": "never",
+          "evidence": "23 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "HBA-169.18",
+          "description": "Hair styling appliances, shavers",
+          "last_carried": "2025",
+          "evidence": "29 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "HOM-192.13",
+          "description": "Mattresses and bases, hybrid",
+          "last_carried": "2024",
+          "evidence": "footfall up 21% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "ELC-238.13",
+          "description": "Laptops and desktops, laptops, over 16 inch",
+          "last_carried": "2024",
+          "evidence": "15 unfulfilled special orders logged by store colleagues this season"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4007",
+      "store_name": "Harbour Point",
+      "channel": "omni",
+      "store_format": "flagship",
+      "segment": "standard",
+      "opened": 2000,
+      "buyer": "M. Varga",
+      "last_review": "2026-04-25",
+      "carried_categories_2026": [
+        "APP-284.15",
+        "APR-123.11",
+        "APR-215.13",
+        "APR-215.15",
+        "APR-261.16",
+        "ELC-146.18",
+        "ELC-307.13",
+        "HBA-215.15",
+        "HDW-123.12",
+        "HDW-215.12",
+        "HOM-123.13",
+        "HOM-123.15",
+        "HOM-215.18",
+        "HOM-238.15",
+        "OUT-192.14",
+        "SEA-100.11",
+        "SEA-100.12",
+        "SEA-284.15"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "APP-169.16",
+          "description": "Fans and air circulators, ceiling, flush mount",
+          "last_carried": "2025",
+          "evidence": "footfall up 33% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "HOM-123.16",
+          "description": "Tables and desks, standing desks",
+          "last_carried": "never",
+          "evidence": "20% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "SPT-261.12",
+          "description": "Winter sports, snowboards",
+          "last_carried": "2024",
+          "evidence": "category search volume up 32% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "APP-192.17",
+          "description": "Refrigerators and freezers, upright freezer",
+          "last_carried": "2024",
+          "evidence": "33% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "SEA-307.12",
+          "description": "Decking, fencing and surfaces, decking fixings",
+          "last_carried": "never",
+          "evidence": "category search volume up 22% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "APP-100.11",
+          "description": "Portable air conditioners, 5,000 to 7,000 BTU",
+          "last_carried": "2024",
+          "evidence": "footfall up 16% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "APP-100.12",
+          "description": "Portable air conditioners, 8,000 to 10,000 BTU",
+          "last_carried": "2024",
+          "evidence": "13% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "APP-100.13",
+          "description": "Portable air conditioners, 11,000 to 13,000 BTU",
+          "last_carried": "2024",
+          "evidence": "category search volume up 12% year on year with no local fulfilment"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4008",
+      "store_name": "Castleton",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "loyalty",
+      "opened": 2009,
+      "buyer": "R. Nakamura",
+      "last_review": "2026-02-11",
+      "carried_categories_2026": [
+        "APP-123.13",
+        "APP-192.12",
+        "APP-307.19",
+        "APR-100.17",
+        "APR-261.17",
+        "ELC-284.12",
+        "HBA-123.14",
+        "HBA-238.17",
+        "HDW-123.19",
+        "HDW-215.12",
+        "HDW-238.18",
+        "HDW-261.14",
+        "HOM-100.19",
+        "OUT-100.13",
+        "OUT-100.14",
+        "OUT-215.15",
+        "OUT-215.17",
+        "SPT-261.19"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "HBA-238.12",
+          "description": "Fragrance, eau de toilette",
+          "last_carried": "never",
+          "evidence": "returns rate 28% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "ELC-192.18",
+          "description": "Home audio, wireless multiroom",
+          "last_carried": "2025",
+          "evidence": "competitor opened a 28,000 sq ft format within 4 miles in Q2"
+        },
+        {
+          "catalog_code": "APR-215.13",
+          "description": "Dresses and occasion wear, knitted dresses",
+          "last_carried": "2024",
+          "evidence": "footfall up 34% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "APR-215.16",
+          "description": "Dresses and occasion wear, occasion and evening",
+          "last_carried": "2024",
+          "evidence": "20% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "OUT-146.14",
+          "description": "Camp kitchen and cooking, cookware sets",
+          "last_carried": "2025",
+          "evidence": "returns rate 33% below chain average, suggesting unmet demand rather than fit issues"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4009",
+      "store_name": "Rowan Hill",
+      "channel": "omni",
+      "store_format": "compact",
+      "segment": "standard",
+      "opened": 2004,
+      "buyer": "D. Brennan",
+      "last_review": "2026-09-13",
+      "carried_categories_2026": [
+        "APP-169.13",
+        "APP-169.19",
+        "APP-261.13",
+        "APR-123.19",
+        "APR-146.18",
+        "APR-261.15",
+        "ELC-215.19",
+        "ELC-238.19",
+        "ELC-307.17",
+        "GRO-215.12",
+        "HBA-100.12",
+        "HBA-100.19",
+        "HDW-100.15",
+        "HDW-192.17",
+        "HDW-238.16",
+        "HDW-307.16",
+        "HOM-123.13",
+        "OUT-192.18"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "HDW-192.19",
+          "description": "Paint and decorating, masking and protection",
+          "last_carried": "2025",
+          "evidence": "returns rate 25% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "SEA-307.12",
+          "description": "Decking, fencing and surfaces, decking fixings",
+          "last_carried": "never",
+          "evidence": "returns rate 28% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "GRO-215.14",
+          "description": "Pet supplies, cat food, wet",
+          "last_carried": "never",
+          "evidence": "returns rate 34% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "APR-192.11",
+          "description": "Women's ready-to-wear bottoms, jeans, skinny",
+          "last_carried": "2025",
+          "evidence": "footfall up 20% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "HDW-123.11",
+          "description": "Corded and bench power tools, table saws",
+          "last_carried": "2025",
+          "evidence": "25% of basket-level demand met by click-and-collect from a sister store"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4010",
+      "store_name": "Eastgate",
+      "channel": "omni",
+      "store_format": "flagship",
+      "segment": "standard",
+      "opened": 2005,
+      "buyer": "R. Nakamura",
+      "last_review": "2026-08-13",
+      "carried_categories_2026": [
+        "APP-169.12",
+        "APP-215.11",
+        "APP-261.15",
+        "APR-123.11",
+        "APR-238.12",
+        "ELC-100.16",
+        "ELC-169.18",
+        "ELC-284.19",
+        "GRO-215.16",
+        "HBA-192.19",
+        "HBA-261.16",
+        "HBA-261.19",
+        "HDW-100.18",
+        "HDW-192.17",
+        "HDW-261.13",
+        "HDW-261.19",
+        "SPT-123.11",
+        "SPT-238.18"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "HOM-100.16",
+          "description": "Seating and upholstery, ottomans and poufs",
+          "last_carried": "never",
+          "evidence": "competitor opened a 11,000 sq ft format within 4 miles in Q2"
+        },
+        {
+          "catalog_code": "OUT-284.11",
+          "description": "Navigation and field electronics, handheld GPS",
+          "last_carried": "2025",
+          "evidence": "returns rate 8% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "APR-261.18",
+          "description": "Formal and outdoor footwear, wellingtons",
+          "last_carried": "2024",
+          "evidence": "footfall up 32% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "HDW-123.11",
+          "description": "Corded and bench power tools, table saws",
+          "last_carried": "2024",
+          "evidence": "12% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "ELC-192.15",
+          "description": "Home audio, subwoofers",
+          "last_carried": "2024",
+          "evidence": "footfall up 17% on weekends with no adjacency to this category"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4011",
+      "store_name": "Milbourne",
+      "channel": "in_store",
+      "store_format": "compact",
+      "segment": "standard",
+      "opened": 2011,
+      "buyer": "R. Nakamura",
+      "last_review": "2026-03-16",
+      "carried_categories_2026": [
+        "APP-146.16",
+        "APR-123.11",
+        "APR-169.17",
+        "ELC-169.19",
+        "ELC-284.12",
+        "HBA-192.17",
+        "HDW-192.11",
+        "HDW-238.13",
+        "HDW-238.14",
+        "HDW-261.13",
+        "OUT-146.15",
+        "OUT-169.13",
+        "OUT-284.15",
+        "SEA-100.18",
+        "SEA-146.11",
+        "SPT-192.13",
+        "SPT-284.11",
+        "SPT-284.19"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "HDW-238.17",
+          "description": "Electrical, testers and detectors",
+          "last_carried": "2024",
+          "evidence": "footfall up 28% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "SEA-146.16",
+          "description": "Patio and garden furniture, hammocks and swings",
+          "last_carried": "2024",
+          "evidence": "competitor opened a 27,000 sq ft format within 4 miles in Q3"
+        },
+        {
+          "catalog_code": "OUT-192.18",
+          "description": "Fishing equipment, line and leader",
+          "last_carried": "2024",
+          "evidence": "32% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "OUT-192.16",
+          "description": "Fishing equipment, fly reels",
+          "last_carried": "2024",
+          "evidence": "15% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "HDW-261.17",
+          "description": "Building materials, guttering and drainage",
+          "last_carried": "never",
+          "evidence": "category search volume up 16% year on year with no local fulfilment"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4012",
+      "store_name": "Oakridge",
+      "channel": "in_store",
+      "store_format": "compact",
+      "segment": "standard",
+      "opened": 2011,
+      "buyer": "M. Varga",
+      "last_review": "2026-06-10",
+      "carried_categories_2026": [
+        "APP-146.11",
+        "APP-284.11",
+        "APR-307.18",
+        "ELC-100.19",
+        "ELC-169.12",
+        "GRO-215.11",
+        "HBA-123.11",
+        "HBA-146.17",
+        "HBA-169.11",
+        "HDW-146.12",
+        "HDW-146.15",
+        "OUT-123.15",
+        "OUT-146.18",
+        "SEA-100.15",
+        "SEA-146.12",
+        "SEA-307.16",
+        "SEA-307.19",
+        "SPT-123.18"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "ELC-146.11",
+          "description": "Televisions, under 43 inch, LED",
+          "last_carried": "2024",
+          "evidence": "13% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "APP-146.17",
+          "description": "Dehumidifiers and air purifiers, combined unit",
+          "last_carried": "2024",
+          "evidence": "34% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "APP-192.13",
+          "description": "Refrigerators and freezers, French door",
+          "last_carried": "2025",
+          "evidence": "footfall up 11% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "HDW-307.17",
+          "description": "Garage and vehicle care, tyre inflation",
+          "last_carried": "2024",
+          "evidence": "footfall up 22% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "SPT-261.18",
+          "description": "Winter sports, goggles, snow",
+          "last_carried": "2024",
+          "evidence": "competitor opened a 20,000 sq ft format within 4 miles in Q4"
+        }
+      ]
+    }
+  ],
+  "valley-home-goods": [
+    {
+      "store_id": "ST-4013",
+      "store_name": "Sandfield",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "loyalty",
+      "opened": 2008,
+      "buyer": "R. Nakamura",
+      "last_review": "2026-01-23",
+      "carried_categories_2026": [
+        "APP-146.17",
+        "APP-215.16",
+        "APP-307.11",
+        "APR-146.19",
+        "APR-192.18",
+        "ELC-169.17",
+        "HBA-123.13",
+        "HDW-307.18",
+        "HOM-100.16",
+        "HOM-238.14",
+        "OUT-100.14",
+        "OUT-100.19",
+        "OUT-238.14",
+        "OUT-261.16",
+        "SEA-192.12",
+        "SEA-307.19",
+        "SPT-238.14",
+        "SPT-261.17"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "APP-215.15",
+          "description": "Washers and dryers, washer-dryer combination",
+          "last_carried": "2024",
+          "evidence": "category search volume up 26% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "SPT-146.16",
+          "description": "Fitness accessories, skipping ropes",
+          "last_carried": "never",
+          "evidence": "competitor opened a 27,000 sq ft format within 4 miles in Q3"
+        },
+        {
+          "catalog_code": "APP-146.14",
+          "description": "Dehumidifiers and air purifiers, air purifier, HEPA, small room",
+          "last_carried": "2025",
+          "evidence": "20% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "SPT-215.11",
+          "description": "Golf, drivers and woods",
+          "last_carried": "never",
+          "evidence": "returns rate 12% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "HOM-100.11",
+          "description": "Seating and upholstery, sofas, two seat",
+          "last_carried": "2025",
+          "evidence": "footfall up 30% on weekends with no adjacency to this category"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4014",
+      "store_name": "Greenway",
+      "channel": "omni",
+      "store_format": "standard",
+      "segment": "loyalty",
+      "opened": 2012,
+      "buyer": "S. Keane",
+      "last_review": "2026-02-27",
+      "carried_categories_2026": [
+        "APP-146.18",
+        "APR-100.16",
+        "HBA-192.15",
+        "HBA-261.12",
+        "HDW-146.16",
+        "HDW-192.18",
+        "HDW-215.19",
+        "HDW-261.18",
+        "HOM-146.14",
+        "HOM-169.18",
+        "HOM-192.19",
+        "OUT-123.11",
+        "SEA-261.12",
+        "SPT-100.18",
+        "SPT-123.11",
+        "SPT-146.15",
+        "SPT-192.13",
+        "SPT-215.17"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "APR-169.13",
+          "description": "Women's ready-to-wear tops, shirts",
+          "last_carried": "2024",
+          "evidence": "32 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "SEA-284.16",
+          "description": "Outdoor storage and structures, garden offices",
+          "last_carried": "2024",
+          "evidence": "24% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "HDW-238.11",
+          "description": "Electrical, sockets and switches",
+          "last_carried": "2025",
+          "evidence": "category search volume up 11% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "APR-146.16",
+          "description": "Men's outerwear, gilets, insulated",
+          "last_carried": "2024",
+          "evidence": "8% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "ELC-100.11",
+          "description": "Internal solid state drives, SATA, under 500 GB",
+          "last_carried": "2025",
+          "evidence": "18% of basket-level demand met by click-and-collect from a sister store"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4015",
+      "store_name": "Pinehurst",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "standard",
+      "opened": 2013,
+      "buyer": "S. Keane",
+      "last_review": "2026-03-10",
+      "carried_categories_2026": [
+        "APP-192.19",
+        "APP-215.19",
+        "APR-100.17",
+        "APR-238.14",
+        "ELC-123.15",
+        "ELC-169.16",
+        "ELC-169.18",
+        "ELC-215.14",
+        "ELC-238.18",
+        "GRO-215.19",
+        "HDW-123.17",
+        "HDW-215.16",
+        "OUT-146.12",
+        "OUT-146.19",
+        "SEA-169.16",
+        "SEA-192.16",
+        "SPT-192.15",
+        "SPT-192.18"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "HOM-146.14",
+          "description": "Storage furniture, sideboards and buffets",
+          "last_carried": "never",
+          "evidence": "competitor opened a 11,000 sq ft format within 4 miles in Q1"
+        },
+        {
+          "catalog_code": "SEA-307.18",
+          "description": "Decking, fencing and surfaces, paving and edging",
+          "last_carried": "2024",
+          "evidence": "returns rate 19% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "APR-261.18",
+          "description": "Formal and outdoor footwear, wellingtons",
+          "last_carried": "2025",
+          "evidence": "category search volume up 13% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "APR-307.12",
+          "description": "Apparel accessories, backpacks, fashion",
+          "last_carried": "never",
+          "evidence": "competitor opened a 13,000 sq ft format within 4 miles in Q1"
+        },
+        {
+          "catalog_code": "APP-261.15",
+          "description": "Dishwashers, portable",
+          "last_carried": "2024",
+          "evidence": "19% of basket-level demand met by click-and-collect from a sister store"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4016",
+      "store_name": "Calder Vale",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "loyalty",
+      "opened": 2004,
+      "buyer": "D. Brennan",
+      "last_review": "2026-04-24",
+      "carried_categories_2026": [
+        "APP-169.17",
+        "APP-192.14",
+        "APR-261.15",
+        "ELC-123.11",
+        "ELC-169.14",
+        "HBA-123.12",
+        "HBA-192.19",
+        "HBA-261.18",
+        "HDW-100.17",
+        "HDW-215.17",
+        "OUT-100.15",
+        "OUT-169.12",
+        "OUT-169.14",
+        "OUT-169.16",
+        "OUT-261.11",
+        "SEA-100.11",
+        "SPT-192.11",
+        "SPT-284.14"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "SEA-146.13",
+          "description": "Patio and garden furniture, lounge sets",
+          "last_carried": "2024",
+          "evidence": "category search volume up 16% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "HBA-215.15",
+          "description": "Personal care devices, IPL and laser",
+          "last_carried": "never",
+          "evidence": "returns rate 13% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "APP-215.16",
+          "description": "Washers and dryers, stacked pair",
+          "last_carried": "never",
+          "evidence": "competitor opened a 9,000 sq ft format within 4 miles in Q1"
+        },
+        {
+          "catalog_code": "GRO-215.14",
+          "description": "Pet supplies, cat food, wet",
+          "last_carried": "2025",
+          "evidence": "27% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "APR-123.17",
+          "description": "Men's ready-to-wear bottoms, shorts, tailored",
+          "last_carried": "2024",
+          "evidence": "30 unfulfilled special orders logged by store colleagues this season"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4017",
+      "store_name": "Thornbury",
+      "channel": "omni",
+      "store_format": "compact",
+      "segment": "loyalty",
+      "opened": 2004,
+      "buyer": "R. Nakamura",
+      "last_review": "2026-06-10",
+      "carried_categories_2026": [
+        "APP-123.11",
+        "ELC-146.12",
+        "ELC-215.19",
+        "ELC-307.19",
+        "GRO-215.14",
+        "HBA-100.19",
+        "HBA-146.14",
+        "HBA-169.12",
+        "HBA-215.12",
+        "HDW-192.14",
+        "HDW-307.17",
+        "HOM-123.17",
+        "OUT-307.15",
+        "OUT-307.19",
+        "SEA-146.18",
+        "SEA-169.16",
+        "SPT-261.12",
+        "SPT-284.16"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "OUT-123.14",
+          "description": "Sleeping bags and pads, quilts",
+          "last_carried": "2024",
+          "evidence": "returns rate 14% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "HOM-123.16",
+          "description": "Tables and desks, standing desks",
+          "last_carried": "2025",
+          "evidence": "competitor opened a 32,000 sq ft format within 4 miles in Q1"
+        },
+        {
+          "catalog_code": "HDW-215.18",
+          "description": "Plumbing, sealants and compounds",
+          "last_carried": "2025",
+          "evidence": "footfall up 28% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "ELC-284.11",
+          "description": "Mobile accessories, cases and covers",
+          "last_carried": "never",
+          "evidence": "10% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "HBA-123.16",
+          "description": "Body care, sun protection, body",
+          "last_carried": "2025",
+          "evidence": "competitor opened a 15,000 sq ft format within 4 miles in Q1"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4018",
+      "store_name": "Redmoor",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "standard",
+      "opened": 2010,
+      "buyer": "L. Osei",
+      "last_review": "2026-03-22",
+      "carried_categories_2026": [
+        "APP-146.15",
+        "APP-215.18",
+        "APP-261.14",
+        "APP-261.16",
+        "APR-100.18",
+        "ELC-123.12",
+        "ELC-146.19",
+        "GRO-215.11",
+        "HDW-146.14",
+        "HDW-146.16",
+        "HOM-192.15",
+        "HOM-215.16",
+        "OUT-100.13",
+        "OUT-307.13",
+        "SEA-100.19",
+        "SPT-123.19",
+        "SPT-146.14",
+        "SPT-284.18"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "HDW-215.18",
+          "description": "Plumbing, sealants and compounds",
+          "last_carried": "never",
+          "evidence": "competitor opened a 29,000 sq ft format within 4 miles in Q3"
+        },
+        {
+          "catalog_code": "HDW-307.15",
+          "description": "Garage and vehicle care, polishes and waxes",
+          "last_carried": "2024",
+          "evidence": "15% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "HOM-261.18",
+          "description": "Rugs and floor coverings, machine washable",
+          "last_carried": "2024",
+          "evidence": "competitor opened a 17,000 sq ft format within 4 miles in Q1"
+        },
+        {
+          "catalog_code": "HOM-238.16",
+          "description": "Window treatments, cellular shades",
+          "last_carried": "2025",
+          "evidence": "category search volume up 11% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "SEA-284.19",
+          "description": "Outdoor storage and structures, anchoring and bases",
+          "last_carried": "2025",
+          "evidence": "13% of basket-level demand met by click-and-collect from a sister store"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4019",
+      "store_name": "Alderley",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "loyalty",
+      "opened": 2007,
+      "buyer": "S. Keane",
+      "last_review": "2026-02-13",
+      "carried_categories_2026": [
+        "APP-192.16",
+        "APR-192.16",
+        "APR-238.18",
+        "ELC-100.16",
+        "ELC-192.16",
+        "ELC-215.18",
+        "HBA-192.16",
+        "HDW-192.15",
+        "HDW-261.16",
+        "HDW-261.17",
+        "HOM-123.18",
+        "HOM-215.13",
+        "OUT-192.17",
+        "OUT-215.18",
+        "OUT-238.17",
+        "OUT-261.12",
+        "SPT-100.13",
+        "SPT-284.17"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "APP-215.16",
+          "description": "Washers and dryers, stacked pair",
+          "last_carried": "2024",
+          "evidence": "returns rate 20% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "OUT-307.13",
+          "description": "Technical outerwear, insulated jackets, synthetic",
+          "last_carried": "never",
+          "evidence": "competitor opened a 14,000 sq ft format within 4 miles in Q4"
+        },
+        {
+          "catalog_code": "OUT-261.17",
+          "description": "Climbing equipment, climbing shoes",
+          "last_carried": "2024",
+          "evidence": "footfall up 26% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "ELC-261.14",
+          "description": "Networking equipment, network switches",
+          "last_carried": "2025",
+          "evidence": "footfall up 25% on weekends with no adjacency to this category"
+        },
+        {
+          "catalog_code": "ELC-146.19",
+          "description": "Televisions, mounts and brackets",
+          "last_carried": "2025",
+          "evidence": "footfall up 22% on weekends with no adjacency to this category"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4020",
+      "store_name": "Wexham",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "loyalty",
+      "opened": 2009,
+      "buyer": "D. Brennan",
+      "last_review": "2026-06-14",
+      "carried_categories_2026": [
+        "APP-146.14",
+        "APP-307.11",
+        "APR-215.16",
+        "APR-261.17",
+        "ELC-192.13",
+        "ELC-284.14",
+        "GRO-215.14",
+        "HDW-261.12",
+        "HOM-100.14",
+        "HOM-192.15",
+        "OUT-146.16",
+        "OUT-192.17",
+        "OUT-261.13",
+        "SEA-100.16",
+        "SEA-146.14",
+        "SPT-123.11",
+        "SPT-192.16",
+        "SPT-192.17"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "HBA-100.14",
+          "description": "Facial skincare, moisturisers, day",
+          "last_carried": "never",
+          "evidence": "16 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "HBA-261.13",
+          "description": "Cosmetics, powder and setting",
+          "last_carried": "2024",
+          "evidence": "28% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "APR-215.11",
+          "description": "Dresses and occasion wear, day dresses",
+          "last_carried": "never",
+          "evidence": "competitor opened a 26,000 sq ft format within 4 miles in Q1"
+        },
+        {
+          "catalog_code": "SPT-100.14",
+          "description": "Cardio equipment, indoor cycling bikes",
+          "last_carried": "never",
+          "evidence": "27% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "ELC-307.19",
+          "description": "Smart home devices, hubs and bridges",
+          "last_carried": "2025",
+          "evidence": "33 unfulfilled special orders logged by store colleagues this season"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4021",
+      "store_name": "Bridgewater",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "standard",
+      "opened": 2005,
+      "buyer": "M. Varga",
+      "last_review": "2026-01-13",
+      "carried_categories_2026": [
+        "APP-215.13",
+        "ELC-123.16",
+        "ELC-146.14",
+        "ELC-192.14",
+        "ELC-192.18",
+        "HBA-192.14",
+        "HBA-261.11",
+        "HDW-146.14",
+        "HDW-146.15",
+        "HDW-146.19",
+        "HDW-307.16",
+        "HOM-215.11",
+        "OUT-238.15",
+        "OUT-307.17",
+        "SEA-169.18",
+        "SEA-192.11",
+        "SEA-307.14",
+        "SPT-238.18"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "APP-123.14",
+          "description": "Window and through-wall air conditioners, inverter",
+          "last_carried": "never",
+          "evidence": "returns rate 13% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "APP-123.11",
+          "description": "Window and through-wall air conditioners, 5,000 to 8,000 BTU",
+          "last_carried": "2025",
+          "evidence": "competitor opened a 11,000 sq ft format within 4 miles in Q4"
+        },
+        {
+          "catalog_code": "ELC-284.18",
+          "description": "Mobile accessories, stylus and input",
+          "last_carried": "2024",
+          "evidence": "30% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "APR-192.13",
+          "description": "Women's ready-to-wear bottoms, jeans, wide leg",
+          "last_carried": "never",
+          "evidence": "returns rate 29% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "HBA-100.12",
+          "description": "Facial skincare, toners and essences",
+          "last_carried": "never",
+          "evidence": "25 unfulfilled special orders logged by store colleagues this season"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4022",
+      "store_name": "Hollowbrook",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "loyalty",
+      "opened": 1999,
+      "buyer": "D. Brennan",
+      "last_review": "2026-04-20",
+      "carried_categories_2026": [
+        "APP-123.12",
+        "APP-192.18",
+        "APP-261.19",
+        "APR-100.14",
+        "APR-100.19",
+        "APR-146.19",
+        "ELC-100.17",
+        "HBA-100.12",
+        "HBA-123.11",
+        "HDW-238.13",
+        "HDW-261.15",
+        "HOM-100.11",
+        "HOM-123.11",
+        "OUT-238.13",
+        "SEA-100.13",
+        "SPT-100.17",
+        "SPT-123.18",
+        "SPT-261.18"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "ELC-238.17",
+          "description": "Laptops and desktops, mini PCs",
+          "last_carried": "never",
+          "evidence": "category search volume up 13% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "HOM-261.13",
+          "description": "Rugs and floor coverings, area rugs, over 8 by 10",
+          "last_carried": "2024",
+          "evidence": "29 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "HBA-261.14",
+          "description": "Cosmetics, blush and bronzer",
+          "last_carried": "2025",
+          "evidence": "category search volume up 19% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "HDW-192.12",
+          "description": "Paint and decorating, emulsion, exterior",
+          "last_carried": "2025",
+          "evidence": "14 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "ELC-100.19",
+          "description": "Internal solid state drives, mounting hardware",
+          "last_carried": "2024",
+          "evidence": "returns rate 25% below chain average, suggesting unmet demand rather than fit issues"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4023",
+      "store_name": "Stanwick",
+      "channel": "omni",
+      "store_format": "compact",
+      "segment": "standard",
+      "opened": 1999,
+      "buyer": "S. Keane",
+      "last_review": "2026-08-13",
+      "carried_categories_2026": [
+        "APP-146.12",
+        "APP-261.13",
+        "APR-123.19",
+        "APR-215.17",
+        "ELC-146.19",
+        "ELC-284.18",
+        "HBA-146.17",
+        "HDW-100.15",
+        "HOM-123.18",
+        "HOM-192.19",
+        "OUT-100.17",
+        "OUT-123.19",
+        "OUT-238.19",
+        "OUT-307.16",
+        "SEA-100.18",
+        "SEA-169.15",
+        "SEA-261.15",
+        "SPT-261.12"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "HOM-100.17",
+          "description": "Seating and upholstery, dining chairs",
+          "last_carried": "2024",
+          "evidence": "20 unfulfilled special orders logged by store colleagues this season"
+        },
+        {
+          "catalog_code": "HBA-169.18",
+          "description": "Hair styling appliances, shavers",
+          "last_carried": "2024",
+          "evidence": "competitor opened a 32,000 sq ft format within 4 miles in Q3"
+        },
+        {
+          "catalog_code": "HOM-215.13",
+          "description": "Lighting, pendant lighting",
+          "last_carried": "never",
+          "evidence": "category search volume up 33% year on year with no local fulfilment"
+        },
+        {
+          "catalog_code": "APP-307.13",
+          "description": "Vacuums and floor care, stick/cordless",
+          "last_carried": "never",
+          "evidence": "returns rate 24% below chain average, suggesting unmet demand rather than fit issues"
+        },
+        {
+          "catalog_code": "SPT-100.15",
+          "description": "Cardio equipment, rowing machines",
+          "last_carried": "2024",
+          "evidence": "category search volume up 14% year on year with no local fulfilment"
+        }
+      ]
+    },
+    {
+      "store_id": "ST-4024",
+      "store_name": "Larchmont",
+      "channel": "in_store",
+      "store_format": "standard",
+      "segment": "standard",
+      "opened": 2016,
+      "buyer": "L. Osei",
+      "last_review": "2026-02-13",
+      "carried_categories_2026": [
+        "APR-123.12",
+        "APR-146.18",
+        "APR-307.17",
+        "ELC-146.17",
+        "ELC-169.11",
+        "ELC-215.15",
+        "ELC-261.11",
+        "ELC-307.14",
+        "GRO-215.11",
+        "HBA-123.13",
+        "HBA-146.11",
+        "OUT-215.13",
+        "OUT-215.19",
+        "OUT-261.15",
+        "OUT-307.15",
+        "SEA-146.16",
+        "SEA-192.18",
+        "SPT-284.11"
+      ],
+      "suspected_gaps": [
+        {
+          "catalog_code": "OUT-307.12",
+          "description": "Technical outerwear, softshell jackets",
+          "last_carried": "never",
+          "evidence": "competitor opened a 27,000 sq ft format within 4 miles in Q1"
+        },
+        {
+          "catalog_code": "ELC-215.13",
+          "description": "Headphones and earbuds, over-ear, wired",
+          "last_carried": "never",
+          "evidence": "competitor opened a 29,000 sq ft format within 4 miles in Q4"
+        },
+        {
+          "catalog_code": "ELC-169.19",
+          "description": "Computer monitors, stands and arms",
+          "last_carried": "never",
+          "evidence": "14% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "HOM-169.15",
+          "description": "Bedding, pillows, down",
+          "last_carried": "2024",
+          "evidence": "18% of basket-level demand met by click-and-collect from a sister store"
+        },
+        {
+          "catalog_code": "OUT-238.17",
+          "description": "Paddle sports, personal flotation devices",
+          "last_carried": "2024",
+          "evidence": "category search volume up 29% year on year with no local fulfilment"
+        }
+      ]
+    }
+  ]
+}

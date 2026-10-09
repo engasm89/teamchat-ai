@@ -1,0 +1,31 @@
+{
+  "source": "original unmodified employer ZIP",
+  "verified_on": "2026-10-09",
+  "files": [
+    {
+      "name": "product_codes.csv",
+      "sha256": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+      "bytes": 130749
+    },
+    {
+      "name": "promo_coefficients.csv",
+      "sha256": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+      "bytes": 1989
+    },
+    {
+      "name": "segment_coefficients.csv",
+      "sha256": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+      "bytes": 415
+    },
+    {
+      "name": "stores.json",
+      "sha256": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+      "bytes": 49138
+    },
+    {
+      "name": "team_memory_seed.json",
+      "sha256": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1",
+      "bytes": 3433
+    }
+  ]
+}

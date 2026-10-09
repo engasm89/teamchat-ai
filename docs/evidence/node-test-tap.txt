@@ -1,0 +1,194 @@
+
+> teamchat-ai-assessment@0.1.0 test
+> node --experimental-strip-types --test tests/*.test.ts
+
+TAP version 13
+# (node:2290) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: CSV parser handles quoted comma and embedded newline
+ok 1 - CSV parser handles quoted comma and embedded newline
+  ---
+  duration_ms: 1.693841
+  type: 'test'
+  ...
+# Subtest: all five unchanged fixtures are parsed and integrity-checked
+ok 2 - all five unchanged fixtures are parsed and integrity-checked
+  ---
+  duration_ms: 0.27342
+  type: 'test'
+  ...
+# (node:2291) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: transaction sets local verified tenant and always releases client
+ok 3 - transaction sets local verified tenant and always releases client
+  ---
+  duration_ms: 1.928905
+  type: 'test'
+  ...
+# Subtest: transaction rolls back and releases on error
+ok 4 - transaction rolls back and releases on error
+  ---
+  duration_ms: 0.663272
+  type: 'test'
+  ...
+# Subtest: foreign-room request fails before querying event history
+ok 5 - foreign-room request fails before querying event history
+  ---
+  duration_ms: 0.481035
+  type: 'test'
+  ...
+# Subtest: durable send uses authorization, dedupe, room lock, durable insert then commit
+ok 6 - durable send uses authorization, dedupe, room lock, durable insert then commit
+  ---
+  duration_ms: 0.947859
+  type: 'test'
+  ...
+# Subtest: retries same clientMessageId do not allocate new sequence
+ok 7 - retries same clientMessageId do not allocate new sequence
+  ---
+  duration_ms: 0.308141
+  type: 'test'
+  ...
+# (node:2292) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: ST-4003 fixture score and duplicate margin class
+ok 8 - ST-4003 fixture score and duplicate margin class
+  ---
+  duration_ms: 2.690902
+  type: 'test'
+  ...
+# Subtest: ST-4007 uplift, transitive supersession and duplicate class
+ok 9 - ST-4007 uplift, transitive supersession and duplicate class
+  ---
+  duration_ms: 0.395689
+  type: 'test'
+  ...
+# Subtest: no invented baseline or percentage
+ok 10 - no invented baseline or percentage
+  ---
+  duration_ms: 0.371925
+  type: 'test'
+  ...
+# Subtest: cycle rejected, valid diamond accepted
+ok 11 - cycle rejected, valid diamond accepted
+  ---
+  duration_ms: 1.174
+  type: 'test'
+  ...
+# Subtest: full precision decimals
+ok 12 - full precision decimals
+  ---
+  duration_ms: 0.214544
+  type: 'test'
+  ...
+# (node:2323) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: migration defines transaction-local fail-closed forced RLS on all tenant tables
+ok 13 - migration defines transaction-local fail-closed forced RLS on all tenant tables
+  ---
+  duration_ms: 1.113421
+  type: 'test'
+  ...
+# Subtest: room notification is opaque and has no business text
+ok 14 - room notification is opaque and has no business text
+  ---
+  duration_ms: 0.22481
+  type: 'test'
+  ...
+# Subtest: SQL seed has both isolated tenant partitions and no raw secret env
+ok 15 - SQL seed has both isolated tenant partitions and no raw secret env
+  ---
+  duration_ms: 1.773138
+  type: 'test'
+  ...
+# (node:2324) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: forged/unresolved tenant contexts fail closed
+ok 16 - forged/unresolved tenant contexts fail closed
+  ---
+  duration_ms: 0.850005
+  type: 'test'
+  ...
+# Subtest: foreign store ID indistinguishable from unknown ID
+ok 17 - foreign store ID indistinguishable from unknown ID
+  ---
+  duration_ms: 0.28709
+  type: 'test'
+  ...
+# Subtest: shared key is isolated to each tenant
+ok 18 - shared key is isolated to each tenant
+  ---
+  duration_ms: 0.429119
+  type: 'test'
+  ...
+# Subtest: nested or oversized memory is refused without mutation
+ok 19 - nested or oversized memory is refused without mutation
+  ---
+  duration_ms: 0.656311
+  type: 'test'
+  ...
+# Subtest: valid tenant-shared memory provenance comes from server ctx
+ok 20 - valid tenant-shared memory provenance comes from server ctx
+  ---
+  duration_ms: 0.388569
+  type: 'test'
+  ...
+# Subtest: turn source ledger refuses hallucinated IDs and fields
+ok 21 - turn source ledger refuses hallucinated IDs and fields
+  ---
+  duration_ms: 0.400456
+  type: 'test'
+  ...
+# Subtest: event replay preserves order, dedupes, and isolates tenants
+ok 22 - event replay preserves order, dedupes, and isolates tenants
+  ---
+  duration_ms: 0.314701
+  type: 'test'
+  ...
+# (node:2325) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Gemini tools declare no tenant override
+ok 23 - Gemini tools declare no tenant override
+  ---
+  duration_ms: 0.821433
+  type: 'test'
+  ...
+# Subtest: catalog lookups return validated source references
+ok 24 - catalog lookups return validated source references
+  ---
+  duration_ms: 0.753103
+  type: 'test'
+  ...
+# Subtest: model cannot override tenant via tool args
+ok 25 - model cannot override tenant via tool args
+  ---
+  duration_ms: 0.64841
+  type: 'test'
+  ...
+# Subtest: foreign store is same as unknown and prompt cannot elevate
+ok 26 - foreign store is same as unknown and prompt cannot elevate
+  ---
+  duration_ms: 0.171691
+  type: 'test'
+  ...
+# Subtest: calculate_uplift tool returns dimensionless data and source ledger
+ok 27 - calculate_uplift tool returns dimensionless data and source ledger
+  ---
+  duration_ms: 1.217874
+  type: 'test'
+  ...
+# Subtest: memory mutation is denied without explicit user consent
+ok 28 - memory mutation is denied without explicit user consent
+  ---
+  duration_ms: 0.181606
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 341.92459

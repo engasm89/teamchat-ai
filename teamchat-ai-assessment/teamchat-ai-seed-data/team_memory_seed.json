@@ -1,0 +1,113 @@
+{
+  "northside-outfitters": [
+    {
+      "memory_id": "mem-n-001",
+      "key": "cooling_accessory_bundling_policy",
+      "value": {
+        "decision": "cooling units are ranged with energy accessories as a single planogram block",
+        "rationale": "attachment rate rose from 11% to 29% in the 2025 pilot",
+        "agreed_by": "Sarah Keane and the merchandising director",
+        "applies_from": "2026-03-14",
+        "review": "annually before season set"
+      },
+      "created_by": "Sarah Keane",
+      "created_at": "2026-03-14T10:22:00Z",
+      "room": "category-strategy"
+    },
+    {
+      "memory_id": "mem-n-002",
+      "key": "q1_assortment_target",
+      "value": {
+        "target_pct": 92,
+        "current_pct": 78,
+        "due": "2026-06-30",
+        "owner": "merchandising director",
+        "measure": "classed lines carried per store"
+      },
+      "created_by": "M. Varga",
+      "created_at": "2026-01-09T14:05:00Z",
+      "room": "assortment-review"
+    },
+    {
+      "memory_id": "mem-n-003",
+      "key": "unspecified_line_rule",
+      "value": {
+        "rule": "an unspecified line may not be used as a permanent range entry beyond one season",
+        "reason": "it carries no margin class and hides the gap from reporting",
+        "agreed_by": "buying team",
+        "effective": "2025-11-02"
+      },
+      "created_by": "L. Osei",
+      "created_at": "2025-11-02T09:40:00Z",
+      "room": "assortment-review"
+    },
+    {
+      "memory_id": "mem-n-004",
+      "key": "supplier_lead_time_assumption",
+      "value": {
+        "standard_weeks": 9,
+        "seasonal_weeks": 14,
+        "note": "seasonal commitments close two weeks earlier than the calendar suggests",
+        "source": "2025 season post-mortem"
+      },
+      "created_by": "D. Brennan",
+      "created_at": "2026-02-18T16:12:00Z",
+      "room": "supply-planning"
+    }
+  ],
+  "valley-home-goods": [
+    {
+      "memory_id": "mem-v-001",
+      "key": "q1_assortment_target",
+      "value": {
+        "target_pct": 85,
+        "current_pct": 81,
+        "due": "2026-05-31",
+        "owner": "head of buying",
+        "measure": "classed lines carried per store"
+      },
+      "created_by": "T. Alsop",
+      "created_at": "2026-01-11T11:30:00Z",
+      "room": "range-planning"
+    },
+    {
+      "memory_id": "mem-v-002",
+      "key": "compact_format_range_cap",
+      "value": {
+        "max_lines": 420,
+        "exception": "seasonal blocks may exceed by 10% for eight weeks",
+        "agreed_by": "format council",
+        "effective": "2025-09-01"
+      },
+      "created_by": "P. Novak",
+      "created_at": "2025-09-01T08:15:00Z",
+      "room": "range-planning"
+    },
+    {
+      "memory_id": "mem-v-003",
+      "key": "markdown_cadence",
+      "value": {
+        "first_markdown_week": 6,
+        "second_markdown_week": 10,
+        "clearance_week": 13,
+        "note": "seasonal only; core lines are never marked down on cadence"
+      },
+      "created_by": "T. Alsop",
+      "created_at": "2025-12-03T13:45:00Z",
+      "room": "pricing"
+    },
+    {
+      "memory_id": "mem-v-004",
+      "key": "own_brand_share_goal",
+      "value": {
+        "goal_pct": 34,
+        "current_pct": 27,
+        "horizon": "2027",
+        "constraint": "not at the expense of classed-line coverage"
+      },
+      "created_by": "head of buying",
+      "created_at": "2026-02-02T10:00:00Z",
+      "room": "strategy"
+    }
+  ]
+}

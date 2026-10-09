@@ -1,0 +1,13 @@
+channel,store_format,segment,coefficient
+in_store,flagship,loyalty,0.284
+in_store,flagship,standard,0.233
+in_store,standard,loyalty,0.196
+in_store,standard,standard,0.161
+in_store,compact,loyalty,0.131
+in_store,compact,standard,0.107
+omni,flagship,loyalty,0.335
+omni,flagship,standard,0.275
+omni,standard,loyalty,0.231
+omni,standard,standard,0.19
+omni,compact,loyalty,0.155
+omni,compact,standard,0.127

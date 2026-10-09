@@ -1,0 +1,45 @@
+margin_class,label,coefficient_loyalty,coefficient_standard,supersedes
+301,"Major Appliances, Premium Efficiency",0.412,0.338,302
+302,"Major Appliances, Standard",0.246,0.201,
+310,Small Appliances and Floor Care,0.187,0.154,
+318,"Climate Control, High Efficiency",0.504,0.421,319;321
+319,"Climate Control, Standard",0.298,0.247,321
+320,Air Treatment and Filtration,0.263,0.219,
+321,"Air Movement, Basic",0.112,0.094,
+410,"Storage Media, Solid State",0.356,0.291,411
+411,"Storage Media, Mechanical",0.148,0.122,
+412,Large Format Display,0.433,0.357,413
+413,Personal Display,0.221,0.182,
+414,"Audio, Home Systems",0.274,0.228,415
+415,"Audio, Personal",0.196,0.163,
+416,Computing Hardware,0.467,0.389,
+417,Network Infrastructure,0.239,0.198,
+419,Connected Home,0.312,0.259,
+505,"Camping Systems, Technical",0.388,0.321,506
+506,"Camping Systems, Recreational",0.207,0.171,
+509,Angling,0.233,0.193,
+510,"Cycling, Complete Bicycles",0.491,0.406,513
+511,Paddle Craft,0.364,0.301,
+512,Vertical and Safety Equipment,0.342,0.283,
+513,Field Electronics and Accessories,0.178,0.147,
+514,Technical Outerwear,0.401,0.332,803
+601,Upholstered Furniture,0.456,0.378,602
+602,Case Goods and Tables,0.287,0.238,
+604,Bedding Textiles,0.219,0.181,
+605,Sleep Systems,0.478,0.396,604
+606,Lighting and Fixtures,0.254,0.211,
+608,Floor Coverings,0.231,0.192,
+701,"Skincare, Treatment",0.387,0.319,702
+702,Personal Wash and Body,0.163,0.135,
+704,Personal Care Devices,0.421,0.348,706
+706,Health Monitoring Devices,0.298,0.246,
+707,Fragrance and Cosmetics,0.372,0.308,
+801,"Ready-to-Wear, Core",0.244,0.202,
+803,"Outerwear, Fashion",0.316,0.262,
+807,Footwear,0.351,0.291,
+901,"Power Tools, Cordless Platform",0.462,0.383,903
+903,Hand Tools and Consumable Trade,0.172,0.143,
+906,Electrical and Building Trade,0.268,0.222,
+1001,"Fitness, Powered Equipment",0.483,0.401,1003
+1003,"Fitness, Accessories and Free Weights",0.209,0.174,
+1101,Garden Powered Equipment,0.447,0.371,

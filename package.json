@@ -1,0 +1,20 @@
+{
+  "name": "teamchat-ai-assessment",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.10"
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "check": "tsc --noEmit",
+    "verify:fixtures": "node --experimental-strip-types scripts/verify-fixtures.ts",
+    "seed:sql": "node --experimental-strip-types scripts/generate-seed-sql.ts"
+  },
+  "description": "Phase 2 assessed implementation, source data and security foundation; deployment integrations pending",
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "typescript": "^5.9.0"
+  }
+}
