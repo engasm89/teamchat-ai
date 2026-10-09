@@ -1,0 +1,5 @@
+apps/web/src/App.tsx SOURCE SYNTAX PASS (NOT a Vite build)
+apps/web/src/main.tsx SOURCE SYNTAX PASS (NOT a Vite build)
+apps/web/src/socket.ts SOURCE SYNTAX PASS (NOT a Vite build)
+apps/web/src/verified.ts SOURCE SYNTAX PASS (NOT a Vite build)
+files parsed 4

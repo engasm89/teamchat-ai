@@ -1,19 +1,19 @@
 import {assertContext, NO_MATCH, type TenantContext} from "../tenant.ts";
 /** Driver-independent interface implemented by pg Pool and pg PoolClient when dependencies are available. */
 export interface QueryResult<T=Record<string,unknown>>{rows:T[];rowCount:number|null;}
-export interface SqlClient {query<T=Record<string,unknown>>(sql:string,args?:unknown[]):Promise<QueryResult<T>>;release():void;}
+export interface SqlClient {query<T=Record<string,unknown>>(sql:string,args?:unknown[]):Promise<QueryResult<T>>;release(error?:Error):void;}
 export interface SqlPool {connect():Promise<SqlClient>;}
 
 export async function inTenantTransaction<T>(pool:SqlPool,ctx:TenantContext,fn:(client:SqlClient)=>Promise<T>):Promise<T>{
- assertContext(ctx);const client=await pool.connect();let open=false;
+ assertContext(ctx);const client=await pool.connect();let open=false;let broken:Error|undefined;
  try{
   await client.query("BEGIN");open=true;
   // `true` means transaction local; pooled connections must never retain tenant after COMMIT.
   await client.query("SELECT set_config('app.tenant_id', $1, true)",[ctx.tenantId]);
   const value=await fn(client);
   await client.query("COMMIT");open=false;return value;
- }catch(err){if(open)try{await client.query("ROLLBACK");}catch{}throw err;}
- finally{client.release();}
+ }catch(err){if(open)try{await client.query("ROLLBACK");}catch(rollbackError){broken=rollbackError instanceof Error?rollbackError:Error("Transaction rollback failed");}throw err;}
+ finally{client.release(broken);}
 }
 export interface DurableMessage {roomId:string;messageId:string;sequence:number;authorUid:string;body:string;duplicate:boolean; aiTurnId?:string;}
 export interface PersistedEvent {room_id:string;sequence:number;event_id:string;type:string;payload:Record<string,unknown>;created_at:string;}

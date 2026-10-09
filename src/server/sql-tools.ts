@@ -1,4 +1,4 @@
-import {rankCatalog} from "../catalog-search.ts";
+import {rankCatalog,normalizeCatalogCode,normalizeStoreId} from "../catalog-search.ts";
 import {inTenantTransaction,type SqlPool,type SqlClient} from "../persistence/postgres.ts";
 import {NO_MATCH,type TenantContext} from "../tenant.ts";
 import {validateMemoryValue} from "../memory.ts";
@@ -14,7 +14,6 @@ function argsOf(value:unknown,allowed:string[]):Rec{
  return value as Rec;
 }
 function str(value:unknown,key:string){if(typeof value!=="string"||!value.trim()||value.length>256)throw Error(`Invalid ${key}`);return value;}
-const codePattern=/^[A-Z]{3}-\d{3}\.\d{2}$/;
 async function requireMembership(c:SqlClient,ctx:TenantContext,room:string){
  const x=await c.query("SELECT 1 FROM teamchat.room_memberships r JOIN teamchat.user_memberships m USING(tenant_id,firebase_uid) WHERE r.tenant_id=$1 AND r.room_id=$2 AND r.firebase_uid=$3 AND m.active=true",[ctx.tenantId,room,ctx.uid]);
  if(x.rows.length!==1)throw Error("Unauthorized");
@@ -84,18 +83,18 @@ export class SqlToolExecutor{
      return rankCatalog(r.rows,query,limit).map(p=>({ref:ledger.add("catalog",String(p.catalog_code),{...p}),...p}));
     }
     case "get_catalog_code":{
-     const a=argsOf(raw,["catalog_code"]);const code=str(a.catalog_code,"catalog_code");const p=await catalogCode(c,ctx,code);
+     const a=argsOf(raw,["catalog_code"]);const code=normalizeCatalogCode(str(a.catalog_code,"catalog_code"));if(!code)return NO_MATCH;const p=await catalogCode(c,ctx,code);
      return p?{ref:ledger.add("catalog",code,p),product:p}:NO_MATCH;
     }
     case "get_store_assortment":{
-     const a=argsOf(raw,["store_id"]);const id=str(a.store_id,"store_id");const store=await getStore(c,ctx,id);
+     const a=argsOf(raw,["store_id"]);const id=normalizeStoreId(str(a.store_id,"store_id"));if(!id)return NO_MATCH;const store=await getStore(c,ctx,id);
      return store?{ref:ledger.add("store",id,store),store}:NO_MATCH;
     }
     case "calculate_uplift":{
-     const a=argsOf(raw,["store_id","add_codes","monetary_baseline"]);const id=str(a.store_id,"store_id");const store=await getStore(c,ctx,id);
+     const a=argsOf(raw,["store_id","add_codes","monetary_baseline"]);const id=normalizeStoreId(str(a.store_id,"store_id"));if(!id)return NO_MATCH;const store=await getStore(c,ctx,id);
      if(!store)return NO_MATCH;
-     if(!Array.isArray(a.add_codes)||a.add_codes.length>30||a.add_codes.some(code=>typeof code!=="string"||!codePattern.test(code)))throw Error("Invalid add_codes");
-     const add=a.add_codes as string[];
+     if(!Array.isArray(a.add_codes)||a.add_codes.length>30||a.add_codes.some(code=>typeof code!=="string"||!normalizeCatalogCode(code)))throw Error("Invalid add_codes");
+     const add=(a.add_codes as string[]).map(code=>normalizeCatalogCode(code)!);
      for(const code of add){const p=await catalogCode(c,ctx,code);if(!p)return NO_MATCH;ledger.add("catalog",code,p);}
      const before=await storeScore(c,ctx,store,store.carried_categories_2026 as string[]);
      const after=await storeScore(c,ctx,store,[...(store.carried_categories_2026 as string[]),...add]);
@@ -106,11 +105,16 @@ export class SqlToolExecutor{
      const a=argsOf(raw,["query"]);const query=str(a.query,"query");
      // Exact tenant RLS scope first, then semantic cosine distance. Weak matches
      // return no record rather than a confidently phrased invented memory.
-     const r=await c.query<{memory_id:string;key:string;value:Rec;created_by:string;created_at:string;source_room_id:string;distance:number}>(
-      `SELECT memory_id,key,value,created_by,created_at::text,source_room_id,
-       (embedding <=> $2::vector)::float8 AS distance
-       FROM teamchat.memories WHERE tenant_id=$1 AND embedding IS NOT NULL
-       AND embedding_model=$3 ORDER BY embedding <=> $2::vector LIMIT 5`,
+     const r=await c.query<{memory_id:string;key:string;value:Rec;created_by:string;author_name:string;created_at:string;source_room_id:string;distance:number}>(
+      `SELECT mem.memory_id,mem.key,mem.value,mem.created_by,
+       COALESCE(actor.display_name,mem.created_by) AS author_name,
+       mem.created_at::text,mem.source_room_id,
+       (mem.embedding <=> $2::vector)::float8 AS distance
+       FROM teamchat.memories mem
+       LEFT JOIN teamchat.user_memberships actor
+         ON actor.tenant_id=mem.tenant_id AND actor.firebase_uid=mem.created_by
+       WHERE mem.tenant_id=$1 AND mem.embedding IS NOT NULL
+       AND mem.embedding_model=$3 ORDER BY mem.embedding <=> $2::vector LIMIT 5`,
       [ctx.tenantId,queryVector!,this.embeddings!.modelId]);
      return r.rows.filter(m=>m.distance<=0.45).map(m=>({ref:ledger.add("memory",String(m.memory_id),m),memory:m}));
     }

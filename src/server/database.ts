@@ -1,4 +1,4 @@
-import type {SqlPool,SqlClient,QueryResult} from "../persistence/postgres.ts";
+import {inTenantTransaction,type SqlPool, type SqlClient} from "../persistence/postgres.ts";
 import {resolvedContext,type TenantContext} from "../tenant.ts";
 
 /** Adapter for a real `pg` Pool. Import is lazy to permit offline contract tests. */
@@ -34,21 +34,18 @@ export async function assertRuntimeDbRole(pool:SqlPool):Promise<void>{
  * Database role may execute this function, but may not SELECT from the auth directory. */
 export async function resolveVerifiedIdentity(pool:SqlPool,uid:string):Promise<TenantContext> {
  if(typeof uid!=="string"||!uid||uid.length>200)throw new Error("Unauthorized");
- const client=await pool.connect();
- try {
+ const client=await pool.connect();let tenant:string|undefined;
+ try{
   const result=await client.query<{tenant_id:string}>("SELECT teamchat.resolve_tenant_for_uid($1) AS tenant_id",[uid]);
-  const tenant=result.rows[0]?.tenant_id;
-  if(!tenant)throw new Error("Unauthorized");
-  // Membership MUST remain active, checked inside tenant-local RLS scope.
-  await client.query("BEGIN");
-  try{
-   await client.query("SELECT set_config('app.tenant_id',$1,true)",[tenant]);
-   const member=await client.query("SELECT 1 FROM teamchat.user_memberships WHERE tenant_id=$1 AND firebase_uid=$2 AND active=true",[tenant,uid]);
-   if(member.rows.length!==1)throw new Error("Unauthorized");
-   await client.query("COMMIT");
-  }catch(e){await client.query("ROLLBACK");throw e;}
-  return resolvedContext(uid,tenant);
+  tenant=result.rows[0]?.tenant_id;
  }finally{client.release();}
+ if(!tenant)throw Error("Unauthorized");
+ const ctx=resolvedContext(uid,tenant);
+ await inTenantTransaction(pool,ctx,async scoped=>{
+  const member=await scoped.query("SELECT 1 FROM teamchat.user_memberships WHERE tenant_id=$1 AND firebase_uid=$2 AND active=true",[tenant,uid]);
+  if(member.rows.length!==1)throw Error("Unauthorized");
+ });
+ return ctx;
 }
 export interface FirebaseIdentityVerifier {verify(token:string):Promise<string>}
 export function firebaseProjectId(value=process.env.FIREBASE_PROJECT_ID):string{

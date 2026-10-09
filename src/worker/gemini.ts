@@ -4,6 +4,7 @@ import {resolvedContext,type TenantContext} from "../tenant.ts";
 import {SourceLedger} from "../grounding.ts";
 import {TOOL_DECLARATIONS,type ToolName} from "../tools.ts";
 import {SqlToolExecutor} from "../server/sql-tools.ts";
+import {verifiedToolBlock} from "./verified-block.ts";
 import {resolveJob,claimJob,persistAnswer,persistTool,getPersistedTool,finishJob,failExhaustedJob,renewJobLease,requeueJob} from "../server/ai-jobs.ts";
 import {inTenantTransaction,type SqlPool} from "../persistence/postgres.ts";
 
@@ -101,7 +102,7 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
     if(!saved)await persistTool(pool,ctx,room,turnId,fence,operationId,name,args,result);
     // Values are structured outputs of authorized DB tools, not model-written claims.
     if(blocks>=20)throw Error("Answer block budget exceeded");
-    await persistAnswer(pool,ctx,room,turnId,fence,blocks++,{template:name,result,source:"verified_database_tool"});
+    await persistAnswer(pool,ctx,room,turnId,fence,blocks++,verifiedToolBlock(name,result));
     // Gemini may assign IDs to parallel function calls. Pair each response
     // with the corresponding call rather than relying on name/order alone.
     answerParts.push({functionResponse:{name,...(typeof call.id==="string"?{id:call.id}:{}),response:{data:result}}});

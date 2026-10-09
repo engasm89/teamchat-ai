@@ -35,7 +35,7 @@ test("semantic search is tenant-scoped, uses model-specific vectors, and suppres
  const vectorCall=calls.find(x=>x.sql.includes("embedding <=>"))!;
  assert.equal(vectorCall.args[0],ctx.tenantId);
  assert.equal(vectorCall.args[2],"mock-768");
- assert.ok(vectorCall.sql.includes("WHERE tenant_id=$1"));
+ assert.ok(vectorCall.sql.includes("WHERE mem.tenant_id=$1"));
  assert.ok(calls.some(x=>x.sql.includes("set_config('app.tenant_id'")));
 });
 test("memory saves require consent before embedding/model invocation",async()=>{

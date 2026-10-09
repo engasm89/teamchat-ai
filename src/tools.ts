@@ -3,6 +3,7 @@ import {rankMemoriesInTenant} from "./memory.ts";
 import {assertContext, NO_MATCH, type TenantContext} from "./tenant.ts";
 import {FixtureRepository} from "./repository.ts";
 import {SourceLedger} from "./grounding.ts";
+import {normalizeCatalogCode} from "./catalog-search.ts";
 import type {FixtureSet} from "./types.ts";
 
 /** Provider-independent tool schema. Only Gemini should select which tools to call. */
@@ -27,8 +28,8 @@ function stringArg(v:unknown,key:string):string {
   return v;
 }
 function codeList(v:unknown):string[] {
-  if(!Array.isArray(v)||v.length>30||v.some(x=>typeof x!=="string"||!/^[A-Z]{3}-\d{3}\.\d{2}$/.test(x)))throw new Error("Invalid add_codes");
-  return v as string[];
+  if(!Array.isArray(v)||v.length>30||v.some(x=>typeof x!=="string"||!normalizeCatalogCode(x)))throw new Error("Invalid add_codes");
+  return (v as string[]).map(x=>normalizeCatalogCode(x)!);
 }
 export class LocalToolExecutor {
   private readonly repo:FixtureRepository;
@@ -56,7 +57,7 @@ export class LocalToolExecutor {
         const store=this.repo.getStore(ctx,storeId);if(!("store_id" in store))return NO_MATCH;
         const additions=codeList(a.add_codes);
         // No dynamic references outside supplied catalog; no fabricated product IDs.
-        for(const code of additions){const p=this.repo.getProduct(ctx,code);if(!("catalog_code" in p))return NO_MATCH;ledger.add("catalog",code,p);}
+        for(const code of additions){const p=this.repo.getProduct(ctx,code);if(!("catalog_code" in p))return NO_MATCH;ledger.add("catalog",p.catalog_code,p);}
         const before=scoreStore(this.fixtures,ctx.tenantId,storeId)!,after=scoreStore(this.fixtures,ctx.tenantId,storeId,additions)!;
         const baseline=a.monetary_baseline===undefined?undefined:stringArg(a.monetary_baseline,"monetary_baseline");
         const result=compareScores(before,after,baseline);

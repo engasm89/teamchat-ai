@@ -25,3 +25,27 @@ test("disconnect during lease INSERT does not resurrect a socket subscription",a
  assert.equal((hub as any).byOpaque.size,0);
  assert.ok(commands.some(x=>x.includes("DELETE FROM teamchat.presence_leases")));
 });
+
+test("simultaneous subscribe then unsubscribe respects arrival order despite slow PostgreSQL",async()=>{
+ let notifyInsert!:()=>void,finishInsert!:()=>void;
+ const insertStarted=new Promise<void>(r=>notifyInsert=r);
+ const inserted=new Promise<void>(r=>finishInsert=r);
+ const queries:string[]=[];
+ const client:SqlClient={release(){},async query<T=Record<string,unknown>>(sql:string):Promise<QueryResult<T>>{
+  queries.push(sql);
+  if(sql.includes("SELECT r.notify_token"))return {rows:[{notify_token:"opaque-room"}] as T[],rowCount:1};
+  if(sql.includes("JOIN teamchat.user_memberships"))return {rows:[{ok:1}] as T[],rowCount:1};
+  if(sql.includes("INSERT INTO teamchat.presence_leases")){notifyInsert();await inserted;}
+  return {rows:[],rowCount:0};
+ }};
+ const hub=new RoomHub({connect:async()=>client});
+ const sock:any={readyState:1,bufferedAmount:0,send(){},close(){this.readyState=3;}};
+ const ctx=resolvedContext("signed-user","northside-outfitters");
+ const first=hub.subscribe(sock,ctx,"assortment-review",0);
+ await insertStarted;
+ const second=hub.unsubscribe(sock,"assortment-review");
+ finishInsert();await Promise.all([first,second]);
+ assert.equal((hub as any).byOpaque.size,0);
+ assert.ok(queries.some(sql=>sql.includes("DELETE FROM teamchat.presence_leases")));
+ hub.remove(sock);
+});

@@ -7,7 +7,7 @@ import type {PersistedEvent} from "../persistence/postgres.ts";
 import {dispatchJob,validateDispatchConfig} from "./task-dispatch.ts";
 
 interface Socket {readyState:number;bufferedAmount:number;send(data:string):void;close(code?:number,reason?:string):void;ping():void;on(name:string,callback:(...args:any[])=>void):void;}
-interface Subscription {roomId:string;token:string;ctx:TenantContext;socket:Socket;cursor:number;busy:boolean;pending:boolean;}
+interface Subscription {roomId:string;token:string;ctx:TenantContext;socket:Socket;cursor:number;busy:boolean;pending:boolean;lastPresenceKey?:string;}
 const send=(socket:Socket,frame:Record<string,unknown>)=>{
  if(socket.readyState!==1)return;
  if(socket.bufferedAmount>512_000){socket.close(1013,"Slow client");return;}
@@ -21,6 +21,17 @@ export class RoomHub {
  private byOpaque=new Map<string,Set<Subscription>>();
  private connectionIds=new WeakMap<Socket,string>();
  private closedSockets=new WeakSet<Socket>();
+ private roomOperations=new WeakMap<Socket,Map<string,Promise<void>>>();
+ /** Serialize subscribe/unsubscribe for a room. Client frames can overlap while
+  * waiting on PostgreSQL; arrival order must control the final subscription. */
+ private async roomOperation<T>(socket:Socket,roomId:string,run:()=>Promise<T>):Promise<T>{
+  let queue=this.roomOperations.get(socket);if(!queue){queue=new Map();this.roomOperations.set(socket,queue);}
+  const preceding=queue.get(roomId);
+  let release!:()=>void;const finished=new Promise<void>(resolve=>{release=resolve;});
+  queue.set(roomId,finished);
+  try{if(preceding)await preceding;return await run();}
+  finally{release();if(queue.get(roomId)===finished)queue.delete(roomId);}
+ }
  private readonly pool:SqlPool;
  constructor(pool:SqlPool){this.pool=pool;}
  private detach(sub:Subscription){
@@ -51,6 +62,10 @@ export class RoomHub {
  /** A room switch must stop presence renewals and fanout for the old room,
   * without closing the authenticated transport for the remaining rooms. */
  async unsubscribe(socket:Socket,roomId:string){
+  if(!id(roomId))throw Error("Invalid room");
+  return this.roomOperation(socket,roomId,()=>this.doUnsubscribe(socket,roomId));
+ }
+ private async doUnsubscribe(socket:Socket,roomId:string){
   const subs=this.subscriptions.get(socket);
   const sub=subs?.get(roomId);
   if(!sub)return;
@@ -64,6 +79,10 @@ export class RoomHub {
   });
  }
  async subscribe(socket:Socket,ctx:TenantContext,roomId:string,after:number){
+  if(!id(roomId)||!Number.isSafeInteger(after)||after<0)throw Error("Invalid subscription");
+  return this.roomOperation(socket,roomId,()=>this.doSubscribe(socket,ctx,roomId,after));
+ }
+ private async doSubscribe(socket:Socket,ctx:TenantContext,roomId:string,after:number){
   if(this.closedSockets.has(socket)||socket.readyState!==1)throw Error("Closed socket");
   if(!id(roomId)||!Number.isSafeInteger(after)||after<0)throw Error("Invalid subscription");
   const room=await inTenantTransaction(this.pool,ctx,async c=>{
@@ -123,7 +142,14 @@ export class RoomHub {
     WHERE l.tenant_id=$1 AND l.room_id=$2 AND l.expires_at>now() AND m.active=true
     GROUP BY l.firebase_uid`,[sub.ctx.tenantId,sub.roomId]);return r.rows;
   });
-  if(this.subscriptions.get(sub.socket)?.get(sub.roomId)===sub)send(sub.socket,{type:"presence",roomId:sub.roomId,users});
+  // Renewing DB leases every 20s must NOT emit identical application frames
+  // while clients are idle. The next heartbeat's notification still lets us
+  // detect a peer whose lease expired after an ungraceful crash.
+  const ordered=users.slice().sort((a,b)=>String(a.firebase_uid).localeCompare(String(b.firebase_uid)));
+  const key=ordered.map(u=>String(u.firebase_uid)).join("\u0000");
+  if(this.subscriptions.get(sub.socket)?.get(sub.roomId)===sub&&sub.lastPresenceKey!==key){
+   sub.lastPresenceKey=key;send(sub.socket,{type:"presence",roomId:sub.roomId,users:ordered});
+  }
  }
  async publishTyping(sub:Subscription){
   if(!await this.hasAccess(sub)){sub.socket.close(1008,"Membership revoked");return;}
