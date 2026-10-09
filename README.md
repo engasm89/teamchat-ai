@@ -69,3 +69,10 @@ Expired-running jobs are recovered by Cloud Scheduler; duplicate sends do not re
 This source includes an additional native tool, `compare_assortment_options`, which compares two additions for the same authorized store and returns a server-calculated B-minus-A coefficient-score difference with source references. The Gemini worker gets the server-verified memory-save consent and room through trusted system context. The database still enforces consent and tenant access separately. Catalog/store output remains evidence-backed and dimensionless; the model can no longer supply an unverified monetary baseline. This is an intentional limitation relative to the optional monetary scenario described in the submitted brief. Store-gap output is readable, records actual fixture evidence and never promotes a suspected gap into confirmed seasonal demand.
 
 See `docs/REQUIREMENTS_TRACEABILITY_v7.md` and `docs/2026-10-09_SOURCE_AUDIT_v7.md`. The original Technical Brief remains unchanged. **Do not claim the Cloud Run deployment, npm production builds, PostgreSQL isolation gate, Firebase auth, Gemini behavior or end-to-end UI tests have passed until they are actually executed.**
+
+
+## October 9 pre-live review v9
+
+The source includes an important Cloud Tasks recovery fix: task-dispatch attempts are reserved and counted *before* making the remote API request. A failed Cloud Tasks API request no longer bypasses the retry budget, and an atomic reservation prevents concurrent API/scheduler dispatchers from creating overlapping tasks. See `tests/task-dispatch-recovery.test.ts` and `docs/REQUIREMENTS_TRACEABILITY_v9.md`.
+
+Pre-live checks: 93 offline tests passed, TypeScript passed, all five original datasets verified and seed generator still writes 2,753 inserts. **Do not deploy yet**: genuine npm lockfiles, a live PostgreSQL instance with forced RLS, Firebase, Vertex AI, Cloud Tasks, two-instance WebSocket and browser tests, GitHub remote and video are not yet complete. The strict packaging and live database gates intentionally fail without these prerequisites. No claim of end-to-end integration acceptance is made.
