@@ -88,7 +88,7 @@ Total criteria: 61; green 17; red 44.
 | A04 | Backend type-check passes under temporary external node types | Gmail/Technical Brief | tsconfig.json; src/**/*.ts | ✅ GREEN — documented/offline verified | npm ci and repeat in clean CI |
 | A05 | All five supplied fixture hashes unchanged | Gmail/Technical Brief | teamchat-ai-seed-data/* | ✅ GREEN — documented/offline verified | Do not mutate fixture data |
 | A06 | SQL seed generates 2,753 inserts | Gmail/Technical Brief | scripts/generate-seed-sql.ts; db/generated/seed.sql | ✅ GREEN — documented/offline verified | Run actual migrations + seed twice |
-| A07 | Genuine root/web npm package-locks and npm ci | Gmail/Technical Brief | package.json; apps/web/package.json | ❌ RED — not proven end-to-end | Generate genuine locks using registry, npm ci twice |
+| A07 | Genuine root/web npm package-locks and npm ci | Gmail/Technical Brief | package.json; apps/web/package.json | ✅ GREEN — documented/offline verified | Locks generated against registry, committed, verify:packaging passes |
 | A08 | Real PostgreSQL RLS + grants + forbidden-write isolation | Gmail/Technical Brief | db/provision_runtime_role.sql; scripts/integration/live-postgres.test.ts | ❌ RED — not proven end-to-end | Prove with restricted teamchat_api login |
 | A09 | Vite/React production build and hosted asset load | Gmail/Technical Brief | apps/web/package.json | ❌ RED — not proven end-to-end | npm --prefix apps/web ci && npm --prefix apps/web run build |
 | A10 | Cloud Tasks OIDC, recovery, duplicate dispatch | Gmail/Technical Brief | src/server/task-dispatch.ts; src/worker/http.ts | ❌ RED — not proven end-to-end | Inject failures and verify end-to-end terminal state |
