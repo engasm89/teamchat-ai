@@ -76,3 +76,12 @@ See `docs/REQUIREMENTS_TRACEABILITY_v7.md` and `docs/2026-10-09_SOURCE_AUDIT_v7.
 The source includes an important Cloud Tasks recovery fix: task-dispatch attempts are reserved and counted *before* making the remote API request. A failed Cloud Tasks API request no longer bypasses the retry budget, and an atomic reservation prevents concurrent API/scheduler dispatchers from creating overlapping tasks. See `tests/task-dispatch-recovery.test.ts` and `docs/REQUIREMENTS_TRACEABILITY_v9.md`.
 
 Pre-live checks: 93 offline tests passed, TypeScript passed, all five original datasets verified and seed generator still writes 2,753 inserts. **Do not deploy yet**: genuine npm lockfiles, a live PostgreSQL instance with forced RLS, Firebase, Vertex AI, Cloud Tasks, two-instance WebSocket and browser tests, GitHub remote and video are not yet complete. The strict packaging and live database gates intentionally fail without these prerequisites. No claim of end-to-end integration acceptance is made.
+
+
+## October 9 pre-live review v10 — release permission and token-expiry fixes
+
+The v10 audit checks database grants against every actual SQL operation and fixes a live migration/runtime mismatch: AI retry cleanup calls `DELETE FROM teamchat.answer_blocks` while the restricted `teamchat_api` login previously lacked that permission. The provisioning grants now include that narrowly scoped DELETE; the mandatory PostgreSQL integration test includes a no-op DELETE under the real runtime login. Do **not** claim this database check passed until Cloud SQL is available.
+
+Firebase WebSocket sessions now terminate by the signed Firebase token expiry (with 10-second margin), capped at 45 minutes. This prevents a token issued nearly an hour earlier from creating an additional 45-minute authorized session. Unit tests cover expired, nearly expired and fresh tokens. Socket lifecycle, replay and account isolation continue to require two-browser live validation.
+
+**v10 verified locally:** 96/96 offline tests; backend TypeScript `tsc --noEmit` passed using a temporary, uncommitted local `@types/node` reference; original fixture integrity and deterministic seed generation. No genuine npm lockfiles or authorized PostgreSQL instance were available; packaging and database release gates continue to fail instead of being skipped. The working UI, live Gemini and private Cloud Tasks worker are not yet demonstrated. See `docs/2026-10-09_SOURCE_AUDIT_v10.md` and `docs/REQUIREMENTS_TRACEABILITY_v10.md`.

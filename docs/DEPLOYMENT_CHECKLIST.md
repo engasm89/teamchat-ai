@@ -23,3 +23,10 @@
 - A worker reclaim with incomplete answer blocks emits one durable `ai_answer_reset` event in the same transaction as clearing active blocks; `turn_id` is propagated in replay frames. A client must hide earlier answer blocks for that turn when displaying historical events, including after refresh.
 - `ai_tool_start` records immutable name/arguments before a tool side effect. A matching persisted plan is required before storing `ai_tool` results; retry may reuse completed tools and must fail on divergent requests.
 - Verify a worker interruption after `ai_tool_start` and after the first `ai_answer_block`, then reconnect a second browser and assert no mixed prior/retry content, with full committed tool history.
+
+
+## v10 mandatory preflight additions
+
+- Apply the updated `db/provision_runtime_role.sql` with `GRANT DELETE ON teamchat.answer_blocks` **after** migrations, using the migration/DBA role. The restricted `teamchat_api` login must execute the `DELETE` privilege probe in `scripts/integration/live-postgres.test.ts` successfully; its absence breaks retry-after-partial-answer on the second AI attempt.
+- Verify Firebase `verifyIdToken(..., true)` returns a valid signed `exp`. On a browser using a near-expiry token, WebSocket lifetime must stop no later than token expiry minus the configured 10-second margin (or the 45-minute cap, whichever is earlier); frontend `getIdToken()` must refresh before reconnect.
+- Run the 27-scenario requirements matrix, including multi-instance WebSockets, Native Gemini tool selection, real-memory semantic recall, strict per-tenant RLS, and no browser polling. These are **release blockers** despite 96 offline tests passing.

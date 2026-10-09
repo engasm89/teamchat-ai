@@ -1,0 +1,7 @@
+
+> teamchat-ai-assessment@0.2.0 seed:sql
+> node --experimental-strip-types scripts/generate-seed-sql.ts
+
+(node:3340) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Wrote db/generated/seed.sql with 2753 data INSERT statements across both tenants

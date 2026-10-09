@@ -1,0 +1,5 @@
+apps/web/src/App.tsx syntax diagnostics 0
+apps/web/src/main.tsx syntax diagnostics 0
+apps/web/src/socket.ts syntax diagnostics 0
+apps/web/src/transcript.ts syntax diagnostics 0
+apps/web/src/verified.ts syntax diagnostics 0
