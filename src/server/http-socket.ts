@@ -14,6 +14,13 @@ const send=(socket:Socket,frame:Record<string,unknown>)=>{
  socket.send(JSON.stringify({v:1,...frame}));
 };
 const id=(v:unknown)=>typeof v==="string"&&/^[-a-z0-9_]{1,128}$/i.test(v);
+/** Do not discard a queued message after transient database or transport
+ * failures. Only authorization/validation and conflicting-id rejections are
+ * permanent; retries of these can never succeed without a changed command. */
+export function isPermanentSendError(error:unknown):boolean{
+ return error instanceof Error&&/^(?:Invalid message command|Conflicting duplicate client message ID)$/.test(error.message);
+}
+
 /** A websocket must not outlive the signed Firebase ID token that admitted it.
  * Also rotate the socket before 45 minutes, so sign-out and revocation are
  * checked at the next connection. An expired token never grants a session. */
@@ -297,8 +304,18 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
     }
     else if(frame.type==="replay")await hub.replay(socket,frame.roomId,frame.after);
     else if(frame.type==="send_message"){
-     const result=await sendDurableMessage(pool,ctx,{roomId:frame.roomId,clientMessageId:frame.clientMessageId,body:frame.body,allowSharedMemorySave:frame.allowSharedMemorySave===true});
-     if("found" in result)throw Error("Room unavailable");
+     // A permanent rejection must remove the client's pending send; without a
+     // rejection ACK it would retry the same invalid command on every reconnect.
+     let result:Awaited<ReturnType<typeof sendDurableMessage>>;
+     try{result=await sendDurableMessage(pool,ctx,{roomId:frame.roomId,clientMessageId:frame.clientMessageId,body:frame.body,allowSharedMemorySave:frame.allowSharedMemorySave===true});}
+     catch(error){
+      if(isPermanentSendError(error)){
+       send(socket,{type:"message_rejected",clientMessageId:frame.clientMessageId,message:"Message could not be accepted"});
+       return;
+      }
+      throw error;
+     }
+     if("found" in result){send(socket,{type:"message_rejected",clientMessageId:frame.clientMessageId,message:"Message could not be accepted"});return;}
      send(socket,{type:"message_ack",clientMessageId:frame.clientMessageId,sequence:result.sequence,aiTurnId:result.aiTurnId});
      if(result.aiTurnId&&!result.duplicate)void dispatchJob(pool,ctx,result.aiTurnId).catch(error=>{
       // Task outbox is durable; authenticated Cloud Scheduler dispatch endpoint retries later.

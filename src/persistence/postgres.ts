@@ -24,7 +24,9 @@ async function authorizeRoom(client:SqlClient,ctx:TenantContext,room:string):Pro
 /** Every send is durable and idempotent. The event must commit before anyone publishes it. */
 export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{roomId:string;clientMessageId:string;body:string;allowSharedMemorySave?:boolean}):Promise<DurableMessage | typeof NO_MATCH>{
  const {roomId,clientMessageId,body}=input;
- if(!/^[-a-z0-9_]{1,128}$/i.test(roomId)||!/^[-a-z0-9_]{1,128}$/i.test(clientMessageId)||!body.trim()||body.length>8000)throw new Error("Invalid message command");
+ if(typeof roomId!=="string"||typeof clientMessageId!=="string"||typeof body!=="string"||
+    !/^[-a-z0-9_]{1,128}$/i.test(roomId)||!/^[-a-z0-9_]{1,128}$/i.test(clientMessageId)||
+    !body.trim()||body.length>8000)throw new Error("Invalid message command");
  return inTenantTransaction(pool,ctx,async client=>{
   if(!await authorizeRoom(client,ctx,roomId))return NO_MATCH;
   // Global per-author dedupe lock BEFORE room lock (also protects simultaneous sends in different rooms).

@@ -69,6 +69,10 @@ export class TeamSocket {
         for(const send of this.outbound.values())sock.send(JSON.stringify({v:1,type:"send_message",...send}));
       } else if(frame.type==="message_ack"){
         if(typeof frame.clientMessageId==="string"){this.outbound.delete(frame.clientMessageId);this.persistState();}
+      } else if(frame.type==="message_rejected"){
+        if(typeof frame.clientMessageId==="string"&&this.outbound.delete(frame.clientMessageId)){
+          this.persistState();this.onError("A message was rejected by the server; it will not be retried");
+        }
       } else if(frame.type==="event"){
         const event=frame.event as LiveEvent;
         if(!event||typeof event.roomId!=="string"||!Number.isSafeInteger(event.sequence))return;
@@ -111,6 +115,12 @@ export class TeamSocket {
     if(this.authenticated&&this.ws?.readyState===WebSocket.OPEN)this.ws.send(JSON.stringify({v:1,type:"unsubscribe",roomId}));
   }
   sendMessage(roomId:string,body:string,allowSharedMemorySave=false):string {
+    // A rejected oversized message never receives an ACK. Do not persist it
+    // indefinitely or retry it after every reconnect. Keep offline sends
+    // bounded; fail visibly rather than silently dropping unsent work.
+    if(!/^[-a-z0-9_]{1,128}$/i.test(roomId)||!body.trim()||body.length>8000)
+      throw Error("Message must contain 1–8000 characters and a valid room");
+    if(this.outbound.size>=100)throw Error("Pending-message queue is full; reconnect before sending more");
     const clientMessageId=crypto.randomUUID();const message={roomId,clientMessageId,body,allowSharedMemorySave};
     this.outbound.set(clientMessageId,message);this.persistState();
     if(this.authenticated&&this.ws?.readyState===WebSocket.OPEN)this.ws.send(JSON.stringify({v:1,type:"send_message",...message}));

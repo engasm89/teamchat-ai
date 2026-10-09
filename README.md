@@ -85,3 +85,7 @@ The v10 audit checks database grants against every actual SQL operation and fixe
 Firebase WebSocket sessions now terminate by the signed Firebase token expiry (with 10-second margin), capped at 45 minutes. This prevents a token issued nearly an hour earlier from creating an additional 45-minute authorized session. Unit tests cover expired, nearly expired and fresh tokens. Socket lifecycle, replay and account isolation continue to require two-browser live validation.
 
 **v10 verified locally:** 96/96 offline tests; backend TypeScript `tsc --noEmit` passed using a temporary, uncommitted local `@types/node` reference; original fixture integrity and deterministic seed generation. No genuine npm lockfiles or authorized PostgreSQL instance were available; packaging and database release gates continue to fail instead of being skipped. The working UI, live Gemini and private Cloud Tasks worker are not yet demonstrated. See `docs/2026-10-09_SOURCE_AUDIT_v10.md` and `docs/REQUIREMENTS_TRACEABILITY_v10.md`.
+
+## 2026-10-09 v11 pre-live review update
+
+See `docs/2026-10-09_SOURCE_AUDIT_v11.md` and `docs/REQUIREMENTS_TRACEABILITY_v11.md`. The update closes Cloud Tasks SDK clients, waits for server-authorized room discovery before subscribing, bounds pending browser sends, and differentiates permanent message rejections from transient transport failures without leaking tenant names. 105 offline tests pass. **No live cloud, PostgreSQL or React production-build claim is made**; the required npm lockfiles and integration infrastructure are still outstanding.

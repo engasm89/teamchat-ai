@@ -1,0 +1,7 @@
+apps/web/src/App.tsx PARSE PASS
+apps/web/src/main.tsx PARSE PASS
+apps/web/src/room-access.ts PARSE PASS
+apps/web/src/socket.ts PARSE PASS
+apps/web/src/transcript.ts PARSE PASS
+apps/web/src/verified.ts PARSE PASS
+files 6 parse errors 0

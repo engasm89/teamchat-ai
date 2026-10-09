@@ -30,6 +30,22 @@ export async function reserveDispatchAttempt(pool:SqlPool,ctx:TenantContext,turn
   return r.rows.length===1?Number(r.rows[0]!.dispatch_attempts):null;
  });
 }
+/** Each transient Cloud Tasks client opens gRPC resources. Close it after the
+ * request settles, including a rejected request; never mask the original task
+ * result with a cleanup exception. The factory seam permits resource-leak tests
+ * without loading or contacting a cloud SDK. */
+export async function invokeTaskWithClient(
+ factory:()=>Promise<{createTask(request:Record<string,unknown>):Promise<unknown>;close():Promise<void>}>,
+ request:Record<string,unknown>
+):Promise<unknown>{
+ const client=await factory();
+ try{return await client.createTask(request);}
+ finally{
+  try{await client.close();}
+  catch(error){console.error("Cloud Tasks client cleanup failed",error instanceof Error?error.name:"UnknownError");}
+ }
+}
+
 /** Dispatch only opaque job IDs; Cloud Tasks OIDC signs private worker requests.
  * The database reservation survives failures and permits bounded recovery. */
 export async function dispatchJob(pool:SqlPool,ctx:TenantContext,turnId:string,
@@ -39,12 +55,13 @@ export async function dispatchJob(pool:SqlPool,ctx:TenantContext,turnId:string,
  if(attempt===null)return false; // Another instance has reserved it, or the job is terminal.
  const name=`${queue}/tasks/teamchat-${turnId.replaceAll("-","")}-d${attempt}`;
  const request={parent:queue,task:{name,httpRequest:{httpMethod:"POST",url:`${worker.replace(/\/$/,"")}/internal/turn`,headers:{"Content-Type":"application/json"},oidcToken:{serviceAccountEmail:serviceAccount,audience},body:Buffer.from(JSON.stringify({turnId})).toString("base64")}}};
- const create= createTaskOverride??(async (payload:Record<string,unknown>)=>{
+ const create=createTaskOverride??(async (payload:Record<string,unknown>)=>
+  invokeTaskWithClient(async()=>{
    const moduleName="@google-cloud/tasks";const imported=await import(moduleName);
    const CloudTasksClient=imported.CloudTasksClient??imported.default?.CloudTasksClient;
    if(!CloudTasksClient)throw Error("CloudTasksClient export unavailable");
-   await new CloudTasksClient().createTask(payload);
- });
+   return new CloudTasksClient();
+  },payload));
  try{await create(request);}
  catch(e:unknown){
   // ALREADY_EXISTS: task was created despite an ambiguous response or retry.
