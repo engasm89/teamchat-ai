@@ -7,7 +7,7 @@
 export interface ShutdownSignals {
   on(event:"SIGTERM"|"SIGINT",handler:()=>void):unknown;
   off(event:"SIGTERM"|"SIGINT",handler:()=>void):unknown;
-  exitCode?:number|string;
+  exitCode?:number|string|null;
 }
 export function installGracefulShutdown(
   close:()=>Promise<void>,
