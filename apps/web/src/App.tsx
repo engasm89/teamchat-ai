@@ -45,6 +45,8 @@ export function App(){
   socket.connect(()=>user.getIdToken());
   user.getIdToken().then(token=>active?fetch(`${import.meta.env.VITE_API_URL}/api/rooms`,{headers:{Authorization:`Bearer ${token}`},signal:controller.signal}):Promise.reject(Error("Request cancelled")))
    .then(r=>r.ok?r.json():Promise.reject()).then(data=>{if(active&&Array.isArray(data.rooms)){
+    // This comes from the authenticated room-list API, never from a chat frame.
+    socket.setExpectedTenant(data.tenantId);
     const allowed=data.rooms.map((r:{room_id:string})=>r.room_id).filter((r:string)=>/^[-a-z0-9_]{1,128}$/i.test(r));
     setChannels(allowed);setRoom(current=>allowed.includes(current)?current:(allowed[0]??""));
    }})

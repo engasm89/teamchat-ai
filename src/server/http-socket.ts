@@ -246,7 +246,7 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
      const rows=await c.query(`SELECT r.room_id,r.title FROM teamchat.rooms r
        JOIN teamchat.room_memberships rm ON rm.tenant_id=r.tenant_id AND rm.room_id=r.room_id
        JOIN teamchat.user_memberships m ON m.tenant_id=rm.tenant_id AND m.firebase_uid=rm.firebase_uid
-       WHERE rm.tenant_id=$1 AND rm.firebase_uid=$2 AND m.active=true ORDER BY r.room_id`,[ctx.tenantId,uid]);return {rooms:rows.rows};
+       WHERE rm.tenant_id=$1 AND rm.firebase_uid=$2 AND m.active=true ORDER BY r.room_id`,[ctx.tenantId,uid]);return {tenantId:ctx.tenantId,rooms:rows.rows};
     });
    res.writeHead(200,{"content-type":"application/json"});res.end(JSON.stringify(data));
   }catch{res.writeHead(401);res.end(JSON.stringify({error:"Unauthorized"}));}

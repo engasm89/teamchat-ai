@@ -1,0 +1,798 @@
+
+> teamchat-ai-assessment@0.2.0 verify:prelive
+> npm run check && npm test && npm run verify:fixtures && npm run seed:sql
+
+
+> teamchat-ai-assessment@0.2.0 check
+> tsc --noEmit
+
+
+> teamchat-ai-assessment@0.2.0 test
+> node --experimental-strip-types --test tests/*.test.ts
+
+TAP version 13
+# (node:9467) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: retry removes persisted partial blocks and emits one durable reset before new execution
+ok 1 - retry removes persisted partial blocks and emits one durable reset before new execution
+  ---
+  duration_ms: 2.140924
+  type: 'test'
+  ...
+# Subtest: initial claim and retry without partial blocks do not reset transcript
+ok 2 - initial claim and retry without partial blocks do not reset transcript
+  ---
+  duration_ms: 0.382757
+  type: 'test'
+  ...
+# Subtest: every tool starts with a fenced durable plan, then completes against exactly that plan
+ok 3 - every tool starts with a fenced durable plan, then completes against exactly that plan
+  ---
+  duration_ms: 2.440365
+  type: 'test'
+  ...
+# Subtest: replayed history supersedes only the interrupted turn's old answer blocks
+ok 4 - replayed history supersedes only the interrupted turn's old answer blocks
+  ---
+  duration_ms: 0.321655
+  type: 'test'
+  ...
+# Subtest: a tool result cannot be completed without the exact durable plan
+ok 5 - a tool result cannot be completed without the exact durable plan
+  ---
+  duration_ms: 0.673644
+  type: 'test'
+  ...
+# (node:9468) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the explicit @AI wakeup recognizes punctuation and mixed case
+ok 6 - the explicit @AI wakeup recognizes punctuation and mixed case
+  ---
+  duration_ms: 2.385162
+  type: 'test'
+  ...
+# (node:9469) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Firebase token verification requires an explicitly configured project
+ok 7 - Firebase token verification requires an explicitly configured project
+  ---
+  duration_ms: 1.015419
+  type: 'test'
+  ...
+# Subtest: verified UID maps through restricted function and checks active membership
+ok 8 - verified UID maps through restricted function and checks active membership
+  ---
+  duration_ms: 0.436758
+  type: 'test'
+  ...
+# Subtest: unknown and deactivated identities never obtain context
+ok 9 - unknown and deactivated identities never obtain context
+  ---
+  duration_ms: 0.293322
+  type: 'test'
+  ...
+# Subtest: API/worker startup fails closed on owner, superuser and bypassrls roles
+ok 10 - API/worker startup fails closed on owner, superuser and bypassrls roles
+  ---
+  duration_ms: 0.447304
+  type: 'test'
+  ...
+# Subtest: websocket fanout requires authorized subscription; different opaque room never receives data
+ok 11 - websocket fanout requires authorized subscription; different opaque room never receives data
+  ---
+  duration_ms: 4.936615
+  type: 'test'
+  ...
+# Subtest: socket replay denied room never leaks message data
+ok 12 - socket replay denied room never leaks message data
+  ---
+  duration_ms: 0.294864
+  type: 'test'
+  ...
+# Subtest: unsubscribing a room removes fanout and database presence/typing leases
+ok 13 - unsubscribing a room removes fanout and database presence/typing leases
+  ---
+  duration_ms: 1.236152
+  type: 'test'
+  ...
+# Subtest: WebSocket token lifetime is bounded by signed token expiry
+ok 14 - WebSocket token lifetime is bounded by signed token expiry
+  ---
+  duration_ms: 0.275184
+  type: 'test'
+  ...
+# (node:9500) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: browser uses Firebase only for authentication and does not poll or use managed realtime
+ok 15 - browser uses Firebase only for authentication and does not poll or use managed realtime
+  ---
+  duration_ms: 1.027167
+  type: 'test'
+  ...
+# Subtest: Gemini owns tool selection and the server never broadcasts raw candidate text
+ok 16 - Gemini owns tool selection and the server never broadcasts raw candidate text
+  ---
+  duration_ms: 0.155614
+  type: 'test'
+  ...
+# Subtest: the repeatable live history bootstrap uses a real Gemini call and verifies persisted fetch
+ok 17 - the repeatable live history bootstrap uses a real Gemini call and verifies persisted fetch
+  ---
+  duration_ms: 0.188524
+  type: 'test'
+  ...
+# (node:9507) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: ignore events for unsubscribed rooms and malformed replay envelopes
+ok 18 - ignore events for unsubscribed rooms and malformed replay envelopes
+  ---
+  duration_ms: 19.508441
+  type: 'test'
+  ...
+# Subtest: closing a session clears pending sends from account storage by default
+ok 19 - closing a session clears pending sends from account storage by default
+  ---
+  duration_ms: 0.781557
+  type: 'test'
+  ...
+# (node:9517) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: outbound queue rejects invalid or oversized messages before storing
+ok 20 - outbound queue rejects invalid or oversized messages before storing
+  ---
+  duration_ms: 1.269302
+  type: 'test'
+  ...
+# Subtest: offline pending sends are bounded to 100 rather than retaining unlimited messages
+ok 21 - offline pending sends are bounded to 100 rather than retaining unlimited messages
+  ---
+  duration_ms: 2.033513
+  type: 'test'
+  ...
+# (node:9533) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: terminal send rejection removes pending message while a transient server error retains it
+ok 22 - terminal send rejection removes pending message while a transient server error retains it
+  ---
+  duration_ms: 24.18885
+  type: 'test'
+  ...
+# (node:9544) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: browser does not send room commands before Firebase authentication succeeds
+ok 23 - browser does not send room commands before Firebase authentication succeeds
+  ---
+  duration_ms: 20.572683
+  type: 'test'
+  ...
+# Subtest: switching rooms unsubscribes the old room and replays only active subscriptions on reconnect
+ok 24 - switching rooms unsubscribes the old room and replays only active subscriptions on reconnect
+  ---
+  duration_ms: 0.468956
+  type: 'test'
+  ...
+# Subtest: late frames from a logged-out or replaced socket cannot restore session state
+ok 25 - late frames from a logged-out or replaced socket cannot restore session state
+  ---
+  duration_ms: 0.295756
+  type: 'test'
+  ...
+# (node:9545) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: two abbreviated categories cannot starve each other
+ok 26 - two abbreviated categories cannot starve each other
+  ---
+  duration_ms: 23.76477
+  type: 'test'
+  ...
+# Subtest: nonexistent goods never return a plausible unrelated product
+ok 27 - nonexistent goods never return a plausible unrelated product
+  ---
+  duration_ms: 7.619334
+  type: 'test'
+  ...
+# Subtest: buyer code punctuation and store numbers normalize without making up records
+ok 28 - buyer code punctuation and store numbers normalize without making up records
+  ---
+  duration_ms: 0.415545
+  type: 'test'
+  ...
+# (node:9566) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: portable AC ranks the exact portable air conditioner family ahead of unrelated air products
+ok 29 - portable AC ranks the exact portable air conditioner family ahead of unrelated air products
+  ---
+  duration_ms: 13.31978
+  type: 'test'
+  ...
+# Subtest: SSD abbreviation expands inside retrieval, without routing tools
+ok 30 - SSD abbreviation expands inside retrieval, without routing tools
+  ---
+  duration_ms: 4.181147
+  type: 'test'
+  ...
+# Subtest: absent or trivial terms produce zero candidates, without invented catalog codes
+ok 31 - absent or trivial terms produce zero candidates, without invented catalog codes
+  ---
+  duration_ms: 2.884715
+  type: 'test'
+  ...
+# (node:9577) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Cloud Tasks client closes after a successful dispatch
+ok 32 - Cloud Tasks client closes after a successful dispatch
+  ---
+  duration_ms: 1.548292
+  type: 'test'
+  ...
+# Subtest: Cloud Tasks client closes after an API rejection without altering the error
+ok 33 - Cloud Tasks client closes after an API rejection without altering the error
+  ---
+  duration_ms: 0.635267
+  type: 'test'
+  ...
+# Subtest: client cleanup failures never turn a confirmed task creation into a retry
+ok 34 - client cleanup failures never turn a confirmed task creation into a retry
+  ---
+  duration_ms: 0.300272
+  type: 'test'
+  ...
+# (node:9583) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: direct two-option comparison uses fixture math, transitive supersession and explicit B-minus-A
+ok 35 - direct two-option comparison uses fixture math, transitive supersession and explicit B-minus-A
+  ---
+  duration_ms: 4.093094
+  type: 'test'
+  ...
+# Subtest: duplicate class does not multiply uplift when comparing alternatives
+ok 36 - duplicate class does not multiply uplift when comparing alternatives
+  ---
+  duration_ms: 0.857161
+  type: 'test'
+  ...
+# Subtest: comparison is tenant bounded and an absent code cannot be invented
+ok 37 - comparison is tenant bounded and an absent code cannot be invented
+  ---
+  duration_ms: 1.342782
+  type: 'test'
+  ...
+# Subtest: comparison forbids model-supplied tenant overrides and invalid code arrays
+ok 38 - comparison forbids model-supplied tenant overrides and invalid code arrays
+  ---
+  duration_ms: 0.516959
+  type: 'test'
+  ...
+# Subtest: store 4007 without ST prefix resolves to the same verified comparison as ST-4007
+ok 39 - store 4007 without ST prefix resolves to the same verified comparison as ST-4007
+  ---
+  duration_ms: 1.481782
+  type: 'test'
+  ...
+# (node:9599) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Cloud Tasks admission fails before serving requests with missing or unsafe OIDC configuration
+ok 40 - Cloud Tasks admission fails before serving requests with missing or unsafe OIDC configuration
+  ---
+  duration_ms: 1.069731
+  type: 'test'
+  ...
+# (node:9610) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: CSV parser handles quoted comma and embedded newline
+ok 41 - CSV parser handles quoted comma and embedded newline
+  ---
+  duration_ms: 1.383093
+  type: 'test'
+  ...
+# Subtest: all five unchanged fixtures are parsed and integrity-checked
+ok 42 - all five unchanged fixtures are parsed and integrity-checked
+  ---
+  duration_ms: 0.283246
+  type: 'test'
+  ...
+# (node:9621) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: online socket does not authorize sending into an unlisted room
+ok 43 - online socket does not authorize sending into an unlisted room
+  ---
+  duration_ms: 0.585181
+  type: 'test'
+  ...
+# (node:9632) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: authorized store results are readable and preserve evidence without inventing seasonal relevance
+ok 44 - authorized store results are readable and preserve evidence without inventing seasonal relevance
+  ---
+  duration_ms: 0.863981
+  type: 'test'
+  ...
+# Subtest: the two-option comparison renders the authoritative source-backed difference
+ok 45 - the two-option comparison renders the authoritative source-backed difference
+  ---
+  duration_ms: 0.166641
+  type: 'test'
+  ...
+# (node:9643) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Gemini cannot introduce an unverified monetary baseline
+ok 46 - Gemini cannot introduce an unverified monetary baseline
+  ---
+  duration_ms: 22.407326
+  type: 'test'
+  ...
+# (node:9654) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: idle lease renewals do not repeatedly resend unchanged presence
+ok 47 - idle lease renewals do not repeatedly resend unchanged presence
+  ---
+  duration_ms: 12.373144
+  type: 'test'
+  ...
+# (node:9665) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: shared memory commits a version-one history row in the same tenant transaction
+ok 48 - shared memory commits a version-one history row in the same tenant transaction
+  ---
+  duration_ms: 5.247171
+  type: 'test'
+  ...
+# Subtest: memory history write failure rolls back the memory creation
+ok 49 - memory history write failure rolls back the memory creation
+  ---
+  duration_ms: 1.09519
+  type: 'test'
+  ...
+# (node:9676) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: invalid and conflicting client messages get terminal rejection, not infinite retries
+ok 50 - invalid and conflicting client messages get terminal rejection, not infinite retries
+  ---
+  duration_ms: 0.750871
+  type: 'test'
+  ...
+# Subtest: invalid JSON command field types are permanently rejected without touching PostgreSQL
+ok 51 - invalid JSON command field types are permanently rejected without touching PostgreSQL
+  ---
+  duration_ms: 0.678352
+  type: 'test'
+  ...
+# (node:9682) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: streaming Gemini planner buffers untrusted text and extracts complete native tool calls
+ok 52 - streaming Gemini planner buffers untrusted text and extracts complete native tool calls
+  ---
+  duration_ms: 1.778899
+  type: 'test'
+  ...
+# Subtest: streaming incomplete or conflicting calls fail before a tool can execute
+ok 53 - streaming incomplete or conflicting calls fail before a tool can execute
+  ---
+  duration_ms: 0.484289
+  type: 'test'
+  ...
+# Subtest: cancelled native stream never produces executable operations
+ok 54 - cancelled native stream never produces executable operations
+  ---
+  duration_ms: 1.08234
+  type: 'test'
+  ...
+# (node:9698) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: release preflight rejects missing or stale root and web npm lockfiles
+ok 55 - release preflight rejects missing or stale root and web npm lockfiles
+  ---
+  duration_ms: 9.427838
+  type: 'test'
+  ...
+# (node:9709) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: transaction sets local verified tenant and always releases client
+ok 56 - transaction sets local verified tenant and always releases client
+  ---
+  duration_ms: 1.453539
+  type: 'test'
+  ...
+# Subtest: transaction rolls back and releases on error
+ok 57 - transaction rolls back and releases on error
+  ---
+  duration_ms: 0.470459
+  type: 'test'
+  ...
+# Subtest: foreign-room request fails before querying event history
+ok 58 - foreign-room request fails before querying event history
+  ---
+  duration_ms: 0.279871
+  type: 'test'
+  ...
+# Subtest: durable send uses authorization, dedupe, room lock, durable insert then commit
+ok 59 - durable send uses authorization, dedupe, room lock, durable insert then commit
+  ---
+  duration_ms: 1.841062
+  type: 'test'
+  ...
+# Subtest: retries same clientMessageId do not allocate new sequence
+ok 60 - retries same clientMessageId do not allocate new sequence
+  ---
+  duration_ms: 0.382145
+  type: 'test'
+  ...
+# Subtest: replaying an AI message cannot silently change shared-memory consent
+ok 61 - replaying an AI message cannot silently change shared-memory consent
+  ---
+  duration_ms: 1.396022
+  type: 'test'
+  ...
+# Subtest: @AI message commits durable AI job and outbox atomically before acknowledgement
+ok 62 - @AI message commits durable AI job and outbox atomically before acknowledgement
+  ---
+  duration_ms: 0.701897
+  type: 'test'
+  ...
+# (node:9710) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: auth directory cannot be SELECTed directly by runtime role
+ok 63 - auth directory cannot be SELECTed directly by runtime role
+  ---
+  duration_ms: 0.788357
+  type: 'test'
+  ...
+# Subtest: job directory is private and contains no model inputs or business text
+ok 64 - job directory is private and contains no model inputs or business text
+  ---
+  duration_ms: 0.174293
+  type: 'test'
+  ...
+# Subtest: native Gemini function declarations and tool executor not keyword router
+ok 65 - native Gemini function declarations and tool executor not keyword router
+  ---
+  duration_ms: 0.283197
+  type: 'test'
+  ...
+# Subtest: websocket origin, payload and idle safeguards installed
+ok 66 - websocket origin, payload and idle safeguards installed
+  ---
+  duration_ms: 0.274373
+  type: 'test'
+  ...
+# (node:9723) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: consented memory saving is informed by the persisted trusted job state
+ok 67 - consented memory saving is informed by the persisted trusted job state
+  ---
+  duration_ms: 0.993406
+  type: 'test'
+  ...
+# Subtest: memory authority cannot be invented by a user prompt
+ok 68 - memory authority cannot be invented by a user prompt
+  ---
+  duration_ms: 0.439762
+  type: 'test'
+  ...
+# Subtest: the current user prompt remains complete and older memory instructions are labelled untrusted
+ok 69 - the current user prompt remains complete and older memory instructions are labelled untrusted
+  ---
+  duration_ms: 0.470799
+  type: 'test'
+  ...
+# (node:9742) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: ST-4003 fixture score and duplicate margin class
+ok 70 - ST-4003 fixture score and duplicate margin class
+  ---
+  duration_ms: 2.102386
+  type: 'test'
+  ...
+# Subtest: ST-4007 uplift, transitive supersession and duplicate class
+ok 71 - ST-4007 uplift, transitive supersession and duplicate class
+  ---
+  duration_ms: 0.471991
+  type: 'test'
+  ...
+# Subtest: no invented baseline or percentage
+ok 72 - no invented baseline or percentage
+  ---
+  duration_ms: 0.443178
+  type: 'test'
+  ...
+# Subtest: cycle rejected, valid diamond accepted
+ok 73 - cycle rejected, valid diamond accepted
+  ---
+  duration_ms: 1.308591
+  type: 'test'
+  ...
+# Subtest: full precision decimals
+ok 74 - full precision decimals
+  ---
+  duration_ms: 0.129636
+  type: 'test'
+  ...
+# (node:9749) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: runtime SQL operations are granted explicitly to nonowner teamchat_api
+ok 75 - runtime SQL operations are granted explicitly to nonowner teamchat_api
+  ---
+  duration_ms: 3.706892
+  type: 'test'
+  ...
+# (node:9760) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: migration defines transaction-local fail-closed forced RLS on all tenant tables
+ok 76 - migration defines transaction-local fail-closed forced RLS on all tenant tables
+  ---
+  duration_ms: 0.798793
+  type: 'test'
+  ...
+# Subtest: room notification is opaque and has no business text
+ok 77 - room notification is opaque and has no business text
+  ---
+  duration_ms: 0.119039
+  type: 'test'
+  ...
+# Subtest: SQL seed has both isolated tenant partitions and no raw secret env
+ok 78 - SQL seed has both isolated tenant partitions and no raw secret env
+  ---
+  duration_ms: 1.499328
+  type: 'test'
+  ...
+# Subtest: restricted runtime role supports AI reclaim without expanding tenant powers
+ok 79 - restricted runtime role supports AI reclaim without expanding tenant powers
+  ---
+  duration_ms: 0.218199
+  type: 'test'
+  ...
+# (node:9775) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: forged/unresolved tenant contexts fail closed
+ok 80 - forged/unresolved tenant contexts fail closed
+  ---
+  duration_ms: 0.886134
+  type: 'test'
+  ...
+# Subtest: foreign store ID indistinguishable from unknown ID
+ok 81 - foreign store ID indistinguishable from unknown ID
+  ---
+  duration_ms: 0.488636
+  type: 'test'
+  ...
+# Subtest: shared key is isolated to each tenant
+ok 82 - shared key is isolated to each tenant
+  ---
+  duration_ms: 0.489217
+  type: 'test'
+  ...
+# Subtest: nested or oversized memory is refused without mutation
+ok 83 - nested or oversized memory is refused without mutation
+  ---
+  duration_ms: 0.627525
+  type: 'test'
+  ...
+# Subtest: valid tenant-shared memory provenance comes from server ctx
+ok 84 - valid tenant-shared memory provenance comes from server ctx
+  ---
+  duration_ms: 0.491079
+  type: 'test'
+  ...
+# Subtest: turn source ledger refuses hallucinated IDs and fields
+ok 85 - turn source ledger refuses hallucinated IDs and fields
+  ---
+  duration_ms: 0.370518
+  type: 'test'
+  ...
+# Subtest: event replay preserves order, dedupes, and isolates tenants
+ok 86 - event replay preserves order, dedupes, and isolates tenants
+  ---
+  duration_ms: 0.383828
+  type: 'test'
+  ...
+# (node:9776) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: embedding input validates dimension, non-finite and zero vectors
+ok 87 - embedding input validates dimension, non-finite and zero vectors
+  ---
+  duration_ms: 1.287569
+  type: 'test'
+  ...
+# Subtest: semantic document text has deterministic key ordering
+ok 88 - semantic document text has deterministic key ordering
+  ---
+  duration_ms: 6.555523
+  type: 'test'
+  ...
+# Subtest: semantic search is tenant-scoped, uses model-specific vectors, and suppresses weak matches
+ok 89 - semantic search is tenant-scoped, uses model-specific vectors, and suppresses weak matches
+  ---
+  duration_ms: 2.047965
+  type: 'test'
+  ...
+# Subtest: memory saves require consent before embedding/model invocation
+ok 90 - memory saves require consent before embedding/model invocation
+  ---
+  duration_ms: 0.339551
+  type: 'test'
+  ...
+# (node:9788) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: disconnect during lease INSERT does not resurrect a socket subscription
+ok 91 - disconnect during lease INSERT does not resurrect a socket subscription
+  ---
+  duration_ms: 1.60047
+  type: 'test'
+  ...
+# Subtest: simultaneous subscribe then unsubscribe respects arrival order despite slow PostgreSQL
+ok 92 - simultaneous subscribe then unsubscribe respects arrival order despite slow PostgreSQL
+  ---
+  duration_ms: 1.077593
+  type: 'test'
+  ...
+# (node:9808) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: failed Cloud Tasks attempts are durable and exhaust the twelve-attempt budget
+ok 93 - failed Cloud Tasks attempts are durable and exhaust the twelve-attempt budget
+  ---
+  duration_ms: 14.692777
+  type: 'test'
+  ...
+# Subtest: competing dispatchers reserve only one remote attempt until retry window
+ok 94 - competing dispatchers reserve only one remote attempt until retry window
+  ---
+  duration_ms: 0.547164
+  type: 'test'
+  ...
+# Subtest: Cloud Tasks ALREADY_EXISTS is acknowledged but ambiguous failures are retried
+ok 95 - Cloud Tasks ALREADY_EXISTS is acknowledged but ambiguous failures are retried
+  ---
+  duration_ms: 0.361795
+  type: 'test'
+  ...
+# (node:9819) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Gemini tools declare no tenant override
+ok 96 - Gemini tools declare no tenant override
+  ---
+  duration_ms: 0.966946
+  type: 'test'
+  ...
+# Subtest: catalog lookups return validated source references
+ok 97 - catalog lookups return validated source references
+  ---
+  duration_ms: 1.537416
+  type: 'test'
+  ...
+# Subtest: model cannot override tenant via tool args
+ok 98 - model cannot override tenant via tool args
+  ---
+  duration_ms: 0.436577
+  type: 'test'
+  ...
+# Subtest: foreign store is same as unknown and prompt cannot elevate
+ok 99 - foreign store is same as unknown and prompt cannot elevate
+  ---
+  duration_ms: 0.368955
+  type: 'test'
+  ...
+# Subtest: calculate_uplift tool returns dimensionless data and source ledger
+ok 100 - calculate_uplift tool returns dimensionless data and source ledger
+  ---
+  duration_ms: 1.462452
+  type: 'test'
+  ...
+# Subtest: memory mutation is denied without explicit user consent
+ok 101 - memory mutation is denied without explicit user consent
+  ---
+  duration_ms: 0.195865
+  type: 'test'
+  ...
+# (node:9825) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: tenant rollback failure causes pooled connection eviction
+ok 102 - tenant rollback failure causes pooled connection eviction
+  ---
+  duration_ms: 1.305936
+  type: 'test'
+  ...
+# Subtest: verified identity lookup works with a one-connection pool (no self-deadlock)
+ok 103 - verified identity lookup works with a one-connection pool (no self-deadlock)
+  ---
+  duration_ms: 0.295024
+  type: 'test'
+  ...
+# (node:9841) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: unknown catalog items and absent decisions use explicitly truthful fixed server messages
+ok 104 - unknown catalog items and absent decisions use explicitly truthful fixed server messages
+  ---
+  duration_ms: 1.229712
+  type: 'test'
+  ...
+# Subtest: a source-backed catalog answer retains code, margin mapping and source reference
+ok 105 - a source-backed catalog answer retains code, margin mapping and source reference
+  ---
+  duration_ms: 0.283387
+  type: 'test'
+  ...
+# (node:9852) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: fenced write extends live lease before data mutation
+ok 106 - fenced write extends live lease before data mutation
+  ---
+  duration_ms: 1.111424
+  type: 'test'
+  ...
+# Subtest: exhausted AI job produces one durable failure event and terminal state
+ok 107 - exhausted AI job produces one durable failure event and terminal state
+  ---
+  duration_ms: 0.534776
+  type: 'test'
+  ...
+# Subtest: scheduler retries expired running jobs and ignores active workers
+ok 108 - scheduler retries expired running jobs and ignores active workers
+  ---
+  duration_ms: 0.785733
+  type: 'test'
+  ...
+# (node:9853) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: job renewal and retry are bounded by tenant, turn ID and fencing token
+ok 109 - job renewal and retry are bounded by tenant, turn ID and fencing token
+  ---
+  duration_ms: 1.83906
+  type: 'test'
+  ...
+# Subtest: dispatch exhaustion emits a durable failure event and fails job and outbox
+ok 110 - dispatch exhaustion emits a durable failure event and fails job and outbox
+  ---
+  duration_ms: 0.886245
+  type: 'test'
+  ...
+# (node:9874) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: AI retry may reuse an operation only when its name and arguments match
+ok 111 - AI retry may reuse an operation only when its name and arguments match
+  ---
+  duration_ms: 7.211972
+  type: 'test'
+  ...
+1..111
+# tests 111
+# suites 0
+# pass 111
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2154.537466
+
+> teamchat-ai-assessment@0.2.0 verify:fixtures
+> node --experimental-strip-types scripts/verify-fixtures.ts
+
+(node:9897) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "products": 1000,
+  "unmapped": 289,
+  "classes": 44,
+  "coefficients": 12,
+  "stores": {
+    "northside-outfitters": 12,
+    "valley-home-goods": 12
+  },
+  "memories": {
+    "northside-outfitters": 4,
+    "valley-home-goods": 4
+  },
+  "hashes": {
+    "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+    "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+    "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+    "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+    "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+  }
+}
+
+> teamchat-ai-assessment@0.2.0 seed:sql
+> node --experimental-strip-types scripts/generate-seed-sql.ts
+
+(node:9920) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Wrote db/generated/seed.sql with 2753 data INSERT statements across both tenants

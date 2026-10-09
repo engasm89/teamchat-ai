@@ -1,0 +1,7 @@
+apps/web/src/App.tsx: PASS
+apps/web/src/main.tsx: PASS
+apps/web/src/room-access.ts: PASS
+apps/web/src/socket.ts: PASS
+apps/web/src/transcript.ts: PASS
+apps/web/src/verified.ts: PASS
+FRONTEND_SYNTAX_ERRORS 0

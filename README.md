@@ -89,3 +89,9 @@ Firebase WebSocket sessions now terminate by the signed Firebase token expiry (w
 ## 2026-10-09 v11 pre-live review update
 
 See `docs/2026-10-09_SOURCE_AUDIT_v11.md` and `docs/REQUIREMENTS_TRACEABILITY_v11.md`. The update closes Cloud Tasks SDK clients, waits for server-authorized room discovery before subscribing, bounds pending browser sends, and differentiates permanent message rejections from transient transport failures without leaking tenant names. 105 offline tests pass. **No live cloud, PostgreSQL or React production-build claim is made**; the required npm lockfiles and integration infrastructure are still outstanding.
+
+## v12 pre-live correction summary (2026-10-09)
+
+See `docs/2026-10-09_REQUIREMENTS_SOURCE_AUDIT_v12.md` and `docs/REQUIREMENTS_TRACEABILITY_v12.md`. The Gemini provider now consumes `generateContentStream` and releases only completed tool calls for execution; returned facts continue to appear only as persisted, source-backed blocks. The browser ignores out-of-room and wrong-tenant events, pending messages are cleared on any intentional/authenticated-session teardown, and punctuation-adjacent `@AI` mentions start a turn without keyword-selecting a business tool.
+
+**Important:** v12 passed local TypeScript/fixture/seed checks and 111 offline tests; it has not passed live PostgreSQL, Firebase, Vertex AI, Cloud Tasks, two-instance WebSocket, production Vite build or deployment tests. Genuine npm lockfiles must still be generated and committed using network access. This package is not cleared for assessment submission.

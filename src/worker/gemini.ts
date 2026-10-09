@@ -17,6 +17,33 @@ function canonicalJson(value:unknown):string{
  return JSON.stringify(value)??"null";
 }
 
+/** Collect native streaming function calls without ever forwarding raw model
+ * prose to browsers. Only COMPLETE tool calls may reach the SQL executor.
+ * Source-backed result blocks are streamed separately after validation. */
+export async function collectGeminiFunctionCalls(
+ stream:AsyncIterable<GeminiResponse>,signal?:AbortSignal
+):Promise<GeminiResponse>{
+ const seen=new Map<string,{id?:string;name?:string;args?:Record<string,unknown>}>();
+ let chunks=0;
+ for await(const response of stream){
+  if(signal?.aborted)throw Error("Gemini request cancelled");
+  if(++chunks>256)throw Error("Gemini streaming chunk limit exceeded");
+  const calls=response.functionCalls??response.candidates?.[0]?.content?.parts?.flatMap((p:any)=>p?.functionCall?[p.functionCall]:[])??[];
+  for(const call of calls){
+   if(!call||typeof call.name!=="string"||!call.name||!call.args||typeof call.args!=="object"||
+       Array.isArray(call.args)||"partialArgs" in call||call.willContinue===true)
+    throw Error("Incomplete or malformed streamed Gemini function call");
+   const key=typeof call.id==="string"&&call.id?`id:${call.id}`:`args:${call.name}:${canonicalJson(call.args)}`;
+   const prior=seen.get(key);
+   if(prior){if(prior.name!==call.name||canonicalJson(prior.args)!==canonicalJson(call.args))
+    throw Error("Conflicting streamed Gemini function call");}
+   else {seen.set(key,{id:call.id,name:call.name,args:call.args});if(seen.size>15)throw Error("Gemini tool call budget exceeded");}
+  }
+ }
+ const functionCalls=[...seen.values()];
+ return {functionCalls,candidates:[{content:{role:"model",parts:functionCalls.map(functionCall=>({functionCall}))}}]};
+}
+
 /** Persisted operation IDs are bound to tool name AND arguments, not merely
  * their ordinal positions. A changed retry must fail closed rather than
  * misattribute an old tool result to a new query. */
@@ -55,12 +82,14 @@ export async function createGeminiProvider():Promise<GeminiProvider>{
  const tools=[{functionDeclarations:TOOL_DECLARATIONS}];
  return {async generate(contents,firstRound,signal,trusted){
   if(!trusted)throw Error("Missing server-verified AI turn context");
-  return client.models.generateContent({model,contents,config:{
+  const stream=await client.models.generateContentStream({model,contents,config:{
   abortSignal:signal,
   temperature:0,tools,systemInstruction:trustedPlannerInstructions(trusted),
   toolConfig:{functionCallingConfig:{mode:firstRound?"ANY":"AUTO"}},
   maxOutputTokens:1024
- }});}};
+ }});
+  return collectGeminiFunctionCalls(stream,signal);
+ }};
 }
 
 /** Live worker: native Gemini chooses tools; only source-backed tool results are rendered.

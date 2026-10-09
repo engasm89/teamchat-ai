@@ -21,6 +21,11 @@ async function authorizeRoom(client:SqlClient,ctx:TenantContext,room:string):Pro
  const auth=await client.query("SELECT 1 FROM teamchat.room_memberships WHERE tenant_id=$1 AND room_id=$2 AND firebase_uid=$3 AND EXISTS (SELECT 1 FROM teamchat.user_memberships WHERE tenant_id=$1 AND firebase_uid=$3 AND active=true)",[ctx.tenantId,room,ctx.uid]);
  return auth.rows.length===1;
 }
+/** Recognize an explicit @AI mention in ordinary prose and punctuation, but
+ * never wake the agent for the domain-like substring in name@ai.example. */
+export function hasAiMention(body:string):boolean {
+ return /(?:^|[^\p{L}\p{N}_])@AI(?![\p{L}\p{N}_])/iu.test(body);
+}
 /** Every send is durable and idempotent. The event must commit before anyone publishes it. */
 export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{roomId:string;clientMessageId:string;body:string;allowSharedMemorySave?:boolean}):Promise<DurableMessage | typeof NO_MATCH>{
  const {roomId,clientMessageId,body}=input;
@@ -60,7 +65,7 @@ export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{r
    [ctx.tenantId,roomId,seq,messageId,ctx.uid,body,clientMessageId]);
   // Native tool selection is independent from explicit @AI wakeup detection.
   let aiTurnId:string|undefined;
-  if(/(?:^|\s)@AI\b/i.test(body)){
+  if(hasAiMention(body)){
     const job=await client.query<{turn_id:string}>(
       "INSERT INTO teamchat.ai_jobs(tenant_id,room_id,turn_id,user_uid,state,transcript_cutoff,memory_consent) VALUES ($1,$2,gen_random_uuid(),$3,'queued',$4,$5) RETURNING turn_id::text",
       [ctx.tenantId,roomId,ctx.uid,seq,input.allowSharedMemorySave===true]);

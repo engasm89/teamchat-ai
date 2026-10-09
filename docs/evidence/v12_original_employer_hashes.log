@@ -1,0 +1,8 @@
+Original employer source comparison: 7 files identical byte-for-byte
+6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45  teamchat-ai-assessment/teamchat-ai-seed-data/product_codes.csv
+85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469  teamchat-ai-assessment/teamchat-ai-seed-data/segment_coefficients.csv
+fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb  teamchat-ai-assessment/teamchat-ai-seed-data/promo_coefficients.csv
+d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1  teamchat-ai-assessment/teamchat-ai-seed-data/team_memory_seed.json
+0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1  teamchat-ai-assessment/teamchat-ai-seed-data/stores.json
+bb298d5d00cfe75edfbefabfe4b9353ae3cfb84a81a82c847e9f8e16b1bcb879  teamchat-ai-assessment/README.md
+ab41a97b944ff8d3c742568ea88703f2ab1a17efacd83577ff2d190a390f2941  teamchat-ai-assessment/ASSESSMENT.md

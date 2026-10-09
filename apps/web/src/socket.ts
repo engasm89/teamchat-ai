@@ -13,6 +13,7 @@ export class TeamSocket {
   private readonly onStatus:(status:SocketStatus)=>void;
   private readonly onError:(message:string)=>void;
   private readonly accountUid:string;
+  private expectedTenantId:string|null=null;
   private readonly onPresence?: (roomId:string,users:Array<{firebase_uid:string;expires_at:string}>)=>void;
   private readonly onTyping?: (roomId:string,users:Array<{firebase_uid:string;expires_at:string}>)=>void;
   constructor(url:string,onEvent:(event:LiveEvent)=>void,onStatus:(status:SocketStatus)=>void,
@@ -23,6 +24,14 @@ export class TeamSocket {
       this.accountUid=accountUid;this.onPresence=onPresence;this.onTyping=onTyping;
       this.restoreState();
     }
+  /** Bind events to the authenticated API's server-resolved tenant. Do not
+   * trust a tenant supplied by a WebSocket frame or client input. */
+  setExpectedTenant(tenantId:string):void {
+    if(!/^[a-z][a-z0-9-]+$/.test(tenantId))throw Error("Invalid workspace tenant");
+    if(this.expectedTenantId!==null&&this.expectedTenantId!==tenantId)
+      throw Error("Workspace identity changed; create a new authenticated socket");
+    this.expectedTenantId=tenantId;
+  }
   private get storageKey(){return `teamchat-pending-v1:${this.accountUid}`;}
   private persistState(){
     if(!this.accountUid)return;
@@ -75,7 +84,10 @@ export class TeamSocket {
         }
       } else if(frame.type==="event"){
         const event=frame.event as LiveEvent;
-        if(!event||typeof event.roomId!=="string"||!Number.isSafeInteger(event.sequence))return;
+        if(!event||typeof event.roomId!=="string"||!this.rooms.has(event.roomId)||
+           (this.expectedTenantId!==null&&event.tenantId!==this.expectedTenantId)||
+           typeof event.eventId!=="string"||!event.eventId||!Number.isSafeInteger(event.sequence)||event.sequence<1||
+           !event.payload||typeof event.payload!=="object"||Array.isArray(event.payload))return;
         const last=this.cursor.get(event.roomId)??0;
         if(event.sequence<=last||this.seen.has(event.eventId))return;
         if(event.sequence!==last+1){
@@ -133,7 +145,7 @@ export class TeamSocket {
     this.lastTypingSent=Date.now();
     this.ws.send(JSON.stringify({v:1,type:"typing",roomId}));
   }
-  close(clearStored=false):void {
+  close(clearStored=true):void {
     this.deliberatelyClosed=true;this.authToken="";this.tokenProvider=null;this.authenticated=false;
     if(this.retryTimer!==undefined){clearTimeout(this.retryTimer);this.retryTimer=undefined;}
     this.ws?.close();this.ws=null;this.outbound.clear();this.rooms.clear();this.cursor.clear();this.seen.clear();if(clearStored&&this.accountUid)try{sessionStorage.removeItem(this.storageKey);}catch{}this.onStatus("offline");
