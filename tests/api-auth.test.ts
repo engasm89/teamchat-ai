@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
 import {resolveVerifiedIdentity,assertRuntimeDbRole,firebaseProjectId} from "../src/server/database.ts";
 import {resolvedContext} from "../src/tenant.ts";
-import {RoomHub} from "../src/server/http-socket.ts";
+import {RoomHub,sessionLifetimeMs} from "../src/server/http-socket.ts";
 import type {SqlPool,SqlClient,QueryResult} from "../src/persistence/postgres.ts";
 
 class Mock implements SqlClient{
@@ -78,4 +79,17 @@ test("unsubscribing a room removes fanout and database presence/typing leases",a
  assert.ok(m.operations.some(x=>x.sql.includes("DELETE FROM teamchat.presence_leases")));
  assert.ok(m.operations.some(x=>x.sql.includes("DELETE FROM teamchat.typing_leases")));
  hub.remove(sock);
+});
+
+
+test("WebSocket token lifetime is bounded by signed token expiry",()=>{
+ const now=1_700_000_000_000;
+ assert.equal(sessionLifetimeMs(now+90_000,now),80_000);
+ assert.equal(sessionLifetimeMs(now+3_600_000,now),45*60_000);
+ assert.equal(sessionLifetimeMs(now-1,now),0);
+ assert.equal(sessionLifetimeMs(now+9_000,now),0);
+ assert.equal(sessionLifetimeMs(Number.NaN,now),0);
+ const code=readFileSync("src/server/http-socket.ts","utf8");
+ assert.match(code,/verifyWithExpiry\?/);
+ assert.match(code,/lifespan=setTimeout\(\(\)=>socket\.close/);
 });

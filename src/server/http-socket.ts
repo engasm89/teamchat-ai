@@ -14,6 +14,13 @@ const send=(socket:Socket,frame:Record<string,unknown>)=>{
  socket.send(JSON.stringify({v:1,...frame}));
 };
 const id=(v:unknown)=>typeof v==="string"&&/^[-a-z0-9_]{1,128}$/i.test(v);
+/** A websocket must not outlive the signed Firebase ID token that admitted it.
+ * Also rotate the socket before 45 minutes, so sign-out and revocation are
+ * checked at the next connection. An expired token never grants a session. */
+export function sessionLifetimeMs(expiresAtMillis:number,now=Date.now()):number{
+ if(!Number.isFinite(expiresAtMillis)||expiresAtMillis<=now)return 0;
+ return Math.min(45*60_000,Math.max(0,expiresAtMillis-now-10_000));
+}
 
 /** Single source of live data is committed PostgreSQL events, NOT in-process PubSub. */
 export class RoomHub {
@@ -256,7 +263,7 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
  wss.on("connection",(socket:Socket)=>{
   let ctx:TenantContext|null=null;let alive=true;let authDeadline=setTimeout(()=>socket.close(1008,"Authentication required"),8000);
   let authenticating=false;let activeCommands=0;let lastTypingAt=0;
-  const lifespan=setTimeout(()=>socket.close(1001,"Reauthenticate"),45*60_000);
+  let lifespan=setTimeout(()=>socket.close(1001,"Reauthenticate"),45*60_000);
   const heartbeat=setInterval(()=>{if(!alive){socket.close(1001,"Heartbeat timeout");return;}alive=false;socket.ping();},25_000);
   const leaseRenewal=setInterval(()=>{if(ctx)void hub.heartbeat(socket).catch(()=>socket.close(1008,"Membership revoked"));},20_000);
   socket.on("pong",()=>{alive=true;});
@@ -268,8 +275,18 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
     if(frame.type==="auth"){
      if(ctx||authenticating)throw Error("Already authenticating or authenticated");
      authenticating=true;
-     const uid=await verifier.verify(frame.token);
-     ctx=await resolveVerifiedIdentity(pool,uid);
+     const verified=verifier.verifyWithExpiry?
+       await verifier.verifyWithExpiry(frame.token):
+       {uid:await verifier.verify(frame.token),expiresAtMillis:Date.now()+45*60_000};
+     const lifetime=sessionLifetimeMs(verified.expiresAtMillis);
+     if(lifetime<=0)throw Error("Expired Firebase token");
+     const membership=await resolveVerifiedIdentity(pool,verified.uid);
+     // The verifier and membership lookup may outlive the initial auth timer.
+     // Never authorize a socket that closed while verification was in flight.
+     if(socket.readyState!==1)return;
+     ctx=membership;
+     clearTimeout(lifespan);
+     lifespan=setTimeout(()=>socket.close(1001,"Firebase session renewal required"),lifetime);
      clearTimeout(authDeadline);send(socket,{type:"auth_ok"});return;
     }
     if(!ctx)throw Error("Unauthorized");

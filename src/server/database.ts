@@ -47,7 +47,11 @@ export async function resolveVerifiedIdentity(pool:SqlPool,uid:string):Promise<T
  });
  return ctx;
 }
-export interface FirebaseIdentityVerifier {verify(token:string):Promise<string>}
+export interface FirebaseIdentityVerifier {
+ verify(token:string):Promise<string>;
+ /** Signed Firebase expiry, in Unix epoch milliseconds (not decoded without verification). */
+ verifyWithExpiry?(token:string):Promise<{uid:string;expiresAtMillis:number}>;
+}
 export function firebaseProjectId(value=process.env.FIREBASE_PROJECT_ID):string{
  if(typeof value!=="string"||!/^([a-z][a-z0-9-]{4,28}[a-z0-9])$/.test(value))
   throw Error("An explicit FIREBASE_PROJECT_ID is required for token verification");
@@ -64,12 +68,16 @@ export async function createFirebaseVerifier():Promise<FirebaseIdentityVerifier>
  if(!active)app.initializeApp({projectId});
  else if(active.options?.projectId!==projectId)throw Error("Firebase Admin project does not match FIREBASE_PROJECT_ID");
  const instance=auth.getAuth();
- return {async verify(token:string){
+ async function verifiedClaims(token:string):Promise<{uid:string;expiresAtMillis:number}>{
   if(typeof token!=="string"||token.length>10000||!token)throw new Error("Unauthorized");
   const claims=await instance.verifyIdToken(token,true);
-  if(!claims.uid||claims.firebase?.sign_in_provider==="anonymous")throw new Error("Unauthorized");
-  return claims.uid as string;
- }};
+  if(!claims.uid||claims.firebase?.sign_in_provider==="anonymous"||
+     !Number.isSafeInteger(claims.exp)||claims.exp*1000<=Date.now())
+    throw new Error("Unauthorized");
+  return {uid:claims.uid as string,expiresAtMillis:claims.exp*1000};
+ }
+ return {async verify(token:string){return (await verifiedClaims(token)).uid;},
+  verifyWithExpiry:verifiedClaims};
 }
 
 export interface SqlNotification {channel:string;payload?:string}

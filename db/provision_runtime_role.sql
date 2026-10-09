@@ -17,7 +17,10 @@ GRANT SELECT ON teamchat.tenants,teamchat.user_memberships,teamchat.rooms,teamch
 GRANT INSERT,UPDATE ON teamchat.messages,teamchat.room_events,teamchat.rooms,
  teamchat.ai_jobs,teamchat.task_outbox,teamchat.tool_calls,teamchat.answer_blocks,
  teamchat.memories,teamchat.memory_versions,teamchat.presence_leases TO teamchat_api;
-GRANT DELETE ON teamchat.presence_leases TO teamchat_api;
+-- Reclaimed AI turns discard superseded verified blocks before emitting the
+-- durable reset event. This DELETE is invoked by claimJob() through the normal
+-- (nonowner, RLS-restricted) teamchat_api login; omitting it breaks retry recovery.
+GRANT DELETE ON teamchat.answer_blocks,teamchat.presence_leases TO teamchat_api;
 REVOKE ALL ON teamchat.auth_directory FROM teamchat_api;
 GRANT EXECUTE ON FUNCTION teamchat.resolve_tenant_for_uid(text) TO teamchat_api;
 REVOKE ALL ON teamchat.ai_job_directory FROM teamchat_api;

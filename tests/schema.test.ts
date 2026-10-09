@@ -21,3 +21,17 @@ test("SQL seed has both isolated tenant partitions and no raw secret env",()=>{
  assert.ok(seed.split("INSERT INTO teamchat.memories").length-1===8);
  assert.doesNotMatch(seed,/sk-proj-|BEGIN PRIVATE KEY/);
 });
+
+
+test("restricted runtime role supports AI reclaim without expanding tenant powers",()=>{
+ const grants=readFileSync("db/provision_runtime_role.sql","utf8");
+ // The production retry path deletes answer_blocks after lease reclamation.
+ const retry=readFileSync("src/server/ai-jobs.ts","utf8");
+ assert.match(retry,/DELETE FROM teamchat\.answer_blocks/);
+ assert.match(grants,/GRANT DELETE ON teamchat\.answer_blocks,teamchat\.presence_leases TO teamchat_api/);
+ // No application INSERT/DELETE on the privileged auth/job directories.
+ assert.match(grants,/REVOKE ALL ON teamchat\.auth_directory FROM teamchat_api/);
+ assert.match(grants,/REVOKE ALL ON teamchat\.ai_job_directory FROM teamchat_api/);
+ const liveTest=readFileSync("scripts/integration/live-postgres.test.ts","utf8");
+ assert.match(liveTest,/DELETE FROM teamchat\.answer_blocks WHERE tenant_id=\$1/);
+});

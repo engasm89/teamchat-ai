@@ -61,6 +61,15 @@ test("real PostgreSQL role, semantic memory backfill and FORCED RLS isolation",{
    assert.equal(memories.rows[0]?.total,memories.rows[0]?.ready,"Seeded semantic memory embeddings must be backfilled");
   }
   const x=await replayRoom(pool,north,"not-in-my-tenant",0);assert.deepEqual(x,NO_MATCH);
+  // Exercise the actual privilege required for failed-AI-turn reclamation.
+  // A zero-match DELETE is harmless but PostgreSQL still checks table DELETE
+  // grants and FORCE RLS under the restricted runtime identity.
+  await inTenantTransaction(pool,north,async c=>{
+   const reclaimed=await c.query(
+    "DELETE FROM teamchat.answer_blocks WHERE tenant_id=$1 AND turn_id=$2::uuid RETURNING block_index",
+    [north.tenantId,"00000000-0000-0000-0000-000000000000"]);
+   assert.equal(reclaimed.rows.length,0);
+  });
   // Scope must reset even if a connection is reused.
   const second=await pool.connect();try{const leaked=await second.query("SELECT * FROM teamchat.catalog");assert.equal(leaked.rows.length,0);}finally{second.release();}
  }finally{await pool.end();}
