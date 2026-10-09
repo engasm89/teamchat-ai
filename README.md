@@ -1,55 +1,44 @@
 # TeamChat AI — Controlease technical assessment
 
-**Phase 2 authenticated-services source checkpoint — 9 October 2026.** This is implementation source and offline test evidence, **not** a deployed or production-tested application. The six-page Technical Brief was submitted on 8 October, before the first application commit.
+**v4 source remediation | 9 October 2026.** The six-page Technical Brief was sent on 8 October 2026. This archive contains runnable source and offline evidence, **not a live-tested application**.
 
-## Implemented code
+## Architecture
 
-- Employer seed fixtures copied unchanged; generated tenant-local, rerunnable SQL loader.
-- Relational PostgreSQL schema, composite tenant foreign keys, forced row-level security; restricted role provisioning, UID lookup and job lookup helpers.
-- `pg` database adapter, server-side Firebase ID token verifier, server-resolved membership, authenticated `/api/me` and `/api/rooms` endpoints.
-- Node `ws` WebSocket server, durable ordered room event replay, duplicate-message prevention, PG LISTEN/NOTIFY wakeups for multi-instance fanout, heartbeat and backpressure.
-- Cross-instance presence and typing via short-lived database leases and opaque PostgreSQL notifications; browser-side presence/typing indicators.
-- `@AI` job and Cloud Tasks outbox creation atomically with chat messages, OIDC-signed private worker invocation, retry dispatch route.
-- Gemini via Vertex AI native `@google/genai` function calling, a tenant-scoped SQL tool executor, persisted tool traces and progressively delivered **verified database result blocks**, never unsupported free-form factual model text.
-- React UI scaffold with Firebase sign-in, live messaging and typed tool output, cursor replay and bounded session-only retry queue, memory save consent checkbox.
-- Google Cloud Run API + private worker Dockerfiles, Firebase Hosting config, six-account provisioning script and deployment checklist.
+React + TypeScript Firebase Hosting client; Firebase Authentication; Node.js/TypeScript API and WebSocket server on Cloud Run; PostgreSQL/Cloud SQL with forced tenant RLS and an authenticated outbox/worker; Vertex AI Gemini native function calls and 768-dimensional Vertex embeddings; Cloud Tasks for durable job delivery. Business facts are rendered from tenant-scoped database tool results, not unchecked model-written sentences. Cross-instance messages are sourced from durable room events, with PostgreSQL NOTIFY as a wake-up signal, never browser polling.
 
-## Development commands
+**Critical boundary:** The server verifies Firebase identity, resolves tenant and room membership, passes a restricted tenant context to every tool, and performs transactions with `SET LOCAL` tenant context. The runtime database role must be named `teamchat_api` and cannot be superuser, schema owner, or `BYPASSRLS`.
+
+## Scripts
 
 ```bash
-npm install                 # requires npm registry; unavailable in this sandbox
-npm test                    # dependency-free mocked tests
-npm run check               # TypeScript backend typecheck
-npm run verify:fixtures
-npm run seed:sql
-npm run test:postgres       # CONDITIONAL; skips without DATABASE_URL and TEST_*_UID
-npm run provision:users     # real authorized Firebase + admin DB; credentials required
-npm run start:api           # requires pg, ws, firebase-admin, Cloud SQL, env
-npm run start:worker        # requires @google/genai, Google auth/tasks, env
+npm install                      # network and package registry required
+npm run check                   # TypeScript core check
+npm test                        # offline domain/mocked integration tests
+npm run verify:fixtures         # employer dataset hash and shape checks
+npm run seed:sql                # generate idempotent SQL fixture loader
+npm run provision:users         # OWNER database URL + authorized Firebase Admin
+npm run embed:backfill          # restricted runtime DB + Vertex embeddings
+npm run test:postgres:required  # FAILS if real DB, test users or embedding model absent
+npm run verify:release          # all local gates + REQUIRED real-DB test
+npm run start:api               # authenticated HTTP + real-time WebSocket
+npm run start:worker            # OIDC-protected durable Gemini worker
 cd apps/web && npm install && npm run build
 ```
 
-## PostgreSQL bootstrap
+## Database initialization sequence
 
-Read `docs/PHASE2_CONTINUATION.md` and `docs/DEPLOYMENT_CHECKLIST.md` in order. Apply SQL migrations 001–006 with the migration owner; create a restricted application login role; apply `db/provision_runtime_role.sql`; apply generated seed with transaction-local tenant context; then provision six actual Firebase users and test tenant access using that login. Never run the API or worker as the migration owner. Keep credentials in Secret Manager.
+1. Install supported PostgreSQL and required extensions using approved database permissions. Create a migration/schema owner and **separate restricted `teamchat_api` login**.
+2. Apply `db/migrations/001_schema.sql` through `007_semantic_memory.sql` IN ORDER. `007` requires pgvector (`CREATE EXTENSION vector`) and adds `vector(768)` column; check Cloud SQL extension prerequisites.
+3. Apply `db/provision_runtime_role.sql` after the role and migrations exist.
+4. Run `db/generated/seed.sql` as migration owner, with only the predefined two tenant contexts.
+5. Run `npm run provision:users` with six explicit authorized credentials and a separate admin URL. Do not commit passwords or print them.
+6. Run `npm run embed:backfill` with restricted DB role and `VERTEX_EMBEDDING_MODEL_ID`; confirm all seeded memories are embedded before any semantic acceptance test.
+7. Run `npm run test:postgres:required` using the actual restricted application role, real test Firebase UIDs and embedding model. The run must pass with **zero skips**.
 
-## Verification summary
+## Verification
 
-- Offline tests: **37 pass** using domain logic and mocked SQL/WebSocket interactions.
-- Backend TypeScript check: **pass**.
-- Real PostgreSQL tenant-isolation integration: **NOT RUN** (test skips; no PostgreSQL server/credentials).
-- Live Firebase, WebSocket, Vertex AI, Cloud Tasks, two-instance, browser tests: **NOT RUN** (no authorized GCP project or networked dependencies available).
-- React build: **NOT RUN** because dependencies are unavailable.
-- Cloud deployment, public URL, live credentials, GitHub remote, demo video: **NOT DONE**.
+The v4 offline suite contains **53 passing tests** including cross-tenant contracts, catalog rankings, source grounding, memory embedding query scope, job fencing, Cloud Tasks terminal handling and socket cleanup races. Backend TypeScript check passes in the available local environment. Five original dataset hashes were checked; the seed generates 2,753 inserts.
 
-## Important technical limitations
+**Not yet verified:** real SQL RLS, browser production build, Firebase tokens, live Vertex models, Cloud Tasks retry semantics, WebSockets on multiple Cloud Run instances, deployed UI, performance and full end-to-end behavior. `npm run test:postgres` reports one SKIP locally; the new strict command fails closed without credentials. See `docs/2026-10-09_END_TO_END_PRELIVE_AUDIT_v4.md` and `docs/DEPLOYMENT_CHECKLIST.md`.
 
-- Tenant isolation is **implemented at code/schema level but not proved against a live PostgreSQL runtime role**. The RLS proof remains an explicit integration gate.
-- The memory search implementation is tenant-filtered lexical search, **not** required semantic embedding retrieval yet.
-- AI worker retries, fencing, concurrent outputs and socket presence have not undergone actual Cloud SQL failure injection; operational bugs may remain.
-- The financial scoring formula is an explicitly disclosed assumption, not a sales/revenue forecast.
-- These are implementation modules, not a claim of passing the employer's acceptance checks.
-
-## 9 October pre-live source audit (v3)
-
-A second security/correctness audit corrected AI operation replay and memory-consent idempotence, privileged SQL startup credentials, worker lease expiration, stale account UI, unauthenticated socket sends and revocation-sensitive presence. See `docs/2026-10-09_PRELIVE_CODE_REVIEW.md` for exact changes and remaining live requirements. **This remains a pre-deployment checkpoint, not a final submission.**
+The reference financial formula is an explicitly disclosed engineering assumption, **not** an estimate of actual sales or revenue. Data integrity, tenant confidentiality and grounding take priority over polish.

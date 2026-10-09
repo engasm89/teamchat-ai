@@ -1,9 +1,12 @@
+import {rankCatalog} from "../catalog-search.ts";
 import {inTenantTransaction,type SqlPool,type SqlClient} from "../persistence/postgres.ts";
 import {NO_MATCH,type TenantContext} from "../tenant.ts";
 import {validateMemoryValue} from "../memory.ts";
 import {decimalMicro,formatMicro,multiplyMicro,retainedClasses,compareScores,type Score} from "../retail.ts";
 import {TOOL_DECLARATIONS,type ToolName} from "../tools.ts";
 import {SourceLedger} from "../grounding.ts";
+
+import {memoryEmbeddingText,vectorSql,type EmbeddingProvider} from "../worker/embeddings.ts";
 
 type Rec=Record<string,unknown>;
 function argsOf(value:unknown,allowed:string[]):Rec{
@@ -50,20 +53,35 @@ async function storeScore(c:SqlClient,ctx:TenantContext,store:Rec,codes:string[]
 /** All tools use scoped PostgreSQL transactions; model arguments never include tenant or authorization. */
 export class SqlToolExecutor{
  private readonly pool:SqlPool;
- constructor(pool:SqlPool){this.pool=pool;}
+ private readonly embeddings?:EmbeddingProvider;
+ constructor(pool:SqlPool,embeddings?:EmbeddingProvider){this.pool=pool;this.embeddings=embeddings;}
  async execute(ctx:TenantContext,roomId:string,name:ToolName,raw:unknown,ledger:SourceLedger,consent=false,jobFence?:{turnId:string;fence:number}):Promise<unknown>{
   if(!TOOL_DECLARATIONS.some(d=>d.name===name))throw Error("Undeclared tool");
+  // Expensive embedding calls happen before opening a PostgreSQL transaction.
+  let queryVector:string|undefined,saveVector:string|undefined;
+  if(name==="search_memory"){
+   const a=argsOf(raw,["query"]),query=str(a.query,"query");
+   if(!this.embeddings)throw Error("Semantic memory service not configured");
+   queryVector=vectorSql(await this.embeddings.embed(query,"RETRIEVAL_QUERY"));
+  }
+  if(name==="save_memory"){
+   const a=argsOf(raw,["key","value","room"]);
+   if(!consent)throw Error("Shared-memory save not consented");
+   const key=str(a.key,"key"),valid=validateMemoryValue(a.value);
+   if(valid.ok){
+    if(!this.embeddings)throw Error("Semantic memory service not configured");
+    saveVector=vectorSql(await this.embeddings.embed(memoryEmbeddingText(key,valid.value),"RETRIEVAL_DOCUMENT"));
+   }
+  }
   return inTenantTransaction(this.pool,ctx,async c=>{
    await requireMembership(c,ctx,roomId);
    switch(name){
     case "search_catalog":{
      const a=argsOf(raw,["query","limit"]);const query=str(a.query,"query").replace(/[%_\\]/g," ");
      const limit=a.limit===undefined?10:Number(a.limit);if(!Number.isInteger(limit)||limit<1||limit>25)throw Error("Invalid limit");
-     // Abbreviations are expanded inside retrieval, NOT used to route tool selection.
-     const expanded=query.replace(/\bAC\b/gi,"air conditioner").replace(/\bSSD\b/gi,"solid state drive");
-     const words=expanded.split(/\s+/).filter(Boolean).slice(0,12);
-     const search=words.map(x=>`%${x}%`);const r=await c.query("SELECT catalog_code,description,product_family,department,margin_class FROM teamchat.catalog WHERE tenant_id=$1 AND (description ILIKE ANY($2::text[]) OR product_family ILIKE ANY($2::text[])) ORDER BY catalog_code LIMIT $3",[ctx.tenantId,search,limit]);
-     return r.rows.map(p=>({ref:ledger.add("catalog",String(p.catalog_code),p),...p}));
+     const r=await c.query<{catalog_code:string;description:string;product_family:string;department:string;margin_class:string|null}>(
+      "SELECT catalog_code,description,product_family,department,margin_class FROM teamchat.catalog WHERE tenant_id=$1 ORDER BY catalog_code LIMIT 1500",[ctx.tenantId]);
+     return rankCatalog(r.rows,query,limit).map(p=>({ref:ledger.add("catalog",String(p.catalog_code),{...p}),...p}));
     }
     case "get_catalog_code":{
      const a=argsOf(raw,["catalog_code"]);const code=str(a.catalog_code,"catalog_code");const p=await catalogCode(c,ctx,code);
@@ -86,8 +104,15 @@ export class SqlToolExecutor{
     }
     case "search_memory":{
      const a=argsOf(raw,["query"]);const query=str(a.query,"query");
-     const r=await c.query("SELECT memory_id,key,value,created_by,created_at::text,source_room_id FROM teamchat.memories WHERE tenant_id=$1 AND to_tsvector('simple',key||' '||value::text) @@ plainto_tsquery('simple',$2) LIMIT 5",[ctx.tenantId,query]);
-     return r.rows.map(m=>({ref:ledger.add("memory",String(m.memory_id),m),memory:m}));
+     // Exact tenant RLS scope first, then semantic cosine distance. Weak matches
+     // return no record rather than a confidently phrased invented memory.
+     const r=await c.query<{memory_id:string;key:string;value:Rec;created_by:string;created_at:string;source_room_id:string;distance:number}>(
+      `SELECT memory_id,key,value,created_by,created_at::text,source_room_id,
+       (embedding <=> $2::vector)::float8 AS distance
+       FROM teamchat.memories WHERE tenant_id=$1 AND embedding IS NOT NULL
+       AND embedding_model=$3 ORDER BY embedding <=> $2::vector LIMIT 5`,
+      [ctx.tenantId,queryVector!,this.embeddings!.modelId]);
+     return r.rows.filter(m=>m.distance<=0.45).map(m=>({ref:ledger.add("memory",String(m.memory_id),m),memory:m}));
     }
     case "save_memory":{
      const a=argsOf(raw,["key","value","room"]);if(!consent)throw Error("Shared-memory save not consented");
@@ -96,7 +121,7 @@ export class SqlToolExecutor{
      const lease=await c.query("SELECT 1 FROM teamchat.ai_jobs WHERE tenant_id=$1 AND turn_id=$2::uuid AND fencing_token=$3 AND state='running' AND lease_expires_at>now() FOR UPDATE",[ctx.tenantId,jobFence.turnId,jobFence.fence]);
      if(lease.rows.length!==1)throw Error("AI job lease lost");
      const valid=validateMemoryValue(a.value);if(!valid.ok)return {validation_errors:valid.errors,saved:false};
-     const r=await c.query("INSERT INTO teamchat.memories(tenant_id,memory_id,key,value,created_by,created_at,source_room_id) VALUES ($1,gen_random_uuid()::text,$2,$3::jsonb,$4,now(),$5) ON CONFLICT (tenant_id,key) DO NOTHING RETURNING memory_id,key,value,created_by,created_at::text,source_room_id",[ctx.tenantId,key,JSON.stringify(valid.value),ctx.uid,roomId]);
+     const r=await c.query("INSERT INTO teamchat.memories(tenant_id,memory_id,key,value,created_by,created_at,source_room_id,embedding,embedding_model) VALUES ($1,gen_random_uuid()::text,$2,$3::jsonb,$4,now(),$5,$6::vector,$7) ON CONFLICT (tenant_id,key) DO NOTHING RETURNING memory_id,key,value,created_by,created_at::text,source_room_id",[ctx.tenantId,key,JSON.stringify(valid.value),ctx.uid,roomId,saveVector!,this.embeddings!.modelId]);
      if(!r.rows.length){
       const previous=await c.query("SELECT memory_id,key,value,created_by,created_at::text,source_room_id FROM teamchat.memories WHERE tenant_id=$1 AND key=$2 AND value=$3::jsonb",[ctx.tenantId,key,JSON.stringify(valid.value)]);
       const old=previous.rows[0];

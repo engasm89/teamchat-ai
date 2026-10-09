@@ -6,8 +6,10 @@ import {resolvedContext,NO_MATCH} from "../../src/tenant.ts";
 /** Run ONLY against a provisioned database using the NONOWNER app role.
  * DATABASE_URL and TEST_NORTHSIDE_UID / TEST_VALLEY_UID must be set and mapped
  * to active Firebase users by scripts/provision-demo-users.ts beforehand. */
-const configured=Boolean(process.env.DATABASE_URL&&process.env.TEST_NORTHSIDE_UID&&process.env.TEST_VALLEY_UID);
-test("real PostgreSQL role and FORCED RLS isolation, no tenant state leak",{skip:!configured},async()=>{
+const configured=Boolean(process.env.DATABASE_URL&&process.env.TEST_NORTHSIDE_UID&&process.env.TEST_VALLEY_UID&&process.env.VERTEX_EMBEDDING_MODEL_ID);
+const required=process.env.REQUIRE_POSTGRES==="1";
+test("real PostgreSQL role, semantic memory backfill and FORCED RLS isolation",{skip:!configured&&!required},async()=>{
+ if(!configured)throw Error("Live PostgreSQL credentials, test UIDs and embedding model are required; refusing to report a false pass");
  const pool=await createPgPool();
  try{
   await assertRuntimeDbRole(pool);
@@ -34,6 +36,13 @@ test("real PostgreSQL role and FORCED RLS isolation, no tenant state leak",{skip
   }));
   const own=await inTenantTransaction(pool,north,c=>c.query("SELECT COUNT(*)::integer AS n FROM teamchat.memories"));
   assert.ok(Number(own.rows[0]?.n)>=4);
+  for(const context of [north,valley]){
+   const memories=await inTenantTransaction(pool,context,c=>c.query<{total:string;ready:string}>(
+    "SELECT COUNT(*)::text AS total,COUNT(*) FILTER(WHERE embedding IS NOT NULL AND embedding_model=$1)::text AS ready FROM teamchat.memories WHERE tenant_id=$2",
+    [process.env.VERTEX_EMBEDDING_MODEL_ID,context.tenantId]));
+   assert.ok(Number(memories.rows[0]?.total)>=4);
+   assert.equal(memories.rows[0]?.total,memories.rows[0]?.ready,"Seeded semantic memory embeddings must be backfilled");
+  }
   const x=await replayRoom(pool,north,"not-in-my-tenant",0);assert.deepEqual(x,NO_MATCH);
   // Scope must reset even if a connection is reused.
   const second=await pool.connect();try{const leaked=await second.query("SELECT * FROM teamchat.catalog");assert.equal(leaked.rows.length,0);}finally{second.release();}

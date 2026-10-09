@@ -59,6 +59,6 @@ test("websocket fanout requires authorized subscription; different opaque room n
 test("socket replay denied room never leaks message data",async()=>{
  const m=new Mock(sql=>sql.includes("SELECT r.notify_token")?[]:[]);
  const hub=new RoomHub(pool(m));
- await assert.rejects(hub.subscribe({} as any,resolvedContext("signed-user","northside-outfitters"),"foreign-room",0),/Room unavailable/);
+ await assert.rejects(hub.subscribe({readyState:1} as any,resolvedContext("signed-user","northside-outfitters"),"foreign-room",0),/Room unavailable/);
  assert.equal(m.operations.some(x=>x.sql.includes("FROM teamchat.room_events")),false);
 });

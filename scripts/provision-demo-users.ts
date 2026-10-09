@@ -10,7 +10,10 @@ if(!input)throw Error("ASSESSMENT_USERS_JSON must contain exactly six designated
 const specs=JSON.parse(input) as Spec[];
 if(!Array.isArray(specs)||specs.length!==6||specs.some(s=>typeof s.email!=="string"||!s.email.includes("@")||typeof s.password!=="string"||s.password.length<12||!TENANTS.includes(s.tenant)||typeof s.name!=="string"||!s.name||!Array.isArray(s.rooms)||!s.rooms.length||s.rooms.some(r=>typeof r!=="string"))||TENANTS.some(t=>specs.filter(s=>s.tenant===t).length!==3)||new Set(specs.map(s=>s.email.toLowerCase())).size!==6)throw Error("Require exactly three unique valid users per tenant with strong passwords and rooms");
 const authPath="firebase-admin/auth",appPath="firebase-admin/app";
-const app=await import(appPath),api=await import(authPath);
+const loadedApp=await import(appPath),loadedAuth=await import(authPath);
+const app=loadedApp.getApps?loadedApp:loadedApp.default;
+const api=loadedAuth.getAuth?loadedAuth:loadedAuth.default;
+if(!app?.getApps||!api?.getAuth)throw Error("Firebase Admin exports unavailable");
 if(!app.getApps().length)app.initializeApp();
 const auth=api.getAuth();
 // This script uses DBA credentials, NEVER runtime DATABASE_URL or the non-owner teamchat_api role.

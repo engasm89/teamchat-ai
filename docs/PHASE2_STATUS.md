@@ -1,3 +1,5 @@
+> HISTORICAL v2/v3 NOTE: See `README.md` and `docs/2026-10-09_END_TO_END_PRELIVE_AUDIT_v4.md` for current source status.
+
 # Phase 2 source status — 9 October 2026 (continuation)
 
 Source modules for real PostgreSQL, Firebase token verification, native WebSockets, room replay, presence/typing, Vertex AI Gemini tool calling and Cloud Tasks private worker **now exist**. They have passed TypeScript checks and offline unit tests but they are not deployed or validated against real service credentials. The entire live integration / operational security checklist remains open.

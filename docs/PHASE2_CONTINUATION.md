@@ -1,3 +1,5 @@
+> HISTORICAL v2/v3 NOTE: See `README.md` and `docs/2026-10-09_END_TO_END_PRELIVE_AUDIT_v4.md` for current source status.
+
 # Phase 2 authenticated services checkpoint — 2026-10-09
 
 ## Delivered source code

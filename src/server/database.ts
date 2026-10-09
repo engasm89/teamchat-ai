@@ -5,7 +5,8 @@ import {resolvedContext,type TenantContext} from "../tenant.ts";
 export async function createPgPool(connectionString=process.env.DATABASE_URL):Promise<SqlPool & {end():Promise<void>}> {
  if(!connectionString)throw new Error("DATABASE_URL is required");
  const moduleName="pg";
- const {Pool}=await import(moduleName);
+ const imported=await import(moduleName);
+ const {Pool}=(imported.default??imported) as {Pool:new (config:unknown)=>SqlPool & {end():Promise<void>}};
  const requestedPoolSize=Number(process.env.PG_POOL_MAX??5);
  if(!Number.isSafeInteger(requestedPoolSize)||requestedPoolSize<1||requestedPoolSize>10)throw Error("PG_POOL_MAX must be an integer between 1 and 10");
  const raw=new Pool({connectionString,max:requestedPoolSize,
@@ -52,7 +53,10 @@ export async function resolveVerifiedIdentity(pool:SqlPool,uid:string):Promise<T
 export interface FirebaseIdentityVerifier {verify(token:string):Promise<string>}
 export async function createFirebaseVerifier():Promise<FirebaseIdentityVerifier>{
  const path="firebase-admin/app", authPath="firebase-admin/auth";
- const app=await import(path), auth=await import(authPath);
+ const importedApp=await import(path), importedAuth=await import(authPath);
+ const app=importedApp.getApps?importedApp:importedApp.default;
+ const auth=importedAuth.getAuth?importedAuth:importedAuth.default;
+ if(!app?.getApps||!auth?.getAuth)throw Error("Firebase Admin exports unavailable");
  if(!app.getApps().length)app.initializeApp();
  const instance=auth.getAuth();
  return {async verify(token:string){
@@ -68,7 +72,8 @@ export interface PgListener extends SqlClient {on(event:"notification",listener:
 /** Dedicated LISTEN client; never use a transaction-pool query connection for listener. */
 export async function connectEventListener(connectionString=process.env.DATABASE_URL):Promise<{client:PgListener,close():Promise<void>}>{
  if(!connectionString)throw new Error("DATABASE_URL is required");
- const moduleName="pg";const {Client}=await import(moduleName);
+ const moduleName="pg";const imported=await import(moduleName);
+ const {Client}=(imported.default??imported) as {Client:new (config:unknown)=>PgListener & {connect():Promise<void>;end():Promise<void>}};
  const client=new Client({connectionString,connectionTimeoutMillis:5000,keepAlive:true}) as PgListener & {connect():Promise<void>;end():Promise<void>};
  await client.connect();await client.query("LISTEN teamchat_events");await client.query("LISTEN teamchat_presence");await client.query("LISTEN teamchat_typing");
  return {client,close:()=>client.end()};

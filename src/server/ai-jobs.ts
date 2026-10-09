@@ -36,6 +36,26 @@ export async function claimJob(pool:SqlPool,ctx:TenantContext,jobId:string,worke
   const job=rows.rows[0];return job?{fence:Number(job.fencing_token),job}:null;
  });
 }
+/** Lease renewal during long Gemini calls. No unlocked update may extend another worker's lease. */
+export async function renewJobLease(pool:SqlPool,ctx:TenantContext,turnId:string,fence:number):Promise<boolean>{
+ return inTenantTransaction(pool,ctx,async c=>{
+  const r=await c.query(`UPDATE teamchat.ai_jobs
+   SET lease_expires_at=now()+interval '4 minutes',updated_at=now()
+   WHERE tenant_id=$1 AND turn_id=$2::uuid AND fencing_token=$3
+   AND state='running' AND lease_expires_at>now() RETURNING 1`,[ctx.tenantId,turnId,fence]);
+  return r.rows.length===1;
+ });
+}
+/** Transient failures release this worker's lease so Cloud Tasks can retry promptly.
+ * The fencing token prevents stale workers from changing an already-reclaimed turn. */
+export async function requeueJob(pool:SqlPool,ctx:TenantContext,turnId:string,fence:number):Promise<void>{
+ await inTenantTransaction(pool,ctx,async c=>{
+  const r=await c.query(`UPDATE teamchat.ai_jobs SET state='queued',lease_owner=NULL,
+   lease_expires_at=NULL,updated_at=now() WHERE tenant_id=$1 AND turn_id=$2::uuid
+   AND fencing_token=$3 AND state='running' AND lease_expires_at>now() RETURNING 1`,[ctx.tenantId,turnId,fence]);
+  if(r.rows.length!==1)throw Error('AI job lease lost');
+ });
+}
 export async function fencedUpdate(pool:SqlPool,ctx:TenantContext,jobId:string,fence:number,
  fn:(c:SqlClient)=>Promise<void>,state:"running"|"completed"|"failed"="running"){
  return inTenantTransaction(pool,ctx,async c=>{
@@ -93,6 +113,23 @@ export async function failExhaustedJob(pool:SqlPool,ctx:TenantContext,turnId:str
   if(row.rows.length!==1)return false;
   await appendWithinTransaction(c,ctx,row.rows[0]!.room_id,"ai_failed",{status:"failed",reason:"AI processing retry limit reached"},turnId);
   await c.query("UPDATE teamchat.ai_jobs SET state='failed',lease_expires_at=NULL,updated_at=now() WHERE tenant_id=$1 AND turn_id=$2::uuid",[ctx.tenantId,turnId]);
+  return true;
+ });
+}
+
+/** A permanently unavailable task dispatcher must fail visibly instead of
+ * leaving an unbounded 'AI queued' status in the transcript. */
+export async function failExhaustedDispatch(pool:SqlPool,ctx:TenantContext,turnId:string):Promise<boolean>{
+ return inTenantTransaction(pool,ctx,async c=>{
+  const r=await c.query<{room_id:string}>(`SELECT j.room_id FROM teamchat.ai_jobs j
+   JOIN teamchat.task_outbox o ON o.tenant_id=j.tenant_id AND o.turn_id=j.turn_id
+   WHERE j.tenant_id=$1 AND j.turn_id=$2::uuid AND j.state='queued'
+   AND o.dispatch_attempts>=12 FOR UPDATE OF j,o`,[ctx.tenantId,turnId]);
+  if(r.rows.length!==1)return false;
+  await appendWithinTransaction(c,ctx,r.rows[0]!.room_id,"ai_failed",
+   {status:"failed",reason:"AI dispatcher retry limit reached"},turnId);
+  await c.query("UPDATE teamchat.ai_jobs SET state='failed',updated_at=now() WHERE tenant_id=$1 AND turn_id=$2::uuid",[ctx.tenantId,turnId]);
+  await c.query("UPDATE teamchat.task_outbox SET state='failed' WHERE tenant_id=$1 AND turn_id=$2::uuid",[ctx.tenantId,turnId]);
   return true;
  });
 }

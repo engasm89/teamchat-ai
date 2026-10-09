@@ -20,6 +20,7 @@ export class RoomHub {
  private subscriptions=new Map<Socket,Map<string,Subscription>>();
  private byOpaque=new Map<string,Set<Subscription>>();
  private connectionIds=new WeakMap<Socket,string>();
+ private closedSockets=new WeakSet<Socket>();
  private readonly pool:SqlPool;
  constructor(pool:SqlPool){this.pool=pool;}
  private detach(sub:Subscription){
@@ -36,6 +37,7 @@ export class RoomHub {
   });
  }
  remove(socket:Socket){
+  this.closedSockets.add(socket);
   for(const s of this.subscriptions.get(socket)?.values()??[]){
    this.detach(s);
    const connectionId=this.connectionIds.get(socket);
@@ -47,11 +49,13 @@ export class RoomHub {
   this.subscriptions.delete(socket);
  }
  async subscribe(socket:Socket,ctx:TenantContext,roomId:string,after:number){
+  if(this.closedSockets.has(socket)||socket.readyState!==1)throw Error("Closed socket");
   if(!id(roomId)||!Number.isSafeInteger(after)||after<0)throw Error("Invalid subscription");
   const room=await inTenantTransaction(this.pool,ctx,async c=>{
    const r=await c.query<{notify_token:string}>("SELECT r.notify_token::text FROM teamchat.rooms r JOIN teamchat.room_memberships rm ON rm.tenant_id=r.tenant_id AND rm.room_id=r.room_id JOIN teamchat.user_memberships m ON m.tenant_id=rm.tenant_id AND m.firebase_uid=rm.firebase_uid WHERE r.tenant_id=$1 AND r.room_id=$2 AND rm.firebase_uid=$3 AND m.active=true",[ctx.tenantId,roomId,ctx.uid]);return r.rows[0];
   });
   if(!room)throw Error("Room unavailable");
+  if(this.closedSockets.has(socket)||socket.readyState!==1)return;
   let subs=this.subscriptions.get(socket);if(!subs){subs=new Map();this.subscriptions.set(socket,subs);}
   if(subs.size>=20&&!subs.has(roomId))throw Error("Too many room subscriptions");
   const old=subs.get(roomId);if(old)this.detach(old);
@@ -62,6 +66,16 @@ export class RoomHub {
   await inTenantTransaction(this.pool,ctx,async c=>{
    await c.query("INSERT INTO teamchat.presence_leases(tenant_id,room_id,firebase_uid,connection_id,expires_at) VALUES($1,$2,$3,$4::uuid,now()+interval '60 seconds') ON CONFLICT (tenant_id,room_id,connection_id) DO UPDATE SET expires_at=EXCLUDED.expires_at",[ctx.tenantId,roomId,ctx.uid,connectionId]);
   });
+  // The close event may run while the DB lease insert is in flight.
+  // Never re-register a dead socket after its cleanup has completed.
+  if(this.closedSockets.has(socket)||socket.readyState!==1){
+   this.subscriptions.get(socket)?.delete(roomId);
+   await inTenantTransaction(this.pool,ctx,async c=>{await c.query(
+    "DELETE FROM teamchat.presence_leases WHERE tenant_id=$1 AND room_id=$2 AND connection_id=$3::uuid",
+    [ctx.tenantId,roomId,connectionId]);});
+   return;
+  }
+  if(this.subscriptions.get(socket)?.get(roomId)!==s)return;
   if(!this.byOpaque.has(s.token))this.byOpaque.set(s.token,new Set());
   this.byOpaque.get(s.token)!.add(s);
   // Subscribe before replay to close the snapshot/live race.
@@ -149,8 +163,11 @@ export class RoomHub {
 
 export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseIdentityVerifier;listener:{client:{on(event:string,listener:(msg:any)=>void):void}};origins:string[];port:number}){
  const {pool,verifier,listener,origins,port}=config;
- if(!origins.length)throw Error("ALLOWED_ORIGINS must be configured");
- const moduleName="ws";const {WebSocketServer}=await import(moduleName);
+ if(!origins.length||origins.some(origin=>!/^https:\/\/[^/]+$/.test(origin)))
+  throw Error("ALLOWED_ORIGINS must contain explicit HTTPS origins");
+ const moduleName="ws";const imported=await import(moduleName);
+ const WebSocketServer=imported.WebSocketServer??imported.default?.WebSocketServer;
+ if(!WebSocketServer)throw Error("WebSocketServer export unavailable");
  const hub=new RoomHub(pool);
  let healthy=true;
  const server=createServer((req:IncomingMessage,res:ServerResponse)=>{void (async()=>{
@@ -233,8 +250,17 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
  return {server,wss,hub,async close(){hub.closeAll();await new Promise<void>(r=>server.close(()=>r()));}};
 }
 export async function startApi(){
- const pool=await createPgPool();await assertRuntimeDbRole(pool);
- const verifier=await createFirebaseVerifier();const listener=await connectEventListener();
- const origins=(process.env.ALLOWED_ORIGINS??"").split(",").map(x=>x.trim()).filter(Boolean);
- return createSocketServer({pool,verifier,listener,origins,port:Number(process.env.PORT||8080)});
+ const pool=await createPgPool();
+ let listener:Awaited<ReturnType<typeof connectEventListener>>|undefined;
+ try{
+  await assertRuntimeDbRole(pool);
+  const verifier=await createFirebaseVerifier();listener=await connectEventListener();
+  const origins=(process.env.ALLOWED_ORIGINS??"").split(",").map(x=>x.trim()).filter(Boolean);
+  const running=await createSocketServer({pool,verifier,listener,origins,port:Number(process.env.PORT||8080)});
+  const listenerHandle=listener;
+  return {...running,async close(){await running.close();await listenerHandle.close();await pool.end();}};
+ }catch(e){
+  if(listener)try{await listener.close();}catch{}
+  await pool.end();throw e;
+ }
 }

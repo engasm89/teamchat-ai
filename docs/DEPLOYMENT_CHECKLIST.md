@@ -1,34 +1,16 @@
-# TeamChat AI — Deployment checklist (requires authorized GCP project)
+# Mandatory live release gate — TeamChat AI v4
 
-> Nothing in this file asserts that deployment, live PG tests, or model tests have passed.
+**No deployment or cloud test is claimed complete by this checklist.** Follow this order in an authorized Google Cloud project.
 
-## Credentials and resources
+1. **Dependencies:** Generate and commit actual root and frontend npm lockfiles in a networked environment; run `npm ci` and `cd apps/web && npm ci && npm run build`. Pin and audit versions. Node >=22.10.
+2. **Cloud SQL:** Install PostgreSQL and pgvector (`vector`) using the permitted Cloud SQL privileged role, then apply migrations `001`–`007` as migration owner. Create runtime role `teamchat_api` as nonowner without SUPERUSER/BYPASSRLS. Run `db/provision_runtime_role.sql` after migrations.
+3. **Data:** `npm run verify:fixtures`, `npm run seed:sql`, execute generated SQL with owner, confirm 12 stores and 4 memories per tenant.
+4. **Firebase:** Enable email/password, set Firebase Admin credentials via service account, run `npm run provision:users` with 3 real users per company. Store passwords separately and privately.
+5. **Semantic memory:** Select a supported Vertex embedding model/region; set `VERTEX_EMBEDDING_MODEL_ID`, `GCP_PROJECT_ID`, `GOOGLE_CLOUD_REGION`, and restricted `DATABASE_URL`; run `npm run embed:backfill` before launching the Gemini worker. Verify model and embedding dimension 768.
+6. **Strict database test:** Set `TEST_NORTHSIDE_UID` and `TEST_VALLEY_UID`, then run `npm run test:postgres:required`. It must PASS with zero skips. Test foreign/nonexistent lookup equivalence, forced RLS, tenant reset on pooled connections, illegal cross-tenant writes and all seeded vectors.
+7. **Model + durable tasks:** Set verified `VERTEX_MODEL_ID`. Configure Cloud Tasks queue, OIDC audience, private worker IAM and Cloud Scheduler recovery. Confirm real native Gemini tool calls and source-backed result blocks. Inject failures and task retries; ensure no lost turn, duplicate memory, or authorization bypass.
+8. **Cloud Run:** Deploy API and private worker with respective Dockerfiles and production environment variables. Configure WebSocket request timeout and instance concurrency; **enable liveness probe** on `/healthz`. Two-instance LISTEN/NOTIFY fanout and 30-second reconnect are required. PostgreSQL connection budget must cover per-instance pool + dedicated LISTEN connection.
+9. **Firebase Hosting:** Build React client with real Firebase/API/WebSocket endpoints and deploy. Use two logged-in browsers, verify access boundary, messages, typing/presence, transcript restore, and idle network free of polling.
+10. **Evaluation:** Test every employer scenario; investigate semantic paraphrase similarity threshold and no-match behavior. Capture tests/logs; provide public URL, GitHub URL/commits, controlled credentials, README and under-five-minute demo by October 16, 2026 (exact time unconfirmed).
 
-- Cloud SQL PostgreSQL instance, private connection preferred; create dedicated database and different migration/runtime users. `teamchat_api` is **nonowner / no BYPASSRLS / no superuser**.
-- Apply 001–006 migration SQL as schema owner and grants after role creation; verify DB roles. Run generated seed as owner with transaction-local tenant contexts.
-- Firebase Auth email/password enabled. Provision 3 users per company with server-controlled mapping via `scripts/provision-demo-users.ts`; credentials via secret manager, do not store in Git history.
-- Vertex AI authorized service account and tested specific model availability. No fallback to an unrelated provider.
-- Cloud Tasks queue and OIDC invoker service account, Cloud Scheduler job calling worker `/internal/dispatch` with identical OIDC audience; worker service must require Cloud Run IAM invocation.
-- API Cloud Run service allows browser HTTPS/WebSocket only on configured origin; worker private service has different IAM access. Cloud SQL connector/network configured to avoid public DB access.
-- Deploy API and worker using `deploy/Dockerfile.api` and `deploy/Dockerfile.worker` respectively. Build context is repository root; these Dockerfiles require internet during build to obtain dependencies.
-- Configure API 60-minute Cloud Run request timeout (or shorter with reconnect). Set database pool limits according to max instances and Cloud SQL connection budget; keep instances <= verified connection capacity.
-- Build web: `cd apps/web && npm install && npm run build`; deploy from `apps/web` with Firebase Hosting configuration.
-
-## Mandatory tests before claiming pass
-
-1. `npm test` (offline, mocked); `npm run check`; `npm run test:postgres` (must have NO SKIP).
-2. Role / RLS audit: missing tenant context returns zero, foreign store returns zero, cross-tenant writes denied, pooled connections do not leak tenant identity.
-3. Firebase token/role tests: invalid, expired, revoked, and foreign room tokens denied, and forged tenant overrides ignored.
-4. Two browser sockets on different API instances: same ordered events, duplicate send idempotence and persisted replay after 30s disconnection; notifications and listener loss recovered.
-5. Native Gemini function-call traces tested against actual Vertex model. Verify no hallucinated SKU/class/store data and that a fake competitor request is indistinguishable from nonexistent record.
-6. Retry/failure injection: Cloud Tasks retries, idempotent shared memory, worker restarts mid tool turn, partial-answer revision, reconnect mid answer, presence/typing.
-7. Snapshot financial calculation caveat and missing coefficient handling; ensure no ungrounded revenue number.
-8. Last: public URL, repo and demo video; protect assessment passwords in private submission only.
-
-## Known unsupported features and risks
-
-- `presence` + `typing` code has NOTIFY/lease transport and UI indicators, but live cloud-instance recovery/expiry semantics remain unverified and need testing.
-- No semantic embeddings/pgvector memory retrieval yet; lexical retrieval is not full requirement compliance.
-- Need end-to-end tests with live Cloud Tasks, Cloud SQL, Cloud Run and Vertex AI; no connectivity/credentials in supplied workspace.
-- Worker retries and lease expiry need deeper fault injection. Current demo code may require extra production hardening after a real run.
-- npm lock files must be generated/committed during deployment preparation (package registry unavailable here).
+**Stop release on ANY failed or skipped tenant-isolation, grounding, live PostgreSQL, or browser/worker acceptance check.** See `2026-10-09_END_TO_END_PRELIVE_AUDIT_v4.md` for limitations and changed code.

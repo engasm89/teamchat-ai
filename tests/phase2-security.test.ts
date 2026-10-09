@@ -19,7 +19,7 @@ test("job directory is private and contains no model inputs or business text",()
 test("native Gemini function declarations and tool executor not keyword router",()=>{
  assert.match(ai,/response.functionCalls/);
  assert.match(ai,/TOOL_DECLARATIONS/);
- assert.match(ai,/new SqlToolExecutor\(pool\)/);
+ assert.match(ai,/new SqlToolExecutor\(pool,embeddings\)/);
  assert.doesNotMatch(ai,/if.*includes\("AC"\)/);
 });
 test("websocket origin, payload and idle safeguards installed",()=>{
