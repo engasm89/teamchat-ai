@@ -1,2 +1,10 @@
 import {startWorker} from "./http.ts";
-startWorker().then(()=>console.log("TeamChat private worker listening")).catch(e=>{console.error(e);process.exitCode=1;});
+import {installGracefulShutdown} from "../runtime/shutdown.ts";
+
+startWorker().then(running=>{
+  installGracefulShutdown(()=>running.close());
+  console.log("TeamChat private worker listening");
+}).catch(error=>{
+  console.error("TeamChat worker failed to start",error);
+  process.exitCode=1;
+});

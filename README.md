@@ -1,3 +1,5 @@
+> **2026-10-09 FINAL IDE-AGENT HANDOFF (post-v12):** The source has 115/115 offline tests passing and TypeScript checks with a temporary local Node-types reference. Fixed API/worker SIGTERM/SIGINT cleanup invocation and stale presence/typing frames after room unsubscribe. This is NOT a live-tested application. Full email/assessment/brief traceability and QA are in `docs/FINAL_HANDOFF_2026-10-09/`, including `IDE_AGENT_MASTER_PROMPT.md`, `REQUIREMENTS_LINE_BY_LINE.md/.csv`, `FINAL_AUDIT_MATRIX.pdf`, `QA_SCENARIO_RUNBOOK.md`, `EMAIL_CHRONOLOGY.md`, and `CURRENT_STATUS.md`. **Overall release RED** until real PostgreSQL/Firebase/Vertex/Cloud Tasks/two-browser/deployment and GitHub @paluchi access pass. Employer deadline Friday October 16, 2026 (overrides stale February date). Do not email without explicit user approval.
+
 # TeamChat AI — Controlease technical assessment
 
 **v8 requirements-aligned pre-live remediation | 9 October 2026.** The six-page Technical Brief was sent on 8 October 2026. This archive contains runnable source and offline evidence, **not a live-tested application**.

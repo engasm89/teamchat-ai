@@ -96,9 +96,9 @@ export class TeamSocket {
         this.cursor.set(event.roomId,event.sequence);this.seen.add(event.eventId);this.persistState();
         if(this.seen.size>2000)this.seen.clear(); // cursor remains source of dedupe
         this.onEvent(event);
-      } else if(frame.type==="presence"&&typeof frame.roomId==="string"&&Array.isArray(frame.users)){
+      } else if(frame.type==="presence"&&typeof frame.roomId==="string"&&this.rooms.has(frame.roomId)&&Array.isArray(frame.users)){
         this.onPresence?.(frame.roomId,frame.users as Array<{firebase_uid:string;expires_at:string}>);
-      } else if(frame.type==="typing"&&typeof frame.roomId==="string"&&Array.isArray(frame.users)){
+      } else if(frame.type==="typing"&&typeof frame.roomId==="string"&&this.rooms.has(frame.roomId)&&Array.isArray(frame.users)){
         this.onTyping?.(frame.roomId,frame.users as Array<{firebase_uid:string;expires_at:string}>);
       } else if(frame.type==="error") this.onError(String(frame.message??"Request failed"));
     });

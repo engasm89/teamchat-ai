@@ -83,3 +83,27 @@ test("late frames from a logged-out or replaced socket cannot restore session st
   assert.equal(states.at(-1),"offline");
  }finally{(globalThis as any).WebSocket=orig;(globalThis as any).sessionStorage=origStorage;}
 });
+
+test("presence and typing frames from a departed room cannot reappear",async()=>{
+ const original=(globalThis as any).WebSocket;
+ const originalStorage=(globalThis as any).sessionStorage;
+ (globalThis as any).WebSocket=FakeSocket;
+ (globalThis as any).sessionStorage={getItem:()=>null,setItem(){},removeItem(){}};
+ try{
+  FakeSocket.instances=[];
+  const present:string[]=[];const typing:string[]=[];
+  const client=new TeamSocket("wss://test.invalid/ws",()=>{},()=>{},()=>{},"member-ephemeral",
+    room=>present.push(room),room=>typing.push(room));
+  client.connect("token");client.subscribe("assortment-review");
+  const fake=FakeSocket.instances.at(-1)!;fake.open();fake.frame({type:"auth_ok"});
+  fake.frame({type:"presence",roomId:"assortment-review",users:[]});
+  client.unsubscribe("assortment-review");client.subscribe("category-strategy");
+  fake.frame({type:"presence",roomId:"assortment-review",users:[]});
+  fake.frame({type:"typing",roomId:"assortment-review",users:[]});
+  fake.frame({type:"presence",roomId:"category-strategy",users:[]});
+  fake.frame({type:"typing",roomId:"category-strategy",users:[]});
+  assert.deepEqual(present,["assortment-review","category-strategy"]);
+  assert.deepEqual(typing,["category-strategy"]);
+  client.close(true);
+ }finally{(globalThis as any).WebSocket=original;(globalThis as any).sessionStorage=originalStorage;}
+});
