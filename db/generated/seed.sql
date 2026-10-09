@@ -1,6 +1,7 @@
 -- Generated ONLY from employer-provided unchanged fixture bytes
 -- idempotent inserts; explicit updates require versioned migrations
 BEGIN;
+SELECT set_config('app.tenant_id', 'northside-outfitters', true);
 INSERT INTO teamchat.tenants (tenant_id,display_name) VALUES ('northside-outfitters','Northside Outfitters') ON CONFLICT DO NOTHING;
 INSERT INTO teamchat.rooms (tenant_id,room_id,title) VALUES ('northside-outfitters','assortment-review','assortment-review') ON CONFLICT DO NOTHING;
 INSERT INTO teamchat.rooms (tenant_id,room_id,title) VALUES ('northside-outfitters','category-strategy','category-strategy') ON CONFLICT DO NOTHING;
@@ -1379,6 +1380,7 @@ INSERT INTO teamchat.dataset_versions (tenant_id,filename,sha256) VALUES ('north
 INSERT INTO teamchat.dataset_versions (tenant_id,filename,sha256) VALUES ('northside-outfitters','segment_coefficients.csv','85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469') ON CONFLICT DO NOTHING;
 INSERT INTO teamchat.dataset_versions (tenant_id,filename,sha256) VALUES ('northside-outfitters','stores.json','0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1') ON CONFLICT DO NOTHING;
 INSERT INTO teamchat.dataset_versions (tenant_id,filename,sha256) VALUES ('northside-outfitters','team_memory_seed.json','d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1') ON CONFLICT DO NOTHING;
+SELECT set_config('app.tenant_id', 'valley-home-goods', true);
 INSERT INTO teamchat.tenants (tenant_id,display_name) VALUES ('valley-home-goods','Valley Home Goods') ON CONFLICT DO NOTHING;
 INSERT INTO teamchat.rooms (tenant_id,room_id,title) VALUES ('valley-home-goods','assortment-review','assortment-review') ON CONFLICT DO NOTHING;
 INSERT INTO teamchat.rooms (tenant_id,room_id,title) VALUES ('valley-home-goods','category-strategy','category-strategy') ON CONFLICT DO NOTHING;

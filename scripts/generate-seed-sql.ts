@@ -9,6 +9,7 @@ function insert(table:string,columns:string[],values:unknown[],conflict="DO NOTH
 }
 const lines=["-- Generated ONLY from employer-provided unchanged fixture bytes", "-- idempotent inserts; explicit updates require versioned migrations", "BEGIN;"];
 for(const tenant of TENANTS) {
+ lines.push(`SELECT set_config('app.tenant_id', ${q(tenant)}, true);`);
  lines.push(insert("tenants",["tenant_id","display_name"],[tenant,tenant==="northside-outfitters"?"Northside Outfitters":"Valley Home Goods"]));
  const rooms=new Set(["assortment-review","category-strategy"]);
  for(const memory of set.memoriesByTenant[tenant])rooms.add(memory.room);
@@ -34,4 +35,4 @@ for(const tenant of TENANTS) {
 lines.push("COMMIT;");
 mkdirSync("db/generated",{recursive:true});const path="db/generated/seed.sql";
 writeFileSync(path,lines.join("\n")+"\n");
-console.log(`Wrote ${path} with ${lines.length-4} data INSERT statements across both tenants`);
+console.log(`Wrote ${path} with ${lines.filter(line=>line.startsWith("INSERT ")).length} data INSERT statements across both tenants`);

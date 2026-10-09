@@ -1,0 +1,40 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {createPgPool,resolveVerifiedIdentity} from "../../src/server/database.ts";
+import {inTenantTransaction,sendDurableMessage,replayRoom} from "../../src/persistence/postgres.ts";
+import {resolvedContext,NO_MATCH} from "../../src/tenant.ts";
+/** Run ONLY against a provisioned database using the NONOWNER app role.
+ * DATABASE_URL and TEST_NORTHSIDE_UID / TEST_VALLEY_UID must be set and mapped
+ * to active Firebase users by scripts/provision-demo-users.ts beforehand. */
+const configured=Boolean(process.env.DATABASE_URL&&process.env.TEST_NORTHSIDE_UID&&process.env.TEST_VALLEY_UID);
+test("real PostgreSQL role and FORCED RLS isolation, no tenant state leak",{skip:!configured},async()=>{
+ const pool=await createPgPool();
+ try{
+  const direct=await pool.connect();
+  try{
+   const role=await direct.query<{rolsuper:boolean;rolbypassrls:boolean}>("SELECT rolsuper,rolbypassrls FROM pg_roles WHERE rolname=current_user");
+   assert.equal(role.rows[0]?.rolsuper,false);assert.equal(role.rows[0]?.rolbypassrls,false);
+   const noContext=await direct.query("SELECT store_id FROM teamchat.stores");
+   assert.equal(noContext.rows.length,0);
+   await assert.rejects(direct.query("SELECT * FROM teamchat.auth_directory"),/permission denied/);
+  }finally{direct.release();}
+  const north=await resolveVerifiedIdentity(pool,process.env.TEST_NORTHSIDE_UID!);
+  const valley=await resolveVerifiedIdentity(pool,process.env.TEST_VALLEY_UID!);
+  assert.notEqual(north.tenantId,valley.tenantId);
+  const nsRows=await inTenantTransaction(pool,north,c=>c.query<{store_id:string}>("SELECT store_id FROM teamchat.stores"));
+  const vRows=await inTenantTransaction(pool,valley,c=>c.query<{store_id:string}>("SELECT store_id FROM teamchat.stores"));
+  assert.equal(nsRows.rows.length,12);assert.equal(vRows.rows.length,12);
+  const nsIds=new Set(nsRows.rows.map(x=>x.store_id));const valleyExclusive=vRows.rows.find(x=>!nsIds.has(x.store_id));
+  if(valleyExclusive){const denied=await inTenantTransaction(pool,north,c=>c.query("SELECT * FROM teamchat.stores WHERE tenant_id=$1 AND store_id=$2",[valley.tenantId,valleyExclusive.store_id]));assert.equal(denied.rows.length,0);}
+  // FORCED RLS WITH CHECK must reject an attempted cross-company write.
+  await assert.rejects(inTenantTransaction(pool,north,async c=>{
+   await c.query("INSERT INTO teamchat.memories(tenant_id,memory_id,key,value,created_by,created_at,source_room_id) VALUES($1,$2,$3,'{}'::jsonb,$4,now(),$5)",
+    [valley.tenantId,"rls-negative-test","rls-negative-test",north.uid,"assortment-review"]);
+  }));
+  const own=await inTenantTransaction(pool,north,c=>c.query("SELECT COUNT(*)::integer AS n FROM teamchat.memories"));
+  assert.ok(Number(own.rows[0]?.n)>=4);
+  const x=await replayRoom(pool,north,"not-in-my-tenant",0);assert.deepEqual(x,NO_MATCH);
+  // Scope must reset even if a connection is reused.
+  const second=await pool.connect();try{const leaked=await second.query("SELECT * FROM teamchat.catalog");assert.equal(leaked.rows.length,0);}finally{second.release();}
+ }finally{await pool.end();}
+});

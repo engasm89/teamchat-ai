@@ -10,11 +10,23 @@
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "check": "tsc --noEmit",
     "verify:fixtures": "node --experimental-strip-types scripts/verify-fixtures.ts",
-    "seed:sql": "node --experimental-strip-types scripts/generate-seed-sql.ts"
+    "seed:sql": "node --experimental-strip-types scripts/generate-seed-sql.ts",
+    "test:postgres": "node --experimental-strip-types --test scripts/integration/live-postgres.test.ts",
+    "provision:users": "node --experimental-strip-types scripts/provision-demo-users.ts",
+    "start:api": "node --experimental-strip-types src/server/start.ts",
+    "start:worker": "node --experimental-strip-types src/worker/start.ts"
   },
   "description": "Phase 2 assessed implementation, source data and security foundation; deployment integrations pending",
   "devDependencies": {
     "@types/node": "^22.19.0",
     "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "pg": "^8.16.0",
+    "ws": "^8.18.3",
+    "firebase-admin": "^13.5.0",
+    "@google-cloud/tasks": "^6.2.1",
+    "google-auth-library": "^10.3.0",
+    "@google/genai": "^1.30.0"
   }
 }

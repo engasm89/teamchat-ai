@@ -15,14 +15,14 @@ export async function inTenantTransaction<T>(pool:SqlPool,ctx:TenantContext,fn:(
  }catch(err){if(open)try{await client.query("ROLLBACK");}catch{}throw err;}
  finally{client.release();}
 }
-export interface DurableMessage {roomId:string;messageId:string;sequence:number;authorUid:string;body:string;duplicate:boolean;}
+export interface DurableMessage {roomId:string;messageId:string;sequence:number;authorUid:string;body:string;duplicate:boolean; aiTurnId?:string;}
 export interface PersistedEvent {room_id:string;sequence:number;event_id:string;type:string;payload:Record<string,unknown>;created_at:string;}
 async function authorizeRoom(client:SqlClient,ctx:TenantContext,room:string):Promise<boolean>{
  const auth=await client.query("SELECT 1 FROM teamchat.room_memberships WHERE tenant_id=$1 AND room_id=$2 AND firebase_uid=$3 AND EXISTS (SELECT 1 FROM teamchat.user_memberships WHERE tenant_id=$1 AND firebase_uid=$3 AND active=true)",[ctx.tenantId,room,ctx.uid]);
  return auth.rows.length===1;
 }
 /** Every send is durable and idempotent. The event must commit before anyone publishes it. */
-export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{roomId:string;clientMessageId:string;body:string}):Promise<DurableMessage | typeof NO_MATCH>{
+export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{roomId:string;clientMessageId:string;body:string;allowSharedMemorySave?:boolean}):Promise<DurableMessage | typeof NO_MATCH>{
  const {roomId,clientMessageId,body}=input;
  if(!/^[-a-z0-9_]{1,128}$/i.test(roomId)||!/^[-a-z0-9_]{1,128}$/i.test(clientMessageId)||!body.trim()||body.length>8000)throw new Error("Invalid message command");
  return inTenantTransaction(pool,ctx,async client=>{
@@ -48,8 +48,18 @@ export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{r
   await client.query(
    "INSERT INTO teamchat.room_events(tenant_id,room_id,sequence,type,payload) VALUES ($1,$2,$3,'message',jsonb_build_object('message_id',$4::text,'author_uid',$5::text,'body',$6::text,'client_message_id',$7::text))",
    [ctx.tenantId,roomId,seq,messageId,ctx.uid,body,clientMessageId]);
+  // Native tool selection is independent from explicit @AI wakeup detection.
+  let aiTurnId:string|undefined;
+  if(/(?:^|\s)@AI\b/i.test(body)){
+    const job=await client.query<{turn_id:string}>(
+      "INSERT INTO teamchat.ai_jobs(tenant_id,room_id,turn_id,user_uid,state,transcript_cutoff,memory_consent) VALUES ($1,$2,gen_random_uuid(),$3,'queued',$4,$5) RETURNING turn_id::text",
+      [ctx.tenantId,roomId,ctx.uid,seq,input.allowSharedMemorySave===true]);
+    aiTurnId=job.rows[0]?.turn_id;
+    if(!aiTurnId)throw new Error("AI job insert failed");
+    await client.query("INSERT INTO teamchat.task_outbox(tenant_id,turn_id) VALUES($1,$2)",[ctx.tenantId,aiTurnId]);
+  }
   // Trigger NOTIFY fires on commit; listener fetches event from authoritative event table.
-  return {roomId,messageId,sequence:seq,authorUid:ctx.uid,body,duplicate:false};
+  return {roomId,messageId,sequence:seq,authorUid:ctx.uid,body,duplicate:false,...(aiTurnId?{aiTurnId}:{})};
  });
 }
 /** Same access check on initial history, reconnect replay and manual history requests. */

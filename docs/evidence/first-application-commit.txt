@@ -1,0 +1,1 @@
+126498d 2026-10-09T07:34:11Z feat: establish tenant-scoped TeamChat AI foundations and tests

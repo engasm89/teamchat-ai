@@ -56,3 +56,19 @@ test("retries same clientMessageId do not allocate new sequence",async()=>{
  assert.ok("duplicate" in result&&result.duplicate);
  assert.ok(!client.trace.some(x=>x.sql.includes("UPDATE teamchat.rooms")));
 });
+test("@AI message commits durable AI job and outbox atomically before acknowledgement",async()=>{
+ const client=new FakeClient(sql=>{
+  if(sql.includes("FROM teamchat.room_memberships"))return [{one:1}];
+  if(sql.includes("FROM teamchat.messages"))return [];
+  if(sql.includes("SELECT next_sequence"))return [{next_sequence:"42"}];
+  if(sql.includes("RETURNING message_id"))return [{message_id:"uuid-message"}];
+  if(sql.includes("RETURNING turn_id"))return [{turn_id:"00000000-0000-4000-a000-000000000001"}];
+  return [];
+ });
+ const result=await sendDurableMessage(poolFor(client),ctx,{roomId:"assortment-review",clientMessageId:"ai-1",body:"@AI show catalog codes",allowSharedMemorySave:false});
+ assert.ok("aiTurnId" in result&&result.aiTurnId);
+ const statements=client.trace.map(x=>x.sql);
+ assert.ok(statements.some(x=>x.includes("INSERT INTO teamchat.ai_jobs")));
+ assert.ok(statements.findIndex(x=>x.includes("INSERT INTO teamchat.ai_jobs"))<statements.findIndex(x=>x.includes("INSERT INTO teamchat.task_outbox")));
+ assert.equal(statements.at(-1),"COMMIT");
+});

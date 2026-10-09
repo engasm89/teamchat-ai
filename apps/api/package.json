@@ -1,0 +1,1 @@
+{"name":"@teamchat/api","private":true,"type":"module","scripts":{"start":"node --experimental-strip-types ../../src/server/start.ts"},"dependencies":{"pg":"^8.16.0","ws":"^8.18.3","firebase-admin":"^13.5.0","@google-cloud/tasks":"^6.2.1","google-auth-library":"^10.3.0","@google/genai":"^1.30.0"}}
