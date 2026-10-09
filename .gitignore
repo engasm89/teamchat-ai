@@ -9,3 +9,6 @@ coverage/
 service-account*.json
 credentials*.json
 *.sqlite
+# Agent handoff only: employer-original archive and test logs must not be pushed
+reference/original_employer_assessment.zip
+qa_evidence/
