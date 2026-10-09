@@ -5,7 +5,7 @@ import {SourceLedger} from "../grounding.ts";
 import {TOOL_DECLARATIONS,type ToolName} from "../tools.ts";
 import {SqlToolExecutor} from "../server/sql-tools.ts";
 import {verifiedToolBlock} from "./verified-block.ts";
-import {resolveJob,claimJob,persistAnswer,persistTool,getPersistedTool,finishJob,failExhaustedJob,renewJobLease,requeueJob} from "../server/ai-jobs.ts";
+import {resolveJob,claimJob,persistAnswer,persistTool,persistToolPlan,getPersistedTool,finishJob,failExhaustedJob,renewJobLease,requeueJob} from "../server/ai-jobs.ts";
 import {inTenantTransaction,type SqlPool} from "../persistence/postgres.ts";
 
 export interface GeminiResponse {functionCalls?:Array<{id?:string;name?:string;args?:Record<string,unknown>}>;candidates?:Array<{content?:{role?:string;parts?:unknown[]}}>};
@@ -121,8 +121,9 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
     const operationId=`r${round}-c${operation++}`;
     const saved=await getPersistedTool(pool,ctx,turnId,operationId);
     assertMatchingPersistedTool(saved,name,args);
-    const result=saved?saved.result:await tools.execute(ctx,room,name,args,ledger,claim.job.memory_consent,{turnId,fence});
-    if(!saved)await persistTool(pool,ctx,room,turnId,fence,operationId,name,args,result);
+    if(!saved)await persistToolPlan(pool,ctx,room,turnId,fence,operationId,name,args);
+    const result=saved?.status==="completed"?saved.result:await tools.execute(ctx,room,name,args,ledger,claim.job.memory_consent,{turnId,fence});
+    if(saved?.status!=="completed")await persistTool(pool,ctx,room,turnId,fence,operationId,name,args,result);
     // Values are structured outputs of authorized DB tools, not model-written claims.
     if(blocks>=20)throw Error("Answer block budget exceeded");
     await persistAnswer(pool,ctx,room,turnId,fence,blocks++,verifiedToolBlock(name,result));

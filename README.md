@@ -1,6 +1,13 @@
 # TeamChat AI — Controlease technical assessment
 
-**v6 requirements-aligned pre-live remediation | 9 October 2026.** The six-page Technical Brief was sent on 8 October 2026. This archive contains runnable source and offline evidence, **not a live-tested application**.
+**v8 requirements-aligned pre-live remediation | 9 October 2026.** The six-page Technical Brief was sent on 8 October 2026. This archive contains runnable source and offline evidence, **not a live-tested application**.
+
+## v8 correctness changes
+
+- AI retries emit a durable `ai_answer_reset` and discard active partial answer blocks before streaming a replacement. The original event audit remains in PostgreSQL; the React transcript projection hides superseded blocks by turn ID.
+- Gemini tool plans are committed as `planned` with an `ai_tool_start` event **before** executing database tools; results may only complete the matching persisted plan. Retry attempts reuse completed results and check planned arguments before executing.
+- Room listing rechecks active memberships inside its own scoped query after Firebase identity resolution, closing a revocation race.
+- Offline test assertions are not evidence of live PostgreSQL, Vertex or Cloud Run correctness. Genuine npm lockfiles remain required, and the production frontend build is not yet verified. See `docs/2026-10-09_SOURCE_AUDIT_v8.md`.
 
 ## Architecture
 

@@ -1,5 +1,5 @@
 /** A single browser-native WebSocket per authenticated session. Never polls for data. */
-export interface LiveEvent {eventId:string;tenantId:string;roomId:string;sequence:number;type:string;payload:Record<string,unknown>;}
+export interface LiveEvent {eventId:string;tenantId:string;roomId:string;sequence:number;type:string;turnId?:string;payload:Record<string,unknown>;}
 export type SocketStatus="offline"|"connecting"|"online"|"reconnecting";
 export class TeamSocket {
   private ws:WebSocket|null=null;private retries=0;private retryTimer:ReturnType<typeof setTimeout>|undefined;

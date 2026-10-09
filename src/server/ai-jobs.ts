@@ -33,7 +33,16 @@ export async function claimJob(pool:SqlPool,ctx:TenantContext,jobId:string,worke
    fencing_token=fencing_token+1,lease_owner=$3,lease_expires_at=now()+interval '4 minutes',updated_at=now()
    WHERE tenant_id=$1 AND turn_id=$2::uuid AND (state='queued' OR (state='running' AND lease_expires_at<now()))
    AND attempts<5 RETURNING turn_id::text,tenant_id,room_id,user_uid,transcript_cutoff::text,memory_consent,state,fencing_token::text,attempts`,[ctx.tenantId,jobId,workerId]);
-  const job=rows.rows[0];return job?{fence:Number(job.fencing_token),job}:null;
+  const job=rows.rows[0];
+  if(!job)return null;
+  // A previous worker may have persisted some answer blocks before failing.
+  // They cannot be silently mixed with blocks from this attempt. Keep the old
+  // event history auditable but emit a durable reset and clear its active view.
+  if(job.attempts>1){
+   const prior=await c.query("DELETE FROM teamchat.answer_blocks WHERE tenant_id=$1 AND turn_id=$2::uuid RETURNING block_index",[ctx.tenantId,jobId]);
+   if(prior.rows.length)await appendWithinTransaction(c,ctx,job.room_id,"ai_answer_reset",{turnId:jobId,attempt:job.attempts},jobId);
+  }
+  return {fence:Number(job.fencing_token),job};
  });
 }
 /** Lease renewal during long Gemini calls. No unlocked update may extend another worker's lease. */
@@ -72,13 +81,31 @@ export async function fencedUpdate(pool:SqlPool,ctx:TenantContext,jobId:string,f
  * A model retry cannot duplicate the same operation ID. */
 export async function persistTool(pool:SqlPool,ctx:TenantContext,room:string,turnId:string,fence:number,operationId:string,name:string,args:unknown,result:unknown){
  await fencedUpdate(pool,ctx,turnId,fence,async c=>{
-  const created=await c.query("INSERT INTO teamchat.tool_calls(tenant_id,turn_id,operation_id,name,arguments,result,status) VALUES($1,$2::uuid,$3,$4,$5::jsonb,$6::jsonb,'completed') ON CONFLICT (tenant_id,turn_id,operation_id) DO NOTHING RETURNING operation_id",[ctx.tenantId,turnId,operationId,name,JSON.stringify(args),JSON.stringify(result)]);
-  if(created.rows.length)await appendWithinTransaction(c,ctx,room,"ai_tool",{operationId,name,arguments:args,result},turnId);
+  // First claim the plan before execution. The result must update the exact
+  // same recorded operation, never a different tool/argument combination.
+  const updated=await c.query(`UPDATE teamchat.tool_calls SET status='completed',result=$6::jsonb
+    WHERE tenant_id=$1 AND turn_id=$2::uuid AND operation_id=$3
+    AND name=$4 AND arguments=$5::jsonb AND status='planned'
+    RETURNING operation_id`,[ctx.tenantId,turnId,operationId,name,JSON.stringify(args),JSON.stringify(result)]);
+  if(updated.rows.length!==1)throw Error("AI tool plan missing, already completed, or diverged");
+  await appendWithinTransaction(c,ctx,room,"ai_tool",{operationId,name,arguments:args,result},turnId);
+ });
+}
+/** A tool plan is committed before a tool runs. This matters most for memory
+ * writes, where a process may crash between the side effect and result log. */
+export async function persistToolPlan(pool:SqlPool,ctx:TenantContext,room:string,turnId:string,fence:number,operationId:string,name:string,args:unknown){
+ await fencedUpdate(pool,ctx,turnId,fence,async c=>{
+  const inserted=await c.query(`INSERT INTO teamchat.tool_calls
+   (tenant_id,turn_id,operation_id,name,arguments,status)
+   VALUES($1,$2::uuid,$3,$4,$5::jsonb,'planned')
+   ON CONFLICT (tenant_id,turn_id,operation_id) DO NOTHING RETURNING operation_id`,
+   [ctx.tenantId,turnId,operationId,name,JSON.stringify(args)]);
+  if(inserted.rows.length)await appendWithinTransaction(c,ctx,room,"ai_tool_start",{operationId,name,arguments:args},turnId);
  });
 }
 export async function getPersistedTool(pool:SqlPool,ctx:TenantContext,turnId:string,operationId:string){
  return inTenantTransaction(pool,ctx,async c=>{
-  const r=await c.query<{name:string;arguments:unknown;result:unknown}>("SELECT name,arguments,result FROM teamchat.tool_calls WHERE tenant_id=$1 AND turn_id=$2::uuid AND operation_id=$3 AND status='completed'",[ctx.tenantId,turnId,operationId]);
+  const r=await c.query<{name:string;arguments:unknown;result:unknown;status:string}>("SELECT name,arguments,result,status FROM teamchat.tool_calls WHERE tenant_id=$1 AND turn_id=$2::uuid AND operation_id=$3 AND status IN ('planned','completed')",[ctx.tenantId,turnId,operationId]);
   return r.rows.length?{found:true as const,...r.rows[0]!}:null;
  });
 }

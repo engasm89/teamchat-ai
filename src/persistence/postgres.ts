@@ -16,7 +16,7 @@ export async function inTenantTransaction<T>(pool:SqlPool,ctx:TenantContext,fn:(
  finally{client.release(broken);}
 }
 export interface DurableMessage {roomId:string;messageId:string;sequence:number;authorUid:string;body:string;duplicate:boolean; aiTurnId?:string;}
-export interface PersistedEvent {room_id:string;sequence:number;event_id:string;type:string;payload:Record<string,unknown>;created_at:string;}
+export interface PersistedEvent {room_id:string;sequence:number;event_id:string;type:string;turn_id?:string|null;payload:Record<string,unknown>;created_at:string;}
 async function authorizeRoom(client:SqlClient,ctx:TenantContext,room:string):Promise<boolean>{
  const auth=await client.query("SELECT 1 FROM teamchat.room_memberships WHERE tenant_id=$1 AND room_id=$2 AND firebase_uid=$3 AND EXISTS (SELECT 1 FROM teamchat.user_memberships WHERE tenant_id=$1 AND firebase_uid=$3 AND active=true)",[ctx.tenantId,room,ctx.uid]);
  return auth.rows.length===1;
@@ -76,7 +76,7 @@ export async function replayRoom(pool:SqlPool,ctx:TenantContext,roomId:string,af
  return inTenantTransaction(pool,ctx,async client=>{
   if(!await authorizeRoom(client,ctx,roomId))return NO_MATCH;
   const result=await client.query<PersistedEvent>(
-    "SELECT room_id,sequence,event_id::text,type,payload,created_at::text FROM teamchat.room_events WHERE tenant_id=$1 AND room_id=$2 AND sequence>$3 ORDER BY sequence ASC LIMIT $4",
+    "SELECT room_id,sequence,event_id::text,type,turn_id::text,payload,created_at::text FROM teamchat.room_events WHERE tenant_id=$1 AND room_id=$2 AND sequence>$3 ORDER BY sequence ASC LIMIT $4",
     [ctx.tenantId,roomId,after,limit]);
   return result.rows;
  });

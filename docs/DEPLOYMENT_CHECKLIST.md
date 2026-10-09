@@ -17,3 +17,9 @@
 **Stop release on ANY failed or skipped tenant-isolation, grounding, live PostgreSQL, or browser/worker acceptance check.** See `2026-10-09_END_TO_END_PRELIVE_AUDIT_v5.md` for limitations and changed code.
 
 **v6 source review:** See `2026-10-09_SOURCE_AUDIT_v6.md` and `REQUIREMENTS_TRACEABILITY_v6.md`. Test expired-running Cloud Task recovery, room unsubscribe, stale browser sockets, and graceful shutdown before signoff.
+
+## v8 retry/replay contract
+
+- A worker reclaim with incomplete answer blocks emits one durable `ai_answer_reset` event in the same transaction as clearing active blocks; `turn_id` is propagated in replay frames. A client must hide earlier answer blocks for that turn when displaying historical events, including after refresh.
+- `ai_tool_start` records immutable name/arguments before a tool side effect. A matching persisted plan is required before storing `ai_tool` results; retry may reuse completed tools and must fail on divergent requests.
+- Verify a worker interruption after `ai_tool_start` and after the first `ai_answer_block`, then reconnect a second browser and assert no mixed prior/retry content, with full committed tool history.

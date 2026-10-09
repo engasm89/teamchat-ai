@@ -191,7 +191,7 @@ export class RoomHub {
       if(sequence<=s.cursor)continue;
       if(sequence!==s.cursor+1)throw Error("Event history gap");
       if(s.socket.readyState!==1)return;
-      send(s.socket,{type:"event",event:{eventId:row.event_id,tenantId:s.ctx.tenantId,roomId:s.roomId,sequence,type:row.type,payload:row.payload}});
+      send(s.socket,{type:"event",event:{eventId:row.event_id,tenantId:s.ctx.tenantId,roomId:s.roomId,sequence,type:row.type,turnId:row.turn_id??undefined,payload:row.payload}});
       s.cursor=sequence;
      }
      if(rows.length!==100)break;
@@ -227,7 +227,12 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
    const uid=await verifier.verify(raw[1]!);const ctx=await resolveVerifiedIdentity(pool,uid);
    const data=req.url==="/api/me"?{uid,tenantId:ctx.tenantId}:
     await inTenantTransaction(pool,ctx,async c=>{
-     const rows=await c.query("SELECT r.room_id,r.title FROM teamchat.rooms r JOIN teamchat.room_memberships rm ON rm.tenant_id=r.tenant_id AND rm.room_id=r.room_id WHERE rm.tenant_id=$1 AND rm.firebase_uid=$2 ORDER BY r.room_id",[ctx.tenantId,uid]);return {rooms:rows.rows};
+     // Recheck active membership in the same query: the identity may have
+     // been revoked between token resolution and the room-list transaction.
+     const rows=await c.query(`SELECT r.room_id,r.title FROM teamchat.rooms r
+       JOIN teamchat.room_memberships rm ON rm.tenant_id=r.tenant_id AND rm.room_id=r.room_id
+       JOIN teamchat.user_memberships m ON m.tenant_id=rm.tenant_id AND m.firebase_uid=rm.firebase_uid
+       WHERE rm.tenant_id=$1 AND rm.firebase_uid=$2 AND m.active=true ORDER BY r.room_id`,[ctx.tenantId,uid]);return {rooms:rows.rows};
     });
    res.writeHead(200,{"content-type":"application/json"});res.end(JSON.stringify(data));
   }catch{res.writeHead(401);res.end(JSON.stringify({error:"Unauthorized"}));}
