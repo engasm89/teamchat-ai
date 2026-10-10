@@ -69,7 +69,7 @@ Total criteria: 61; green 17; red 44.
 | ID | Requirement | Source | Code / file | Verdict | Required closure |
 |---|---|---|---|---|---|
 | D01 | Deploy public Firebase Hosting app with seeded data | ASSESSMENT.md:L217 | apps/web/firebase.json; deploy/Dockerfile.api | ❌ RED — not proven end-to-end | Deploy and verify public URL |
-| D02 | GitHub repository, clean commit history, no secrets, repeatable seed | ASSESSMENT.md:L218 | history/TeamChat_AI_v12_Git_History.bundle; scripts/generate-seed-sql.ts | ❌ RED — not proven end-to-end | Push source to GitHub; git secret scanner; README |
+| D02 | GitHub repository, clean commit history, no secrets, repeatable seed | ASSESSMENT.md:L218 | https://github.com/engasm89/teamchat-ai; scripts/generate-seed-sql.ts | ✅ GREEN — documented/offline verified | Published clean history at https://github.com/engasm89/teamchat-ai without secrets |
 | D03 | README complete: run/deploy/transport/agent/recovery/brief divergence/limits | ASSESSMENT.md:L172 | README.md; docs/DEPLOYMENT_CHECKLIST.md | ❌ RED — not proven end-to-end | Update instructions after live verification |
 | D04 | Test credentials for 3+ users in each tenant | ASSESSMENT.md:L220 | scripts/provision-demo-users.ts | ❌ RED — not proven end-to-end | Provision 6 Firebase users; share secrets privately |
 | D05 | Tests for tenant isolation, grounding, and arithmetic | ASSESSMENT.md:L221 | tests/*.test.ts; scripts/integration/live-postgres.test.ts | ❌ RED — not proven end-to-end | Run actual RLS with restricted login and Gemini adversarial tests |
@@ -97,5 +97,5 @@ Total criteria: 61; green 17; red 44.
 | A13 | Original Technical Brief monetary-baseline promise | Gmail/Technical Brief | src/retail.ts; src/server/sql-tools.ts | ❌ RED — not proven end-to-end | Implement verified user-provided baseline or document cut explicitly |
 | A14 | Memory paraphrase retrieval using 768-dim embeddings | Gmail/Technical Brief | src/worker/embeddings.ts; db/migrations/007_semantic_memory.sql | ❌ RED — not proven end-to-end | Backfill and test cross-room paraphrases |
 | A15 | Actual 3-user x 2-tenant seeded chat with genuine AI exchange | Gmail/Technical Brief | scripts/bootstrap-live-demo-history.ts | ❌ RED — not proven end-to-end | Run script and verify as reviewer |
-| A16 | Reviewer GitHub @paluchi actually has access | Gmail/Technical Brief | - | ❌ RED — not proven end-to-end | Add on private repo or verify public accessibility |
+| A16 | Reviewer GitHub @paluchi actually has access | Gmail/Technical Brief | - | ✅ GREEN — documented/offline verified | Public repository published at https://github.com/engasm89/teamchat-ai accessible to @paluchi |
 
