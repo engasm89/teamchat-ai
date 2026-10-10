@@ -3,6 +3,9 @@ import type {TenantContext} from "../tenant.ts";
 export function validateDispatchConfig(env:NodeJS.ProcessEnv=process.env){
  const queue=env.CLOUD_TASKS_QUEUE_PATH,worker=env.CLOUD_TASKS_WORKER_URL,
   serviceAccount=env.CLOUD_TASKS_INVOKER_EMAIL,audience=env.CLOUD_TASKS_AUDIENCE;
+ if(env.LOCAL_TASK_WORKER==="1"||!queue){
+  return {queue:"local",worker:"local",serviceAccount:"local",audience:"local"};
+ }
  if(!queue||!/^projects\/[^/]+\/locations\/[^/]+\/queues\/[^/]+$/.test(queue)||
   !worker||!/^https:\/\/[^/]+$/.test(worker)||
   !serviceAccount||!/^[^\s@]+@[^\s@]+$/.test(serviceAccount)||
@@ -53,6 +56,20 @@ export async function dispatchJob(pool:SqlPool,ctx:TenantContext,turnId:string,
  const {queue,worker,serviceAccount,audience}=validateDispatchConfig();
  const attempt=await reserveDispatchAttempt(pool,ctx,turnId);
  if(attempt===null)return false; // Another instance has reserved it, or the job is terminal.
+ if(queue==="local"){
+  // Local environment worker execution
+  import("../worker/gemini.ts").then(async ({createGeminiProvider,executeAiJob})=>{
+   const {createVertexEmbedder}=await import("../worker/embeddings.ts");
+   const provider=await createGeminiProvider();
+   const embeddings=await createVertexEmbedder();
+   await executeAiJob(pool,provider,turnId,embeddings);
+  }).catch(e=>console.error("Local task execution error",e));
+  await inTenantTransaction(pool,ctx,async c=>{await c.query(
+   `UPDATE teamchat.task_outbox SET state='dispatched'
+    WHERE tenant_id=$1 AND turn_id=$2::uuid AND dispatch_attempts=$3`,
+   [ctx.tenantId,turnId,attempt]);});
+  return true;
+ }
  const name=`${queue}/tasks/teamchat-${turnId.replaceAll("-","")}-d${attempt}`;
  const request={parent:queue,task:{name,httpRequest:{httpMethod:"POST",url:`${worker.replace(/\/$/,"")}/internal/turn`,headers:{"Content-Type":"application/json"},oidcToken:{serviceAccountEmail:serviceAccount,audience},body:Buffer.from(JSON.stringify({turnId})).toString("base64")}}};
  const create=createTaskOverride??(async (payload:Record<string,unknown>)=>

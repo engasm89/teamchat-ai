@@ -23,7 +23,7 @@ function canonicalJson(value:unknown):string{
 export async function collectGeminiFunctionCalls(
  stream:AsyncIterable<GeminiResponse>,signal?:AbortSignal
 ):Promise<GeminiResponse>{
- const seen=new Map<string,{id?:string;name?:string;args?:Record<string,unknown>}>();
+ const seen=new Map<string,{id?:string;name?:string;args?:Record<string,unknown>;thoughtSignature?:string}>();
  let chunks=0;
  for await(const response of stream){
   if(signal?.aborted)throw Error("Gemini request cancelled");
@@ -37,11 +37,17 @@ export async function collectGeminiFunctionCalls(
    const prior=seen.get(key);
    if(prior){if(prior.name!==call.name||canonicalJson(prior.args)!==canonicalJson(call.args))
     throw Error("Conflicting streamed Gemini function call");}
-   else {seen.set(key,{id:call.id,name:call.name,args:call.args});if(seen.size>15)throw Error("Gemini tool call budget exceeded");}
+   else {seen.set(key,{id:call.id,name:call.name,args:call.args,thoughtSignature:(call as any).thoughtSignature || ((response.candidates?.[0]?.content?.parts as any[])?.find((p:any)=>p?.thoughtSignature)?.thoughtSignature)});if(seen.size>15)throw Error("Gemini tool call budget exceeded");}
   }
  }
  const functionCalls=[...seen.values()];
- return {functionCalls,candidates:[{content:{role:"model",parts:functionCalls.map(functionCall=>({functionCall}))}}]};
+ const parts:any[] = functionCalls.map(f => {
+    const part:any = {functionCall: {name: f.name, args: f.args}};
+    if(f.id) part.functionCall.id = f.id;
+    if((f as any).thoughtSignature) part.thoughtSignature = (f as any).thoughtSignature;
+    return part;
+  });
+  return {functionCalls,candidates:[{content:{role:"model",parts}}]};
 }
 
 /** Persisted operation IDs are bound to tool name AND arguments, not merely
@@ -82,15 +88,29 @@ export async function createGeminiProvider():Promise<GeminiProvider>{
  const client=apiKey?new GoogleGenAI({apiKey}):new GoogleGenAI({vertexai:true,project,location});
  const tools=[{functionDeclarations:TOOL_DECLARATIONS}];
  return {async generate(contents,firstRound,signal,trusted){
-  if(!trusted)throw Error("Missing server-verified AI turn context");
-  const stream=await client.models.generateContentStream({model,contents,config:{
-  abortSignal:signal,
-  temperature:0,tools,systemInstruction:trustedPlannerInstructions(trusted),
-  toolConfig:{functionCallingConfig:{mode:firstRound?"ANY":"AUTO"}},
-  maxOutputTokens:1024
- }});
-  return collectGeminiFunctionCalls(stream,signal);
- }};
+   if(!trusted)throw Error("Missing server-verified AI turn context");
+   for(let attempt=0;attempt<6;attempt++){
+    try {
+     const stream=await client.models.generateContentStream({model,contents,config:{
+      abortSignal:signal,
+      temperature:0,tools,systemInstruction:trustedPlannerInstructions(trusted),
+      toolConfig:{functionCallingConfig:{mode:firstRound?"ANY":"AUTO"}},
+      maxOutputTokens:1024
+     }});
+     return await collectGeminiFunctionCalls(stream,signal);
+    } catch(err:any){
+     const is429 = err?.status === 429 || String(err?.message||"").includes("429") || String(err?.message||"").includes("RESOURCE_EXHAUSTED");
+     if(is429 && attempt < 5){
+      const delay = Math.min(15000, (attempt + 1) * 4000);
+      console.warn(`[Gemini rate-limit 429] Backing off ${delay}ms (attempt ${attempt+1}/5)...`);
+      await new Promise(r => setTimeout(r, delay));
+      continue;
+     }
+     throw err;
+    }
+   }
+   throw Error("Gemini generate quota retry limit reached");
+  }};
 }
 
 /** Live worker: native Gemini chooses tools; only source-backed tool results are rendered.
@@ -119,7 +139,7 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
    const active=await c.query("SELECT 1 FROM teamchat.room_memberships r JOIN teamchat.user_memberships u USING(tenant_id,firebase_uid) WHERE r.tenant_id=$1 AND r.room_id=$2 AND r.firebase_uid=$3 AND u.active=true",[ctx.tenantId,room,ctx.uid]);
    if(active.rows.length!==1)throw Error("Authorization revoked");
    const q=await c.query<{type:string;payload:Record<string,unknown>;sequence:string}>(
-    "SELECT type,payload,sequence::text FROM teamchat.room_events WHERE tenant_id=$1 AND room_id=$2 AND sequence<=$3 AND type IN ('message','ai_answer_block') ORDER BY sequence DESC LIMIT 16",[ctx.tenantId,room,claim.job.transcript_cutoff]);
+    "SELECT type,payload,sequence::text FROM teamchat.room_events WHERE tenant_id=$1 AND room_id=$2 AND sequence<=$3 AND type IN ('message','ai_answer_block') ORDER BY room_events.sequence DESC LIMIT 16",[ctx.tenantId,room,claim.job.transcript_cutoff]);
    if(!q.rows.some(r=>r.type==="message"&&Number(r.sequence)===Number(claim.job.transcript_cutoff)&&r.payload.author_uid===ctx.uid))throw Error("Original message unavailable");
    return q.rows.reverse();
   });

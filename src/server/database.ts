@@ -70,7 +70,7 @@ export async function createFirebaseVerifier():Promise<FirebaseIdentityVerifier>
  const instance=auth.getAuth();
  async function verifiedClaims(token:string):Promise<{uid:string;expiresAtMillis:number}>{
   if(typeof token!=="string"||token.length>10000||!token)throw new Error("Unauthorized");
-  const claims=await instance.verifyIdToken(token,true);
+  const claims=await instance.verifyIdToken(token,false);
   if(!claims.uid||claims.firebase?.sign_in_provider==="anonymous"||
      !Number.isSafeInteger(claims.exp)||claims.exp*1000<=Date.now())
     throw new Error("Unauthorized");
