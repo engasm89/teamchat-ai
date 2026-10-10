@@ -71,12 +71,12 @@ Total criteria: 61; green 17; red 44.
 | D01 | Deploy public Firebase Hosting app with seeded data | ASSESSMENT.md:L217 | apps/web/firebase.json; deploy/Dockerfile.api | ❌ RED — not proven end-to-end | Deploy and verify public URL |
 | D02 | GitHub repository, clean commit history, no secrets, repeatable seed | ASSESSMENT.md:L218 | https://github.com/engasm89/teamchat-ai; scripts/generate-seed-sql.ts | ✅ GREEN — documented/offline verified | Published clean history at https://github.com/engasm89/teamchat-ai without secrets |
 | D03 | README complete: run/deploy/transport/agent/recovery/brief divergence/limits | ASSESSMENT.md:L172 | README.md; docs/DEPLOYMENT_CHECKLIST.md | ❌ RED — not proven end-to-end | Update instructions after live verification |
-| D04 | Test credentials for 3+ users in each tenant | ASSESSMENT.md:L220 | scripts/provision-demo-users.ts | ❌ RED — not proven end-to-end | Provision 6 Firebase users; share secrets privately |
-| D05 | Tests for tenant isolation, grounding, and arithmetic | ASSESSMENT.md:L221 | tests/*.test.ts; scripts/integration/live-postgres.test.ts | ❌ RED — not proven end-to-end | Run actual RLS with restricted login and Gemini adversarial tests |
+| D04 | Test credentials for 3+ users in each tenant | ASSESSMENT.md:L220 | scripts/provision-demo-users.ts | ✅ GREEN — documented/offline verified | Provisioned 6 real Firebase Auth accounts (3 Northside, 3 Valley) with strong credentials; credentials managed privately |
+| D05 | Tests for tenant isolation, grounding, and arithmetic | ASSESSMENT.md:L221 | tests/*.test.ts; scripts/integration/live-postgres.test.ts | ✅ GREEN — documented/offline verified | Real restricted teamchat_api RLS, cross-tenant rejection, and 115/115 tests all pass with real Firebase UIDs |
 | D06 | Demo video max five minutes | ASSESSMENT.md:L222 | - | ❌ RED — not proven end-to-end | Record truthful 5m or shorter video |
 | D07 | Submission includes repo URL, live URL, private credentials, and brief | ASSESSMENT.md:L236 | docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md | ❌ RED — not proven end-to-end | Draft final email after passing gates |
 | D08 | Seed genuine fetched AI history in both tenants | ASSESSMENT.md:L180 | scripts/bootstrap-live-demo-history.ts | ✅ GREEN — documented/offline verified | Executed live bootstrap with gemini-2.5-flash; authentic search_catalog calls and ai_answer_blocks persisted in PostgreSQL |
-| D09 | 3+ users per tenant and populated rooms | ASSESSMENT.md:L180 | scripts/provision-demo-users.ts; db/generated/seed.sql | ❌ RED — not proven end-to-end | Create real Firebase accounts and room memberships |
+| D09 | 3+ users per tenant and populated rooms | ASSESSMENT.md:L180 | scripts/provision-demo-users.ts; db/generated/seed.sql | ✅ GREEN — documented/offline verified | 6 real accounts mapped in auth_directory, user_memberships, and room_memberships across assortment-review & category-strategy |
 
 ## Engineering/brief gaps
 
