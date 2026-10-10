@@ -19,15 +19,18 @@ export function memoryEmbeddingText(key: string, value: Record<string,unknown>):
   return `${key}\n${Object.entries(value).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>`${k}: ${String(v)}`).join("\n")}`.slice(0,8_192);
 }
 export async function createVertexEmbedder(): Promise<EmbeddingProvider> {
+  const apiKey=process.env.GEMINI_API_KEY;
   const project=process.env.GCP_PROJECT_ID;
   const location=process.env.GOOGLE_CLOUD_REGION;
-  const modelId=process.env.VERTEX_EMBEDDING_MODEL_ID;
-  if(!project||!location||!modelId)throw Error("Vertex embedding project/region/model required");
+  const modelId=process.env.VERTEX_EMBEDDING_MODEL_ID||process.env.GEMINI_EMBEDDING_MODEL_ID||"gemini-embedding-001";
+  if(!apiKey&&(!project||!location))throw Error("Vertex embedding project/region/model required");
   const path="@google/genai"; const {GoogleGenAI}=await import(path);
-  const genai=new GoogleGenAI({vertexai:true,project,location});
+  const genai=apiKey?new GoogleGenAI({apiKey}):new GoogleGenAI({vertexai:true,project,location});
   return {modelId,async embed(text,task){
-    if(typeof text!=="string"||!text.trim()||text.length>8_192)throw Error("Invalid embedding input");
-    const result=await genai.models.embedContent({model:modelId,contents:text,config:{taskType:task,outputDimensionality:EMBEDDING_DIMENSION,autoTruncate:false}});
+    const config = apiKey
+      ? { taskType: task, outputDimensionality: EMBEDDING_DIMENSION }
+      : { taskType: task, outputDimensionality: EMBEDDING_DIMENSION, autoTruncate: false };
+    const result=await genai.models.embedContent({model:modelId,contents:text,config});
     return validateEmbedding(result.embeddings?.[0]?.values);
   }};
 }

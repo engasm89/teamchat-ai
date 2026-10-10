@@ -75,10 +75,11 @@ export function trustedPlannerInstructions(context:{roomId:string;memoryConsent:
 }
 
 export async function createGeminiProvider():Promise<GeminiProvider>{
- const project=process.env.GCP_PROJECT_ID,location=process.env.GOOGLE_CLOUD_REGION,model=process.env.VERTEX_MODEL_ID;
- if(!project||!location||!model)throw Error("Verified Vertex AI model/project/region required");
+ const apiKey=process.env.GEMINI_API_KEY;
+ const project=process.env.GCP_PROJECT_ID,location=process.env.GOOGLE_CLOUD_REGION,model=process.env.VERTEX_MODEL_ID||process.env.GEMINI_MODEL_ID||"gemini-2.5-flash";
+ if(!apiKey&&(!project||!location))throw Error("Verified Gemini API key or Vertex AI project/region required");
  const path="@google/genai";const {GoogleGenAI}=await import(path);
- const client=new GoogleGenAI({vertexai:true,project,location});
+ const client=apiKey?new GoogleGenAI({apiKey}):new GoogleGenAI({vertexai:true,project,location});
  const tools=[{functionDeclarations:TOOL_DECLARATIONS}];
  return {async generate(contents,firstRound,signal,trusted){
   if(!trusted)throw Error("Missing server-verified AI turn context");
