@@ -99,10 +99,10 @@ export async function createGeminiProvider():Promise<GeminiProvider>{
      }});
      return await collectGeminiFunctionCalls(stream,signal);
     } catch(err:any){
-     const is429 = err?.status === 429 || String(err?.message||"").includes("429") || String(err?.message||"").includes("RESOURCE_EXHAUSTED");
-     if(is429 && attempt < 5){
+     const isTransient = (err?.name === "AbortError" && !signal?.aborted) || err?.status === 429 || String(err?.message||"").includes("429") || String(err?.message||"").includes("RESOURCE_EXHAUSTED") || String(err?.message||"").includes("ECONNRESET") || (String(err?.message||"").includes("aborted") && !signal?.aborted);
+     if(isTransient && attempt < 5 && !signal?.aborted){
       const delay = Math.min(15000, (attempt + 1) * 4000);
-      console.warn(`[Gemini rate-limit 429] Backing off ${delay}ms (attempt ${attempt+1}/5)...`);
+      console.warn(`[Gemini transient/rate-limit] Backing off ${delay}ms (attempt ${attempt+1}/5)...`);
       await new Promise(r => setTimeout(r, delay));
       continue;
      }
