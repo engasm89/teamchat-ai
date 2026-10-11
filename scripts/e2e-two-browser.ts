@@ -7,7 +7,9 @@
 import WebSocket from "ws";
 
 async function login(email: string, pass: string): Promise<string> {
-  const res = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDJDBdfXKX7p2icNrr1q5d8neZWXK6GcpI", {
+  const firebaseApiKey = process.env.FIREBASE_WEB_API_KEY;
+  if (!firebaseApiKey) throw new Error("FIREBASE_WEB_API_KEY environment variable is required");
+  const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${encodeURIComponent(firebaseApiKey)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password: pass, returnSecureToken: true })
