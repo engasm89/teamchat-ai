@@ -377,17 +377,15 @@ try {
     
     try {
       const testEmail = process.env.TEST_BUYER_EMAIL || "northside.buyer1@teamchat.internal";
-      let testPassword = process.env.TEST_BUYER_PASSWORD;
+      const testPassword = process.env.TEST_BUYER_PASSWORD;
       if (!testPassword) {
-        try {
-          const creds = JSON.parse(await import("node:fs").then(fs => fs.readFileSync("/Users/macbook/.gemini/antigravity-ide/brain/5dc0b142-5c9f-41fb-933a-5d0b4ca796d7/scratch/new_rotated_credentials.json", "utf8")));
-          testPassword = creds[testEmail];
-        } catch {}
+        throw new Error("TEST_BUYER_PASSWORD environment variable is required for live socket verification");
       }
-      if (!testPassword) {
-        throw new Error("TEST_BUYER_PASSWORD environment variable or scratch file required for live socket verification");
+      const firebaseApiKey = process.env.FIREBASE_WEB_API_KEY;
+      if (!firebaseApiKey) {
+        throw new Error("FIREBASE_WEB_API_KEY environment variable is required for live socket verification");
       }
-      const authRes = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDJDBdfXKX7p2icNrr1q5d8neZWXK6GcpI", {
+      const authRes = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${encodeURIComponent(firebaseApiKey)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: testEmail, password: testPassword, returnSecureToken: true })
