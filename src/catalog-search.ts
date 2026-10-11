@@ -8,7 +8,10 @@ function tokens(value:string):string[]{
   .filter(w=>w.length>1&&!STOP.has(w)))];
 }
 export function catalogQueryTerms(value:string):string[]{
- const expanded=value.replace(/\b(AC|SSD|HBA|RTW|DIY)\b/gi,w=>EXPANSIONS[w.toLowerCase()]!);
+ const expanded=value.replace(/\b(AC|SSD|HBA|RTW|DIY)s?\b/gi,w=>{
+  const base=w.toLowerCase().replace(/s$/,"");
+  return EXPANSIONS[base]??w;
+ });
  return [...new Set((expanded.toLowerCase().match(/[a-z0-9]+/g)??[]).filter(w=>w.length>1&&!STOP.has(w)))].slice(0,16);
 }
 function rankOne<T extends CatalogCandidate>(candidates:T[],query:string):T[]{
@@ -24,7 +27,7 @@ function rankOne<T extends CatalogCandidate>(candidates:T[],query:string):T[]{
 }
 export function rankCatalog<T extends CatalogCandidate>(candidates:T[],query:string,limit:number):T[]{
  if(!Number.isSafeInteger(limit)||limit<1||limit>25)throw Error("Invalid catalog result limit");
- const mentioned=[...new Set((query.match(/\b(AC|SSD|HBA|RTW|DIY)\b/gi)??[]).map(x=>x.toLowerCase()))];
+ const mentioned=[...new Set((query.match(/\b(AC|SSD|HBA|RTW|DIY)s?\b/gi)??[]).map(x=>x.toLowerCase().replace(/s$/,"")))];
  if(mentioned.length<2)return rankOne(candidates,query).slice(0,limit);
  // Buyers ask for several categories at once; interleave independently retrieved
  // fixture records so a broad SSD family cannot crowd AC out of the results.

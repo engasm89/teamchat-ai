@@ -55,7 +55,7 @@ async function createClient(name: string, email: string, pass: string, wsUrl: st
 
 console.log("=== STARTING TWO-BROWSER LIVE REAL-TIME E2E SUITE ===");
 
-const WS_URL = "ws://localhost:8080/ws";
+const WS_URL = process.env.WS_URL || "ws://localhost:8080/ws";
 
 // 1. Establish User 1 (Northside Buyer 1) and User 2 (Northside Buyer 2)
 console.log("1. Authenticating User 1 and User 2...");

@@ -375,6 +375,7 @@ try {
     let framesReceived = 0;
     let dropped = false;
     
+    try {
       const testEmail = process.env.TEST_BUYER_EMAIL || "northside.buyer1@teamchat.internal";
       const testPassword = process.env.TEST_BUYER_PASSWORD;
       if (!testPassword) {
@@ -388,7 +389,7 @@ try {
       const authData = (await authRes.json()) as { idToken?: string };
       const token = authData.idToken;
 
-      const wsUrl = "ws://localhost:8080/ws";
+      const wsUrl = process.env.WS_URL || "ws://localhost:8080/ws";
       await new Promise<void>((resolve) => {
         const ws = new WebSocket(wsUrl, { headers: { Origin: "https://focus-clean-4b9f4.web.app" } });
         const timer = setTimeout(() => {
