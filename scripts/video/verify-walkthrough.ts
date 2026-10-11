@@ -144,6 +144,13 @@ try{
   const signInTimes=Array.from({length:8},(_,i)=>signIn.fromSeconds+0.5+i*(signIn.toSeconds-signIn.fromSeconds-1)/7);
   cropSheet(VIDEO,signInTimes,controls.emailBox,path.join(t.dir,"crops-email-field.jpg"));
   t.artifact("crops-email-field.jpg","E-mail field of both panes during sign-in, 3x, for visual review");
+  /** Caption times are recording time; the published cut is sped up per speedSegments. */
+  const toOutput=(s:number)=>(timeline.speedSegments as Array<{fromSeconds:number;toSeconds:number;speed:number}>)
+   .reduce((o,g)=>o+Math.max(0,Math.min(s,g.toSeconds)-g.fromSeconds)/g.speed,0);
+  const valley=(timeline.captions as Array<{cast:string;fromSeconds:number;toSeconds:number}>).find(c=>c.cast.includes("VALLEY"))!;
+  const [vFrom,vTo]=[toOutput(valley.fromSeconds),toOutput(valley.toSeconds)];
+  cropSheet(VIDEO,Array.from({length:8},(_,i)=>vFrom+0.25+i*(vTo-vFrom-0.5)/7),controls.emailBox,path.join(t.dir,"crops-email-field-valley.jpg"));
+  t.artifact("crops-email-field-valley.jpg","E-mail field of both panes while the right pane re-signs in as Valley, 3x, for visual review");
   const footerTimes=Array.from({length:10},(_,i)=>signIn.toSeconds+(i+0.5)*(duration-signIn.toSeconds)/10);
   cropSheet(VIDEO,footerTimes,FOOTER,path.join(t.dir,"crops-sidebar-footer.jpg"));
   t.artifact("crops-sidebar-footer.jpg","Signed-in account footer of both panes across the video, 3x, for visual review");
