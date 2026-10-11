@@ -1,8 +1,10 @@
-# REQUIREMENTS FINAL TRACEABILITY SUMMARY
+# REQUIREMENTS INDEPENDENT CERTIFICATION SUMMARY
 
 Total Requirements Tracked: **61**  
-Total Verified PASS: **61**  
-Total Failed: **0**  
+- **PASS:** **61**  
+- **FAIL:** **0**  
+- **BLOCKED:** **0**  
+- **NOT VERIFIED:** **0**  
 
 ### Category Breakdown
 

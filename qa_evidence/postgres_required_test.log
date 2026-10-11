@@ -1,0 +1,13 @@
+
+> teamchat-ai-assessment@0.2.0 test:postgres:required
+> REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+
+✔ real PostgreSQL role, semantic memory backfill and FORCED RLS isolation (17738.1855ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17824.179708

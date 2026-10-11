@@ -3,12 +3,15 @@ node_modules/
 .env.*
 !.env.example
 *.log
+!qa_evidence/*.log
 coverage/
 .DS_Store
 .firebase/
 service-account*.json
 credentials*.json
 *.sqlite
+*.bundle
+*.zip
 # Agent handoff only: employer-original archive and test logs must not be pushed
 reference/original_employer_assessment.zip
 reference/submitted_technical_brief_2026-10-08.pdf
