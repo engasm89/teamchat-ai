@@ -53,3 +53,18 @@ object parameter that declares no properties, so shared memory silently stored
 empty values, the exact "silent truncation" the S10 runbook forbids. The fix
 declares `value_json`, parses it on the server, keeps the field-level rejection
 of nested values, and rejects empty values.
+
+## The one controlled repair
+
+With the schema fixed, a live S10 turn (scratch run) rejected the nested roster
+with field-level reasons and then ended. The worker's `MemoryRepairBudget`
+allows exactly one repair, but nothing told the model it could repair.
+`scripts/experiments/save-memory-repair.ts` replays round 2 of that turn (the
+rejection as the function response, mode `AUTO`, three trials):
+
+| System instruction | Repair call made |
+| --- | --- |
+| As deployed in 75de127 | 0/3 (the model apologised and stopped) |
+| Plus: "If save_memory returns validation_errors, make exactly one corrected save_memory call with the same key and a flat value_json (express nested lists as plain text fields), then stop retrying." | 3/3, same key, every lead, day and store kept as flat text |
+
+Raw output: `save-memory-repair.json`.
