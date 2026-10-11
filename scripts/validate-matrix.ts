@@ -3,7 +3,7 @@ import path from "node:path";
 import {pathToFileURL} from "node:url";
 import {execFileSync} from "node:child_process";
 import {parse} from "csv-parse/sync";
-import {sha256File,loadRuns,verifyManifest,APPLICATION_PATHS,type Verdict,type RunResults,type Provenance} from "./evidence/lib.ts";
+import {sha256File,loadRuns,verifyManifest,liveDeployment,APPLICATION_PATHS,type Verdict,type RunResults,type Provenance} from "./evidence/lib.ts";
 
 /**
  * Derives each requirement verdict from independently stored evidence.
@@ -69,12 +69,7 @@ async function defaultFetcher(url:string){
 }
 
 async function defaultLiveDeployment(p:Provenance){
- const describe=(service:string)=>JSON.parse(execFileSync("gcloud",["run","services","describe",service,"--region","us-central1","--format=json"],{encoding:"utf8"}));
- const revisionDigest=(rev:string)=>JSON.parse(execFileSync("gcloud",["run","revisions","describe",rev,"--region","us-central1","--format=json"],{encoding:"utf8"})).status.imageDigest as string;
- const api=describe(p.api.service),worker=describe(p.worker.service);
- const serving=(svc:any)=>(svc.status.traffic as Array<{revisionName:string;percent:number}>).find(t=>t.percent===100)?.revisionName??"";
- const apiRevision=serving(api),workerRevision=serving(worker);
- return {apiRevision,apiDigest:revisionDigest(apiRevision),workerRevision,workerDigest:revisionDigest(workerRevision)};
+ return liveDeployment(p.api.service,p.worker.service);
 }
 
 export async function validate(options:ValidateOptions={}):Promise<ValidationReport>{

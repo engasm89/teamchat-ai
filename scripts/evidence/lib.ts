@@ -174,6 +174,21 @@ export interface Provenance {
 export function loadProvenance(file="qa_evidence/provenance.json"):Provenance|null{
  return fs.existsSync(file)?JSON.parse(fs.readFileSync(file,"utf8")) as Provenance:null;
 }
+export const GCP={project:"focus-clean-4b9f4",region:"us-central1"};
+export function gcloudJson(args:string[]):any{
+ return JSON.parse(execFileSync("gcloud",[...args,"--project",GCP.project,"--format=json"],{encoding:"utf8"}));
+}
+/** Serving revision (100% traffic) and its image digest for each service. */
+export function liveDeployment(apiService:string,workerService:string):DeploymentRef{
+ const serving=(service:string)=>{
+  const svc=gcloudJson(["run","services","describe",service,"--region",GCP.region]);
+  const revision=(svc.status.traffic as Array<{revisionName:string;percent:number}>).find(t=>t.percent===100)?.revisionName??"";
+  const digest=gcloudJson(["run","revisions","describe",revision,"--region",GCP.region]).status.imageDigest as string;
+  return {revision,digest};
+ };
+ const api=serving(apiService),worker=serving(workerService);
+ return {apiRevision:api.revision,apiDigest:api.digest,workerRevision:worker.revision,workerDigest:worker.digest};
+}
 export function deploymentRef(p:Provenance):DeploymentRef{
  return {apiRevision:p.api.revision,workerRevision:p.worker.revision,apiDigest:p.api.digest,workerDigest:p.worker.digest,hostingVersion:p.hosting.releaseVersion};
 }
