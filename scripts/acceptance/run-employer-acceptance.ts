@@ -388,7 +388,8 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
 ];
 
 async function s19(t:TestRecorder){
- const value=`${tag("cold")}`,drill=`drill ${tag("d").slice(2)}`;
+ // The topic word must not be catalog vocabulary ("drill" sent the recall to search_catalog).
+ const value=`${tag("cold")}`,drill=`rehearsal ${tag("r").slice(2)}`;
  const n1=await client("n1",NROOM);
  const save=await ask(t,n1,NROOM,`@AI Remember that the cold-start check code for ${drill} is ${value}.`,"s19-save",true);
  closeClients();
