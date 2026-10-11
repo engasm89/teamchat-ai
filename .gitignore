@@ -17,3 +17,7 @@ reference/original_employer_assessment.zip
 reference/submitted_technical_brief_2026-10-08.pdf
 dist/
 apps/web/dist/
+# Published evidence runs keep their logs and Playwright traces
+!qa_evidence/runs/**/*.log
+!qa_evidence/runs/**/*.zip
+qa_evidence/scratch/

@@ -1,0 +1,2007 @@
+{
+ "validatedAt": "2026-10-11T16:16:27.046Z",
+ "inventorySha256": "0179576f862974afef6f4bf3390d5318ed29550d554c993f9f7c246f65e097e0",
+ "integrityErrors": [],
+ "sourceSha": null,
+ "apiRevision": null,
+ "workerRevision": null,
+ "counts": {
+  "PASS": 11,
+  "FAIL": 8,
+  "BLOCKED": 1,
+  "NOT VERIFIED": 41
+ },
+ "requirements": [
+  {
+   "row": {
+    "id": "E01",
+    "group": "Correspondence",
+    "requirement": "Original application and recruitment conversation reconstructed",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md",
+    "evidence": "Full 17-message Gmail thread reviewed",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Retain thread reference"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-CHRONOLOGY",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "E02",
+    "group": "Correspondence",
+    "requirement": "October 16 Friday deadline replaces obsolete Feb 9 IST",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "EMAIL_CHRONOLOGY.md",
+    "evidence": "Gonzalo Oct 8/Oct 9 replies",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Submit by Oct 16; confirm time zone if needed"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-DEADLINE",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "E03",
+    "group": "Correspondence",
+    "requirement": "Evaluation GitHub collaborator @paluchi",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md",
+    "evidence": "Gonzalo Oct 9 09:58 +02",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Add @paluchi if repo private; document public repo access"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-EVALUATOR",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md"
+     ]
+    },
+    {
+     "id": "URL-REPO-PUBLIC",
+     "kind": "url",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "https://api.github.com/repos/engasm89/teamchat-ai"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "E04",
+    "group": "Correspondence",
+    "requirement": "Six-page Technical Brief emailed before coding",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "reference/submitted_technical_brief_2026-10-08.pdf",
+    "evidence": "Gmail SENT Oct 8 with attachment",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Do not resend"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-BRIEF-SENT",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md"
+     ]
+    },
+    {
+     "id": "GIT-CODE-AFTER-BRIEF",
+     "kind": "git",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "first commit 2026-10-09T07:34:11Z"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "E05",
+    "group": "Correspondence",
+    "requirement": "Final email to Gonzalo, cc Elisa with submission",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "-",
+    "evidence": "No final submission sent",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Draft for explicit user review; do not send automatically"
+   },
+   "verdict": "FAIL",
+   "checks": [
+    {
+     "id": "DRAFT-EMAIL",
+     "kind": "file",
+     "verdict": "FAIL",
+     "notes": [
+      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md lacks required content /^\\*\\*To:\\*\\* gonzalo@controlease\\.net/",
+      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md lacks required content /^\\*\\*Cc:\\*\\* elisa@controlease\\.net/"
+     ],
+     "evidence": [
+      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md"
+     ]
+    },
+    {
+     "id": "HUMAN-SEND-SUBMISSION",
+     "kind": "human",
+     "verdict": "BLOCKED",
+     "notes": [
+      "Awaiting human action: Ashraf reviews and sends the final submission email himself"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "G01",
+    "group": "Ground rules",
+    "requirement": "No Firebase database listeners, managed realtime transport or browser polling",
+    "original_source": "ASSESSMENT.md:L108",
+    "code_or_document": "apps/web/src/socket.ts; src/server/http-socket.ts",
+    "evidence": "static source review; network test missing",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Inspect browser DevTools for a minute / no polling"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "BROWSER-S17",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "BROWSER-NEG-S17",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-FORBIDDEN-TRANSPORT",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "G02",
+    "group": "Ground rules",
+    "requirement": "Native Gemini function calling; model chooses tool, server executes",
+    "original_source": "ASSESSMENT.md:L119",
+    "code_or_document": "src/worker/gemini.ts; src/tools.ts",
+    "evidence": "offline provider/contract tests; live Gemini missing",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Run live tool-driven prompts, inspect tool traces"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S01",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "ACC-S03",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-UNIT-TESTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "G03",
+    "group": "Ground rules",
+    "requirement": "All catalog/store/coefficient responses grounded in fetched tenant data",
+    "original_source": "ASSESSMENT.md:L121",
+    "code_or_document": "src/server/sql-tools.ts; src/worker/verified-block.ts",
+    "evidence": "offline source-result contracts; live injection missing",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Attempt 20 unfetched codes, foreign facts and malicious memories"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S04",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "ACC-S05",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "ACC-S13",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "G04",
+    "group": "Ground rules",
+    "requirement": "No cross-tenant disclosure via any interface, read, memory, error",
+    "original_source": "ASSESSMENT.md:L123",
+    "code_or_document": "db/migrations/001_schema.sql; src/persistence/postgres.ts",
+    "evidence": "offline RLS contracts; live PostgreSQL missing",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Run required real PostgreSQL tests + adversarial attacks"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S11",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "ACC-S12",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "ACC-S13",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "ACC-S18",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-POSTGRES-RLS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "G05",
+    "group": "Ground rules",
+    "requirement": "Firebase Auth, Vertex AI Gemini, Cloud Run, Firebase Hosting, React/TypeScript",
+    "original_source": "ASSESSMENT.md:L125",
+    "code_or_document": "apps/web/src/App.tsx; deploy/Dockerfile.api; deploy/Dockerfile.worker",
+    "evidence": "source scaffold; no deployed URLs",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Prove Firebase Hosting + Cloud Run + real login"
+   },
+   "verdict": "FAIL",
+   "checks": [
+    {
+     "id": "PROV-API-SOURCE",
+     "kind": "json",
+     "verdict": "FAIL",
+     "notes": [
+      "Missing qa_evidence/provenance.json"
+     ],
+     "evidence": [
+      "qa_evidence/provenance.json#/api/labels/org.opencontainers.image.revision"
+     ]
+    },
+    {
+     "id": "PROV-WORKER-SOURCE",
+     "kind": "json",
+     "verdict": "FAIL",
+     "notes": [
+      "Missing qa_evidence/provenance.json"
+     ],
+     "evidence": [
+      "qa_evidence/provenance.json#/worker/labels/org.opencontainers.image.revision"
+     ]
+    },
+    {
+     "id": "PROV-HOSTING-MATCH",
+     "kind": "json",
+     "verdict": "FAIL",
+     "notes": [
+      "Missing qa_evidence/provenance.json"
+     ],
+     "evidence": [
+      "qa_evidence/provenance.json#/hosting/assetsMatchLocalBuild"
+     ]
+    },
+    {
+     "id": "LIVE-DEPLOYMENT",
+     "kind": "live-deployment",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "No provenance to compare"
+     ],
+     "evidence": [
+      "gcloud run services describe (live)"
+     ]
+    },
+    {
+     "id": "URL-HOSTING",
+     "kind": "url",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "https://focus-clean-4b9f4.web.app/"
+     ]
+    },
+    {
+     "id": "URL-API-HEALTH",
+     "kind": "url",
+     "verdict": "FAIL",
+     "notes": [
+      "https://teamchat-api-1068908463902.us-central1.run.app/healthz returned HTTP 404"
+     ],
+     "evidence": [
+      "https://teamchat-api-1068908463902.us-central1.run.app/healthz"
+     ]
+    },
+    {
+     "id": "BROWSER-S01",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "G06",
+    "group": "Ground rules",
+    "requirement": "Only supplied datasets; no live catalog lookup at request time",
+    "original_source": "ASSESSMENT.md:L127",
+    "code_or_document": "src/fixtures.ts; src/server/sql-tools.ts",
+    "evidence": "original 5 fixture SHA256 checks",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Verify fixture hashes on target deployment"
+   },
+   "verdict": "FAIL",
+   "checks": [
+    {
+     "id": "GATES-FIXTURES",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "PROV-DB-DATASETS",
+     "kind": "json",
+     "verdict": "FAIL",
+     "notes": [
+      "Missing qa_evidence/provenance.json"
+     ],
+     "evidence": [
+      "qa_evidence/provenance.json#/database/datasetHashesMatchFixtures"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S01",
+    "group": "Employer evaluation",
+    "requirement": "Portable AC code & margin, two users watch fetch",
+    "original_source": "ASSESSMENT.md:L190",
+    "code_or_document": "src/catalog-search.ts; src/worker/gemini.ts; apps/web/src/App.tsx",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Two live browsers; trace/logs/code"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S01",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "BROWSER-S01",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S02",
+    "group": "Employer evaluation",
+    "requirement": "Reverse code-to-description lookup",
+    "original_source": "ASSESSMENT.md:L191",
+    "code_or_document": "src/server/sql-tools.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Live get_catalog_code call"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S02",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S03",
+    "group": "Employer evaluation",
+    "requirement": "AC + SSD in same query",
+    "original_source": "ASSESSMENT.md:L192",
+    "code_or_document": "src/catalog-search.ts; src/tools.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Real native Gemini calls; both families"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S03",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S04",
+    "group": "Employer evaluation",
+    "requirement": "Beekeeping veils must return no data",
+    "original_source": "ASSESSMENT.md:L193",
+    "code_or_document": "src/worker/verified-block.ts; src/catalog-search.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Live no-match and zero invented codes"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S04",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S05",
+    "group": "Employer evaluation",
+    "requirement": "ST-4003 margin score and class supersession",
+    "original_source": "ASSESSMENT.md:L194",
+    "code_or_document": "src/retail.ts; src/server/sql-tools.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Check retained/removed classes and no fabricated money"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S05",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S06",
+    "group": "Employer evaluation",
+    "requirement": "ST-4007 gaps+evidence+coefficient result",
+    "original_source": "ASSESSMENT.md:L195",
+    "code_or_document": "src/server/sql-tools.ts; apps/web/src/verified.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Store + calculation tools in order; source refs"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S06",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S07",
+    "group": "Employer evaluation",
+    "requirement": "Compare two proposed codings",
+    "original_source": "ASSESSMENT.md:L196",
+    "code_or_document": "src/retail.ts; src/server/sql-tools.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Direct B-minus-A authoritative result"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S07",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S08",
+    "group": "Employer evaluation",
+    "requirement": "Paraphrased seeded memory from different room",
+    "original_source": "ASSESSMENT.md:L197",
+    "code_or_document": "src/worker/embeddings.ts; src/server/sql-tools.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Real Vertex embeddings/backfill; author/date/ref"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S08",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S09",
+    "group": "Employer evaluation",
+    "requirement": "New contact/deadline accessible across users and rooms",
+    "original_source": "ASSESSMENT.md:L198",
+    "code_or_document": "src/server/sql-tools.ts; db/migrations/007_semantic_memory.sql",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Save consent; refresh user B, search other room"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S09",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S10",
+    "group": "Employer evaluation",
+    "requirement": "Nested memory validation and single repair attempt",
+    "original_source": "ASSESSMENT.md:L199",
+    "code_or_document": "src/memory.ts; src/worker/gemini.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Actual invalid nested payload and repair path"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S10",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S11",
+    "group": "Employer evaluation",
+    "requirement": "Overlapping tracked target tenant-only",
+    "original_source": "ASSESSMENT.md:L200",
+    "code_or_document": "src/server/sql-tools.ts; db/migrations/001_schema.sql",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Both tenants same intent, isolation verified"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S11",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S12",
+    "group": "Employer evaluation",
+    "requirement": "Foreign store invisible after forged access claim",
+    "original_source": "ASSESSMENT.md:L201",
+    "code_or_document": "src/server/sql-tools.ts; src/tenant.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Unknown == foreign response; logs generic"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S12",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S13",
+    "group": "Employer evaluation",
+    "requirement": "Admin-mode prompt injection no bypass",
+    "original_source": "ASSESSMENT.md:L202",
+    "code_or_document": "src/worker/gemini.ts; src/server/sql-tools.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Attack prompt and memory injection live"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S13",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S14",
+    "group": "Employer evaluation",
+    "requirement": "Two concurrent AI turns independent",
+    "original_source": "ASSESSMENT.md:L203",
+    "code_or_document": "src/server/ai-jobs.ts; src/worker/gemini.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Two simultaneous turns, separate tool IDs"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S14",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S15",
+    "group": "Employer evaluation",
+    "requirement": "Refresh mid-turn replays full answer and tool results",
+    "original_source": "ASSESSMENT.md:L204",
+    "code_or_document": "src/server/ai-jobs.ts; apps/web/src/transcript.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Refresh browser during active Gemini call"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "BROWSER-S15",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "BROWSER-NEG-S15",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S16",
+    "group": "Employer evaluation",
+    "requirement": "30-second disconnect ordered gap-free replay",
+    "original_source": "ASSESSMENT.md:L205",
+    "code_or_document": "src/server/http-socket.ts; apps/web/src/socket.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Network offline 30s; no missing/duplicates"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "BROWSER-S16",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "BROWSER-NEG-S16-DROP",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "BROWSER-NEG-S16-DUP",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S17",
+    "group": "Employer evaluation",
+    "requirement": "Idle one socket and no polling or resource growth",
+    "original_source": "ASSESSMENT.md:L206",
+    "code_or_document": "apps/web/src/socket.ts; src/server/http-socket.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Browser network/CPU/heap on idle"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "BROWSER-S17",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "BROWSER-NEG-S17",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S18",
+    "group": "Employer evaluation",
+    "requirement": "Valley gets only its own tenant answer",
+    "original_source": "ASSESSMENT.md:L207",
+    "code_or_document": "src/server/sql-tools.ts; db/migrations/001_schema.sql",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Test both tenants, foreign/no-match equivalence"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S18",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "S19",
+    "group": "Employer evaluation",
+    "requirement": "Cold-start persistence of saved shared memory",
+    "original_source": "ASSESSMENT.md:L208",
+    "code_or_document": "src/server/sql-tools.ts; src/worker/embeddings.ts",
+    "evidence": "Offline component evidence only; no live two-browser run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Scale down/restart worker+API, query memory"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S19",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "B01",
+    "group": "Phase 1",
+    "requirement": "Brief sent before application code",
+    "original_source": "ASSESSMENT.md:L17",
+    "code_or_document": "reference/submitted_technical_brief_2026-10-08.pdf",
+    "evidence": "Gmail sent Oct 8; code first commit follows",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Preserve original email and PDF"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-BRIEF-SENT",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md"
+     ]
+    },
+    {
+     "id": "GIT-CODE-AFTER-BRIEF",
+     "kind": "git",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "first commit 2026-10-09T07:34:11Z"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "B02",
+    "group": "Phase 1",
+    "requirement": "User stories with acceptance criteria",
+    "original_source": "ASSESSMENT.md:L158",
+    "code_or_document": "Technical Brief pp.1–2",
+    "evidence": "Six-page PDF reviewed",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Present committed scope"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-BRIEF-STORIES",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "phase1-docs/BRIEF_REFERENCE.md"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "B03",
+    "group": "Phase 1",
+    "requirement": "Derived requirements",
+    "original_source": "ASSESSMENT.md:L160",
+    "code_or_document": "Technical Brief pp.1–2",
+    "evidence": "PDF section 3",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Explain tenant context, durable ACKs"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-BRIEF-DERIVED",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "phase1-docs/BRIEF_REFERENCE.md"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "B04",
+    "group": "Phase 1",
+    "requirement": "Alternatives and architecture tradeoffs",
+    "original_source": "ASSESSMENT.md:L162",
+    "code_or_document": "Technical Brief pp.2–4",
+    "evidence": "PDF sections 4–12",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Discuss PostgreSQL NOTIFY vs Redis"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-BRIEF-ALTERNATIVES",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "phase1-docs/BRIEF_REFERENCE.md"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "B05",
+    "group": "Phase 1",
+    "requirement": "Data model and performance tradeoffs",
+    "original_source": "ASSESSMENT.md:L164",
+    "code_or_document": "Technical Brief p.3",
+    "evidence": "PDF sections 7–9",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Explain RLS and room seq lock"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-BRIEF-DATA-MODEL",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "phase1-docs/BRIEF_REFERENCE.md"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "B06",
+    "group": "Phase 1",
+    "requirement": "Explicit exclusions and risks",
+    "original_source": "ASSESSMENT.md:L166",
+    "code_or_document": "Technical Brief p.6",
+    "evidence": "PDF sections 18–19",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Keep README divergence accurate"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "DOC-BRIEF-EXCLUSIONS",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "phase1-docs/BRIEF_REFERENCE.md"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D01",
+    "group": "Deliverables",
+    "requirement": "Deploy public Firebase Hosting app with seeded data",
+    "original_source": "ASSESSMENT.md:L217",
+    "code_or_document": "apps/web/firebase.json; deploy/Dockerfile.api",
+    "evidence": "Config exists; deployment absent",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Deploy and verify public URL"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "URL-HOSTING",
+     "kind": "url",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "https://focus-clean-4b9f4.web.app/"
+     ]
+    },
+    {
+     "id": "BROWSER-S01",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "HANDOFF-SEEDED-HISTORY",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "LIVE-DEPLOYMENT",
+     "kind": "live-deployment",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "No provenance to compare"
+     ],
+     "evidence": [
+      "gcloud run services describe (live)"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D02",
+    "group": "Deliverables",
+    "requirement": "GitHub repository, clean commit history, no secrets, repeatable seed",
+    "original_source": "ASSESSMENT.md:L218",
+    "code_or_document": "history/TeamChat_AI_v12_Git_History.bundle; scripts/generate-seed-sql.ts",
+    "evidence": "Git bundle and seed local; no GitHub remote",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Push source to GitHub; git secret scanner; README"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "URL-REPO-PUBLIC",
+     "kind": "url",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "https://api.github.com/repos/engasm89/teamchat-ai"
+     ]
+    },
+    {
+     "id": "GATES-SECRET-SCAN",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-FRESH-MIGRATIONS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D03",
+    "group": "Deliverables",
+    "requirement": "README complete: run/deploy/transport/agent/recovery/brief divergence/limits",
+    "original_source": "ASSESSMENT.md:L172",
+    "code_or_document": "README.md; docs/DEPLOYMENT_CHECKLIST.md",
+    "evidence": "Source documentation exists but no successful deployment",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Update instructions after live verification"
+   },
+   "verdict": "FAIL",
+   "checks": [
+    {
+     "id": "DOC-README-SECTIONS",
+     "kind": "file",
+     "verdict": "FAIL",
+     "notes": [
+      "README.md lacks required content /^## How to run/",
+      "README.md lacks required content /^## How it is deployed/",
+      "README.md lacks required content /^## Real-time delivery/",
+      "README.md lacks required content /^## How the model acts/",
+      "README.md lacks required content /^## How the brief changed/",
+      "README.md lacks required content /^## What does not work/",
+      "README.md lacks required content /^## Test credentials/"
+     ],
+     "evidence": [
+      "README.md"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D04",
+    "group": "Deliverables",
+    "requirement": "Test credentials for 3+ users in each tenant",
+    "original_source": "ASSESSMENT.md:L220",
+    "code_or_document": "scripts/provision-demo-users.ts",
+    "evidence": "Provisioning script only",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Provision 6 Firebase users; share secrets privately"
+   },
+   "verdict": "BLOCKED",
+   "checks": [
+    {
+     "id": "HANDOFF-ACCOUNTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "HUMAN-CREDENTIAL-DELIVERY",
+     "kind": "human",
+     "verdict": "BLOCKED",
+     "notes": [
+      "Awaiting human action: Ashraf delivers the six reviewer credentials privately and confirms receipt"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D05",
+    "group": "Deliverables",
+    "requirement": "Tests for tenant isolation, grounding, and arithmetic",
+    "original_source": "ASSESSMENT.md:L221",
+    "code_or_document": "tests/*.test.ts; scripts/integration/live-postgres.test.ts",
+    "evidence": "115 offline tests; required PostgreSQL not run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Run actual RLS with restricted login and Gemini adversarial tests"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "GATES-UNIT-TESTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-POSTGRES-RLS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D06",
+    "group": "Deliverables",
+    "requirement": "Demo video max five minutes",
+    "original_source": "ASSESSMENT.md:L222",
+    "code_or_document": "-",
+    "evidence": "No video recorded",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Record truthful 5m or shorter video"
+   },
+   "verdict": "FAIL",
+   "checks": [
+    {
+     "id": "VIDEO-DEMO",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "URL-VIDEO",
+     "kind": "url",
+     "verdict": "FAIL",
+     "notes": [
+      "https://drive.google.com/uc?export=download&id=PENDING_UPLOAD returned HTTP 404"
+     ],
+     "evidence": [
+      "https://drive.google.com/uc?export=download&id=PENDING_UPLOAD"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D07",
+    "group": "Deliverables",
+    "requirement": "Submission includes repo URL, live URL, private credentials, and brief",
+    "original_source": "ASSESSMENT.md:L236",
+    "code_or_document": "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md",
+    "evidence": "Brief submitted, rest pending",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Draft final email after passing gates"
+   },
+   "verdict": "FAIL",
+   "checks": [
+    {
+     "id": "DRAFT-EMAIL",
+     "kind": "file",
+     "verdict": "FAIL",
+     "notes": [
+      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md lacks required content /^\\*\\*To:\\*\\* gonzalo@controlease\\.net/",
+      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md lacks required content /^\\*\\*Cc:\\*\\* elisa@controlease\\.net/"
+     ],
+     "evidence": [
+      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md"
+     ]
+    },
+    {
+     "id": "HUMAN-SEND-SUBMISSION",
+     "kind": "human",
+     "verdict": "BLOCKED",
+     "notes": [
+      "Awaiting human action: Ashraf reviews and sends the final submission email himself"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "HUMAN-CREDENTIAL-DELIVERY",
+     "kind": "human",
+     "verdict": "BLOCKED",
+     "notes": [
+      "Awaiting human action: Ashraf delivers the six reviewer credentials privately and confirms receipt"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D08",
+    "group": "Deliverables",
+    "requirement": "Seed genuine fetched AI history in both tenants",
+    "original_source": "ASSESSMENT.md:L180",
+    "code_or_document": "scripts/bootstrap-live-demo-history.ts",
+    "evidence": "Bootstrap script; no live history",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Run genuine model/tool exchange, inspect DB replay"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "HANDOFF-SEEDED-HISTORY",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "D09",
+    "group": "Deliverables",
+    "requirement": "3+ users per tenant and populated rooms",
+    "original_source": "ASSESSMENT.md:L180",
+    "code_or_document": "scripts/provision-demo-users.ts; db/generated/seed.sql",
+    "evidence": "Fixture stores/memories seeded offline; live users not provisioned",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Create real Firebase accounts and room memberships"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "HANDOFF-ACCOUNTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "HANDOFF-MEMBERSHIPS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A01",
+    "group": "Engineering/brief gaps",
+    "requirement": "API/worker SIGTERM/SIGINT closes server, WebSockets, listeners and pool",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "src/runtime/shutdown.ts; src/server/start.ts; src/worker/start.ts",
+    "evidence": "3 new signal tests pass",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Live send SIGTERM and verify exit/drain"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "GATES-SIGTERM-DRAIN",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-UNIT-TESTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A02",
+    "group": "Engineering/brief gaps",
+    "requirement": "No late presence/typing frames after unsubscription",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "apps/web/src/socket.ts",
+    "evidence": "Added room filter; component source verified",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Live switch rooms under rapid typing and presence"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-A02",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-UNIT-TESTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A03",
+    "group": "Engineering/brief gaps",
+    "requirement": "Offline tests finish with 0 failed",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "tests/*.test.ts",
+    "evidence": "115/115 PASS on this snapshot",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Run again after installing pinned dependencies"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "GATES-UNIT-TESTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A04",
+    "group": "Engineering/brief gaps",
+    "requirement": "Backend type-check passes under temporary external node types",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "tsconfig.json; src/**/*.ts",
+    "evidence": "tsc --noEmit PASS (temporary local type refs)",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "npm ci and repeat in clean CI"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "GATES-TYPECHECK",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A05",
+    "group": "Engineering/brief gaps",
+    "requirement": "All five supplied fixture hashes unchanged",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "teamchat-ai-seed-data/*",
+    "evidence": "SHA-256 match checked",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Do not mutate fixture data"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "GATES-FIXTURES",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A06",
+    "group": "Engineering/brief gaps",
+    "requirement": "SQL seed generates 2,753 inserts",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "scripts/generate-seed-sql.ts; db/generated/seed.sql",
+    "evidence": "Local generation PASS",
+    "status": "✅ GREEN — documented/offline verified",
+    "closure": "Run actual migrations + seed twice"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "GATES-SEED-SQL",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A07",
+    "group": "Engineering/brief gaps",
+    "requirement": "Genuine root/web npm package-locks and npm ci",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "package.json; apps/web/package.json",
+    "evidence": "Missing lockfiles, npm DNS EAI_AGAIN",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Generate genuine locks using registry, npm ci twice"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "GATES-NPM-CI",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A08",
+    "group": "Engineering/brief gaps",
+    "requirement": "Real PostgreSQL RLS + grants + forbidden-write isolation",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "db/provision_runtime_role.sql; scripts/integration/live-postgres.test.ts",
+    "evidence": "No live PostgreSQL instance",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Prove with restricted teamchat_api login"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "GATES-POSTGRES-RLS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-FRESH-MIGRATIONS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A09",
+    "group": "Engineering/brief gaps",
+    "requirement": "Vite/React production build and hosted asset load",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "apps/web/package.json",
+    "evidence": "Actual npm install/build not run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "npm --prefix apps/web ci && npm --prefix apps/web run build"
+   },
+   "verdict": "FAIL",
+   "checks": [
+    {
+     "id": "GATES-WEB-BUILD",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "PROV-HOSTING-MATCH",
+     "kind": "json",
+     "verdict": "FAIL",
+     "notes": [
+      "Missing qa_evidence/provenance.json"
+     ],
+     "evidence": [
+      "qa_evidence/provenance.json#/hosting/assetsMatchLocalBuild"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A10",
+    "group": "Engineering/brief gaps",
+    "requirement": "Cloud Tasks OIDC, recovery, duplicate dispatch",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "src/server/task-dispatch.ts; src/worker/http.ts",
+    "evidence": "Offline tests only",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Inject failures and verify end-to-end terminal state"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-A10",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "GATES-UNIT-TESTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A11",
+    "group": "Engineering/brief gaps",
+    "requirement": "Gemini model native stream + parallel function calls",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "src/worker/gemini.ts",
+    "evidence": "Offline collector tests only",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Real Vertex calls under pinned model"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-S03",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "ACC-S06",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A12",
+    "group": "Engineering/brief gaps",
+    "requirement": "Cross-instance LISTEN/NOTIFY, bounded socket resources",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "src/server/http-socket.ts; src/server/database.ts",
+    "evidence": "Offline contract tests only",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Deploy 2 instances, network loss, leak tests"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "ACC-A12",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A13",
+    "group": "Engineering/brief gaps",
+    "requirement": "Original Technical Brief monetary-baseline promise",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "src/retail.ts; src/server/sql-tools.ts",
+    "evidence": "Dimensionless score only; intentional divergence",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Implement verified user-provided baseline or document cut explicitly"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "DOC-README-MONETARY",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "README.md"
+     ]
+    },
+    {
+     "id": "ACC-S05",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A14",
+    "group": "Engineering/brief gaps",
+    "requirement": "Memory paraphrase retrieval using 768-dim embeddings",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "src/worker/embeddings.ts; db/migrations/007_semantic_memory.sql",
+    "evidence": "No Vertex backfill run",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Backfill and test cross-room paraphrases"
+   },
+   "verdict": "FAIL",
+   "checks": [
+    {
+     "id": "ACC-S08",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "PROV-DB-EMBEDDINGS",
+     "kind": "json",
+     "verdict": "FAIL",
+     "notes": [
+      "Missing qa_evidence/provenance.json"
+     ],
+     "evidence": [
+      "qa_evidence/provenance.json#/database/memoriesWithout768Embedding"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A15",
+    "group": "Engineering/brief gaps",
+    "requirement": "Actual 3-user x 2-tenant seeded chat with genuine AI exchange",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "scripts/bootstrap-live-demo-history.ts",
+    "evidence": "Not bootstrapped",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Run script and verify as reviewer"
+   },
+   "verdict": "NOT VERIFIED",
+   "checks": [
+    {
+     "id": "HANDOFF-SEEDED-HISTORY",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    },
+    {
+     "id": "HANDOFF-ACCOUNTS",
+     "kind": "test",
+     "verdict": "NOT VERIFIED",
+     "notes": [
+      "Provenance file qa_evidence/provenance.json missing"
+     ],
+     "evidence": []
+    }
+   ],
+   "notes": []
+  },
+  {
+   "row": {
+    "id": "A16",
+    "group": "Engineering/brief gaps",
+    "requirement": "Reviewer GitHub @paluchi actually has access",
+    "original_source": "Gmail/Technical Brief",
+    "code_or_document": "-",
+    "evidence": "Name confirmed, remote not created",
+    "status": "❌ RED — not proven end-to-end",
+    "closure": "Add on private repo or verify public accessibility"
+   },
+   "verdict": "PASS",
+   "checks": [
+    {
+     "id": "URL-REPO-PUBLIC",
+     "kind": "url",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "https://api.github.com/repos/engasm89/teamchat-ai"
+     ]
+    },
+    {
+     "id": "URL-PALUCHI-USER",
+     "kind": "url",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "https://api.github.com/users/paluchi"
+     ]
+    },
+    {
+     "id": "DOC-EVALUATOR",
+     "kind": "file",
+     "verdict": "PASS",
+     "notes": [],
+     "evidence": [
+      "docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md"
+     ]
+    }
+   ],
+   "notes": []
+  }
+ ]
+}

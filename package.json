@@ -25,6 +25,7 @@
   "description": "Controlease TeamChat AI pre-live audited source; cloud integration and deployment are required release gates",
   "devDependencies": {
     "@types/node": "^22.19.0",
+    "csv-parse": "^6.2.1",
     "playwright": "^1.64.0",
     "typescript": "^5.9.0"
   },
