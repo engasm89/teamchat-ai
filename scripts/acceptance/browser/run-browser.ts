@@ -53,6 +53,8 @@ type RouteFault={dropEvent?:(event:any)=>boolean};
 
 const browser=await chromium.launch();
 const sessions:Session[]=[];
+/** Hosting loads occasionally stalled for 30 s in Chromium only (2026-10-11); one retry is allowed and every attempt is published. */
+const navigations:Array<{account:AccountKey;at:string;attempts:Array<{ms:number;ok:boolean;error?:string}>}>=[];
 async function openSession(account:AccountKey,opts:{proxy?:string;init?:string;fault?:RouteFault}={}):Promise<Session>{
  const {email,tenant}=ACCOUNTS[account];const room=QA_ROOM[tenant];
  const context=await browser.newContext({viewport:{width:1280,height:860},...(opts.proxy?{proxy:{server:opts.proxy}}:{})});
@@ -69,7 +71,14 @@ async function openSession(account:AccountKey,opts:{proxy?:string;init?:string;f
    });
   });
  }
- await page.goto(APP_URL,{waitUntil:"networkidle"});
+ const attempts:Array<{ms:number;ok:boolean;error?:string}>=[];
+ for(;;){
+  const started=Date.now();
+  try{await page.goto(APP_URL,{waitUntil:"networkidle"});attempts.push({ms:Date.now()-started,ok:true});break;}
+  catch(error){attempts.push({ms:Date.now()-started,ok:false,error:String(error).split("\n")[0]!});
+   if(attempts.length>=2){navigations.push({account,at:new Date().toISOString(),attempts});throw error;}}
+ }
+ navigations.push({account,at:new Date().toISOString(),attempts});
  await page.fill('input[type="email"]',email);
  await page.fill('input[type="password"]',keychainPassword(email));
  await page.click('button:has-text("Sign in")');
@@ -390,5 +399,6 @@ try{
  }
 }finally{
  await closeAll();await browser.close();await pool.end();
+ fs.writeFileSync(path.join(run.dir,"navigation.json"),JSON.stringify({retried:navigations.filter(n=>n.attempts.length>1).length,sessions:navigations},null,1)+"\n");
  run.finish();
 }
