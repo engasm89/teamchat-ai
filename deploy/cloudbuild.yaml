@@ -1,18 +1,25 @@
+# Submit from a clean clone: gcloud builds submit --config deploy/cloudbuild.yaml --substitutions=_GIT_SHA=$(git rev-parse HEAD)
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
       '-f', 'deploy/Dockerfile.api',
-      '-t', 'us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api:latest',
+      '-t', 'us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api:${_GIT_SHA}',
+      '--label', 'org.opencontainers.image.revision=${_GIT_SHA}',
+      '--label', 'org.opencontainers.image.source=https://github.com/engasm89/teamchat-ai',
+      '--label', 'org.opencontainers.image.title=teamchat-api',
       '.'
     ]
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
       '-f', 'deploy/Dockerfile.worker',
-      '-t', 'us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker:latest',
+      '-t', 'us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker:${_GIT_SHA}',
+      '--label', 'org.opencontainers.image.revision=${_GIT_SHA}',
+      '--label', 'org.opencontainers.image.source=https://github.com/engasm89/teamchat-ai',
+      '--label', 'org.opencontainers.image.title=teamchat-worker',
       '.'
     ]
 images:
-  - 'us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api:latest'
-  - 'us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker:latest'
+  - 'us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api:${_GIT_SHA}'
+  - 'us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker:${_GIT_SHA}'

@@ -1,0 +1,43 @@
+{
+ "question": "Was the deployment live on 2026-10-11 (api 00007-8z5, worker 00007-2qt) built from commit dc70fc8?",
+ "method": [
+  "Downloaded the Cloud Build source tarball for build 87aea6c3 from gs://focus-clean-4b9f4_cloudbuild",
+  "Extracted git archive dc70fc8",
+  "diff -rq of the two trees",
+  "Compared build 87aea6c3 result digests with the serving revisions status.imageDigest"
+ ],
+ "build": {
+  "id": "87aea6c3-a974-400e-ad5d-dccc849df731",
+  "createTime": "2026-10-11T09:06:51Z",
+  "sourceObject": "gs://focus-clean-4b9f4_cloudbuild/source/1791709608.1302-cca714986aa446adb449e64f147405d4.tgz",
+  "sourceTarballSha256": "b1d664ffe2212ac01cddca9cbaaf39c9837445e39ec10fa2f83f54da15b6a15b",
+  "apiDigest": "sha256:d1465defaef7e50786ed301c0b76a1263eeeab2bf370fcd6d903fabf31f2f126",
+  "workerDigest": "sha256:c753a029a8244a818fb149072446419be8c72a2d2a49a4b962cfdbfd9ea2d588"
+ },
+ "serving": {
+  "api": {
+   "revision": "teamchat-api-00007-8z5",
+   "imageDigest": "sha256:d1465defaef7e50786ed301c0b76a1263eeeab2bf370fcd6d903fabf31f2f126"
+  },
+  "worker": {
+   "revision": "teamchat-worker-00007-2qt",
+   "imageDigest": "sha256:c753a029a8244a818fb149072446419be8c72a2d2a49a4b962cfdbfd9ea2d588"
+  }
+ },
+ "filesPresentInBoth": 209,
+ "differencesInFilesPresentInBoth": 0,
+ "imageInputsDifferingFromDc70fc8": 0,
+ "imageInputs": "package.json, package-lock.json, src/** (the only COPY sources in deploy/Dockerfile.api and deploy/Dockerfile.worker)",
+ "diffOutput": [
+  "Only in git: .gitignore",
+  "Only in git/docs/evidence: v12_frontend_parse.log",
+  "Only in git/docs/evidence: v12_original_employer_hashes.log",
+  "Only in git/docs/evidence: v12_packaging_GATE_FAILED.log",
+  "Only in git/docs/evidence: v12_postgres_GATE_FAILED.log",
+  "Only in git/docs/evidence: v12_prelive_checks.log",
+  "Only in live: teamchat-ai-complete.bundle",
+  "Only in live: teamchat-ai-submission-clean.zip"
+ ],
+ "conclusion": "The image inputs of build 87aea6c3 are byte-identical to dc70fc8 and the serving revisions run that build`s digests, so the prior deployment was built from dc70fc8 content. The images carry no git SHA tag or OCI revision label, so this link rests on the tarball diff, not on image metadata. The build upload also contained two untracked local artifacts (a git bundle and a zip) that did not enter the images; the repository has no .gcloudignore.",
+ "checkedAt": "2026-10-11T16:40:15.960Z"
+}
