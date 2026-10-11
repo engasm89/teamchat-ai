@@ -1,0 +1,724 @@
+{
+ "ranAt": "2026-10-11T19:06:09.197Z",
+ "model": "gemini-2.5-flash",
+ "location": "us-central1",
+ "replayedTurn": "572b6b8e-dfb6-4b9a-887a-5db682c28c77",
+ "gaps": [
+  "APP-100.11",
+  "APP-100.12",
+  "APP-100.13",
+  "APP-169.16",
+  "APP-192.17",
+  "HOM-123.16",
+  "SEA-307.12",
+  "SPT-261.12"
+ ],
+ "config": "round 2 replay; streaming, temperature 0, mode AUTO, maxOutputTokens 1024, consent DENIED; earlier transcript = 15 live room events",
+ "clarified": {
+  "description": "Compare deterministic dimensionless assortment coefficient scores for an authorized store, before and after adding a set of existing codes together. To price several additions (for example closing every gap), pass all of them in one call. No sales/money baseline may be invented by Gemini.",
+  "addCodesDescription": "Every existing catalog code to add, all together in this one call"
+ },
+ "summary": {
+  "production": "2/8 priced every gap in one call",
+  "clarified": "7/8 priced every gap in one call"
+ },
+ "results": [
+  {
+   "variant": "production",
+   "trial": 1,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production",
+   "trial": 2,
+   "allGapsInOneCall": false,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.11"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.13"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-169.16"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-192.17"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "HOM-123.16"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "SEA-307.12"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "SPT-261.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production",
+   "trial": 3,
+   "allGapsInOneCall": false,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.11"
+      ],
+      "store_id": "ST-4007"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production",
+   "trial": 4,
+   "allGapsInOneCall": false,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.13"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-169.16"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-192.17"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "HOM-123.16"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "SEA-307.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production",
+   "trial": 5,
+   "allGapsInOneCall": false,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.11"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.13"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-169.16"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-192.17"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "HOM-123.16"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "SEA-307.12"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "SPT-261.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production",
+   "trial": 6,
+   "allGapsInOneCall": false,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.13"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-169.16"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-192.17"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "HOM-123.16"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "SEA-307.12"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production",
+   "trial": 7,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production",
+   "trial": 8,
+   "allGapsInOneCall": false,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.12"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.13"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-169.16"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-192.17"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "HOM-123.16"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "SEA-307.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "clarified",
+   "trial": 1,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "clarified",
+   "trial": 2,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "clarified",
+   "trial": 3,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "clarified",
+   "trial": 4,
+   "allGapsInOneCall": false,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-100.13"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-169.16"
+      ]
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "APP-192.17"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "HOM-123.16"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "SEA-307.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    },
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "add_codes": [
+       "SPT-261.12"
+      ],
+      "store_id": "ST-4007"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "clarified",
+   "trial": 5,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "clarified",
+   "trial": 6,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "clarified",
+   "trial": 7,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "variant": "clarified",
+   "trial": 8,
+   "allGapsInOneCall": true,
+   "calls": [
+    {
+     "name": "calculate_uplift",
+     "args": {
+      "store_id": "ST-4007",
+      "add_codes": [
+       "APP-100.11",
+       "APP-100.12",
+       "APP-100.13",
+       "APP-169.16",
+       "APP-192.17",
+       "HOM-123.16",
+       "SEA-307.12",
+       "SPT-261.12"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

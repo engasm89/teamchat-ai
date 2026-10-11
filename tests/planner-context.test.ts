@@ -10,6 +10,12 @@ test('consented memory saving is informed by the persisted trusted job state',()
  assert.match(text,/compare_assortment_options/);
  assert.match(text,/value_json to the text of a JSON object/);
 });
+test('calculate_uplift tells the model to price a set of additions in one call',async()=>{
+ const {TOOL_DECLARATIONS}=await import('../src/tools.ts');
+ const calc=TOOL_DECLARATIONS.find(t=>t.name==='calculate_uplift')!;
+ assert.match(calc.description,/pass all of them in one call/);
+ assert.match(String((calc.parameters.properties.add_codes as {description?:string}).description),/all together in this one call/);
+});
 test('memory authority cannot be invented by a user prompt',()=>{
  const text=trustedPlannerInstructions({roomId:'assortment-review',memoryConsent:false});
  assert.match(text,/consent for THIS turn: DENIED/);

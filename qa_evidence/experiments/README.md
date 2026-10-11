@@ -119,3 +119,24 @@ not the model's copy, is what `save_memory` validates, repairs and stores
 (`requesterMemoryValue` in `src/memory.ts`); the audit record carries
 `valueSource: "requester_message"`. Free-text requests are unchanged. The gates
 test `MEMORY-REPAIR` includes a scripted model that sends the flattened copy.
+
+## S06: pricing every gap in one calculation
+
+Official acceptance run 2 on 0919a9b failed S06: after `get_store_assortment`
+the model called `calculate_uplift` with one gap code per round, hit the
+worker's six-round limit and the turn ended `ai_failed`.
+`scripts/experiments/s06-batching.ts` replays round 2 of that turn (the same 15
+earlier room events, the recorded store result, production streaming config,
+mode `AUTO`) and varies only the `calculate_uplift` declaration:
+
+| Declaration | Every gap priced in one call |
+| --- | --- |
+| As deployed in 0919a9b ("…using additional existing codes") | 4/24 (2/8, 2/16); otherwise eight single-code calls |
+| Description says the codes are added together and several additions go in one call; `add_codes` says "all together in this one call" | 22/24 (7/8, 15/16); the miss was eight single-code calls |
+| The same plus a system-instruction sentence | 11/16; five trials made no calculation at all, so the sentence was not adopted |
+
+Raw output: `s06-batching-description-8.json`, `s06-batching-description-16.json`,
+`s06-batching-description-plus-instruction-16.json` (in these files
+"production" means the 0919a9b declaration). The clarified declaration
+shipped. About one S06 turn in twelve may still split the codes; that residual
+rate is a model behaviour this change reduces, not removes.
