@@ -54,7 +54,9 @@ type RouteFault={dropEvent?:(event:any)=>boolean};
 
 const browser=await chromium.launch();
 const sessions:Session[]=[];
-/** Hosting loads occasionally stalled for 30 s in Chromium only (2026-10-11); one retry is allowed and every attempt is published. */
+/** From this test network, TCP to Firebase Hosting intermittently blackholes for up to ~3 min while the API stays
+ * reachable (qa_evidence/experiments/hosting-reachability.md). Page loads are retried; every attempt is published. */
+const NAVIGATION_BACKOFF_MS=[15000,45000,90000];
 const navigations:Array<{account:AccountKey;at:string;attempts:Array<{ms:number;ok:boolean;error?:string}>}>=[];
 async function openSession(account:AccountKey,opts:{proxy?:string;init?:string;fault?:RouteFault}={}):Promise<Session>{
  const {email,tenant}=ACCOUNTS[account];const room=QA_ROOM[tenant];
@@ -77,7 +79,8 @@ async function openSession(account:AccountKey,opts:{proxy?:string;init?:string;f
   const started=Date.now();
   try{await page.goto(APP_URL,{waitUntil:"networkidle"});attempts.push({ms:Date.now()-started,ok:true});break;}
   catch(error){attempts.push({ms:Date.now()-started,ok:false,error:String(error).split("\n")[0]!});
-   if(attempts.length>=2){navigations.push({account,at:new Date().toISOString(),attempts});throw error;}}
+   if(attempts.length>=NAVIGATION_BACKOFF_MS.length+1){navigations.push({account,at:new Date().toISOString(),attempts});throw error;}
+   await sleep(NAVIGATION_BACKOFF_MS[attempts.length-1]!);}
  }
  navigations.push({account,at:new Date().toISOString(),attempts});
  await page.fill('input[type="email"]',email);

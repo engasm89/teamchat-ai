@@ -1,49 +1,49 @@
 {
- "capturedAt": "2026-10-11T17:02:24.253Z",
+ "capturedAt": "2026-10-11T17:17:45.562Z",
  "source": {
-  "sha": "fbf3f8b8d3cf1417ad25c47359501453a6969914",
-  "applicationPathsTreeHash": "38b058691615e540cb9b5248ce3be063d7f47b615714a27e2b22392ec1c26545",
+  "sha": "116a629a892fd6930f4bb5b3f59c433fd92ba3b7",
+  "applicationPathsTreeHash": "a9e6067e4f850506f011c7079ecb82ee5686211d7608d3b528b5756096e1a7cc",
   "repository": "https://github.com/engasm89/teamchat-ai",
   "cleanClone": "git clone from GitHub, checked out at the SHA, no tracked modifications"
  },
  "api": {
   "service": "teamchat-api",
-  "revision": "teamchat-api-00008-jjp",
-  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api@sha256:d3573250af29b0ea18235edf28afc7a6596e5ba1f8502f2de88cc3fab2566a05",
-  "digest": "sha256:d3573250af29b0ea18235edf28afc7a6596e5ba1f8502f2de88cc3fab2566a05",
+  "revision": "teamchat-api-00009-zvw",
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api@sha256:cee93d4af7638bcb0234282202e72a13963ab7ec329838f0cb0153e505666a77",
+  "digest": "sha256:cee93d4af7638bcb0234282202e72a13963ab7ec329838f0cb0153e505666a77",
   "labels": {
-   "org.opencontainers.image.revision": "fbf3f8b8d3cf1417ad25c47359501453a6969914",
+   "org.opencontainers.image.revision": "116a629a892fd6930f4bb5b3f59c433fd92ba3b7",
    "org.opencontainers.image.source": "https://github.com/engasm89/teamchat-ai",
    "org.opencontainers.image.title": "teamchat-api"
   },
   "cmd": "node --experimental-strip-types src/server/start.ts",
-  "buildId": "aec7d460-cdae-4cd1-9a6c-2bb908d2cfc4"
+  "buildId": "f1cd1281-0424-4aa8-b93c-e3419e56e665"
  },
  "worker": {
   "service": "teamchat-worker",
-  "revision": "teamchat-worker-00008-vs8",
-  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker@sha256:a73523c32e7d594f8a36fd2b6a3b8708decb36e281333bf9140837c67abd8617",
-  "digest": "sha256:a73523c32e7d594f8a36fd2b6a3b8708decb36e281333bf9140837c67abd8617",
+  "revision": "teamchat-worker-00009-vbh",
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker@sha256:2c853cd529a4918a1f5177351ec8bfd255d1ce0f7a14aff024245de0887491b6",
+  "digest": "sha256:2c853cd529a4918a1f5177351ec8bfd255d1ce0f7a14aff024245de0887491b6",
   "labels": {
-   "org.opencontainers.image.revision": "fbf3f8b8d3cf1417ad25c47359501453a6969914",
+   "org.opencontainers.image.revision": "116a629a892fd6930f4bb5b3f59c433fd92ba3b7",
    "org.opencontainers.image.source": "https://github.com/engasm89/teamchat-ai",
    "org.opencontainers.image.title": "teamchat-worker"
   },
   "cmd": "node --experimental-strip-types src/worker/start.ts",
-  "buildId": "aec7d460-cdae-4cd1-9a6c-2bb908d2cfc4"
+  "buildId": "f1cd1281-0424-4aa8-b93c-e3419e56e665"
  },
  "build": {
-  "id": "aec7d460-cdae-4cd1-9a6c-2bb908d2cfc4",
-  "createTime": "2026-10-11T16:45:23.863077873Z",
-  "source": "gs://focus-clean-4b9f4_cloudbuild/source/1791737119.401979-96875f7e2659455eacccc5e7a163f3e9.tgz",
+  "id": "f1cd1281-0424-4aa8-b93c-e3419e56e665",
+  "createTime": "2026-10-11T17:15:48.381613108Z",
+  "source": "gs://focus-clean-4b9f4_cloudbuild/source/1791738944.670008-4449b5976a144e359c519c1d8fccab67.tgz",
   "substitutions": {
-   "_GIT_SHA": "fbf3f8b8d3cf1417ad25c47359501453a6969914"
+   "_GIT_SHA": "116a629a892fd6930f4bb5b3f59c433fd92ba3b7"
   }
  },
  "hosting": {
   "site": "focus-clean-4b9f4",
-  "releaseVersion": "sites/focus-clean-4b9f4/versions/0b3496d1e73ed143",
-  "releaseTime": "2026-10-11T16:49:47.453Z",
+  "releaseVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c",
+  "releaseTime": "2026-10-11T17:17:20.274Z",
   "servedAssets": {
    "/index.html": "13e8a69a1fcd6015c607aebd4b547d271d04b8d411147de81e85067ba9eeacf0",
    "/assets/index-DloCzopf.js": "283994f11a25f3ff282953f41cf55707782743561f4d542fdfdc5cc42e29cbec",
@@ -55,7 +55,7 @@
    "/index.html": "13e8a69a1fcd6015c607aebd4b547d271d04b8d411147de81e85067ba9eeacf0"
   },
   "assetsMatchLocalBuild": true,
-  "message": "git fbf3f8b8d3cf1417ad25c47359501453a6969914 (clean clone)",
+  "message": "git 116a629a892fd6930f4bb5b3f59c433fd92ba3b7 (clean clone)",
   "untrackedBuildInput": {
    "file": "apps/web/.env.production",
    "sha256": "403fa0479a790d73a558dcaeb6e7745e7efe26cfa945fc7bee12f729312ecd4f",
