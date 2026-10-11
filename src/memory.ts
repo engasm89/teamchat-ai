@@ -4,6 +4,7 @@ export function validateMemoryValue(value: unknown): {ok:true,value:MemoryValue}
   const errors: ValidationError[] = [];
   if (!value || typeof value !== "object" || Array.isArray(value)) return {ok:false,errors:[{field:"value",issue:"Expected a flat object"}]};
   const obj = value as Record<string, unknown>; const keys = Object.keys(obj);
+  if (keys.length === 0) errors.push({field:"value",issue:"At least one field is required"});
   if (keys.length > 20) errors.push({field:"value",issue:"Maximum 20 fields"});
   const size = Buffer.byteLength(JSON.stringify(obj),"utf8");
   if (size > 8192) errors.push({field:"value",issue:"Maximum 8192 UTF-8 bytes"});
@@ -14,6 +15,14 @@ export function validateMemoryValue(value: unknown): {ok:true,value:MemoryValue}
     if (typeof v === "string" && v.length > 2048) errors.push({field:key,issue:"Maximum 2048 characters"});
   }
   return errors.length ? {ok:false,errors} : {ok:true,value:obj as MemoryValue};
+}
+/** save_memory receives its value as JSON text: Gemini's constrained decoding emits `{}` for an
+ * OBJECT parameter without declared properties (qa_evidence/experiments/save-memory-schema.json). */
+export function parseMemoryValueJson(text: unknown): ReturnType<typeof validateMemoryValue> {
+  if (typeof text !== "string") return {ok:false,errors:[{field:"value_json",issue:"Expected the text of a JSON object"}]};
+  let value: unknown;
+  try { value = JSON.parse(text); } catch { return {ok:false,errors:[{field:"value_json",issue:"Not valid JSON"}]}; }
+  return validateMemoryValue(value);
 }
 /** Lexical baseline ranking within an *already tenant-filtered* candidate set. Embedding reranking is pending Vertex integration. */
 export function rankMemoriesInTenant(candidates: TeamMemory[], query: string, minScore=0.2): TeamMemory[] {

@@ -41,6 +41,6 @@ test("semantic search is tenant-scoped, uses model-specific vectors, and suppres
 test("memory saves require consent before embedding/model invocation",async()=>{
  let called=0;const never:EmbeddingProvider={...embedder,embed:async()=>{called++;return good;}};
  const sql:SqlPool={connect:async()=>{throw Error("DB should not be accessed");}};
- await assert.rejects(new SqlToolExecutor(sql,never).execute(ctx,"assortment-review","save_memory",{key:"a",value:{note:"x"},room:"assortment-review"},new SourceLedger(ctx,"t"),false),/consent/);
+ await assert.rejects(new SqlToolExecutor(sql,never).execute(ctx,"assortment-review","save_memory",{key:"a",value_json:JSON.stringify({note:"x"}),room:"assortment-review"},new SourceLedger(ctx,"t"),false),/consent/);
  assert.equal(called,0);
 });

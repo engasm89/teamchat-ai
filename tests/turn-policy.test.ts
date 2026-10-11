@@ -46,7 +46,7 @@ test("tool audit records identify the attempt without logging result rows",()=>{
 test("memory audit records keep the key and field names, not the stored values",()=>{
  const ctx=resolvedContext("uid-northside-buyer1","northside-outfitters");
  const record=toolAuditRecord({ctx,turnId:"t",roomId:"assortment-review",triggerSequence:3,jobAttempt:2,operationId:"r1-c0",name:"save_memory",
-  args:{key:"escalation_contact",room:"assortment-review",value:{name:"Dana Private",phone:"555-0100"}},result:rejected(),replayed:true});
+  args:{key:"escalation_contact",room:"assortment-review",value_json:JSON.stringify({name:"Dana Private",phone:"555-0100"})},result:rejected(),replayed:true});
  assert.deepEqual(record.requested,{key:"escalation_contact",room:"assortment-review",fields:["name","phone"]});
  assert.equal(record.outcome,"validation_rejected");
  assert.equal(record.replayed,true);

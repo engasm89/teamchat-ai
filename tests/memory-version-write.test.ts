@@ -19,7 +19,7 @@ test("shared memory commits a version-one history row in the same tenant transac
  }};
  const pool:SqlPool={connect:async()=>client};
  const result=await new SqlToolExecutor(pool,{modelId:"embed-mock",embed:async()=>vector}).execute(
-  ctx,"assortment-review","save_memory",{key:"buyer-decision",room:"assortment-review",value:{choice:"retain"}},new SourceLedger(ctx,"turn-1"),true,
+  ctx,"assortment-review","save_memory",{key:"buyer-decision",room:"assortment-review",value_json:JSON.stringify({choice:"retain"})},new SourceLedger(ctx,"turn-1"),true,
   {turnId:"00000000-0000-4000-a000-000000000001",fence:4});
  assert.equal((result as {saved:boolean}).saved,true);
  const main=trace.findIndex(s=>s.includes("INSERT INTO teamchat.memories"));
@@ -39,7 +39,7 @@ test("memory history write failure rolls back the memory creation",async()=>{
   return {rows:rows as T[],rowCount:rows.length};
  }};
  await assert.rejects(new SqlToolExecutor({connect:async()=>client},{modelId:"embed-mock",embed:async()=>vector}).execute(
-  ctx,"assortment-review","save_memory",{key:"buyer-decision",room:"assortment-review",value:{choice:"retain"}},new SourceLedger(ctx,"turn-2"),true,
+  ctx,"assortment-review","save_memory",{key:"buyer-decision",room:"assortment-review",value_json:JSON.stringify({choice:"retain"})},new SourceLedger(ctx,"turn-2"),true,
   {turnId:"00000000-0000-4000-a000-000000000002",fence:5}),/history unavailable/);
  assert.equal(trace.at(-1),"ROLLBACK");
 });

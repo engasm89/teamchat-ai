@@ -1,7 +1,7 @@
 import {rankCatalog,normalizeCatalogCode,normalizeStoreId} from "../catalog-search.ts";
 import {inTenantTransaction,type SqlPool,type SqlClient} from "../persistence/postgres.ts";
 import {NO_MATCH,type TenantContext} from "../tenant.ts";
-import {validateMemoryValue} from "../memory.ts";
+import {parseMemoryValueJson} from "../memory.ts";
 import {decimalMicro,formatMicro,multiplyMicro,retainedClasses,compareScores,compareAlternatives,type Score} from "../retail.ts";
 import {TOOL_DECLARATIONS,type ToolName} from "../tools.ts";
 import {SourceLedger} from "../grounding.ts";
@@ -64,9 +64,9 @@ export class SqlToolExecutor{
    queryVector=vectorSql(await this.embeddings.embed(query,"RETRIEVAL_QUERY"));
   }
   if(name==="save_memory"){
-   const a=argsOf(raw,["key","value","room"]);
+   const a=argsOf(raw,["key","value_json","room"]);
    if(!consent)throw Error("Shared-memory save not consented");
-   const key=str(a.key,"key"),valid=validateMemoryValue(a.value);
+   const key=str(a.key,"key"),valid=parseMemoryValueJson(a.value_json);
    if(valid.ok){
     if(!this.embeddings)throw Error("Semantic memory service not configured");
     saveVector=vectorSql(await this.embeddings.embed(memoryEmbeddingText(key,valid.value),"RETRIEVAL_DOCUMENT"));
@@ -137,12 +137,12 @@ export class SqlToolExecutor{
      return r.rows.filter(m=>m.distance<=0.55).map(m=>({ref:ledger.add("memory",String(m.memory_id),m),memory:m}));
     }
     case "save_memory":{
-     const a=argsOf(raw,["key","value","room"]);if(!consent)throw Error("Shared-memory save not consented");
+     const a=argsOf(raw,["key","value_json","room"]);if(!consent)throw Error("Shared-memory save not consented");
      const key=str(a.key,"key"),sourceRoom=str(a.room,"room");if(sourceRoom!==roomId)throw Error("Source room mismatch");
      if(!jobFence)throw Error("Memory mutation requires a durable AI job lease");
      const lease=await c.query("SELECT 1 FROM teamchat.ai_jobs WHERE tenant_id=$1 AND turn_id=$2::uuid AND fencing_token=$3 AND state='running' AND lease_expires_at>now() FOR UPDATE",[ctx.tenantId,jobFence.turnId,jobFence.fence]);
      if(lease.rows.length!==1)throw Error("AI job lease lost");
-     const valid=validateMemoryValue(a.value);if(!valid.ok)return {validation_errors:valid.errors,saved:false};
+     const valid=parseMemoryValueJson(a.value_json);if(!valid.ok)return {validation_errors:valid.errors,saved:false};
      const r=await c.query("INSERT INTO teamchat.memories(tenant_id,memory_id,key,value,created_by,created_at,source_room_id,embedding,embedding_model) VALUES ($1,gen_random_uuid()::text,$2,$3::jsonb,$4,now(),$5,$6::vector,$7) ON CONFLICT (tenant_id,key) DO NOTHING RETURNING memory_id,key,value,created_by,created_at::text,source_room_id",[ctx.tenantId,key,JSON.stringify(valid.value),ctx.uid,roomId,saveVector!,this.embeddings!.modelId]);
      if(!r.rows.length){
       const previous=await c.query("SELECT memory_id,key,value,created_by,created_at::text,source_room_id FROM teamchat.memories WHERE tenant_id=$1 AND key=$2 AND value=$3::jsonb",[ctx.tenantId,key,JSON.stringify(valid.value)]);

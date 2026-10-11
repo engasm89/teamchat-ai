@@ -1,5 +1,5 @@
 import {scoreStore, compareScores,compareAlternatives} from "./retail.ts";
-import {rankMemoriesInTenant} from "./memory.ts";
+import {rankMemoriesInTenant,parseMemoryValueJson} from "./memory.ts";
 import {assertContext, NO_MATCH, type TenantContext} from "./tenant.ts";
 import {FixtureRepository} from "./repository.ts";
 import {SourceLedger} from "./grounding.ts";
@@ -14,7 +14,7 @@ export const TOOL_DECLARATIONS = [
   {name:"calculate_uplift",description:"Compare deterministic dimensionless assortment coefficient scores for an authorized store, using additional existing codes. No sales/money baseline may be invented by Gemini.",parameters:{type:"OBJECT",properties:{store_id:{type:"STRING"},add_codes:{type:"ARRAY",items:{type:"STRING"}}},required:["store_id","add_codes"]}},
   {name:"compare_assortment_options",description:"Compare two alternative proposed catalog-code additions for the SAME authorized store, with arithmetic performed on the server and a direct B-minus-A score difference. Not a sales forecast.",parameters:{type:"OBJECT",properties:{store_id:{type:"STRING"},option_a_codes:{type:"ARRAY",items:{type:"STRING"}},option_b_codes:{type:"ARRAY",items:{type:"STRING"}}},required:["store_id","option_a_codes","option_b_codes"]}},
   {name:"search_memory",description:"Find previous decisions recorded within the current organization, including source and attribution.",parameters:{type:"OBJECT",properties:{query:{type:"STRING"}},required:["query"]}},
-  {name:"save_memory",description:"Save a flat tenant-shared decision with explicit user consent; nested structures are rejected.",parameters:{type:"OBJECT",properties:{key:{type:"STRING"},value:{type:"OBJECT"},room:{type:"STRING"}},required:["key","value","room"]}}
+  {name:"save_memory",description:"Save a flat tenant-shared decision with explicit user consent; nested structures are rejected.",parameters:{type:"OBJECT",properties:{key:{type:"STRING"},value_json:{type:"STRING",description:"The details to remember, as the text of a JSON object mapping field names to values"},room:{type:"STRING"}},required:["key","value_json","room"]}}
 ] as const;
 export type ToolName=typeof TOOL_DECLARATIONS[number]["name"];
 
@@ -85,10 +85,12 @@ export class LocalToolExecutor {
         return rankMemoriesInTenant(this.repo.listMemories(ctx),query).slice(0,5).map(m=>({ref:ledger.add("memory",m.memory_id,m),memory:m}));
       }
       case "save_memory": {
-        const a=plainArgs(args,["key","value","room"]);
+        const a=plainArgs(args,["key","value_json","room"]);
         if(!consentForSave)throw new Error("Explicit user consent required to store tenant-shared memory");
         const key=stringArg(a.key,"key"),room=stringArg(a.room,"room");
-        const saved=this.repo.saveMemory(ctx,{key,room,value:a.value},new Date().toISOString());
+        const parsed=parseMemoryValueJson(a.value_json);
+        if(!parsed.ok)throw new Error(`Invalid memory: ${JSON.stringify(parsed.errors)}`);
+        const saved=this.repo.saveMemory(ctx,{key,room,value:parsed.value},new Date().toISOString());
         return {ref:ledger.add("memory",saved.memory_id,saved),memory:saved};
       }
       default: throw new Error("Undeclared tool");

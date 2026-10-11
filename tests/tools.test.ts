@@ -32,5 +32,5 @@ test("calculate_uplift tool returns dimensionless data and source ledger",async(
  if(result&&typeof result==="object"&&"result" in result){assert.equal((result.result as any).delta,"0.115775");assert.equal(ledger.resolve(String((result as any).ref),"delta"),"0.115775");}
 });
 test("memory mutation is denied without explicit user consent",async()=>{
- await assert.rejects(executor.execute(north,"save_memory",{key:"new",room:"assortment-review",value:{owner:"A"}},new SourceLedger(north,"t7")),/consent/);
+ await assert.rejects(executor.execute(north,"save_memory",{key:"new",room:"assortment-review",value_json:JSON.stringify({owner:"A"})},new SourceLedger(north,"t7")),/consent/);
 });
