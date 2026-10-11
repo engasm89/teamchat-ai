@@ -12,7 +12,7 @@ import WebSocket from "ws";
 import {RunRecorder,deploymentRef,loadProvenance,keychainPassword,GCP,type TestRecorder} from "../evidence/lib.ts";
 import {ACCOUNTS,APP_URL,firebaseSignIn,sleep} from "../acceptance/common.ts";
 
-const HARNESS=["scripts/gates/run-gates.ts","scripts/evidence/lib.ts","scripts/acceptance/common.ts"];
+const HARNESS=["scripts/gates/run-gates.ts","scripts/gates/memory-repair-driver.ts","scripts/evidence/lib.ts","scripts/acceptance/common.ts"];
 const arg=(name:string)=>{const i=process.argv.indexOf(name);if(i<0||!process.argv[i+1])throw Error(`${name} is required`);return process.argv[i+1]!;};
 const clone=path.resolve(arg("--clone"));
 const ORIGINAL_ZIP=path.resolve("reference/original_employer_assessment.zip");
@@ -234,6 +234,35 @@ try{
    if(kind==="api")t.assert("api closed every open WebSocket",sockets.every(s=>s.closedAt!==undefined),"all closed",results[kind]);
   }
   t.detail("results",results);
+ });
+
+ await run.run("MEMORY-REPAIR","Worker loop on a real database: nested value rejected, one controlled repair stored intact, then no more attempts",["S10"],async t=>{
+  if(!pgPort)throw Error("Local PostgreSQL from FRESH-MIGRATIONS is not running");
+  localQuery("INSERT INTO teamchat.user_memberships(tenant_id,firebase_uid,display_name) VALUES('northside-outfitters','gate-user','Gate User') ON CONFLICT DO NOTHING");
+  localQuery("INSERT INTO teamchat.rooms(tenant_id,room_id,title) VALUES('northside-outfitters','gate-room','Gate room') ON CONFLICT DO NOTHING");
+  localQuery("INSERT INTO teamchat.room_memberships(tenant_id,room_id,firebase_uid) VALUES('northside-outfitters','gate-room','gate-user') ON CONFLICT DO NOTHING");
+  const r=sh(t,"memory-repair-driver.log",process.execPath,["--experimental-strip-types",path.resolve("scripts/gates/memory-repair-driver.ts"),clone,"gate-user","gate-room",
+   String(provenance.vertex.VERTEX_EMBEDDING_MODEL_ID)],{cwd:process.cwd(),env:{...process.env,DATABASE_URL:localDbUrl(),PG_POOL_MAX:"3"}});
+  if(r.status!==0)throw Error("Driver failed; see memory-repair-driver.log");
+  const out=JSON.parse(r.stdout.trim().split("\n").at(-1)!);
+  t.writeJson("memory-repair.json",out,"Persisted tool events, answer blocks and memory rows for both scenarios");
+  const {nested:n,unrepairable:u}=out;
+  const parse=(s:unknown)=>{try{return JSON.parse(String(s));}catch{return undefined;}};
+  const repaired=parse(n.tools[1]?.arguments?.value_json);
+  t.assert("nested: turn completed",n.first?.status==="completed"&&n.terminal.join()==="ai_complete","completed",{run:n.first,terminal:n.terminal});
+  t.assert("nested: first save rejected with a field-level reason for the nested field",n.tools[0]?.result?.saved===false&&
+   (n.tools[0]?.result?.validation_errors??[]).some((e:any)=>e.field==="leads"&&e.issue),"leads rejected",n.tools[0]?.result);
+  t.assert("nested: exactly one controlled repair, executed by the worker and stored",n.tools.length===2&&n.tools[1]?.operationId==="r0-c1"&&n.tools[1]?.result?.saved===true,
+   "2 operations, second saved",n.tools.map((x:any)=>({op:x.operationId,saved:x.result?.saved})));
+  t.assert("nested: the repair keeps every field, re-encoding the nested one as JSON text",typeof repaired?.leads==="string"&&
+   JSON.stringify(parse(repaired.leads))===JSON.stringify(out.originalLeads)&&repaired?.site==="north","nothing dropped",repaired);
+  t.assert("nested: the stored memory equals the repaired value",n.stored.length===1&&JSON.stringify(n.stored[0].value)===JSON.stringify(repaired),repaired,n.stored);
+  t.assert("nested: the user sees the rejection and then the saved value",n.answerBlocks.filter((b:string)=>b==="save_memory").length===2,2,n.answerBlocks);
+  t.assert("nested: re-running the finished job writes nothing",n.again?.status==="completed"&&n.eventCountAfterSecondRun===n.eventCountAfterFirstRun,
+   n.eventCountAfterFirstRun,{again:n.again,eventsAfterSecondRun:n.eventCountAfterSecondRun});
+  t.assert("unrepairable: repair rejected too, the model's retry refused, nothing stored",u.tools.length===3&&
+   Array.isArray(u.tools[1]?.result?.validation_errors)&&/Repair limit reached/.test(String(u.tools[2]?.result?.error))&&u.stored.length===0&&u.terminal.join()==="ai_complete",
+   "rejected, rejected, refused; 0 rows",{tools:u.tools.map((x:any)=>({op:x.operationId,errors:x.result?.validation_errors,error:x.result?.error,saved:x.result?.saved})),stored:u.stored.length});
  });
 
  await run.run("SECRET-SCAN","gitleaks over full history plus reviewer-password and JWT scan of evidence",["D02"],async t=>{

@@ -68,3 +68,29 @@ rejection as the function response, mode `AUTO`, three trials):
 | Plus: "If save_memory returns validation_errors, make exactly one corrected save_memory call with the same key and a flat value_json (express nested lists as plain text fields), then stop retrying." | 3/3, same key, every lead, day and store kept as flat text |
 
 Raw output: `save-memory-repair.json`.
+
+That sentence shipped in 26276b1 and did not hold up. Re-running both rounds
+against it (temperature 0) gave:
+
+- Round 1: with the sentence in the system instruction the model often
+  pre-flattens the roster into keys like `leads_0_shifts_0_stores_1` without
+  ever being rejected (1 of 2 trials stayed nested), so S10's "rejected first"
+  path is not reliably reached.
+- Round 2: given the rejection, the model made the repair call in 1 of 3
+  trials; twice it apologised and asked the user instead.
+
+Raw output: `save-memory-recheck-round1.json`, `save-memory-recheck-round2.json`.
+
+A prompt that works some of the time is not a control. The sentence was
+removed and the repair moved into the worker: when `save_memory` returns
+`validation_errors` and the value has nested fields, the worker makes exactly
+one further `save_memory` call with the same key, each nested field re-encoded
+as JSON text (`controlledMemoryRepair` in `src/memory.ts`), and persists both
+operations so a re-run replays rather than re-executes. If the repair is also
+rejected (for example it exceeds 2048 characters), any further save in that
+turn is refused with "Repair limit reached" and nothing is stored. The gates
+test `MEMORY-REPAIR` drives the real worker loop and real SQL with a scripted
+model to show both paths.
+
+This is a product decision taken without Ashraf (the run was unattended): the
+stored value keeps every field, but nested ones become text, not structure.

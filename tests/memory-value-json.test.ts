@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {TOOL_DECLARATIONS} from "../src/tools.ts";
-import {parseMemoryValueJson} from "../src/memory.ts";
+import {parseMemoryValueJson,controlledMemoryRepair} from "../src/memory.ts";
 import {SqlToolExecutor} from "../src/server/sql-tools.ts";
 import {SourceLedger} from "../src/grounding.ts";
 import {resolvedContext} from "../src/tenant.ts";
@@ -30,6 +30,18 @@ test("memory value JSON: flat values parse; nested, empty and malformed values g
  assert.deepEqual(parseMemoryValueJson("{not json"),{ok:false,errors:[{field:"value_json",issue:"Not valid JSON"}]});
  assert.deepEqual(parseMemoryValueJson({contact:"Dana"}),{ok:false,errors:[{field:"value_json",issue:"Expected the text of a JSON object"}]});
  assert.equal(parseMemoryValueJson('["a"]').ok,false);
+});
+
+test("the controlled repair re-encodes nested fields as JSON text and drops nothing",()=>{
+ const leads=[{name:"Ana",shifts:[{day:"Mon",stores:["ST-4001"]}]}];
+ const repaired=controlledMemoryRepair(JSON.stringify({leads,site:"north",open:true,owner:{name:"Ben"},note:null}));
+ assert.deepEqual(JSON.parse(repaired!),{leads:JSON.stringify(leads),site:"north",open:true,owner:'{"name":"Ben"}',note:null});
+ assert.equal(parseMemoryValueJson(repaired).ok,true);
+ assert.equal(controlledMemoryRepair('{"site":"north"}'),null,"nothing nested: re-encoding cannot help");
+ assert.equal(controlledMemoryRepair("{}"),null);
+ assert.equal(controlledMemoryRepair("[1,2]"),null);
+ assert.equal(controlledMemoryRepair("{not json"),null);
+ assert.equal(controlledMemoryRepair({leads}),null);
 });
 
 test("save_memory rejects nested and empty values without writing, and refuses the old object argument",async()=>{

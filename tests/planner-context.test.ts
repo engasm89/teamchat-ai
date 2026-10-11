@@ -9,7 +9,6 @@ test('consented memory saving is informed by the persisted trusted job state',()
  assert.match(text,/Current authorized room: category-strategy/);
  assert.match(text,/compare_assortment_options/);
  assert.match(text,/value_json to the text of a JSON object/);
- assert.match(text,/If save_memory returns validation_errors, make exactly one corrected save_memory call/);
 });
 test('memory authority cannot be invented by a user prompt',()=>{
  const text=trustedPlannerInstructions({roomId:'assortment-review',memoryConsent:false});

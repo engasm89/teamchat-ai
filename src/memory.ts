@@ -24,6 +24,17 @@ export function parseMemoryValueJson(text: unknown): ReturnType<typeof validateM
   try { value = JSON.parse(text); } catch { return {ok:false,errors:[{field:"value_json",issue:"Not valid JSON"}]}; }
   return validateMemoryValue(value);
 }
+/** The one controlled repair of a rejected value: each nested object or array field is kept,
+ * re-encoded as JSON text, so nothing is dropped. Null when re-encoding cannot change the outcome. */
+export function controlledMemoryRepair(text: unknown): string | null {
+  if (typeof text !== "string") return null;
+  let value: unknown;
+  try { value = JSON.parse(text); } catch { return null; }
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const entries = Object.entries(value as Record<string, unknown>);
+  if (!entries.some(([, v]) => v !== null && typeof v === "object")) return null;
+  return JSON.stringify(Object.fromEntries(entries.map(([k, v]) => [k, v !== null && typeof v === "object" ? JSON.stringify(v) : v])));
+}
 /** Lexical baseline ranking within an *already tenant-filtered* candidate set. Embedding reranking is pending Vertex integration. */
 export function rankMemoriesInTenant(candidates: TeamMemory[], query: string, minScore=0.2): TeamMemory[] {
   const words = (s:string) => new Set(s.toLowerCase().match(/[a-z0-9]+/g) ?? []);

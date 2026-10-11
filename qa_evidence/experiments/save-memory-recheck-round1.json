@@ -1,0 +1,248 @@
+{
+ "ranAt": "2026-10-11T18:16:34.138Z",
+ "model": "gemini-2.5-flash",
+ "location": "us-central1",
+ "config": "temperature 0, maxOutputTokens 1024, mode ANY, production system instruction with consent GRANTED",
+ "results": [
+  {
+   "variant": "production: src/tools.ts as checked out",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "ST-4003 Escalation",
+      "room": "supply-planning",
+      "value_json": "{\"contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production: src/tools.ts as checked out",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"store_id\": \"ST-4003\", \"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "room": "supply-planning",
+      "key": "ST-4003 Escalation"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production: src/tools.ts as checked out",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "room": "supply-planning",
+      "key": "roster-x1"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production: src/tools.ts as checked out",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads_0_name\": \"Ana\", \"leads_0_shifts_0_day\": \"Mon\", \"leads_0_shifts_0_stores_0\": \"ST-4001\", \"leads_0_shifts_0_stores_1\": \"ST-4002\", \"leads_1_name\": \"Ben\", \"leads_1_shifts_0_day\": \"Tue\", \"leads_1_shifts_0_stores_0\": \"ST-4003\"}",
+      "room": "supply-planning",
+      "key": "roster-x1"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "before the fix: value OBJECT without properties",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "value": {},
+      "key": "ST-4003 Escalation Contact and Deadline"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "before the fix: value OBJECT without properties",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "ST-4003 escalation contact",
+      "value": {},
+      "room": "supply-planning"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "before the fix: value OBJECT without properties",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value": {},
+      "key": "roster-x1",
+      "room": "supply-planning"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "before the fix: value OBJECT without properties",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x1",
+      "value": {},
+      "room": "supply-planning"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "JSON Schema: value object, open properties",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value": {},
+      "key": "ST-4003 Escalation Contact and Deadline",
+      "room": "supply-planning"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "JSON Schema: value object, open properties",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value": {},
+      "key": "ST-4003 escalation contact and deadline",
+      "room": "supply-planning"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "JSON Schema: value object, open properties",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x1",
+      "value": {},
+      "room": "supply-planning"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "JSON Schema: value object, open properties",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value": {},
+      "key": "roster-x1",
+      "room": "supply-planning"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "value_json: JSON object text",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "value_json": "{\"store_id\": \"ST-4003\", \"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "key": "ST-4003 Escalation"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "value_json: JSON object text",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "room": "supply-planning",
+      "key": "ST-4003 Escalation"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "value_json: JSON object text",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-x1",
+      "room": "supply-planning"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "value_json: JSON object text",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads_0_name\": \"Ana\", \"leads_0_shifts_0_day\": \"Mon\", \"leads_0_shifts_0_stores_0\": \"ST-4001\", \"leads_0_shifts_0_stores_1\": \"ST-4002\", \"leads_1_name\": \"Ben\", \"leads_1_shifts_0_day\": \"Tue\", \"leads_1_shifts_0_stores_0\": \"ST-4003\"}",
+      "key": "roster-x1",
+      "room": "supply-planning"
+     }
+    }
+   ]
+  }
+ ]
+}
