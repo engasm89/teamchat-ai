@@ -3,9 +3,10 @@
  * and each tenant's reviewer room holds a three-person conversation with a tool-backed AI turn.
  * Usage: node --experimental-strip-types scripts/handoff/run-handoff.ts */
 import {RunRecorder} from "../evidence/lib.ts";
-import {ACCOUNTS,API_URL,APP_URL,bindDeployment,openDb,authoritativeEvents,firebaseApiKey,firebaseSignIn,type AccountKey} from "../acceptance/common.ts";
+import {ACCOUNTS,API_URL,APP_URL,QA_ROOM,bindDeployment,openDb,authoritativeEvents,firebaseApiKey,firebaseSignIn,sleep,type AccountKey} from "../acceptance/common.ts";
+import {LiveClient} from "../acceptance/live-client.ts";
 
-const HARNESS=["scripts/handoff/run-handoff.ts","scripts/acceptance/common.ts","scripts/evidence/lib.ts"];
+const HARNESS=["scripts/handoff/run-handoff.ts","scripts/acceptance/common.ts","scripts/acceptance/live-client.ts","scripts/evidence/lib.ts"];
 const REVIEWER_ROOMS=["assortment-review","category-strategy"];
 const {sourceSha,deployment}=bindDeployment();
 const run=new RunRecorder({suite:"handoff",environment:`production: ${APP_URL} + ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS});
@@ -47,6 +48,42 @@ try{
   t.detail("roomsPerAccount",lists).detail("reviewerRooms",REVIEWER_ROOMS);
   t.assert("every account lists its rooms through the API",keys.every(k=>(lists[k]?.length??0)>0&&!lists[k]![0]!.startsWith("HTTP")),"6 lists",Object.keys(lists).length);
   t.assert("every account is a member of both reviewer rooms",keys.every(k=>REVIEWER_ROOMS.every(r=>lists[k]?.includes(r))),REVIEWER_ROOMS,lists);
+ });
+
+ await run.run("BOUNDARIES","Each account sees only its own chain: API rejects missing or forged tokens; WebSocket replay holds only own-tenant events",["D04","G04"],async t=>{
+  const anon=await fetch(API_URL+"/api/me",{headers:{Origin:APP_URL}});
+  const forged=await fetch(API_URL+"/api/me",{headers:{Origin:APP_URL,Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ4In0.forged"}});
+  t.detail("unauthenticated",{noToken:anon.status,forgedToken:forged.status});
+  t.assert("the API rejects a request without a token",anon.status===401,401,anon.status);
+  t.assert("the API rejects a forged token",forged.status===401,401,forged.status);
+  const room="assortment-review";
+  const dbIds=new Map<string,Set<string>>();
+  for(const tenant of tenants){const k=keys.find(x=>ACCOUNTS[x].tenant===tenant&&identities.has(x))!;
+   dbIds.set(tenant,new Set((await authoritativeEvents(pool,tenant,identities.get(k)!.uid,room,0)).map(e=>e.event_id)));}
+  const foreignOnly:Record<string,string>={"northside-outfitters":QA_ROOM["valley-home-goods"],"valley-home-goods":QA_ROOM["northside-outfitters"]};
+  const rows:Array<Record<string,unknown>>=[];
+  for(const k of keys){
+   const who=identities.get(k);if(!who){rows.push({account:k,error:"not signed in"});continue;}
+   const own=ACCOUNTS[k].tenant,other=tenants.find(x=>x!==own)!;
+   const c=await new LiveClient(k).connect(who);
+   try{
+    await c.subscribe(room,0);await sleep(2500);
+    const got=c.events.get(room)??[];
+    const probe=foreignOnly[own]!;c.send({type:"subscribe",roomId:probe,after:0});await sleep(2500);
+    const probeEvents=(c.events.get(probe)??[]).length;
+    const probeReply=c.frames.filter(f=>f.dir==="in"&&f.frame.roomId===probe).map(f=>f.frame.type);
+    rows.push({account:k,tenant:own,replayed:got.length,
+     wrongTenantLabel:got.filter(e=>e.tenantId!==own).length,
+     notInOwnTenantDb:got.filter(e=>!dbIds.get(own)!.has(e.eventId)).length,
+     inOtherTenantDb:got.filter(e=>dbIds.get(other)!.has(e.eventId)).length,
+     foreignOnlyRoom:probe,foreignRoomEvents:probeEvents,foreignRoomReplies:[...new Set(probeReply)]});
+   }finally{c.close();}
+  }
+  t.detail("replayRoom",room).detail("accounts",rows);
+  t.assert("every account replays a populated reviewer room",rows.every(r=>Number(r.replayed)>0),">0 each",rows.map(r=>[r.account,r.replayed]));
+  t.assert("every replayed event belongs to the account's own tenant (label and database)",rows.every(r=>r.wrongTenantLabel===0&&r.notInOwnTenantDb===0&&r.inOtherTenantDb===0),
+   "0 foreign",rows.map(r=>[r.account,r.wrongTenantLabel,r.notInOwnTenantDb,r.inOtherTenantDb]));
+  t.assert("subscribing to a room that exists only in the other chain yields no events",rows.every(r=>r.foreignRoomEvents===0),0,rows.map(r=>[r.account,r.foreignOnlyRoom,r.foreignRoomEvents,r.foreignRoomReplies]));
  });
 
  await run.run("SEEDED-HISTORY","Both tenants have human message history and at least one genuine tool-backed AI exchange",["D01","D08","A15"],async t=>{
