@@ -20,7 +20,9 @@ export const ACCOUNTS={
 } as const;
 export type AccountKey=keyof typeof ACCOUNTS;
 /** QA traffic stays out of the rooms reviewers are asked to use. */
-export const QA_ROOM={"northside-outfitters":"supply-planning","valley-home-goods":"pricing"} as const;
+/** Rooms n1 and v1 are members of. Valley's tenant-specific rooms each have exactly one member
+ * (pricing: v2, range-planning: v1, strategy: v3). */
+export const QA_ROOM={"northside-outfitters":"supply-planning","valley-home-goods":"range-planning"} as const;
 
 export const sleep=(ms:number)=>new Promise(r=>setTimeout(r,ms));
 export const tag=(prefix:string)=>`${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,6)}`;
