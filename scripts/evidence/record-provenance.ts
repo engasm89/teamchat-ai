@@ -25,7 +25,10 @@ async function imageConfig(name:string,digest:string){
  return {labels:config.config.Labels as Record<string,string>,cmd:(config.config.Cmd as string[]).join(" ")};
 }
 
-const build=gcloudJson(["builds","describe",buildId]);
+const build=(()=>{
+ try{return gcloudJson(["builds","describe",buildId]);}
+ catch{return gcloudJson(["builds","describe",buildId,"--region",GCP.region]);}
+})();
 if(build.status!=="SUCCESS")throw Error(`Build ${buildId} is ${build.status}`);
 const sha=build.substitutions?._GIT_SHA as string;
 if(!/^[0-9a-f]{40}$/.test(sha??""))throw Error("Build has no _GIT_SHA substitution");
