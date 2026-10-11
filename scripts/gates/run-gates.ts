@@ -7,6 +7,7 @@ import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
 import net from "node:net";
+import {isDeepStrictEqual} from "node:util";
 import {spawn,spawnSync,execFileSync} from "node:child_process";
 import WebSocket from "ws";
 import {RunRecorder,deploymentRef,loadProvenance,keychainPassword,GCP,type TestRecorder} from "../evidence/lib.ts";
@@ -255,8 +256,8 @@ try{
   t.assert("nested: exactly one controlled repair, executed by the worker and stored",n.tools.length===2&&n.tools[1]?.operationId==="r0-c1"&&n.tools[1]?.result?.saved===true,
    "2 operations, second saved",n.tools.map((x:any)=>({op:x.operationId,saved:x.result?.saved})));
   t.assert("nested: the repair keeps every field, re-encoding the nested one as JSON text",typeof repaired?.leads==="string"&&
-   JSON.stringify(parse(repaired.leads))===JSON.stringify(out.originalLeads)&&repaired?.site==="north","nothing dropped",repaired);
-  t.assert("nested: the stored memory equals the repaired value",n.stored.length===1&&JSON.stringify(n.stored[0].value)===JSON.stringify(repaired),repaired,n.stored);
+   isDeepStrictEqual(parse(repaired.leads),out.originalLeads)&&repaired?.site==="north","nothing dropped",repaired);
+  t.assert("nested: the stored memory equals the repaired value",n.stored.length===1&&isDeepStrictEqual(n.stored[0].value,repaired),repaired,n.stored);
   t.assert("nested: the user sees the rejection and then the saved value",n.answerBlocks.filter((b:string)=>b==="save_memory").length===2,2,n.answerBlocks);
   t.assert("nested: re-running the finished job writes nothing",n.again?.status==="completed"&&n.eventCountAfterSecondRun===n.eventCountAfterFirstRun,
    n.eventCountAfterFirstRun,{again:n.again,eventsAfterSecondRun:n.eventCountAfterSecondRun});
