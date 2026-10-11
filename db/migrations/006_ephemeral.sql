@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS teamchat.typing_leases (
 );
 ALTER TABLE teamchat.typing_leases ENABLE ROW LEVEL SECURITY;
 ALTER TABLE teamchat.typing_leases FORCE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS tenant_guard ON teamchat.typing_leases;
 CREATE POLICY tenant_guard ON teamchat.typing_leases
  USING (tenant_id=nullif(current_setting('app.tenant_id',true),''))
  WITH CHECK (tenant_id=nullif(current_setting('app.tenant_id',true),''));
