@@ -5,6 +5,7 @@ export class TeamSocket {
   private ws:WebSocket|null=null;private retries=0;private retryTimer:ReturnType<typeof setTimeout>|undefined;
   private authenticated=false;
   private authToken="";private tokenProvider:(()=>Promise<string>)|null=null;private deliberatelyClosed=false;
+  private networkDown=false;
   private readonly cursor=new Map<string,number>();private readonly seen=new Set<string>();
   private readonly rooms=new Set<string>();
   private readonly outbound=new Map<string,{roomId:string;clientMessageId:string;body:string;allowSharedMemorySave:boolean}>();
@@ -52,10 +53,28 @@ export class TeamSocket {
   connect(token:string|(()=>Promise<string>)):void {
     if(typeof token==="string"){this.authToken=token;this.tokenProvider=null;}
     else {this.authToken="";this.tokenProvider=token;}
-    this.deliberatelyClosed=false;this.open(false);
+    this.deliberatelyClosed=false;
+    if(typeof globalThis.addEventListener==="function"){
+      globalThis.addEventListener("offline",this.handleOffline);globalThis.addEventListener("online",this.handleOnline);
+    }
+    this.open(false);
   }
+  // Browsers keep an open WebSocket alive when the OS or DevTools reports the
+  // network offline, so treat the offline event as a disconnect and resume
+  // from the cursor when the network returns.
+  private readonly handleOffline=()=>{
+    if(this.deliberatelyClosed)return;
+    this.networkDown=true;
+    if(this.retryTimer!==undefined){clearTimeout(this.retryTimer);this.retryTimer=undefined;}
+    const sock=this.ws;this.ws=null;this.authenticated=false;
+    this.onStatus("offline");sock?.close();
+  };
+  private readonly handleOnline=()=>{
+    if(this.deliberatelyClosed||!this.networkDown)return;
+    this.networkDown=false;this.retries=0;this.open(true);
+  };
   private open(reconnect:boolean):void {
-    if(this.deliberatelyClosed||this.ws&&(this.ws.readyState===WebSocket.OPEN||this.ws.readyState===WebSocket.CONNECTING))return;
+    if(this.deliberatelyClosed||this.networkDown||this.ws&&(this.ws.readyState===WebSocket.OPEN||this.ws.readyState===WebSocket.CONNECTING))return;
     this.onStatus(reconnect?"reconnecting":"connecting");
     const sock=new WebSocket(this.url);this.ws=sock;this.authenticated=false;
     sock.addEventListener("open",()=>{
@@ -106,7 +125,7 @@ export class TeamSocket {
       if(this.ws!==sock)return; // ignore delayed close from an older transport
       this.authenticated=false;
       this.ws=null;
-      if(this.deliberatelyClosed){this.onStatus("offline");return;}
+      if(this.deliberatelyClosed||this.networkDown){this.onStatus("offline");return;}
       this.onStatus("reconnecting");this.scheduleReconnect();
     });
     sock.addEventListener("error",()=>{if(this.ws===sock&&!this.deliberatelyClosed)this.onError("WebSocket transport error");});
@@ -146,7 +165,10 @@ export class TeamSocket {
     this.ws.send(JSON.stringify({v:1,type:"typing",roomId}));
   }
   close(clearStored=true):void {
-    this.deliberatelyClosed=true;this.authToken="";this.tokenProvider=null;this.authenticated=false;
+    this.deliberatelyClosed=true;this.authToken="";this.tokenProvider=null;this.authenticated=false;this.networkDown=false;
+    if(typeof globalThis.removeEventListener==="function"){
+      globalThis.removeEventListener("offline",this.handleOffline);globalThis.removeEventListener("online",this.handleOnline);
+    }
     if(this.retryTimer!==undefined){clearTimeout(this.retryTimer);this.retryTimer=undefined;}
     this.ws?.close();this.ws=null;this.outbound.clear();this.rooms.clear();this.cursor.clear();this.seen.clear();if(clearStored&&this.accountUid)try{sessionStorage.removeItem(this.storageKey);}catch{}this.onStatus("offline");
   }

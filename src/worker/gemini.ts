@@ -58,6 +58,39 @@ export function assertMatchingPersistedTool(saved:{name:string;arguments:unknown
   throw Error("AI retry diverged from persisted tool plan");
 }
 
+const isRecord=(value:unknown):value is Record<string,unknown>=>!!value&&typeof value==="object"&&!Array.isArray(value);
+
+/** A rejected memory value gets exactly one controlled repair attempt per turn.
+ * Further save_memory calls after a rejected repair are refused, not executed. */
+export class MemoryRepairBudget{
+ private rejections=0;
+ refusal(name:string):Record<string,unknown>|null{
+  if(name!=="save_memory"||this.rejections<2)return null;
+  return {saved:false,error:"Repair limit reached: the value was rejected and its one repair attempt was also rejected, so nothing was stored"};
+ }
+ observe(name:string,result:unknown):void{
+  if(name==="save_memory"&&isRecord(result)&&Array.isArray(result.validation_errors))this.rejections++;
+ }
+}
+
+/** One structured Cloud Logging record per tool call. Records the requesting
+ * tenant/user and what was asked, never the tool's result rows, so a refused
+ * foreign lookup leaves an audit trail without any foreign data. */
+export function toolAuditRecord(input:{ctx:TenantContext;turnId:string;roomId:string;triggerSequence:string|number;jobAttempt:number;
+ operationId:string;name:string;args:unknown;result:unknown;replayed:boolean}):Record<string,unknown>{
+ const {result,args}=input;
+ const outcome=isRecord(result)&&result.found===false?"no_match":
+  Array.isArray(result)?(result.length?"results":"no_match"):
+  isRecord(result)&&Array.isArray(result.validation_errors)?"validation_rejected":
+  isRecord(result)&&result.saved===false?"refused":
+  isRecord(result)&&result.saved===true?"saved":"results";
+ const requested=input.name==="save_memory"&&isRecord(args)
+  ?{key:args.key,room:args.room,fields:isRecord(args.value)?Object.keys(args.value):typeof args.value}:args;
+ return {severity:"INFO",message:"ai_tool_call",tenantId:input.ctx.tenantId,uid:input.ctx.uid,turnId:input.turnId,roomId:input.roomId,
+  triggerSequence:Number(input.triggerSequence),jobAttempt:input.jobAttempt,operationId:input.operationId,tool:input.name,
+  requested,outcome,replayed:input.replayed};
+}
+
 /** Preserve the complete (bounded) active user request and clearly label
  * earlier room content as context, so an old "remember" message is not
  * mistaken for the user's currently consented instruction. */
@@ -124,7 +157,7 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
   return {status:"busy"};
  }
  const {fence}=claim,room=claim.job.room_id;
- const tools=new SqlToolExecutor(pool,embeddings),ledger=new SourceLedger(ctx,turnId);
+ const tools=new SqlToolExecutor(pool,embeddings),ledger=new SourceLedger(ctx,turnId),repairs=new MemoryRepairBudget();
  let operation=0,blocks=0;
  let leaseLost=false;
  // Model calls can be slow. Progress-only lease renewal is insufficient.
@@ -172,8 +205,12 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
     const saved=await getPersistedTool(pool,ctx,turnId,operationId);
     assertMatchingPersistedTool(saved,name,args);
     if(!saved)await persistToolPlan(pool,ctx,room,turnId,fence,operationId,name,args);
-    const result=saved?.status==="completed"?saved.result:await tools.execute(ctx,room,name,args,ledger,claim.job.memory_consent,{turnId,fence});
+    const result=saved?.status==="completed"?saved.result:
+     repairs.refusal(name)??await tools.execute(ctx,room,name,args,ledger,claim.job.memory_consent,{turnId,fence});
     if(saved?.status!=="completed")await persistTool(pool,ctx,room,turnId,fence,operationId,name,args,result);
+    repairs.observe(name,result);
+    console.log(JSON.stringify(toolAuditRecord({ctx,turnId,roomId:room,triggerSequence:claim.job.transcript_cutoff,jobAttempt:claim.job.attempts,
+     operationId,name,args,result,replayed:saved?.status==="completed"})));
     // Values are structured outputs of authorized DB tools, not model-written claims.
     if(blocks>=20)throw Error("Answer block budget exceeded");
     await persistAnswer(pool,ctx,room,turnId,fence,blocks++,verifiedToolBlock(name,result));

@@ -28,7 +28,7 @@ export async function startWorker(){
  const provider=await createGeminiProvider();
  const embeddings=await createVertexEmbedder();
  const server=createServer(async(req,res)=>{
-  if(req.url==="/healthz"){res.writeHead(200);res.end("ok");return;}
+  if(req.url==="/health"||req.url==="/healthz"){res.writeHead(200);res.end("ok");return;}
   if(req.method!=="POST"||!["/internal/turn","/internal/dispatch"].includes(req.url??"")){res.writeHead(404);res.end();return;}
   try{
    await verifyTaskIdentity(req.headers.authorization);

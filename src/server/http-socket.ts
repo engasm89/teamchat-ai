@@ -226,7 +226,8 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
  const hub=new RoomHub(pool);
  let healthy=true;
  const server=createServer((req:IncomingMessage,res:ServerResponse)=>{void (async()=>{
-  if(req.url==="/healthz"){res.writeHead(healthy?200:503,{"content-type":"application/json"});res.end(JSON.stringify({up:healthy}));return;}
+  // Cloud Run's front end reserves paths ending in "z"; /health is the public probe.
+  if(req.url==="/health"||req.url==="/healthz"){res.writeHead(healthy?200:503,{"content-type":"application/json"});res.end(JSON.stringify({up:healthy}));return;}
   if(req.method==="OPTIONS"&&["/api/me","/api/rooms"].includes(req.url??"")){
    if(!req.headers.origin||!origins.includes(req.headers.origin)){res.writeHead(403);res.end();return;}
    res.writeHead(204,{"Access-Control-Allow-Origin":req.headers.origin,"Access-Control-Allow-Headers":"Authorization,Content-Type","Access-Control-Allow-Methods":"GET,OPTIONS","Vary":"Origin"});res.end();return;

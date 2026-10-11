@@ -84,6 +84,42 @@ test("late frames from a logged-out or replaced socket cannot restore session st
  }finally{(globalThis as any).WebSocket=orig;(globalThis as any).sessionStorage=origStorage;}
 });
 
+test("a browser offline event disconnects, holds reconnects, and resumes from the cursor when online",async()=>{
+ const original=(globalThis as any).WebSocket;
+ const originalStorage=(globalThis as any).sessionStorage;
+ const originalAdd=(globalThis as any).addEventListener,originalRemove=(globalThis as any).removeEventListener;
+ const network=new EventTarget();
+ (globalThis as any).WebSocket=FakeSocket;
+ (globalThis as any).sessionStorage={getItem:()=>null,setItem(){},removeItem(){}};
+ (globalThis as any).addEventListener=network.addEventListener.bind(network);
+ (globalThis as any).removeEventListener=network.removeEventListener.bind(network);
+ try{
+  FakeSocket.instances=[];
+  const states:string[]=[];const seen:string[]=[];
+  const socket=new TeamSocket("wss://test.invalid/ws",ev=>seen.push(ev.eventId),s=>states.push(s),()=>{},"member-offline");
+  socket.connect("token");socket.subscribe("assortment-review");
+  const first=FakeSocket.instances.at(-1)!;first.open();first.frame({type:"auth_ok"});
+  first.frame({type:"event",event:{eventId:"e1",tenantId:"t",roomId:"assortment-review",sequence:1,type:"message",payload:{}}});
+  first.frame({type:"event",event:{eventId:"e2",tenantId:"t",roomId:"assortment-review",sequence:2,type:"message",payload:{}}});
+  network.dispatchEvent(new Event("offline"));
+  assert.equal(first.readyState,3);
+  assert.equal(states.at(-1),"offline");
+  first.frame({type:"event",event:{eventId:"late",tenantId:"t",roomId:"assortment-review",sequence:3,type:"message",payload:{}}});
+  assert.deepEqual(seen,["e1","e2"],"frames from the detached socket are ignored");
+  (socket as any).open(true);
+  assert.equal(FakeSocket.instances.length,1,"no reconnect while offline");
+  network.dispatchEvent(new Event("online"));
+  assert.equal(FakeSocket.instances.length,2);
+  const next=FakeSocket.instances.at(-1)!;next.open();await Promise.resolve();next.frame({type:"auth_ok"});
+  assert.deepEqual(next.sent.find(x=>x.type==="subscribe"),{v:1,type:"subscribe",roomId:"assortment-review",after:2});
+  assert.equal(states.at(-1),"online");
+  socket.close(true);
+  network.dispatchEvent(new Event("online"));
+  assert.equal(FakeSocket.instances.length,2,"listeners are removed on close");
+ }finally{(globalThis as any).WebSocket=original;(globalThis as any).sessionStorage=originalStorage;
+  (globalThis as any).addEventListener=originalAdd;(globalThis as any).removeEventListener=originalRemove;}
+});
+
 test("presence and typing frames from a departed room cannot reappear",async()=>{
  const original=(globalThis as any).WebSocket;
  const originalStorage=(globalThis as any).sessionStorage;

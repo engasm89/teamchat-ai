@@ -50,6 +50,13 @@ export function renderVerifiedBlock(raw:unknown):string{
   const a=c?.option_a as Record<string,unknown>|undefined,b=c?.option_b as Record<string,unknown>|undefined;
   if(c&&a&&b)return `Store ${String(x.store_id)} · original score ${String(c.baseline)}\nOption A: ${JSON.stringify(x.codes_a)} → score ${String(a.score)}, uplift ${String(a.uplift)}\nOption B: ${JSON.stringify(x.codes_b)} → score ${String(b.score)}, uplift ${String(b.uplift)}\nDifference (B − A): ${String(c.difference_b_minus_a)}\nA retained/superseded classes: ${JSON.stringify(a.retained)} / ${JSON.stringify(a.removed)}\nB retained/superseded classes: ${JSON.stringify(b.retained)} / ${JSON.stringify(b.removed)}\nAssumption: ${String(c.caveat)}\nSource: ${String(x.ref??"")}`;
  }
+ if(verified.template==="save_memory"&&result&&typeof result==="object"){
+  const x=result as Record<string,unknown>,m=x.memory as Record<string,unknown>|undefined;
+  if(Array.isArray(x.validation_errors))return `Not saved — the value does not fit the shared-memory shape (a flat set of named text, number or yes/no fields):\n${x.validation_errors.map(e=>{
+   const err=e as Record<string,unknown>;return `• ${String(err.field??"value")}: ${String(err.issue??"invalid")}`;}).join("\n")}`;
+  if(x.saved===false)return `Not saved — ${String(x.error??"the memory could not be stored")}`;
+  if(x.saved===true&&m)return `Saved to shared memory: ${String(m.key??"")}\n${JSON.stringify(m.value)}\nRecorded by: ${String(m.created_by??"")} on ${String(m.created_at??"")} in #${String(m.source_room_id??"")}\nSource: ${String(x.ref??"")}`;
+ }
  // Other records are server-fetched and remain structured with source IDs.
  return JSON.stringify(verified,null,2);
 }
