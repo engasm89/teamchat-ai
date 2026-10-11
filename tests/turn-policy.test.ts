@@ -51,4 +51,7 @@ test("memory audit records keep the key and field names, not the stored values",
  assert.equal(record.outcome,"validation_rejected");
  assert.equal(record.replayed,true);
  assert.doesNotMatch(JSON.stringify(record),/Dana Private|555-0100/);
+ const fromMessage=toolAuditRecord({ctx,turnId:"t",roomId:"assortment-review",triggerSequence:3,jobAttempt:1,operationId:"r0-c0",name:"save_memory",
+  args:{key:"k",room:"assortment-review",value_json:'{"a":1}'},result:rejected(),replayed:false,valueSource:"requester_message"});
+ assert.equal((fromMessage.requested as Record<string,unknown>).valueSource,"requester_message");
 });

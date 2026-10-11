@@ -94,3 +94,28 @@ model to show both paths.
 
 This is a product decision taken without Ashraf (the run was unattended): the
 stored value keeps every field, but nested ones become text, not structure.
+
+## The model reshapes the value once a room has history
+
+With the worker repair deployed (f2e60bc), a live S10 turn still failed: the
+model rewrote the roster as `{"leads":"Ana: Mon (ST-4001, ST-4002); Ben: Tue
+(ST-4003)"}` before calling `save_memory`, so it passed validation and the user
+was never told it did not fit. `scripts/experiments/save-memory-fidelity.ts`
+(production declarations, temperature 0, mode `ANY`, 5 trials per cell) shows
+the trigger is the room's history:
+
+| Earlier transcript sent to the model | Roster kept nested | Unseen planogram kept nested |
+| --- | --- | --- |
+| Empty | 5/5 | 5/5 |
+| The 15 live `supply-planning` events before that turn | 0/5 | 0/5 |
+| Same, plus "Put the details into value_json exactly as the user gave them…" | 1/5 | 1/5 |
+
+Flat requests saved both facts in every cell. Raw output:
+`save-memory-fidelity-empty-transcript.json`, `save-memory-fidelity-live-transcript.json`.
+
+Prompting does not fix it, so the worker does (decision approved by Ashraf):
+when the requester's own message contains exactly one JSON object, that object,
+not the model's copy, is what `save_memory` validates, repairs and stores
+(`requesterMemoryValue` in `src/memory.ts`); the audit record carries
+`valueSource: "requester_message"`. Free-text requests are unchanged. The gates
+test `MEMORY-REPAIR` includes a scripted model that sends the flattened copy.

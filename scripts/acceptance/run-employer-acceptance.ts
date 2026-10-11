@@ -8,6 +8,7 @@
  * Requires cloud-sql-proxy on DB_PROXY_PORT (default 6543). */
 import fs from "node:fs";
 import path from "node:path";
+import {isDeepStrictEqual} from "node:util";
 import {spawn,execFileSync} from "node:child_process";
 import {RunRecorder,GCP,type Assertion,type TestRecorder} from "../evidence/lib.ts";
 import {API_URL,APP_URL,QA_ROOM,bindDeployment,openDb,authoritativeEvents,firebaseSignIn,sleep,tag,type AccountKey} from "./common.ts";
@@ -206,7 +207,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("memory carries its original room, which differs from the asking room",found?.source_room_id===seed.room&&seed.room!==NROOM,seed.room,found?.source_room_id),
    a("answer shows author and date",rendered(pos).includes(seed.created_by)&&rendered(pos).includes(seed.created_at.slice(0,10)),seed.created_by,rendered(pos).slice(0,400)),
    a("unrelated query does not return it",!hits(unrelated).some(m=>m.key===seed.key),"absent",hits(unrelated).map(m=>m.key)),
-   a("Valley query returns no Northside memory",!hits(valley).some(m=>oracle.memories[N]!.some(s=>s.key===m.key&&JSON.stringify(s.value)===JSON.stringify(m.value))),"none",hits(valley).map(m=>m.key)),
+   a("Valley query returns no Northside memory",!hits(valley).some(m=>oracle.memories[N]!.some(s=>s.key===m.key&&isDeepStrictEqual(s.value,m.value))),"none",hits(valley).map(m=>m.key)),
    a("Valley answer contains no Northside memory text",!rendered(valley).includes(String(seed.value.decision)),"absent","")]);
  }],
  ["S09","A new contact and deadline saved with consent reach another user in another room, not Valley",["S09"],async t=>{
@@ -243,7 +244,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("at most one repair attempt was executed",executed.length<=2,"≤2 executed save_memory calls",executed.length),
    a("the value was put right: the one repair saved a flat value",!!stored&&executed.length===2&&rejected.length===1,"rejected once, then saved",saves.map(x=>x.result?.saved??x.result?.error??"rejected")),
    a("stored value is flat and exactly what the repair sent",!!stored&&Object.keys(stored.result.memory.value).length>0&&Object.values(stored.result.memory.value).every(v=>v===null||typeof v!=="object")&&
-    JSON.stringify(stored.result.memory.value)===JSON.stringify(parsed(stored.arguments.value_json)),"flat, non-empty, identical",stored&&{sent:stored.arguments.value_json,stored:stored.result.memory.value}),
+    isDeepStrictEqual(stored.result.memory.value,parsed(stored.arguments.value_json)),"flat, non-empty, identical",stored&&{sent:stored.arguments.value_json,stored:stored.result.memory.value}),
    completed(flat,"flat"),
    a("a valid flat value saves with the requested content",flatSave?.result?.saved===true&&JSON.stringify(flatSave.result.memory?.value??{}).includes(`${key}-ok`),`saved, containing ${key}-ok`,flatSave?.result)]);
  }],

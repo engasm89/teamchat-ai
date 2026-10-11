@@ -261,6 +261,12 @@ try{
   t.assert("nested: the user sees the rejection and then the saved value",n.answerBlocks.filter((b:string)=>b==="save_memory").length===2,2,n.answerBlocks);
   t.assert("nested: re-running the finished job writes nothing",n.again?.status==="completed"&&n.eventCountAfterSecondRun===n.eventCountAfterFirstRun,
    n.eventCountAfterFirstRun,{again:n.again,eventsAfterSecondRun:n.eventCountAfterSecondRun});
+  const s=out.reshaped,sRepaired=parse(s.tools[1]?.arguments?.value_json);
+  t.assert("reshaped: the model's flattened copy is not what gets validated; the requester's own value is, and is rejected",
+   isDeepStrictEqual(parse(s.tools[0]?.arguments?.value_json),{leads:out.originalLeads,site:"north"})&&(s.tools[0]?.result?.validation_errors??[]).some((e:any)=>e.field==="leads"),
+   "requester's nested value, leads rejected",{validated:s.tools[0]?.arguments?.value_json,result:s.tools[0]?.result});
+  t.assert("reshaped: the one controlled repair of the requester's value is what is stored",s.tools.length===2&&s.tools[1]?.result?.saved===true&&
+   isDeepStrictEqual(parse(sRepaired?.leads),out.originalLeads)&&s.stored.length===1&&isDeepStrictEqual(s.stored[0].value,sRepaired),"repaired requester value stored",s.stored);
   t.assert("unrepairable: repair rejected too, the model's retry refused, nothing stored",u.tools.length===3&&
    Array.isArray(u.tools[1]?.result?.validation_errors)&&/Repair limit reached/.test(String(u.tools[2]?.result?.error))&&u.stored.length===0&&u.terminal.join()==="ai_complete",
    "rejected, rejected, refused; 0 rows",{tools:u.tools.map((x:any)=>({op:x.operationId,errors:x.result?.validation_errors,error:x.result?.error,saved:x.result?.saved})),stored:u.stored.length});

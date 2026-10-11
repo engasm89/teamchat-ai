@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {TOOL_DECLARATIONS} from "../src/tools.ts";
-import {parseMemoryValueJson,controlledMemoryRepair} from "../src/memory.ts";
+import {parseMemoryValueJson,controlledMemoryRepair,requesterMemoryValue} from "../src/memory.ts";
 import {SqlToolExecutor} from "../src/server/sql-tools.ts";
 import {SourceLedger} from "../src/grounding.ts";
 import {resolvedContext} from "../src/tenant.ts";
@@ -42,6 +42,19 @@ test("the controlled repair re-encodes nested fields as JSON text and drops noth
  assert.equal(controlledMemoryRepair("[1,2]"),null);
  assert.equal(controlledMemoryRepair("{not json"),null);
  assert.equal(controlledMemoryRepair({leads}),null);
+});
+
+test("the requester's own JSON object is found in their message, exactly and only when there is one",()=>{
+ const roster={leads:[{name:"Ana",shifts:[{day:"Mon",stores:["ST-4001","ST-4002"]}]}]};
+ assert.equal(requesterMemoryValue(`@AI Remember this complex nested roster as r-1: ${JSON.stringify(roster,null,2)} thanks`),JSON.stringify(roster));
+ assert.equal(requesterMemoryValue('@AI Save {"note":"a } in text","q":"say \\"{hi}\\""} now'),JSON.stringify({note:"a } in text",q:'say "{hi}"'}));
+ assert.equal(requesterMemoryValue("@AI Remember that our escalation contact is Dana Whitfield."),null);
+ assert.equal(requesterMemoryValue("@AI Remember {not json} and {also: not}"),null);
+ assert.equal(requesterMemoryValue('@AI Remember [{"a":1}]'),JSON.stringify({a:1}),"an object inside a list is still the one object supplied");
+ assert.equal(requesterMemoryValue('@AI Remember {"a":1} and {"b":2}'),null,"two objects: ambiguous, the model's value is used");
+ assert.equal(requesterMemoryValue('@AI Remember {"a":{"b":1}'),null,"unbalanced: no inner fragment");
+ assert.equal(requesterMemoryValue('@AI Remember {site: north, data: {"a":1}}'),null,"not JSON: no inner fragment");
+ assert.equal(requesterMemoryValue(42),null);
 });
 
 test("save_memory rejects nested and empty values without writing, and refuses the old object argument",async()=>{

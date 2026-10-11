@@ -35,6 +35,33 @@ export function controlledMemoryRepair(text: unknown): string | null {
   if (!entries.some(([, v]) => v !== null && typeof v === "object")) return null;
   return JSON.stringify(Object.fromEntries(entries.map(([k, v]) => [k, v !== null && typeof v === "object" ? JSON.stringify(v) : v])));
 }
+/** The JSON object the requester typed into their own message, as compact text, when there is
+ * exactly one. The model can reshape a value before calling save_memory (it does so reliably once
+ * a room's history shows earlier rejections), which would bypass validation; what the requester
+ * supplied is what must be validated. */
+export function requesterMemoryValue(body: unknown): string | null {
+  if (typeof body !== "string") return null;
+  const found: string[] = [];
+  for (let i = 0; i < body.length; i++) {
+    if (body[i] !== "{") continue;
+    const end = matchingBrace(body, i);
+    if (end < 0) return null;
+    try { found.push(JSON.stringify(JSON.parse(body.slice(i, end + 1)))); } catch { /* not JSON: never take a fragment from inside it */ }
+    i = end;
+  }
+  return found.length === 1 ? found[0]! : null;
+}
+function matchingBrace(text: string, start: number): number {
+  let depth = 0, inString = false;
+  for (let i = start; i < text.length; i++) {
+    const c = text[i];
+    if (inString) { if (c === "\\") i++; else if (c === '"') inString = false; continue; }
+    if (c === '"') inString = true;
+    else if (c === "{") depth++;
+    else if (c === "}" && --depth === 0) return i;
+  }
+  return -1;
+}
 /** Lexical baseline ranking within an *already tenant-filtered* candidate set. Embedding reranking is pending Vertex integration. */
 export function rankMemoriesInTenant(candidates: TeamMemory[], query: string, minScore=0.2): TeamMemory[] {
   const words = (s:string) => new Set(s.toLowerCase().match(/[a-z0-9]+/g) ?? []);

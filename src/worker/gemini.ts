@@ -7,7 +7,7 @@ import {SqlToolExecutor} from "../server/sql-tools.ts";
 import {verifiedToolBlock} from "./verified-block.ts";
 import {resolveJob,claimJob,persistAnswer,persistTool,persistToolPlan,getPersistedTool,finishJob,failExhaustedJob,renewJobLease,requeueJob} from "../server/ai-jobs.ts";
 import {inTenantTransaction,type SqlPool} from "../persistence/postgres.ts";
-import {controlledMemoryRepair} from "../memory.ts";
+import {controlledMemoryRepair,requesterMemoryValue} from "../memory.ts";
 
 export interface GeminiResponse {functionCalls?:Array<{id?:string;name?:string;args?:Record<string,unknown>}>;candidates?:Array<{content?:{role?:string;parts?:unknown[]}}>};
 export interface GeminiProvider {generate(contents:Array<Record<string,unknown>>,firstRound:boolean,signal?:AbortSignal,trusted?:{roomId:string;memoryConsent:boolean}):Promise<GeminiResponse>}
@@ -83,7 +83,7 @@ export class MemoryRepairBudget{
  * tenant/user and what was asked, never the tool's result rows, so a refused
  * foreign lookup leaves an audit trail without any foreign data. */
 export function toolAuditRecord(input:{ctx:TenantContext;turnId:string;roomId:string;triggerSequence:string|number;jobAttempt:number;
- operationId:string;name:string;args:unknown;result:unknown;replayed:boolean}):Record<string,unknown>{
+ operationId:string;name:string;args:unknown;result:unknown;replayed:boolean;valueSource?:"requester_message"}):Record<string,unknown>{
  const {result,args}=input;
  const outcome=isRecord(result)&&result.found===false?"no_match":
   Array.isArray(result)?(result.length?"results":"no_match"):
@@ -91,7 +91,7 @@ export function toolAuditRecord(input:{ctx:TenantContext;turnId:string;roomId:st
   isRecord(result)&&result.saved===false?"refused":
   isRecord(result)&&result.saved===true?"saved":"results";
  const requested=input.name==="save_memory"&&isRecord(args)
-  ?{key:args.key,room:args.room,fields:memoryFieldNames(args.value_json)}:args;
+  ?{key:args.key,room:args.room,fields:memoryFieldNames(args.value_json),...(input.valueSource?{valueSource:input.valueSource}:{})}:args;
  return {severity:"INFO",message:"ai_tool_call",tenantId:input.ctx.tenantId,uid:input.ctx.uid,turnId:input.turnId,roomId:input.roomId,
   triggerSequence:Number(input.triggerSequence),jobAttempt:input.jobAttempt,operationId:input.operationId,tool:input.name,
   requested,outcome,replayed:input.replayed};
@@ -204,7 +204,7 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
    if(responseContent?.parts?.length)contents.push({role:"model",parts:responseContent.parts});
    else contents.push({role:"model",parts:calls.map(call=>({functionCall:call}))});
    const answerParts:unknown[]=[];
-   const runTool=async(name:ToolName,args:Record<string,unknown>)=>{
+   const runTool=async(name:ToolName,args:Record<string,unknown>,valueSource?:"requester_message")=>{
     const operationId=`r${round}-c${operation++}`;
     const saved=await getPersistedTool(pool,ctx,turnId,operationId);
     assertMatchingPersistedTool(saved,name,args);
@@ -214,18 +214,21 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
     if(saved?.status!=="completed")await persistTool(pool,ctx,room,turnId,fence,operationId,name,args,result);
     repairs.observe(name,result);
     console.log(JSON.stringify(toolAuditRecord({ctx,turnId,roomId:room,triggerSequence:claim.job.transcript_cutoff,jobAttempt:claim.job.attempts,
-     operationId,name,args,result,replayed:saved?.status==="completed"})));
+     operationId,name,args,result,replayed:saved?.status==="completed",valueSource})));
     // Values are structured outputs of authorized DB tools, not model-written claims.
     if(blocks>=20)throw Error("Answer block budget exceeded");
     await persistAnswer(pool,ctx,room,turnId,fence,blocks++,verifiedToolBlock(name,result));
     return result;
    };
    for(const call of calls){
-    const name=call.name as ToolName,args=call.args??{};
+    const name=call.name as ToolName;
     if(!TOOL_DECLARATIONS.some(t=>t.name===name))throw Error("Gemini requested undeclared tool");
-    let result=await runTool(name,args);
+    const supplied=name==="save_memory"?requesterMemoryValue(history.at(-1)?.payload.body):null;
+    const args=supplied?{...call.args??{},value_json:supplied}:call.args??{};
+    const valueSource=supplied?"requester_message" as const:undefined;
+    let result=await runTool(name,args,valueSource);
     const repairedValue=name==="save_memory"&&isRecord(result)&&Array.isArray(result.validation_errors)?controlledMemoryRepair(args.value_json):null;
-    if(repairedValue)result={rejected:result,controlledRepair:await runTool(name,{...args,value_json:repairedValue})};
+    if(repairedValue)result={rejected:result,controlledRepair:await runTool(name,{...args,value_json:repairedValue},valueSource)};
     // Gemini may assign IDs to parallel function calls. Pair each response
     // with the corresponding call rather than relying on name/order alone.
     answerParts.push({functionResponse:{name,...(typeof call.id==="string"?{id:call.id}:{}),response:{data:result}}});

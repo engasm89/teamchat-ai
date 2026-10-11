@@ -1,0 +1,531 @@
+{
+ "ranAt": "2026-10-11T18:29:31.855Z",
+ "model": "gemini-2.5-flash",
+ "location": "us-central1",
+ "config": "temperature 0, maxOutputTokens 1024, mode ANY, production declarations, consent GRANTED",
+ "fidelitySentence": "Put the details into value_json exactly as the user gave them: keep their field names and structure, including nested lists and objects, and never flatten, summarise or rephrase them yourself. The server checks the value; if it does not fit, the user is told why and one controlled repair is made.",
+ "summary": {
+  "as checked out": {
+   "flat": "5/5 saved with both facts",
+   "nested": "5/5 reached the server still nested",
+   "nested2": "5/5 reached the server still nested"
+  },
+  "plus fidelity sentence": {
+   "flat": "5/5 saved with both facts",
+   "nested": "5/5 reached the server still nested",
+   "nested2": "5/5 reached the server still nested"
+  }
+ },
+ "results": [
+  {
+   "variant": "as checked out",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "ST-4003 Escalation",
+      "value_json": "{\"contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "room": "supply-planning",
+      "key": "ST-4003_escalation_contact_deadline"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "flat",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "ST-4003 Escalation Contact and Deadline",
+      "value_json": "{\"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "flat",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "ST-4003_escalation_contact_deadline",
+      "value_json": "{\"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "flat",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "ST-4003 Escalation",
+      "room": "supply-planning",
+      "value_json": "{\"contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-x1",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x1",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}]}",
+      "room": "supply-planning",
+      "key": "roster-x1"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "roster-x1",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "roster-x1",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}]}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested2",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "bay-plan-7",
+      "room": "supply-planning",
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested2",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}",
+      "key": "bay-plan-7",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested2",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "bay-plan-7",
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested2",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "bay-plan-7",
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "as checked out",
+   "prompt": "nested2",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "bay-plan-7",
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "ST-4003 escalation contact",
+      "room": "supply-planning",
+      "value_json": "{\"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "value_json": "{\"store_id\": \"ST-4003\", \"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "key": "ST-4003 Escalation"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "flat",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "room": "supply-planning",
+      "key": "ST-4003_escalation_deadline"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "flat",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "key": "ST-4003_escalation_contact_and_deadline",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "flat",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"escalation_contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "room": "supply-planning",
+      "key": "ST-4003_escalation_deadline"
+     }
+    }
+   ],
+   "nestedReachedServer": null,
+   "flatFactsKept": true
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x1",
+      "room": "supply-planning",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-x1",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x1",
+      "room": "supply-planning",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-x1",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "roster-x1",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested2",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}",
+      "key": "bay-plan-7"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested2",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}",
+      "room": "supply-planning",
+      "key": "bay-plan-7"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested2",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "bay-plan-7",
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested2",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "bay-plan-7",
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  },
+  {
+   "variant": "plus fidelity sentence",
+   "prompt": "nested2",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "bay-plan-7",
+      "value_json": "{\"bays\":[{\"bay\":1,\"shelves\":[{\"level\":\"top\",\"codes\":[\"APP-100.12\",\"APP-210.40\"]}]},{\"bay\":2,\"shelves\":[{\"level\":\"eye\",\"codes\":[\"ELE-330.05\"]}]}],\"owner\":{\"name\":\"Priya\",\"team\":\"merch\"}}"
+     }
+    }
+   ],
+   "nestedReachedServer": true,
+   "flatFactsKept": null
+  }
+ ]
+}

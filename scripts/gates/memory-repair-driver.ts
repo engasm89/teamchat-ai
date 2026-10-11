@@ -16,14 +16,15 @@ const ctx=resolvedContext(uid,"northside-outfitters");
 const embeddings={modelId:embeddingModel,embed:async()=>Array.from({length:768},(_,i)=>i===0?1:0)};
 const leads=[{name:"Ana",shifts:[{day:"Mon",stores:["ST-4001","ST-4002"]}]},{name:"Ben",shifts:[{day:"Tue",stores:["ST-4003"]}]}];
 
-async function scenario(label:string,firstValue:Record<string,unknown>,retryAfterRepair:boolean){
+/** The user types `supplied`; the scripted model's first save sends `modelValue` (by default the same). */
+async function scenario(label:string,supplied:Record<string,unknown>,retryAfterRepair:boolean,modelValue=supplied){
  const key=`gate-${label}-${crypto.randomBytes(3).toString("hex")}`;
- const sent=await sendDurableMessage(pool,ctx,{roomId:room,clientMessageId:crypto.randomUUID(),body:`@AI Remember this as ${key}: ${JSON.stringify(firstValue)}`,allowSharedMemorySave:true});
+ const sent=await sendDurableMessage(pool,ctx,{roomId:room,clientMessageId:crypto.randomUUID(),body:`@AI Remember this as ${key}: ${JSON.stringify(supplied,null,1)}`,allowSharedMemorySave:true});
  if(!sent.aiTurnId)throw Error("No AI turn was created");
  const rounds:number[]=[];
  const provider={async generate(_contents:unknown,firstRound:boolean){
   rounds.push(rounds.length);
-  if(firstRound)return {functionCalls:[{id:"call-1",name:"save_memory",args:{key,room,value_json:JSON.stringify(firstValue)}}]};
+  if(firstRound)return {functionCalls:[{id:"call-1",name:"save_memory",args:{key,room,value_json:JSON.stringify(modelValue)}}]};
   if(retryAfterRepair&&rounds.length===2)return {functionCalls:[{id:"call-2",name:"save_memory",args:{key,room,value_json:JSON.stringify({note:"model retry"})}}]};
   return {functionCalls:[]};
  }};
@@ -40,6 +41,7 @@ async function scenario(label:string,firstValue:Record<string,unknown>,retryAfte
 
 const out={
  nested:await scenario("nested",{leads,site:"north"},false),
+ reshaped:await scenario("reshaped",{leads,site:"north"},false,{leads:"Ana: Mon (ST-4001, ST-4002); Ben: Tue (ST-4003)",site:"north"}),
  unrepairable:await scenario("unrepairable",{leads:Array.from({length:60},(_,i)=>({name:`Lead ${i}`,stores:["ST-4001","ST-4002","ST-4003"]}))},true),
  originalLeads:leads,
 };
