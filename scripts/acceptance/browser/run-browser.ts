@@ -2,6 +2,7 @@
  * S01 (two browsers), S15, S16 (TCP cut and browser-offline), S17, plus
  * negative controls that run the same assertion functions against injected
  * faults. Usage: node --experimental-strip-types scripts/acceptance/browser/run-browser.ts
+ *   [--only S16,NEG-S16-DUP] [--scratch]   (--scratch writes under qa_evidence/scratch/runs, outside the evidence set)
  * Requires cloud-sql-proxy on DB_PROXY_PORT (default 6543). */
 import fs from "node:fs";
 import path from "node:path";
@@ -205,11 +206,15 @@ const portableAc=new Map(ac.filter(r=>/portable air condition/i.test(r.descripti
 
 const {sourceSha,deployment}=bindDeployment();
 const pool=await openDb();
-const run=new RunRecorder({suite:"browser",environment:`production: ${APP_URL} + ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS});
+const args=process.argv.slice(2);
+const ONLY=args.includes("--only")?new Set(args[args.indexOf("--only")+1]!.split(",")):null;
+const run=new RunRecorder({suite:"browser",environment:`production: ${APP_URL} + ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
+ ...(args.includes("--scratch")?{runsDir:"qa_evidence/scratch/runs"}:{})});
+const test=(id:string,title:string,requirementIds:string[],body:(t:TestRecorder)=>Promise<void>)=>ONLY&&!ONLY.has(id)?Promise.resolve():run.run(id,title,requirementIds,body);
 const monitoringWindows:Record<string,{start:number;end:number}>={};
 
 try{
- await run.run("S17","Idle for 60 s with instrumentation installed before navigation",["G01","S17"],async t=>{
+ await test("S17","Idle for 60 s with instrumentation installed before navigation",["G01","S17"],async t=>{
   try{
    const s=await openSession("n1"),peer=await openSession("n2");
    const w=await idleWindow(s,peer,60);monitoringWindows.S17={start:w.start,end:w.end};
@@ -220,7 +225,7 @@ try{
   }finally{await closeAll();}
  });
 
- await run.run("NEG-S17","S17 checker fails when polling and a second socket are injected",["G01","S17"],async t=>{
+ await test("NEG-S17","S17 checker fails when polling and a second socket are injected",["G01","S17"],async t=>{
   try{
    const init=`setInterval(()=>{fetch(${JSON.stringify(API_URL+"/health")}).catch(()=>{});window.__extra=new WebSocket(${JSON.stringify(API_URL.replace("https","wss")+"/ws")});},5000);`;
    const s=await openSession("n1",{init}),peer=await openSession("n2");
@@ -231,7 +236,7 @@ try{
   }finally{await closeAll();}
  });
 
- await run.run("S01-BROWSER","Two signed-in Northside users watch the same AI turn arrive live, including the fetch",["G05","S01","D01"],async t=>{
+ await test("S01-BROWSER","Two signed-in Northside users watch the same AI turn arrive live, including the fetch",["G05","S01","D01"],async t=>{
   try{
    const s=await openSession("n1"),peer=await openSession("n2");
    const cursor=await lastSequence(pool,s.tenant,s.uid,s.room);
@@ -290,10 +295,10 @@ try{
   s.log.write(t,"user");
   return s15Checks({turnId,reloadAt,db,dom,terminalBeforeReload});
  };
- await run.run("S15","Refresh mid-answer: the same turn completes once, with every fetch, in order",["S15"],async t=>{
+ await test("S15","Refresh mid-answer: the same turn completes once, with every fetch, in order",["S15"],async t=>{
   try{record(t,await s15(t,false));}finally{await closeAll();}
  });
- await run.run("NEG-S15","S15 checker fails when the turn's events are suppressed after reload",["S15"],async t=>{
+ await test("NEG-S15","S15 checker fails when the turn's events are suppressed after reload",["S15"],async t=>{
   try{recordControl(t,"routeWebSocket in the test context drops every event of the target turn after reload",await s15(t,true),
    ["rendered projection equals the database projection item by item"]);}finally{await closeAll();}
  });
@@ -340,10 +345,10 @@ try{
    s.log.write(t,"disconnected");peer.log.write(t,"peer");
   }finally{await closeAll();await proxy?.stop();}
  };
- await run.run("S16","30-second TCP-level outage: everything missed arrives once, in order, with the same IDs",["S16"],t=>outage(t,"tcp"));
- await run.run("S16-OFFLINE","30-second browser-reported offline (the DevTools path): same guarantees",["S16"],t=>outage(t,"offline"));
+ await test("S16","30-second TCP-level outage: everything missed arrives once, in order, with the same IDs",["S16"],t=>outage(t,"tcp"));
+ await test("S16-OFFLINE","30-second browser-reported offline (the DevTools path): same guarantees",["S16"],t=>outage(t,"offline"));
 
- await run.run("NEG-S16-DROP","S16 checker fails when one event is dropped every time it is delivered",["S16"],async t=>{
+ await test("NEG-S16-DROP","S16 checker fails when one event is dropped every time it is delivered",["S16"],async t=>{
   try{
    let dropTag="";
    const s=await openSession("n1",{fault:{dropEvent:e=>!!dropTag&&String(e?.payload?.body??"").includes(dropTag)}}),peer=await openSession("n2");
@@ -364,7 +369,7 @@ try{
   }finally{await closeAll();}
  });
 
- await run.run("NEG-S16-DUP","S16 checker fails when a delivered message is shown twice",["S16"],async t=>{
+ await test("NEG-S16-DUP","S16 checker fails when a delivered message is shown twice",["S16"],async t=>{
   try{
    const s=await openSession("n1"),peer=await openSession("n2");
    await sleep(2000);const cursorBefore=(await storedCursor(s))??0;
