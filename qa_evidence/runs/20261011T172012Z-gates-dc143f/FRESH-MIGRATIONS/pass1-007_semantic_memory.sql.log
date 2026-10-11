@@ -1,0 +1,3 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-RIhQD9 -p 61305 -U postgres -d teamchat -f /tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/007_semantic_memory.sql
+(cwd ., exit 0, 24 ms)
+

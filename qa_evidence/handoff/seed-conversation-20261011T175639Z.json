@@ -1,0 +1,55 @@
+{
+ "sourceSha": "116a629a892fd6930f4bb5b3f59c433fd92ba3b7",
+ "deployment": {
+  "apiRevision": "teamchat-api-00009-zvw",
+  "apiDigest": "sha256:cee93d4af7638bcb0234282202e72a13963ab7ec329838f0cb0153e505666a77",
+  "workerRevision": "teamchat-worker-00009-vbh",
+  "workerDigest": "sha256:2c853cd529a4918a1f5177351ec8bfd255d1ce0f7a14aff024245de0887491b6",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "room": "assortment-review",
+ "startedAt": "2026-10-11T17:56:39.343Z",
+ "tenants": {
+  "northside-outfitters": {
+   "skipped": "already has three human authors and a tool-backed AI exchange"
+  },
+  "valley-home-goods": {
+   "authorsBefore": 1,
+   "toolBackedBefore": true,
+   "sent": [
+    {
+     "account": "v1",
+     "uid": "xM6WYYfOsUVm4htAYKoEnjPvRh03",
+     "body": "Before Thursday's range review, can we check what the catalog says about portable air conditioners?",
+     "sequence": 57
+    },
+    {
+     "account": "v2",
+     "uid": "zzYPoDqlwReWiVKnS6dphdH8a212",
+     "body": "Agreed. I'd rather see the actual codes and margin classes than last season's spreadsheet.",
+     "sequence": 58
+    },
+    {
+     "account": "v3",
+     "uid": "mlKH3GGyIBY1es6Couua08OIB872",
+     "body": "@AI Which portable air conditioner codes are in the catalog, and what margin class does each carry?",
+     "sequence": 59,
+     "turn": {
+      "turnId": "3d06b211-ee72-48e5-9dcf-18e9d1613899",
+      "terminal": "ai_complete",
+      "tools": [
+       {
+        "name": "search_catalog",
+        "arguments": {
+         "query": "portable air conditioner"
+        },
+        "resultCount": 10
+       }
+      ]
+     }
+    }
+   ]
+  }
+ },
+ "finishedAt": "2026-10-11T17:57:40.336Z"
+}

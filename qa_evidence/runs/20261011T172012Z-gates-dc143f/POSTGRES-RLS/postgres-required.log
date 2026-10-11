@@ -1,0 +1,23 @@
+$ npm run test:postgres:required
+(cwd ., exit 0, 16347 ms)
+
+
+> teamchat-ai-assessment@0.2.0 test:postgres:required
+> REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+
+TAP version 13
+# Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+  ---
+  duration_ms: 16078.891041
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16173.021167

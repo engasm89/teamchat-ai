@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 1,
+ "suite": "acceptance-restart",
+ "runId": "20261011T194044Z-acceptance-restart-2b09e6",
+ "environment": "production: https://teamchat-api-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-11T19:40:44.654Z",
+ "finishedAt": "2026-10-11T19:41:42.677Z",
+ "harness": {
+  "gitHead": "cbe052b10bb0f6d282b8b3bcd0573886438bd9fd",
+  "dirty": true,
+  "fingerprint": "3df067cc710a625604548f8f9de4e2b40909da564bae65fb52ba96094ba991ab",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/acceptance/live-client.ts",
+   "scripts/acceptance/oracle.ts",
+   "scripts/acceptance/run-employer-acceptance.ts",
+   "scripts/evidence/lib.ts"
+  ]
+ },
+ "source": {
+  "sha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-00014-72f",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00014-4v8",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "tests": [
+  {
+   "id": "S19",
+   "title": "Forced cold start of API and worker; remembered value still there",
+   "requirementIds": [
+    "S19"
+   ],
+   "status": "FAIL",
+   "startedAt": "2026-10-11T19:40:44.695Z",
+   "finishedAt": "2026-10-11T19:41:42.676Z",
+   "details": {
+    "revisions": {
+     "before": {
+      "apiRevision": "teamchat-api-00014-72f",
+      "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+      "workerRevision": "teamchat-worker-00014-4v8",
+      "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+      "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+     },
+     "after": {
+      "apiRevision": "teamchat-api-00015-ptw",
+      "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+      "workerRevision": "teamchat-worker-00015-bzh",
+      "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+      "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+     }
+    },
+    "newRevisionLogLines": 12
+   },
+   "assertions": [
+    {
+     "name": "saveturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "saved before restart",
+     "pass": true,
+     "expected": true,
+     "actual": ""
+    },
+    {
+     "name": "new API and worker revisions serve traffic",
+     "pass": true,
+     "expected": "new revisions",
+     "actual": {
+      "before": {
+       "apiRevision": "teamchat-api-00014-72f",
+       "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+       "workerRevision": "teamchat-worker-00014-4v8",
+       "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+       "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+      },
+      "after": {
+       "apiRevision": "teamchat-api-00015-ptw",
+       "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+       "workerRevision": "teamchat-worker-00015-bzh",
+       "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+       "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+      }
+     }
+    },
+    {
+     "name": "images unchanged across the restart",
+     "pass": true,
+     "expected": "same digests",
+     "actual": ""
+    },
+    {
+     "name": "new revisions started (Cloud Logging)",
+     "pass": true,
+     "expected": ">0 log lines from new revisions",
+     "actual": 12
+    },
+    {
+     "name": "recallturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "remembered value retrieved after restart",
+     "pass": false,
+     "expected": "cold-mv48aas7-5rtj",
+     "actual": []
+    },
+    {
+     "name": "attribution survives the restart",
+     "pass": false,
+     "expected": {
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T194044Z-acceptance-restart-2b09e6/S19/s19-save.json",
+     "sha256": "828e816ad15b571cc6512296a323792c970a83252be7a7e85e83663ab7244b99",
+     "description": "s19-save: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T194044Z-acceptance-restart-2b09e6/S19/s19-recall.json",
+     "sha256": "ce7892861030e00e48abab755da8ddd255bafacaebf760dfc4f69e2df7f72bd1",
+     "description": "s19-recall: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  }
+ ]
+}

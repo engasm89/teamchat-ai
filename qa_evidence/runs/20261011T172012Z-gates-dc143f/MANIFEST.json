@@ -1,0 +1,170 @@
+{
+ "generatedAt": "2026-10-11T17:20:51.989Z",
+ "files": [
+  {
+   "path": "FIXTURES/verify-fixtures.log",
+   "bytes": 792,
+   "sha256": "365c27b80f0243537a99d1ce3ca80dee3cfe314e41e075ea6cb382254a7c3356"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/initdb.log",
+   "bytes": 1154,
+   "sha256": "82ffc74eedf8aa24f491e3e2dfe1d024086f02ad52d5f7980847f1b7cbbcd90f"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-001_schema.sql.log",
+   "bytes": 418,
+   "sha256": "8932817684cda6e6f761a6fab2bd90cd9c8c6ea7b16855b274cd88b408ce7fe5"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-002_notifications.sql.log",
+   "bytes": 437,
+   "sha256": "91f119b959ec320a133d84327e29f759ed823e929a79cf970f609db44d7bb9b6"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-003_auth_grants.sql.log",
+   "bytes": 237,
+   "sha256": "04bede063dbd7b3ce8c6a32a2bf2433370c254d9095cfd6e467687ae10dffd2a"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-004_ai_consent.sql.log",
+   "bytes": 236,
+   "sha256": "bd8f5a604f3524f6fbea7693b573586969ac678e5314b30b06aab1c558503109"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-005_job_lookup.sql.log",
+   "bytes": 433,
+   "sha256": "7d766329488335a8e01f296954242001006b8383dd537ec940ce277fcbaec02c"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-006_ephemeral.sql.log",
+   "bytes": 815,
+   "sha256": "d9cc6cb3d80b355faa1486632e44aec3d513b4ada80b10e85ba225f0dc910391"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-007_semantic_memory.sql.log",
+   "bytes": 241,
+   "sha256": "9224cdc44022b3e83506da88adba20b0128f7ad4fef7f4d89f6a924efef08a03"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-provision_runtime_role.sql.log",
+   "bytes": 233,
+   "sha256": "a342f09922c1a10901245dfd216325a691a0c7197073b3541776bb36fee8bab6"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass1-seed.sql.log",
+   "bytes": 371,
+   "sha256": "ae6d62a5c53ac37d1045fb5dbbcee7fb482dd8dbd7997f8742ff69f148507012"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-001_schema.sql.log",
+   "bytes": 4332,
+   "sha256": "1cf4b682b7810dadfb21f0e56d496f953c6c1b2e66d678529e96972d59ab6fd8"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-002_notifications.sql.log",
+   "bytes": 239,
+   "sha256": "3f9446a8f473c352a5b6d3fd14b259cdd6b1f0ed2f14ff1905f390a041b2d759"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-003_auth_grants.sql.log",
+   "bytes": 394,
+   "sha256": "68de9c6805cded1083f04f7dec97b57f8cb22c85bc4516d0f4e8526dd089ae07"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-004_ai_consent.sql.log",
+   "bytes": 412,
+   "sha256": "cfc01b0e418c11568e0980bb7e55c4afc26cb8649d5e71ba3a8820878f32da94"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-005_job_lookup.sql.log",
+   "bytes": 394,
+   "sha256": "bb273ea813352ea8bcb5674f2e20b1c64cf9b5e708f6d61dca41e13a1711f584"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-006_ephemeral.sql.log",
+   "bytes": 389,
+   "sha256": "e48a06d780197eb6e2271da3177108ae6e75eed25a94b39be3440379a4612858"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-007_semantic_memory.sql.log",
+   "bytes": 931,
+   "sha256": "c291a4591c49942d57f69eda0ad8c278b6189ff354cf589edecdcea615451d2f"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-provision_runtime_role.sql.log",
+   "bytes": 233,
+   "sha256": "29a0a0f64e4b2c1aaaaf9eb20fae78d18dec8d42f61ef6b2dbe887bd70478e9b"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pass2-seed.sql.log",
+   "bytes": 370,
+   "sha256": "0c96e1b2b69a7155acba30f95fb2702f7e368a5937b3aa03792f2380e36e24e3"
+  },
+  {
+   "path": "FRESH-MIGRATIONS/pg-start.log",
+   "bytes": 358,
+   "sha256": "a710a854d9b1cdb9291258832f3b505f129573adac16e59b6b3a9e5c3c439172"
+  },
+  {
+   "path": "NPM-CI/npm-ci-root.log",
+   "bytes": 82,
+   "sha256": "7f730a35fa166c8825913a0752663f1b90af58b166415990021a8616a3e0260f"
+  },
+  {
+   "path": "NPM-CI/npm-ci-web.log",
+   "bytes": 89,
+   "sha256": "81b0cb3327b5a8fa902d90de108664cd3c2eb6102e2253213ad340e88986810d"
+  },
+  {
+   "path": "POSTGRES-RLS/postgres-required.log",
+   "bytes": 556,
+   "sha256": "5db2ccea070633ac67bc6e6bb55e6750f4c8e9d3547c425cc350b1d2ea46780a"
+  },
+  {
+   "path": "SECRET-SCAN/gitleaks-history.json",
+   "bytes": 1828,
+   "sha256": "9ba130a2dc9a23a4e6c71d8ac37dcf285f4dafb2d0da7979652fa18f08a5c8c1"
+  },
+  {
+   "path": "SECRET-SCAN/gitleaks-history.log",
+   "bytes": 436,
+   "sha256": "c258e8d1c7e4f3ff066f21d9e3c8764196c78a4b463952d6d1d31970ff02b7ce"
+  },
+  {
+   "path": "SEED-SQL/seed-sql.log",
+   "bytes": 230,
+   "sha256": "94c0681204238f3178ead16fcb417d6f5671ba6f78fb2d91d0ac241a47c04eca"
+  },
+  {
+   "path": "SIGTERM-DRAIN/api-process.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "SIGTERM-DRAIN/worker-process.log",
+   "bytes": 34,
+   "sha256": "d7695635b017e76808a37efd2fef33b2f19c99b3570ae568efadbebd102a7925"
+  },
+  {
+   "path": "TYPECHECK/typecheck.log",
+   "bytes": 96,
+   "sha256": "64187c3afa31a92135dfe60bc647633f93637c53d1f93fce750f3c21090b520c"
+  },
+  {
+   "path": "UNIT-TESTS/npm-test.log",
+   "bytes": 29209,
+   "sha256": "97e01a8f5fb221d0120ee73702730327da6573e9d2ba61441342d259318a1c4b"
+  },
+  {
+   "path": "WEB-BUILD/web-build.log",
+   "bytes": 485,
+   "sha256": "291d93d234e4fe7b9495b48032fab15e6cdebb3d9829554403ece72233c6c1a8"
+  },
+  {
+   "path": "results.json",
+   "bytes": 38220,
+   "sha256": "fd65a67f93ad0ce24c9c47d863ea8e676d1b38593830e1ab4f2d7f92e78d6975"
+  }
+ ]
+}

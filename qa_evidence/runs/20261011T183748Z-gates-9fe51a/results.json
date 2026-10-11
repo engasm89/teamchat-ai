@@ -1,0 +1,1200 @@
+{
+ "schemaVersion": 1,
+ "suite": "gates",
+ "runId": "20261011T183748Z-gates-9fe51a",
+ "environment": "clean clone of 0919a9b9234a54959c6a43d75c64753976d97232 on darwin arm64, node v22.22.3",
+ "startedAt": "2026-10-11T18:37:48.272Z",
+ "finishedAt": "2026-10-11T18:38:32.466Z",
+ "harness": {
+  "gitHead": "d400bac1d1c2cff2281a0ccf83b7aaa530393e57",
+  "dirty": true,
+  "fingerprint": "585166496a77a9e6c89472486e8e2a1adcd7906ebba12a7263e6c9a4822f9abe",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/evidence/lib.ts",
+   "scripts/gates/memory-repair-driver.ts",
+   "scripts/gates/run-gates.ts"
+  ]
+ },
+ "source": {
+  "sha": "0919a9b9234a54959c6a43d75c64753976d97232"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-00013-lsc",
+  "workerRevision": "teamchat-worker-00013-6dl",
+  "apiDigest": "sha256:d769da6deccccc3e444e8d0a1a47411190f11511e19f43509baa823aa5a09140",
+  "workerDigest": "sha256:04295824a0269f1478d367dab7fbeb611d1fe6c80e7051b7a7d7052935881600",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "tests": [
+  {
+   "id": "NPM-CI",
+   "title": "npm ci succeeds from committed lockfiles in a clean clone",
+   "requirementIds": [
+    "A07"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:37:48.295Z",
+   "finishedAt": "2026-10-11T18:37:55.293Z",
+   "details": {
+    "npm": "10.9.8",
+    "node": "v22.22.3",
+    "lockfiles": {
+     "package-lock.json": "ec3b0d0e761f72c0717e5f019ab515dffa25a05ad15df0b7631dafad654b3ecf",
+     "apps/web/package-lock.json": "f44df90ea23f1b365f672978ee5d5c8844c1c28dbdd3abf2ebea7cb0985f022a"
+    }
+   },
+   "assertions": [
+    {
+     "name": "root npm ci exits 0",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "apps/web npm ci exits 0",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "lockfiles and tracked files unchanged after install",
+     "pass": true,
+     "expected": "",
+     "actual": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/NPM-CI/npm-ci-root.log",
+     "sha256": "5809747f0d842e785e9e4db6155b88a69fb1d26fe872d309f02cb62a2279e4f0",
+     "description": "Output of npm ci --no-audit --no-fund"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/NPM-CI/npm-ci-web.log",
+     "sha256": "3db6784067b4e216e2fa3520995d7604025584c4f98e00ead33ec169d887df95",
+     "description": "Output of npm ci --no-audit --no-fund"
+    }
+   ]
+  },
+  {
+   "id": "TYPECHECK",
+   "title": "tsc --noEmit in a clean clone",
+   "requirementIds": [
+    "A04"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:37:55.294Z",
+   "finishedAt": "2026-10-11T18:37:57.138Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "npm run check exits 0",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "no TypeScript diagnostics",
+     "pass": true,
+     "expected": "none",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/TYPECHECK/typecheck.log",
+     "sha256": "8a7847eca36f6cf12eb70a3dbb4ba2cbf23d806b83c03792d1620fd18a2c17ed",
+     "description": "Output of npm run check"
+    }
+   ]
+  },
+  {
+   "id": "UNIT-TESTS",
+   "title": "npm test in a clean clone, 0 failures",
+   "requirementIds": [
+    "G02",
+    "D05",
+    "A01",
+    "A02",
+    "A03",
+    "A10"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:37:57.138Z",
+   "finishedAt": "2026-10-11T18:37:58.198Z",
+   "details": {
+    "tap": {
+     "tests": 144,
+     "pass": 144,
+     "fail": 0,
+     "cancelled": 0,
+     "skipped": 0,
+     "todo": 0
+    }
+   },
+   "assertions": [
+    {
+     "name": "npm test exits 0",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "at least one test ran and all passed",
+     "pass": true,
+     "expected": "pass = tests > 0",
+     "actual": {
+      "tests": 144,
+      "pass": 144,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+     }
+    },
+    {
+     "name": "no failed, cancelled, skipped or todo tests",
+     "pass": true,
+     "expected": 0,
+     "actual": {
+      "tests": 144,
+      "pass": 144,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/UNIT-TESTS/npm-test.log",
+     "sha256": "050dac5368eabc95a47043aa1d4f3d2f3d6b722eb03444423b2ee6de9e8b61c7",
+     "description": "Output of npm test"
+    }
+   ]
+  },
+  {
+   "id": "FIXTURES",
+   "title": "Five supplied fixture hashes verified against the employer archive, the repository and the live database",
+   "requirementIds": [
+    "G06",
+    "A05"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:37:58.198Z",
+   "finishedAt": "2026-10-11T18:37:58.463Z",
+   "details": {
+    "originalArchive": {
+     "path": "reference/original_employer_assessment.zip",
+     "sha256": "df0d6a3c3e4fd72280944b976cbdc0d02554d3e711d70be611102203332c0b22",
+     "note": "Archive kept outside Git in reference/; its own authenticity rests on how it was received"
+    },
+    "original": {
+     "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+     "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+     "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+     "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+     "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+    },
+    "repository": {
+     "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+     "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+     "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+     "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+     "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+    },
+    "appReported": {
+     "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+     "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+     "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+     "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+     "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+    }
+   },
+   "assertions": [
+    {
+     "name": "all five fixtures found in the employer archive",
+     "pass": true,
+     "expected": 5,
+     "actual": [
+      "product_codes.csv",
+      "promo_coefficients.csv",
+      "segment_coefficients.csv",
+      "stores.json",
+      "team_memory_seed.json"
+     ]
+    },
+    {
+     "name": "repository fixtures equal the employer archive byte for byte",
+     "pass": true,
+     "expected": {
+      "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+      "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+      "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+      "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+      "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+     },
+     "actual": {
+      "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+      "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+      "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+      "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+      "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+     }
+    },
+    {
+     "name": "the application's fixture loader reports the same hashes",
+     "pass": true,
+     "expected": {
+      "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+      "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+      "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+      "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+      "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+     },
+     "actual": {
+      "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+      "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+      "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+      "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+      "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+     }
+    },
+    {
+     "name": "live database dataset_versions equal the employer archive for both tenants",
+     "pass": true,
+     "expected": {
+      "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+      "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+      "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+      "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+      "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+     },
+     "actual": {
+      "northside-outfitters": {
+       "datasetVersions": {
+        "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+        "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+        "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+        "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+        "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+       },
+       "memories": 17,
+       "memoriesWithout768Embedding": 0
+      },
+      "valley-home-goods": {
+       "datasetVersions": {
+        "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+        "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+        "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+        "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+        "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+       },
+       "memories": 4,
+       "memoriesWithout768Embedding": 0
+      }
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FIXTURES/verify-fixtures.log",
+     "sha256": "c4ec01d1b128dce052d61056d73aa55e2942d212fb8b98e0bbcde209ecea03e9",
+     "description": "Output of npm run --silent verify:fixtures"
+    }
+   ]
+  },
+  {
+   "id": "SEED-SQL",
+   "title": "Seed SQL regenerates byte-identical to the committed file and carries the fixture hashes",
+   "requirementIds": [
+    "A06"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:37:58.464Z",
+   "finishedAt": "2026-10-11T18:37:58.680Z",
+   "details": {
+    "seedSha256": "f3a8de39704f2fbc00c883c138891b024fb518fbb2e5217cd539b927f78d24c1",
+    "datasetVersionRowsPerFixture": {
+     "product_codes.csv": 2,
+     "promo_coefficients.csv": 2,
+     "segment_coefficients.csv": 2,
+     "stores.json": 2,
+     "team_memory_seed.json": 2
+    }
+   },
+   "assertions": [
+    {
+     "name": "npm run seed:sql exits 0",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "regenerated seed.sql is identical to the committed file",
+     "pass": true,
+     "expected": "no diff",
+     "actual": ""
+    },
+    {
+     "name": "seed carries one dataset_versions row per fixture per tenant",
+     "pass": true,
+     "expected": 2,
+     "actual": {
+      "product_codes.csv": 2,
+      "promo_coefficients.csv": 2,
+      "segment_coefficients.csv": 2,
+      "stores.json": 2,
+      "team_memory_seed.json": 2
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/SEED-SQL/seed-sql.log",
+     "sha256": "d13dc508e6571654bd4b07e88946a7e774a48f6c88403be9fcd5b122f79ee158",
+     "description": "Output of npm run seed:sql"
+    }
+   ]
+  },
+  {
+   "id": "WEB-BUILD",
+   "title": "Vite production build in a clean clone reproduces the served Hosting assets",
+   "requirementIds": [
+    "A09"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:37:58.680Z",
+   "finishedAt": "2026-10-11T18:38:01.376Z",
+   "details": {
+    "built": {
+     "/assets/index-BTnPilvg.css": "701c1fbbcc6ef9656fa293bd559e514b8920f0d2b27277aea7fe149cbe2fc59a",
+     "/assets/index-DloCzopf.js": "283994f11a25f3ff282953f41cf55707782743561f4d542fdfdc5cc42e29cbec",
+     "/index.html": "13e8a69a1fcd6015c607aebd4b547d271d04b8d411147de81e85067ba9eeacf0"
+    },
+    "served": {
+     "/index.html": "13e8a69a1fcd6015c607aebd4b547d271d04b8d411147de81e85067ba9eeacf0",
+     "/assets/index-DloCzopf.js": "283994f11a25f3ff282953f41cf55707782743561f4d542fdfdc5cc42e29cbec",
+     "/assets/index-BTnPilvg.css": "701c1fbbcc6ef9656fa293bd559e514b8920f0d2b27277aea7fe149cbe2fc59a"
+    },
+    "envProductionSha256": "403fa0479a790d73a558dcaeb6e7745e7efe26cfa945fc7bee12f729312ecd4f"
+   },
+   "assertions": [
+    {
+     "name": "build exits 0 (tsc + vite)",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "built assets equal the assets served by Hosting",
+     "pass": true,
+     "expected": {
+      "/index.html": "13e8a69a1fcd6015c607aebd4b547d271d04b8d411147de81e85067ba9eeacf0",
+      "/assets/index-DloCzopf.js": "283994f11a25f3ff282953f41cf55707782743561f4d542fdfdc5cc42e29cbec",
+      "/assets/index-BTnPilvg.css": "701c1fbbcc6ef9656fa293bd559e514b8920f0d2b27277aea7fe149cbe2fc59a"
+     },
+     "actual": {
+      "/assets/index-BTnPilvg.css": "701c1fbbcc6ef9656fa293bd559e514b8920f0d2b27277aea7fe149cbe2fc59a",
+      "/assets/index-DloCzopf.js": "283994f11a25f3ff282953f41cf55707782743561f4d542fdfdc5cc42e29cbec",
+      "/index.html": "13e8a69a1fcd6015c607aebd4b547d271d04b8d411147de81e85067ba9eeacf0"
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/WEB-BUILD/web-build.log",
+     "sha256": "3dafad133a159e37c72a814218fc5376ff0bb5ba0d5e3f625a106a66ce9b1e28",
+     "description": "Output of npm --prefix apps/web run build"
+    }
+   ]
+  },
+  {
+   "id": "FORBIDDEN-TRANSPORT",
+   "title": "Client source and built bundle contain no Firebase listeners, managed realtime SDKs or timers that fetch",
+   "requirementIds": [
+    "G01"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:38:01.377Z",
+   "finishedAt": "2026-10-11T18:38:01.379Z",
+   "details": {
+    "sourceFiles": [
+     "App.tsx",
+     "main.tsx",
+     "room-access.ts",
+     "socket.ts",
+     "transcript.ts",
+     "verified.ts"
+    ],
+    "setTimeoutSites": [
+     "App.tsx:25: const timer=window.setTimeout(()=>setNow(Date.now()),Math.max(100,Math.min(...dates)-current+60));",
+     "socket.ts:136: this.retryTimer=setTimeout(()=>{this.retryTimer=undefined;this.open(true);},backoff*(.7+Math.random()*.6));"
+    ],
+    "fetchSites": [
+     "App.tsx:46: user.getIdToken().then(token=>active?fetch(`${import.meta.env.VITE_API_URL}/api/rooms`,{headers:{Authorization:`Bearer ${token}`},signal:controller.signal}):Pro"
+    ],
+    "bundleInformational": {
+     "setInterval": 2,
+     "@firebase/database registry name": 2,
+     "note": "setInterval in the bundle is Firebase Auth's local storage/IndexedDB persistence polling (no network); S17 measures runtime traffic"
+    }
+   },
+   "assertions": [
+    {
+     "name": "no realtime SDK imports or listeners in client source",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "no setInterval in client source",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "no timer callback calls fetch",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "only the one-shot room list fetch exists",
+     "pass": true,
+     "expected": "App.tsx /api/rooms only",
+     "actual": [
+      "App.tsx:46: user.getIdToken().then(token=>active?fetch(`${import.meta.env.VITE_API_URL}/api/rooms`,{headers:{Authorization:`Bearer ${token}`},signal:controller.signal}):Pro"
+     ]
+    },
+    {
+     "name": "bundle has no realtime endpoints, EventSource, beacons or XHR",
+     "pass": true,
+     "expected": 0,
+     "actual": {
+      "firestore.googleapis.com": 0,
+      "firebaseio.com": 0,
+      "fcmregistrations.googleapis.com": 0,
+      "new EventSource": 0,
+      "sendBeacon": 0,
+      "XMLHttpRequest": 0
+     }
+    }
+   ],
+   "artifacts": []
+  },
+  {
+   "id": "POSTGRES-RLS",
+   "title": "REQUIRE_POSTGRES live RLS test against Cloud SQL as teamchat_api, 0 skipped",
+   "requirementIds": [
+    "G04",
+    "D05",
+    "A08"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:38:01.380Z",
+   "finishedAt": "2026-10-11T18:38:22.061Z",
+   "details": {
+    "tap": {
+     "tests": 1,
+     "pass": 1,
+     "fail": 0,
+     "cancelled": 0,
+     "skipped": 0,
+     "todo": 0
+    },
+    "database": {
+     "instance": "focus-clean-4b9f4:us-central1:teamchat-pg-instance",
+     "role": "teamchat_api",
+     "via": "cloud-sql-proxy 127.0.0.1"
+    }
+   },
+   "assertions": [
+    {
+     "name": "required PostgreSQL test exits 0",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "the live test ran and passed (not skipped)",
+     "pass": true,
+     "expected": {
+      "tests": 1,
+      "pass": 1,
+      "skipped": 0
+     },
+     "actual": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/POSTGRES-RLS/postgres-required.log",
+     "sha256": "7c5bd3da01a533d74f82f1e2bbf9f71764c0c1c3525f61cabc46a19a0a3704b6",
+     "description": "Output of npm run test:postgres:required"
+    }
+   ]
+  },
+  {
+   "id": "FRESH-MIGRATIONS",
+   "title": "Migrations and seed applied twice to an empty PostgreSQL with pgvector",
+   "requirementIds": [
+    "D02",
+    "A08"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:38:22.061Z",
+   "finishedAt": "2026-10-11T18:38:23.725Z",
+   "details": {
+    "files": [
+     "db/migrations/001_schema.sql",
+     "db/migrations/002_notifications.sql",
+     "db/migrations/003_auth_grants.sql",
+     "db/migrations/004_ai_consent.sql",
+     "db/migrations/005_job_lookup.sql",
+     "db/migrations/006_ephemeral.sql",
+     "db/migrations/007_semantic_memory.sql",
+     "db/provision_runtime_role.sql",
+     "db/generated/seed.sql"
+    ],
+    "passes": [
+     {
+      "ok": true,
+      "failed": [],
+      "counts": "ai_job_directory=0,ai_jobs=0,answer_blocks=0,auth_directory=0,catalog=2000,dataset_versions=10,margin_classes=88,memories=8,memory_versions=0,messages=0,presence_leases=0,room_events=0,room_memberships=0,rooms=8,segment_coefficients=24,store_carried_codes=433,store_gaps=124,stores=24,supersession_edges=32,task_outbox=0,tenants=2,tool_calls=0,typing_leases=0,user_memberships=0"
+     },
+     {
+      "ok": true,
+      "failed": [],
+      "counts": "ai_job_directory=0,ai_jobs=0,answer_blocks=0,auth_directory=0,catalog=2000,dataset_versions=10,margin_classes=88,memories=8,memory_versions=0,messages=0,presence_leases=0,room_events=0,room_memberships=0,rooms=8,segment_coefficients=24,store_carried_codes=433,store_gaps=124,stores=24,supersession_edges=32,task_outbox=0,tenants=2,tool_calls=0,typing_leases=0,user_memberships=0"
+     }
+    ],
+    "pgvector": "0.8.7",
+    "postgres": "17.11 (Homebrew)"
+   },
+   "assertions": [
+    {
+     "name": "first pass applies every migration, role grants and seed",
+     "pass": true,
+     "expected": true,
+     "actual": {
+      "ok": true,
+      "failed": [],
+      "counts": "ai_job_directory=0,ai_jobs=0,answer_blocks=0,auth_directory=0,catalog=2000,dataset_versions=10,margin_classes=88,memories=8,memory_versions=0,messages=0,presence_leases=0,room_events=0,room_memberships=0,rooms=8,segment_coefficients=24,store_carried_codes=433,store_gaps=124,stores=24,supersession_edges=32,task_outbox=0,tenants=2,tool_calls=0,typing_leases=0,user_memberships=0"
+     }
+    },
+    {
+     "name": "second pass re-applies cleanly (idempotent)",
+     "pass": true,
+     "expected": true,
+     "actual": {
+      "ok": true,
+      "failed": [],
+      "counts": "ai_job_directory=0,ai_jobs=0,answer_blocks=0,auth_directory=0,catalog=2000,dataset_versions=10,margin_classes=88,memories=8,memory_versions=0,messages=0,presence_leases=0,room_events=0,room_memberships=0,rooms=8,segment_coefficients=24,store_carried_codes=433,store_gaps=124,stores=24,supersession_edges=32,task_outbox=0,tenants=2,tool_calls=0,typing_leases=0,user_memberships=0"
+     }
+    },
+    {
+     "name": "row counts identical after both passes",
+     "pass": true,
+     "expected": "ai_job_directory=0,ai_jobs=0,answer_blocks=0,auth_directory=0,catalog=2000,dataset_versions=10,margin_classes=88,memories=8,memory_versions=0,messages=0,presence_leases=0,room_events=0,room_memberships=0,rooms=8,segment_coefficients=24,store_carried_codes=433,store_gaps=124,stores=24,supersession_edges=32,task_outbox=0,tenants=2,tool_calls=0,typing_leases=0,user_memberships=0",
+     "actual": "ai_job_directory=0,ai_jobs=0,answer_blocks=0,auth_directory=0,catalog=2000,dataset_versions=10,margin_classes=88,memories=8,memory_versions=0,messages=0,presence_leases=0,room_events=0,room_memberships=0,rooms=8,segment_coefficients=24,store_carried_codes=433,store_gaps=124,stores=24,supersession_edges=32,task_outbox=0,tenants=2,tool_calls=0,typing_leases=0,user_memberships=0"
+    },
+    {
+     "name": "pgvector installed",
+     "pass": true,
+     "expected": "version",
+     "actual": "0.8.7"
+    },
+    {
+     "name": "runtime role is neither superuser nor BYPASSRLS",
+     "pass": true,
+     "expected": "restricted",
+     "actual": "restricted"
+    },
+    {
+     "name": "runtime role sees no rows without tenant context",
+     "pass": true,
+     "expected": "0",
+     "actual": "0"
+    },
+    {
+     "name": "runtime role sees exactly its tenant's 12 stores with context",
+     "pass": true,
+     "expected": "12",
+     "actual": "12"
+    },
+    {
+     "name": "cross-tenant insert rejected by RLS",
+     "pass": true,
+     "expected": "rejected by RLS",
+     "actual": "rejected by RLS"
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/initdb.log",
+     "sha256": "5cff73e09bc41a7661596cee889ce2c7987069b803fd3870a51fcd2dc84e2564",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/initdb -D /var/folders/zn/ngr7t1ws30b4nrg7r09mjm9r0000gn/T/teamchat-gates-pg-vOHVWt -U postgres --auth=trust -E UTF8"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pg-start.log",
+     "sha256": "c5d6206482dc7dde28fd47a9df48124568883819fcb605767fdc0869e7887a04",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/pg_ctl -D /var/folders/zn/ngr7t1ws30b4nrg7r09mjm9r0000gn/T/teamchat-gates-pg-vOHVWt -l /var/folders/zn/ngr7t1ws30b4nrg7r09mjm9r0000gn/T/teamchat-gates-pg-"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-001_schema.sql.log",
+     "sha256": "10d49f0424b12bc0ed095f27cc67a2dfbe0cdd99353d214aca4544d67d36d9f9",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-002_notifications.sql.log",
+     "sha256": "8a38be1971f539b27d2849cb5d2e3d159e84fd50fb026abcb8f5795eff875c5a",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-003_auth_grants.sql.log",
+     "sha256": "b0361470fe9f116a5af835b18644b3a7ee864e37f6db8d3bce723bc862abd1e0",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-004_ai_consent.sql.log",
+     "sha256": "646aa168c81d5116a2a8a42b0a3e2712224c041e54fad1f463610551ff36fbe0",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-005_job_lookup.sql.log",
+     "sha256": "70ddcdd12306e9945ab5dfdbd6b3d829bb1df5ac36840dfd1abf74b0d3b2ae34",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-006_ephemeral.sql.log",
+     "sha256": "6210e3f6bb83d28f584be7c859ffb42f9cf8949ce50a952e868b15abf67dbe8b",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-007_semantic_memory.sql.log",
+     "sha256": "a405bcca8605283e1c7c0eb9db2645be21d161a84165607dff06d74f895671fa",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-provision_runtime_role.sql.log",
+     "sha256": "491319a173edfe12f17e1fba7599c532d52d4943e0082368ccb58461d84ed895",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/provision_"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass1-seed.sql.log",
+     "sha256": "952f6806cb59b18ffa7047295b473fa1bbf04ecf19b850640e098f082de129f1",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/generated/"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-001_schema.sql.log",
+     "sha256": "c805e90b668b374596a56b75209f007fc214c8c15b8bf44ed032df6954a55da1",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-002_notifications.sql.log",
+     "sha256": "49275c2dedca9b2a52814ac5f2bc96e760b8581b66991e228b20ff72d9e851a1",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-003_auth_grants.sql.log",
+     "sha256": "bcde2a1a7a7786b8a6b0fce987d5c796189238715ddaef637c826e73d2e9ed00",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-004_ai_consent.sql.log",
+     "sha256": "8bebb15a8460e355477494e2ba7e2589f64a483a98ab0349b230624db434c732",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-005_job_lookup.sql.log",
+     "sha256": "108cea38f50b1c9ec52e37362cab6b763b985a199963f6f464e1f58946226a3a",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-006_ephemeral.sql.log",
+     "sha256": "9ea1ce0661679c78c127d73438562fb15f0baa0a8193ba702bdac2a6f215deb7",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-007_semantic_memory.sql.log",
+     "sha256": "c068310d009e2f243ccf6f26e4b7bd6a5b50fabedeee347950a31698972fa7cc",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-provision_runtime_role.sql.log",
+     "sha256": "f6b1b842bf5458648616c6e46b4baab044244a6338339e3f4a15cc3e718c26a4",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/provision_"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/FRESH-MIGRATIONS/pass2-seed.sql.log",
+     "sha256": "cc460c57fa27cef4f98dfec3d580a3c6d88dc420b12dab8eaa7e0447a14a51fc",
+     "description": "Output of /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-W2IW2E -p 52247 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/generated/"
+    }
+   ]
+  },
+  {
+   "id": "SIGTERM-DRAIN",
+   "title": "Real API and worker processes exit cleanly on SIGTERM with open sockets and pool",
+   "requirementIds": [
+    "A01"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:38:23.725Z",
+   "finishedAt": "2026-10-11T18:38:27.864Z",
+   "details": {
+    "results": {
+     "api": {
+      "exit": {
+       "code": 0,
+       "signal": null,
+       "afterMs": 10
+      },
+      "dbConnectionsBefore": 2,
+      "dbConnectionsAfter": 0,
+      "sockets": [
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       },
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       },
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       }
+      ],
+      "keepAliveClosedAfterMs": 2
+     },
+     "worker": {
+      "exit": {
+       "code": 0,
+       "signal": null,
+       "afterMs": 7
+      },
+      "dbConnectionsBefore": 1,
+      "dbConnectionsAfter": 0,
+      "sockets": [],
+      "keepAliveClosedAfterMs": 1
+     }
+    }
+   },
+   "assertions": [
+    {
+     "name": "api exits by itself with code 0 within 15 s of SIGTERM",
+     "pass": true,
+     "expected": "code 0",
+     "actual": {
+      "exit": {
+       "code": 0,
+       "signal": null,
+       "afterMs": 10
+      },
+      "dbConnectionsBefore": 2,
+      "dbConnectionsAfter": 0,
+      "sockets": [
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       },
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       },
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       }
+      ],
+      "keepAliveClosedAfterMs": 2
+     }
+    },
+    {
+     "name": "api held database connections before SIGTERM",
+     "pass": true,
+     "expected": ">0",
+     "actual": 2
+    },
+    {
+     "name": "api released every database connection",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "api closed the idle keep-alive HTTP connection",
+     "pass": true,
+     "expected": "closed after SIGTERM",
+     "actual": {
+      "exit": {
+       "code": 0,
+       "signal": null,
+       "afterMs": 10
+      },
+      "dbConnectionsBefore": 2,
+      "dbConnectionsAfter": 0,
+      "sockets": [
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       },
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       },
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       }
+      ],
+      "keepAliveClosedAfterMs": 2
+     }
+    },
+    {
+     "name": "api closed every open WebSocket",
+     "pass": true,
+     "expected": "all closed",
+     "actual": {
+      "exit": {
+       "code": 0,
+       "signal": null,
+       "afterMs": 10
+      },
+      "dbConnectionsBefore": 2,
+      "dbConnectionsAfter": 0,
+      "sockets": [
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       },
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       },
+       {
+        "code": 1006,
+        "closedAfterMs": 2
+       }
+      ],
+      "keepAliveClosedAfterMs": 2
+     }
+    },
+    {
+     "name": "worker exits by itself with code 0 within 15 s of SIGTERM",
+     "pass": true,
+     "expected": "code 0",
+     "actual": {
+      "exit": {
+       "code": 0,
+       "signal": null,
+       "afterMs": 7
+      },
+      "dbConnectionsBefore": 1,
+      "dbConnectionsAfter": 0,
+      "sockets": [],
+      "keepAliveClosedAfterMs": 1
+     }
+    },
+    {
+     "name": "worker held database connections before SIGTERM",
+     "pass": true,
+     "expected": ">0",
+     "actual": 1
+    },
+    {
+     "name": "worker released every database connection",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "worker closed the idle keep-alive HTTP connection",
+     "pass": true,
+     "expected": "closed after SIGTERM",
+     "actual": {
+      "exit": {
+       "code": 0,
+       "signal": null,
+       "afterMs": 7
+      },
+      "dbConnectionsBefore": 1,
+      "dbConnectionsAfter": 0,
+      "sockets": [],
+      "keepAliveClosedAfterMs": 1
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/SIGTERM-DRAIN/api-process.log",
+     "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b",
+     "description": "api process output"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/SIGTERM-DRAIN/worker-process.log",
+     "sha256": "d7695635b017e76808a37efd2fef33b2f19c99b3570ae568efadbebd102a7925",
+     "description": "worker process output"
+    }
+   ]
+  },
+  {
+   "id": "MEMORY-REPAIR",
+   "title": "Worker loop on a real database: nested value rejected, one controlled repair stored intact, then no more attempts",
+   "requirementIds": [
+    "S10"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:38:27.864Z",
+   "finishedAt": "2026-10-11T18:38:28.096Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "nested: turn completed",
+     "pass": true,
+     "expected": "completed",
+     "actual": {
+      "run": {
+       "status": "completed",
+       "blocks": 2
+      },
+      "terminal": [
+       "ai_complete"
+      ]
+     }
+    },
+    {
+     "name": "nested: first save rejected with a field-level reason for the nested field",
+     "pass": true,
+     "expected": "leads rejected",
+     "actual": {
+      "saved": false,
+      "validation_errors": [
+       {
+        "field": "leads",
+        "issue": "Nested values and arrays are not allowed"
+       }
+      ]
+     }
+    },
+    {
+     "name": "nested: exactly one controlled repair, executed by the worker and stored",
+     "pass": true,
+     "expected": "2 operations, second saved",
+     "actual": [
+      {
+       "op": "r0-c0",
+       "saved": false
+      },
+      {
+       "op": "r0-c1",
+       "saved": true
+      }
+     ]
+    },
+    {
+     "name": "nested: the repair keeps every field, re-encoding the nested one as JSON text",
+     "pass": true,
+     "expected": "nothing dropped",
+     "actual": {
+      "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]",
+      "site": "north"
+     }
+    },
+    {
+     "name": "nested: the stored memory equals the repaired value",
+     "pass": true,
+     "expected": {
+      "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]",
+      "site": "north"
+     },
+     "actual": [
+      {
+       "key": "gate-nested-54af88",
+       "value": {
+        "site": "north",
+        "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]"
+       }
+      }
+     ]
+    },
+    {
+     "name": "nested: the user sees the rejection and then the saved value",
+     "pass": true,
+     "expected": 2,
+     "actual": [
+      "save_memory",
+      "save_memory"
+     ]
+    },
+    {
+     "name": "nested: re-running the finished job writes nothing",
+     "pass": true,
+     "expected": 7,
+     "actual": {
+      "again": {
+       "status": "completed"
+      },
+      "eventsAfterSecondRun": 7
+     }
+    },
+    {
+     "name": "reshaped: the model's flattened copy is not what gets validated; the requester's own value is, and is rejected",
+     "pass": true,
+     "expected": "requester's nested value, leads rejected",
+     "actual": {
+      "validated": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}],\"site\":\"north\"}",
+      "result": {
+       "saved": false,
+       "validation_errors": [
+        {
+         "field": "leads",
+         "issue": "Nested values and arrays are not allowed"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "reshaped: the one controlled repair of the requester's value is what is stored",
+     "pass": true,
+     "expected": "repaired requester value stored",
+     "actual": [
+      {
+       "key": "gate-reshaped-cb5794",
+       "value": {
+        "site": "north",
+        "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]"
+       }
+      }
+     ]
+    },
+    {
+     "name": "unrepairable: repair rejected too, the model's retry refused, nothing stored",
+     "pass": true,
+     "expected": "rejected, rejected, refused; 0 rows",
+     "actual": {
+      "tools": [
+       {
+        "op": "r0-c0",
+        "errors": [
+         {
+          "field": "leads",
+          "issue": "Nested values and arrays are not allowed"
+         }
+        ],
+        "saved": false
+       },
+       {
+        "op": "r0-c1",
+        "errors": [
+         {
+          "field": "leads",
+          "issue": "Maximum 2048 characters"
+         }
+        ],
+        "saved": false
+       },
+       {
+        "op": "r1-c2",
+        "error": "Repair limit reached: the value was rejected and its one repair attempt was also rejected, so nothing was stored",
+        "saved": false
+       }
+      ],
+      "stored": 0
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/MEMORY-REPAIR/memory-repair-driver.log",
+     "sha256": "3db01d8350f5a380fd3ca4d5f1696748089f1a42d7f1f8802c01f0b31db4ce90",
+     "description": "Output of /Users/macbook/.hermes/node/bin/node --experimental-strip-types /Users/macbook/NotSynced/TeamChat_AI_Final_Audit_IDE_Agent_Handoff_v13_2026-10-09/teamchat-ai/scripts/gates/memory-repair-driv"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/MEMORY-REPAIR/memory-repair.json",
+     "sha256": "5cedc210f51c5ff2bacad2279f9c10fb421ed3b4c1710f3d10d51df0d79b14a8",
+     "description": "Persisted tool events, answer blocks and memory rows for both scenarios"
+    }
+   ]
+  },
+  {
+   "id": "SECRET-SCAN",
+   "title": "gitleaks over full history plus reviewer-password and JWT scan of evidence",
+   "requirementIds": [
+    "D02"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T18:38:28.096Z",
+   "finishedAt": "2026-10-11T18:38:32.151Z",
+   "details": {
+    "gitleaksVersion": "8.30.1",
+    "commitsScanned": 58,
+    "gitleaksRuleCounts": {
+     "gcp-api-key": 2
+    },
+    "gitleaksFindings": [
+     {
+      "rule": "gcp-api-key",
+      "file": "scripts/e2e-two-browser.ts",
+      "line": 10,
+      "commit": "fb7401e1b389",
+      "triaged": "public Firebase web API key, identical to the value served in the Hosting bundle"
+     },
+     {
+      "rule": "gcp-api-key",
+      "file": "scripts/run-live-scenarios.ts",
+      "line": 383,
+      "commit": "fb7401e1b389",
+      "triaged": "public Firebase web API key, identical to the value served in the Hosting bundle"
+     }
+    ],
+    "publishableFilesScanned": 721,
+    "literalSecretsChecked": 7,
+    "evidenceHits": []
+   },
+   "assertions": [
+    {
+     "name": "gitleaks completed",
+     "pass": true,
+     "expected": "exit 0 or 1",
+     "actual": 1
+    },
+    {
+     "name": "every gitleaks finding in any commit is a verified public value",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "no reviewer/database password, JWT or private key in publishable files",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/SECRET-SCAN/gitleaks-history.log",
+     "sha256": "b1bde503778ef33bd29bb9bb4c3fe976f91bea6002f2168feb0ea27469debb56",
+     "description": "Output of gitleaks git --redact --no-banner --report-format json --report-path /Users/macbook/NotSynced/TeamChat_AI_Final_Audit_IDE_Agent_Handoff_v13_2026-10-09/teamchat-ai/qa_evidence/runs/20261011T1"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T183748Z-gates-9fe51a/SECRET-SCAN/gitleaks-history.json",
+     "sha256": "5cc54363d458c88c78cf4551e8145013e0107e1f7911c7aee3465e6a7afa40a1",
+     "description": "gitleaks findings over the full Git history (secrets redacted by gitleaks)"
+    }
+   ]
+  }
+ ]
+}

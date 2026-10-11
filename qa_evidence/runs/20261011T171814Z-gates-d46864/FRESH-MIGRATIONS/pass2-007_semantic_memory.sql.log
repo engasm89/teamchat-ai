@@ -1,0 +1,7 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-L06gJy -p 61114 -U postgres -d teamchat -f /tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/007_semantic_memory.sql
+(cwd ., exit 0, 12 ms)
+
+psql:/tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/007_semantic_memory.sql:4: NOTICE:  extension "vector" already exists, skipping
+psql:/tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/007_semantic_memory.sql:5: NOTICE:  column "embedding" of relation "memories" already exists, skipping
+psql:/tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/007_semantic_memory.sql:6: NOTICE:  column "embedding_model" of relation "memories" already exists, skipping
+psql:/tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/007_semantic_memory.sql:9: NOTICE:  relation "memories_semantic_partial_idx" already exists, skipping

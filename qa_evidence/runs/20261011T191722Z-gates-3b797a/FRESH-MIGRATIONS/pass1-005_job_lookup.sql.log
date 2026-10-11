@@ -1,0 +1,4 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-RhU52e -p 56588 -U postgres -d teamchat -f /tmp/tc-clean-d66da3d8a9f4908e20b99c3527a3396b479bacd2/db/migrations/005_job_lookup.sql
+(cwd ., exit 0, 17 ms)
+
+psql:/tmp/tc-clean-d66da3d8a9f4908e20b99c3527a3396b479bacd2/db/migrations/005_job_lookup.sql:13: NOTICE:  trigger "ai_job_directory_insert" for relation "teamchat.ai_jobs" does not exist, skipping

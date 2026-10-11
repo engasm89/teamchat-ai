@@ -1,0 +1,39 @@
+{
+ "label": "s19-save",
+ "user": "northside.buyer1@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that the cold-start check code for rehearsal mv48cfd3-pt15 is cold-mv48cfd3-yj8f.",
+ "consent": true,
+ "turnId": "14d31138-86d4-4182-bf53-65920e78a279",
+ "messageSequence": 883,
+ "at": "2026-10-11T19:42:30.907Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "cold-start check code for rehearsal mv48cfd3-pt15",
+    "room": "supply-planning",
+    "value_json": "{\"rehearsal_code\": \"mv48cfd3-pt15\", \"cold_start_check_code\": \"cold-mv48cfd3-yj8f\"}"
+   },
+   "result": {
+    "ref": "14d31138-86d4-4182-bf53-65920e78a279:northside-outfitters:memory:80fd206a-f459-45cd-90ab-8fb48666951e",
+    "saved": true,
+    "memory": {
+     "key": "cold-start check code for rehearsal mv48cfd3-pt15",
+     "value": {
+      "rehearsal_code": "mv48cfd3-pt15",
+      "cold_start_check_code": "cold-mv48cfd3-yj8f"
+     },
+     "memory_id": "80fd206a-f459-45cd-90ab-8fb48666951e",
+     "created_at": "2026-10-11 19:42:30.006663+00",
+     "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "Saved to shared memory: cold-start check code for rehearsal mv48cfd3-pt15\n{\"rehearsal_code\":\"mv48cfd3-pt15\",\"cold_start_check_code\":\"cold-mv48cfd3-yj8f\"}\nRecorded by: m8O2in6sSKViQgq6RpLAE3dep8Q2 on 2026-10-11 19:42:30.006663+00 in #supply-planning\nSource: 14d31138-86d4-4182-bf53-65920e78a279:northside-outfitters:memory:80fd206a-f459-45cd-90ab-8fb48666951e"
+}

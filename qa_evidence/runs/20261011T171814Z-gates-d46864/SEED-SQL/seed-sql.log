@@ -1,0 +1,8 @@
+$ npm run seed:sql
+(cwd ., exit 0, 198 ms)
+
+
+> teamchat-ai-assessment@0.2.0 seed:sql
+> node --experimental-strip-types scripts/generate-seed-sql.ts
+
+Wrote db/generated/seed.sql with 2753 data INSERT statements across both tenants

@@ -1,0 +1,170 @@
+{
+ "retried": 1,
+ "sessions": [
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:22:02.567Z",
+   "attempts": [
+    {
+     "ms": 30006,
+     "ok": false,
+     "error": "TimeoutError: page.goto: Timeout 30000ms exceeded."
+    },
+    {
+     "ms": 1589,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:22:06.468Z",
+   "attempts": [
+    {
+     "ms": 930,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:23:15.758Z",
+   "attempts": [
+    {
+     "ms": 1015,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:23:19.164Z",
+   "attempts": [
+    {
+     "ms": 1419,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:23:48.769Z",
+   "attempts": [
+    {
+     "ms": 1000,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:23:51.968Z",
+   "attempts": [
+    {
+     "ms": 1205,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:24:06.519Z",
+   "attempts": [
+    {
+     "ms": 1899,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:24:42.068Z",
+   "attempts": [
+    {
+     "ms": 786,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:25:04.004Z",
+   "attempts": [
+    {
+     "ms": 1095,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:25:08.389Z",
+   "attempts": [
+    {
+     "ms": 1888,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:25:54.644Z",
+   "attempts": [
+    {
+     "ms": 836,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:25:57.545Z",
+   "attempts": [
+    {
+     "ms": 915,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:26:39.885Z",
+   "attempts": [
+    {
+     "ms": 820,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:26:42.764Z",
+   "attempts": [
+    {
+     "ms": 878,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:27:04.774Z",
+   "attempts": [
+    {
+     "ms": 858,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:27:07.711Z",
+   "attempts": [
+    {
+     "ms": 956,
+     "ok": true
+    }
+   ]
+  }
+ ]
+}

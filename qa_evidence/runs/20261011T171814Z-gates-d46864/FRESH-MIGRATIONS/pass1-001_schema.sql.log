@@ -1,0 +1,4 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-L06gJy -p 61114 -U postgres -d teamchat -f /tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/001_schema.sql
+(cwd ., exit 0, 46 ms)
+
+psql:/tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/001_schema.sql:56: NOTICE:  constraint "catalog_margin_class_fk" of relation "catalog" does not exist, skipping

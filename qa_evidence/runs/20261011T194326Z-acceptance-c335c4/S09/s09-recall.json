@@ -1,0 +1,109 @@
+{
+ "label": "s09-recall",
+ "user": "northside.buyer2@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "category-strategy",
+ "prompt": "@AI Who is our escalation contact for the case mv48f5iv-sy1j supplier dispute, and when is the deadline?",
+ "consent": false,
+ "turnId": "a76d5ff2-8237-4569-916b-2275285608bd",
+ "messageSequence": 97,
+ "at": "2026-10-11T19:44:46.186Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "escalation contact for case mv48f5iv-sy1j supplier dispute"
+   },
+   "result": [
+    {
+     "ref": "a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:cd1a9f63-9efa-43b8-8de5-f8e0bc685a12",
+     "memory": {
+      "key": "supplier_dispute_mv48f5iv_sy1j_escalation",
+      "value": {
+       "case": "mv48f5iv-sy1j supplier dispute",
+       "deadline": "2026-11-20",
+       "escalation_contact": "Dana mv48f5iv-jwdf"
+      },
+      "distance": 0.1786526167690905,
+      "memory_id": "cd1a9f63-9efa-43b8-8de5-f8e0bc685a12",
+      "created_at": "2026-10-11 19:44:42.501963+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:e4f73cf7-9e0e-4314-a3a0-0e8c7b508f16",
+     "memory": {
+      "key": "supplier_dispute_mv46irww_escalation",
+      "value": {
+       "case_id": "mv46irww-xgul",
+       "deadline": "2026-11-20",
+       "escalation_contact": "Dana mv46irww-9i6h"
+      },
+      "distance": 0.2187640220393482,
+      "memory_id": "e4f73cf7-9e0e-4314-a3a0-0e8c7b508f16",
+      "created_at": "2026-10-11 18:51:34.025899+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:243ee9d4-0e51-462b-8f5a-b7bc616ec7ea",
+     "memory": {
+      "key": "escalation_contact_mv47v326-xz12",
+      "value": {
+       "case_id": "mv47v326-xz12",
+       "deadline": "2026-11-20",
+       "supplier_dispute": true,
+       "escalation_contact": "Dana mv47v326-ism2"
+      },
+      "distance": 0.24175439757187167,
+      "memory_id": "243ee9d4-0e51-462b-8f5a-b7bc616ec7ea",
+      "created_at": "2026-10-11 19:29:06.335927+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:d638e669-92ae-4ca2-a9b9-bf76d5f397d3",
+     "memory": {
+      "key": "supplier_dispute_mv46s4h2",
+      "value": {
+       "case_id": "mv46s4h2-79oh",
+       "deadline": "2026-11-20",
+       "escalation_contact": "Dana mv46s4h2-q8mu"
+      },
+      "distance": 0.24281064256392282,
+      "memory_id": "d638e669-92ae-4ca2-a9b9-bf76d5f397d3",
+      "created_at": "2026-10-11 18:58:47.844672+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:273e32ba-f4ac-4298-98c5-f9059a513d8b",
+     "memory": {
+      "key": "supplier_dispute_mv483k3l",
+      "value": {
+       "deadline": "2026-11-20",
+       "escalation_contact": "Dana mv483k3l-tiad"
+      },
+      "distance": 0.2593614549960116,
+      "memory_id": "273e32ba-f4ac-4298-98c5-f9059a513d8b",
+      "created_at": "2026-10-11 19:35:40.928507+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "Recorded decision: supplier_dispute_mv48f5iv_sy1j_escalation\n{\"case\":\"mv48f5iv-sy1j supplier dispute\",\"deadline\":\"2026-11-20\",\"escalation_contact\":\"Dana mv48f5iv-jwdf\"}\nRecorded by: Northside Buyer One on 2026-10-11 19:44:42.501963+00 in #supply-planning\nSource: a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:cd1a9f63-9efa-43b8-8de5-f8e0bc685a12\n\nRecorded decision: supplier_dispute_mv46irww_escalation\n{\"case_id\":\"mv46irww-xgul\",\"deadline\":\"2026-11-20\",\"escalation_contact\":\"Dana mv46irww-9i6h\"}\nRecorded by: Northside Buyer One on 2026-10-11 18:51:34.025899+00 in #supply-planning\nSource: a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:e4f73cf7-9e0e-4314-a3a0-0e8c7b508f16\n\nRecorded decision: escalation_contact_mv47v326-xz12\n{\"case_id\":\"mv47v326-xz12\",\"deadline\":\"2026-11-20\",\"supplier_dispute\":true,\"escalation_contact\":\"Dana mv47v326-ism2\"}\nRecorded by: Northside Buyer One on 2026-10-11 19:29:06.335927+00 in #supply-planning\nSource: a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:243ee9d4-0e51-462b-8f5a-b7bc616ec7ea\n\nRecorded decision: supplier_dispute_mv46s4h2\n{\"case_id\":\"mv46s4h2-79oh\",\"deadline\":\"2026-11-20\",\"escalation_contact\":\"Dana mv46s4h2-q8mu\"}\nRecorded by: Northside Buyer One on 2026-10-11 18:58:47.844672+00 in #supply-planning\nSource: a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:d638e669-92ae-4ca2-a9b9-bf76d5f397d3\n\nRecorded decision: supplier_dispute_mv483k3l\n{\"deadline\":\"2026-11-20\",\"escalation_contact\":\"Dana mv483k3l-tiad\"}\nRecorded by: Northside Buyer One on 2026-10-11 19:35:40.928507+00 in #supply-planning\nSource: a76d5ff2-8237-4569-916b-2275285608bd:northside-outfitters:memory:273e32ba-f4ac-4298-98c5-f9059a513d8b"
+}

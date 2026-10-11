@@ -1,0 +1,12 @@
+{"t":1791744012002,"url":"https://focus-clean-4b9f4.web.app/","method":"GET","type":"document"}
+{"t":1791744012293,"url":"https://focus-clean-4b9f4.web.app/assets/index-DloCzopf.js","method":"GET","type":"script"}
+{"t":1791744012293,"url":"https://focus-clean-4b9f4.web.app/assets/index-BTnPilvg.css","method":"GET","type":"stylesheet"}
+{"t":1791744013082,"url":"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword","method":"POST","type":"fetch"}
+{"t":1791744013873,"url":"https://identitytoolkit.googleapis.com/v1/accounts:lookup","method":"POST","type":"fetch"}
+{"t":1791744014241,"url":"https://teamchat-api-1068908463902.us-central1.run.app/api/rooms","method":"GET","type":"fetch"}
+{"t":1791744017294,"url":"https://teamchat-api-1068908463902.us-central1.run.app/health","method":"GET","type":"fetch"}
+{"t":1791744022293,"url":"https://teamchat-api-1068908463902.us-central1.run.app/health","method":"GET","type":"fetch"}
+{"t":1791744027299,"url":"https://teamchat-api-1068908463902.us-central1.run.app/health","method":"GET","type":"fetch"}
+{"t":1791744032299,"url":"https://teamchat-api-1068908463902.us-central1.run.app/health","method":"GET","type":"fetch"}
+{"t":1791744037297,"url":"https://teamchat-api-1068908463902.us-central1.run.app/health","method":"GET","type":"fetch"}
+{"t":1791744042296,"url":"https://teamchat-api-1068908463902.us-central1.run.app/health","method":"GET","type":"fetch"}

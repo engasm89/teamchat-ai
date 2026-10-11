@@ -1,0 +1,4 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-7ovsXX -p 50762 -U postgres -d teamchat -f /tmp/tc-clean-f2e60bcdca5e32ee5d2a144ebee8a204027c5629/db/migrations/003_auth_grants.sql
+(cwd ., exit 0, 12 ms)
+
+psql:/tmp/tc-clean-f2e60bcdca5e32ee5d2a144ebee8a204027c5629/db/migrations/003_auth_grants.sql:9: NOTICE:  relation "auth_directory" already exists, skipping

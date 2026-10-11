@@ -1,0 +1,39 @@
+{
+ "label": "s19-save",
+ "user": "northside.buyer1@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that the cold-start check code for drill mv48aas7-qxr8 is cold-mv48aas7-5rtj.",
+ "consent": true,
+ "turnId": "9b447c7d-0987-4ab3-9e30-985ea8d81ce5",
+ "messageSequence": 878,
+ "at": "2026-10-11T19:40:50.979Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "cold-start check code for drill mv48aas7-qxr8",
+    "room": "supply-planning",
+    "value_json": "{\"drill_code\": \"mv48aas7-qxr8\", \"cold_start_check_code\": \"cold-mv48aas7-5rtj\"}"
+   },
+   "result": {
+    "ref": "9b447c7d-0987-4ab3-9e30-985ea8d81ce5:northside-outfitters:memory:1952033c-c908-4534-b152-067d327b32ac",
+    "saved": true,
+    "memory": {
+     "key": "cold-start check code for drill mv48aas7-qxr8",
+     "value": {
+      "drill_code": "mv48aas7-qxr8",
+      "cold_start_check_code": "cold-mv48aas7-5rtj"
+     },
+     "memory_id": "1952033c-c908-4534-b152-067d327b32ac",
+     "created_at": "2026-10-11 19:40:50.352881+00",
+     "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "Saved to shared memory: cold-start check code for drill mv48aas7-qxr8\n{\"drill_code\":\"mv48aas7-qxr8\",\"cold_start_check_code\":\"cold-mv48aas7-5rtj\"}\nRecorded by: m8O2in6sSKViQgq6RpLAE3dep8Q2 on 2026-10-11 19:40:50.352881+00 in #supply-planning\nSource: 9b447c7d-0987-4ab3-9e30-985ea8d81ce5:northside-outfitters:memory:1952033c-c908-4534-b152-067d327b32ac"
+}

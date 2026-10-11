@@ -1,13 +1,384 @@
+# PostgreSQL gates: REQUIRE_POSTGRES live RLS test and fresh migrations, every gates run
+# Derived by scripts/evidence/write-derived-logs.ts at 2026-10-11T20:00:37.704Z from qa_evidence/runs/*/results.json.
+# Tested source d66da3d8a9f4908e20b99c3527a3396b479bacd2; API sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374; worker sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69.
+# Suites: gates. "current" runs are the ones the validator counts; every other run is listed with the reason it is not counted.
 
-> teamchat-ai-assessment@0.2.0 test:postgres:required
-> REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+== 20261011T171814Z-gates-d46864  superseded: source 116a629  started=2026-10-11T17:18:14.161Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T171814Z-gates-d46864/POSTGRES-RLS/postgres-required.log (sha256=cd0a63a88dfcf952b7dc6cf2ad5c73e6b4e61d8116e049d711f1cab82c90ea0a)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 13989 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 13720.086208
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 13808.928084
 
-✔ real PostgreSQL role, semantic memory backfill and FORCED RLS isolation (17738.1855ms)
-ℹ tests 1
-ℹ suites 0
-ℹ pass 1
-ℹ fail 0
-ℹ cancelled 0
-ℹ skipped 0
-ℹ todo 0
-ℹ duration_ms 17824.179708
+== 20261011T172012Z-gates-dc143f  superseded: source 116a629  started=2026-10-11T17:20:12.927Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T172012Z-gates-dc143f/POSTGRES-RLS/postgres-required.log (sha256=5db2ccea070633ac67bc6e6bb55e6750f4c8e9d3547c425cc350b1d2ea46780a)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 16347 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 16078.891041
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 16173.021167
+
+== 20261011T182211Z-gates-bb2f99  superseded: source f2e60bc  started=2026-10-11T18:22:11.451Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T182211Z-gates-bb2f99/POSTGRES-RLS/postgres-required.log (sha256=37eb9782a4d1187aabd2a22fdbec59c2798ffc9537cd255873acfb18e7aabc1a)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 14611 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 14344.467834
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 14432.604
+
+== 20261011T182319Z-gates-deacfc  superseded: source f2e60bc  started=2026-10-11T18:23:19.934Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T182319Z-gates-deacfc/POSTGRES-RLS/postgres-required.log (sha256=b14740ebc7038edd8a065e1db3b88ee929a5d985e736e2d97249f0595fc24833)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 16228 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 15959.217708
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 16052.046625
+
+== 20261011T182410Z-gates-50a305  superseded: source f2e60bc  started=2026-10-11T18:24:10.469Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T182410Z-gates-50a305/POSTGRES-RLS/postgres-required.log (sha256=ddcd7a76ae947b7b88ac12a24f91a48d05f7ce9ed354931a5d7dd8337d8b2b1f)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 14826 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 14549.929541
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 14647.69675
+
+== 20261011T183655Z-gates-31b9b7  superseded: source 0919a9b  started=2026-10-11T18:36:55.004Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T183655Z-gates-31b9b7/POSTGRES-RLS/postgres-required.log (sha256=55ea6d92f06a4f9466e2d8647f36feefbd6918123d7785b4067d1376eefccf88)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 17767 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 17489.965667
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 17578.807042
+
+== 20261011T183748Z-gates-9fe51a  superseded: source 0919a9b  started=2026-10-11T18:37:48.272Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T183748Z-gates-9fe51a/POSTGRES-RLS/postgres-required.log (sha256=7c5bd3da01a533d74f82f1e2bbf9f71764c0c1c3525f61cabc46a19a0a3704b6)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 18716 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 18449.842875
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 18548.623834
+
+== 20261011T191630Z-gates-9ff163  current  started=2026-10-11T19:16:30.823Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T191630Z-gates-9ff163/POSTGRES-RLS/postgres-required.log (sha256=9eee65b99fcc6b83840292537e2793132d7260033fe5788c3b45c5e4be10ecc5)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 16266 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 15997.006791
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 16095.938667
+
+== 20261011T191722Z-gates-3b797a  current  started=2026-10-11T19:17:22.805Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T191722Z-gates-3b797a/POSTGRES-RLS/postgres-required.log (sha256=f7bdb5832c3b1e358d6c382ddffbc6ec093787b37a67bc475c55967463c37ada)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 15672 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 15391.973833
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 15491.157709
+
+== 20261011T195934Z-gates-867dc3  current  started=2026-10-11T19:59:34.155Z
+   POSTGRES-RLS PASS 2/2 assertions
+      ok   required PostgreSQL test exits 0
+      ok   the live test ran and passed (not skipped)
+   FRESH-MIGRATIONS PASS 8/8 assertions
+      ok   first pass applies every migration, role grants and seed
+      ok   second pass re-applies cleanly (idempotent)
+      ok   row counts identical after both passes
+      ok   pgvector installed
+      ok   runtime role is neither superuser nor BYPASSRLS
+      ok   runtime role sees no rows without tenant context
+      ok   runtime role sees exactly its tenant's 12 stores with context
+      ok   cross-tenant insert rejected by RLS
+   --- qa_evidence/runs/20261011T195934Z-gates-867dc3/POSTGRES-RLS/postgres-required.log (sha256=649205a62a2608e5a279956c30964bf2464f68673fbd6808967283d261a6a534)
+   | $ npm run test:postgres:required
+   | (cwd ., exit 0, 17487 ms)
+   | 
+   | 
+   | > teamchat-ai-assessment@0.2.0 test:postgres:required
+   | > REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts
+   | 
+   | TAP version 13
+   | # Subtest: real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   | ok 1 - real PostgreSQL role, semantic memory backfill and FORCED RLS isolation
+   |   ---
+   |   duration_ms: 17200.331875
+   |   type: 'test'
+   |   ...
+   | 1..1
+   | # tests 1
+   | # suites 0
+   | # pass 1
+   | # fail 0
+   | # cancelled 0
+   | # skipped 0
+   | # todo 0
+   | # duration_ms 17302.42725

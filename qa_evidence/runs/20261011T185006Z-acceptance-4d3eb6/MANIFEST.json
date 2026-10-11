@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-11T18:57:06.104Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 5380,
+   "sha256": "e5fc2f9d754e05d0a3d5a93b024281d4c55c714874dbe4e6d4134709529eee4d"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1074,
+   "sha256": "e4dcbb6032e8cb723cf2fb1e70f14a0813243d991e61e4be6ccd20d38035e6c7"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 10322,
+   "sha256": "ecb7990c07c226e2f8a5b51627c377e5c754d314e742ec91aad417a178bacbad"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 582,
+   "sha256": "9280d35fd4a65a98ba8fba2caee7222d71e7c3c891c80e726f04a6a115ce9843"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3386,
+   "sha256": "4d89c988e2ae7fcf03fde5bddb9023be1b11a9501756cb1a561c544678e1d921"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 8162,
+   "sha256": "cd8b90caab41f72e97cc84d49def62204fb1fdff937157e842dc2faffbb9a5c6"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 2723,
+   "sha256": "7128de28e9beb49cabb6d0a0a9f7339034d61e46c27b7eee8026f37cc7e96667"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 1857,
+   "sha256": "43e7321c488bfe4a5149b52e0c40f511c6e53b9fa9ece7f6e34a431386af70ba"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 572,
+   "sha256": "c1c4a13305558080e19cddcff12de31ca6f96d5750a8dd157a984ee20062ac1e"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 610,
+   "sha256": "5b000af2a7ed7858a2df19badc302d9123ac7a5a0e0eb0a77d8a8247de33f653"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 4946,
+   "sha256": "1524e2f4d3d78596a9a65b42be3f188ac79627fe4ab1a9ea1eadc05b9f8e35d0"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1730,
+   "sha256": "1f5e9dbb3792b1d77b7157c9e384ed5f027669a8c61a635d38843ffc7beb485e"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2434,
+   "sha256": "3e2c3ce0258456180889e1175385e67b1ff2d135b0512f0b6432cbbf977f42d9"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1454,
+   "sha256": "9992fa2e3cb067318e26d3197fb75bf6d65a602c2f8cd0c134781d536900f48d"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 2802,
+   "sha256": "37d288f307dc1c9c97900a9a28062854c63e0a2ca5ae50a007cc9fc6ac19bcb4"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3738,
+   "sha256": "95c478490a6011bbac9831ec54e508fc4fad84434efc43f26db47fbd413134ef"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4129,
+   "sha256": "a256b951372d506f0785adb69983f0d83795d3a86c6a52c105bebd7ebe690b47"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 856,
+   "sha256": "b4e8c05742c5c6c8ac8b2d9bd02ba4f8d874a3131d9ebafecac99d2dd0be2c30"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 657,
+   "sha256": "f34725821c1f5bc6f8dd2278ff86598526ed2fffc4b0508805c924f61f679c7c"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 708,
+   "sha256": "da52db457327ba12a049620ed72ffa18bb21df5c58d89c0db80d8a04a349ecd8"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 659,
+   "sha256": "3f8af1162b1228bda2741527d3b74e1da3955bbc1332e66151bf8f9d2cdfb9ad"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 1038,
+   "sha256": "af3e6b067782f8fa5cf245af9935485fb8f3c03cb351fd926c24bb615a105c87"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 10380,
+   "sha256": "2faa7a3370f305bf760360b066ab7281042c6c7cb34b7c132abbc6bb04d2d905"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 659,
+   "sha256": "96237443b023789f504451f3ae8c673a52487ed6e1055e1e47bd41af11ce2d92"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4129,
+   "sha256": "baa04dbdb23efff98e90c25ce004a1b79898abc0b850d743b369ac40056c40f7"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 651,
+   "sha256": "81b4af2d748c2752816633c5cd8a8bfe7ac0b56349c17ee34450ec35d18ef1d3"
+  },
+  {
+   "path": "results.json",
+   "bytes": 47662,
+   "sha256": "732ac820b5c53780c84f73ab0b2f8d531c8caf0e5453b3831ffd4b52d2dd50f1"
+  }
+ ]
+}

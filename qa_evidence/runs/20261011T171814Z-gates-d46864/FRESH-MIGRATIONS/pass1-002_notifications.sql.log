@@ -1,0 +1,4 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-L06gJy -p 61114 -U postgres -d teamchat -f /tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/002_notifications.sql
+(cwd ., exit 0, 14 ms)
+
+psql:/tmp/tc-clean-116a629a892fd6930f4bb5b3f59c433fd92ba3b7/db/migrations/002_notifications.sql:12: NOTICE:  trigger "room_event_wakeup" for relation "teamchat.room_events" does not exist, skipping

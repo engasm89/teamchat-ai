@@ -1,0 +1,6 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-obfaNV -p 52147 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations/006_ephemeral.sql
+(cwd ., exit 0, 15 ms)
+
+psql:/tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations/006_ephemeral.sql:11: NOTICE:  policy "tenant_guard" for relation "teamchat.typing_leases" does not exist, skipping
+psql:/tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations/006_ephemeral.sql:27: NOTICE:  trigger "presence_changed" for relation "teamchat.presence_leases" does not exist, skipping
+psql:/tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations/006_ephemeral.sql:30: NOTICE:  trigger "typing_changed" for relation "teamchat.typing_leases" does not exist, skipping

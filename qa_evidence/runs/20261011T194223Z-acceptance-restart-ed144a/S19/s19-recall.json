@@ -1,0 +1,109 @@
+{
+ "label": "s19-recall",
+ "user": "northside.buyer2@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "category-strategy",
+ "prompt": "@AI What is the cold-start check code for rehearsal mv48cfd3-pt15?",
+ "consent": false,
+ "turnId": "61c0366c-dc31-4c7a-99d5-040c8fc968db",
+ "messageSequence": 89,
+ "at": "2026-10-11T19:43:17.039Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_catalog",
+   "arguments": {
+    "query": "rehearsal mv48cfd3-pt15"
+   },
+   "result": []
+  },
+  {
+   "operationId": "r1-c1",
+   "name": "search_memory",
+   "arguments": {
+    "query": "cold-start check code for rehearsal mv48cfd3-pt15"
+   },
+   "result": [
+    {
+     "ref": "61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:80fd206a-f459-45cd-90ab-8fb48666951e",
+     "memory": {
+      "key": "cold-start check code for rehearsal mv48cfd3-pt15",
+      "value": {
+       "rehearsal_code": "mv48cfd3-pt15",
+       "cold_start_check_code": "cold-mv48cfd3-yj8f"
+      },
+      "distance": 0.15981993855673526,
+      "memory_id": "80fd206a-f459-45cd-90ab-8fb48666951e",
+      "created_at": "2026-10-11 19:42:30.006663+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:1952033c-c908-4534-b152-067d327b32ac",
+     "memory": {
+      "key": "cold-start check code for drill mv48aas7-qxr8",
+      "value": {
+       "drill_code": "mv48aas7-qxr8",
+       "cold_start_check_code": "cold-mv48aas7-5rtj"
+      },
+      "distance": 0.2767708891687628,
+      "memory_id": "1952033c-c908-4534-b152-067d327b32ac",
+      "created_at": "2026-10-11 19:40:50.352881+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:887e307f-0301-4c7f-8847-dacb3d349e65",
+     "memory": {
+      "key": "roster-mv452l58-tfcy-flat-check",
+      "value": {
+       "value": "roster-mv452l58-tfcy-ok"
+      },
+      "distance": 0.479767269477832,
+      "memory_id": "887e307f-0301-4c7f-8847-dacb3d349e65",
+      "created_at": "2026-10-11 18:10:51.42614+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:8387df2e-0639-4d96-b4ed-5a6f804f75d4",
+     "memory": {
+      "key": "roster-mv46ja3q-bs81-flat-check",
+      "value": {
+       "value": "roster-mv46ja3q-bs81-ok"
+      },
+      "distance": 0.48064183755386425,
+      "memory_id": "8387df2e-0639-4d96-b4ed-5a6f804f75d4",
+      "created_at": "2026-10-11 18:51:49.930026+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:c117d5f3-e918-45a7-b50f-711ae8bf736a",
+     "memory": {
+      "key": "roster-mv45llop-5sh3-flat-check",
+      "value": {
+       "value": "roster-mv45llop-5sh3-ok"
+      },
+      "distance": 0.48840732916065965,
+      "memory_id": "c117d5f3-e918-45a7-b50f-711ae8bf736a",
+      "created_at": "2026-10-11 18:25:44.476986+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "No matching product exists in the supplied catalog.\n\nRecorded decision: cold-start check code for rehearsal mv48cfd3-pt15\n{\"rehearsal_code\":\"mv48cfd3-pt15\",\"cold_start_check_code\":\"cold-mv48cfd3-yj8f\"}\nRecorded by: Northside Buyer One on 2026-10-11 19:42:30.006663+00 in #supply-planning\nSource: 61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:80fd206a-f459-45cd-90ab-8fb48666951e\n\nRecorded decision: cold-start check code for drill mv48aas7-qxr8\n{\"drill_code\":\"mv48aas7-qxr8\",\"cold_start_check_code\":\"cold-mv48aas7-5rtj\"}\nRecorded by: Northside Buyer One on 2026-10-11 19:40:50.352881+00 in #supply-planning\nSource: 61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:1952033c-c908-4534-b152-067d327b32ac\n\nRecorded decision: roster-mv452l58-tfcy-flat-check\n{\"value\":\"roster-mv452l58-tfcy-ok\"}\nRecorded by: Northside Buyer One on 2026-10-11 18:10:51.42614+00 in #supply-planning\nSource: 61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:887e307f-0301-4c7f-8847-dacb3d349e65\n\nRecorded decision: roster-mv46ja3q-bs81-flat-check\n{\"value\":\"roster-mv46ja3q-bs81-ok\"}\nRecorded by: Northside Buyer One on 2026-10-11 18:51:49.930026+00 in #supply-planning\nSource: 61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:8387df2e-0639-4d96-b4ed-5a6f804f75d4\n\nRecorded decision: roster-mv45llop-5sh3-flat-check\n{\"value\":\"roster-mv45llop-5sh3-ok\"}\nRecorded by: Northside Buyer One on 2026-10-11 18:25:44.476986+00 in #supply-planning\nSource: 61c0366c-dc31-4c7a-99d5-040c8fc968db:northside-outfitters:memory:c117d5f3-e918-45a7-b50f-711ae8bf736a"
+}

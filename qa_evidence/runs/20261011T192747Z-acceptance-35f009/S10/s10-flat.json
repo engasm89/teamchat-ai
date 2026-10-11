@@ -1,0 +1,38 @@
+{
+ "label": "s10-flat",
+ "user": "northside.buyer1@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that the roster-mv47vjnf-yq95 flat check value is roster-mv47vjnf-yq95-ok.",
+ "consent": true,
+ "turnId": "cc255554-00ab-45f6-93b5-ac9cbaaba7e8",
+ "messageSequence": 722,
+ "at": "2026-10-11T19:29:21.437Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "roster-mv47vjnf-yq95_flat_check_value",
+    "room": "supply-planning",
+    "value_json": "{\"value\": \"roster-mv47vjnf-yq95-ok\"}"
+   },
+   "result": {
+    "ref": "cc255554-00ab-45f6-93b5-ac9cbaaba7e8:northside-outfitters:memory:d2c5c9f8-5f66-4ab1-9ff6-67c80c10a09c",
+    "saved": true,
+    "memory": {
+     "key": "roster-mv47vjnf-yq95_flat_check_value",
+     "value": {
+      "value": "roster-mv47vjnf-yq95-ok"
+     },
+     "memory_id": "d2c5c9f8-5f66-4ab1-9ff6-67c80c10a09c",
+     "created_at": "2026-10-11 19:29:20.825055+00",
+     "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "Saved to shared memory: roster-mv47vjnf-yq95_flat_check_value\n{\"value\":\"roster-mv47vjnf-yq95-ok\"}\nRecorded by: m8O2in6sSKViQgq6RpLAE3dep8Q2 on 2026-10-11 19:29:20.825055+00 in #supply-planning\nSource: cc255554-00ab-45f6-93b5-ac9cbaaba7e8:northside-outfitters:memory:d2c5c9f8-5f66-4ab1-9ff6-67c80c10a09c"
+}

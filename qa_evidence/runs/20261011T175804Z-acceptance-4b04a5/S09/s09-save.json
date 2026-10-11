@@ -1,0 +1,36 @@
+{
+ "label": "s09-save",
+ "user": "northside.buyer1@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that our escalation contact for ST-4003 is Dana mv44ojrh-tp9f and the deadline is 2026-11-20.",
+ "consent": true,
+ "turnId": "556195c2-069c-4f24-9958-99208ece51b8",
+ "messageSequence": 165,
+ "at": "2026-10-11T18:00:03.021Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "ST-4003 escalation contact and deadline",
+    "room": "supply-planning",
+    "value": {}
+   },
+   "result": {
+    "ref": "556195c2-069c-4f24-9958-99208ece51b8:northside-outfitters:memory:5498367a-9e6b-4bb1-b684-786c47715ad3",
+    "saved": true,
+    "memory": {
+     "key": "ST-4003 escalation contact and deadline",
+     "value": {},
+     "memory_id": "5498367a-9e6b-4bb1-b684-786c47715ad3",
+     "created_at": "2026-10-11 18:00:02.085797+00",
+     "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "Saved to shared memory: ST-4003 escalation contact and deadline\n{}\nRecorded by: m8O2in6sSKViQgq6RpLAE3dep8Q2 on 2026-10-11 18:00:02.085797+00 in #supply-planning\nSource: 556195c2-069c-4f24-9958-99208ece51b8:northside-outfitters:memory:5498367a-9e6b-4bb1-b684-786c47715ad3"
+}

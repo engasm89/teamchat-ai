@@ -1,0 +1,95 @@
+{
+ "label": "s07",
+ "user": "northside.buyer1@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Compare option A (APP-100.12, APP-100.13) and option B (ELC-100.13, HDW-146.18) for ST-4007; show B minus A.",
+ "consent": false,
+ "turnId": "f56e00e3-f920-4605-9c40-c4058f09ea63",
+ "messageSequence": 507,
+ "at": "2026-10-11T18:58:22.817Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "compare_assortment_options",
+   "arguments": {
+    "store_id": "ST-4007",
+    "option_a_codes": [
+     "APP-100.12",
+     "APP-100.13"
+    ],
+    "option_b_codes": [
+     "ELC-100.13",
+     "HDW-146.18"
+    ]
+   },
+   "result": {
+    "ref": "f56e00e3-f920-4605-9c40-c4058f09ea63:northside-outfitters:calculation:ST-4007:alternatives",
+    "codes_a": [
+     "APP-100.12",
+     "APP-100.13"
+    ],
+    "codes_b": [
+     "ELC-100.13",
+     "HDW-146.18"
+    ],
+    "store_id": "ST-4007",
+    "comparison": {
+     "caveat": "Dimensionless assortment coefficient scores only. B minus A is not monetary sales or a percentage.",
+     "baseline": "0.984775",
+     "option_a": {
+      "score": "1.100550",
+      "uplift": "0.115775",
+      "removed": [],
+      "retained": [
+       "1101",
+       "310",
+       "318",
+       "412",
+       "419",
+       "509",
+       "602",
+       "606",
+       "608",
+       "706",
+       "801",
+       "803",
+       "807",
+       "901",
+       "906"
+      ],
+      "unmapped": []
+     },
+     "option_b": {
+      "score": "1.064800",
+      "uplift": "0.080025",
+      "removed": [
+       "903"
+      ],
+      "retained": [
+       "1101",
+       "310",
+       "410",
+       "412",
+       "419",
+       "509",
+       "602",
+       "606",
+       "608",
+       "706",
+       "801",
+       "803",
+       "807",
+       "901",
+       "906"
+      ],
+      "unmapped": []
+     },
+     "difference_b_minus_a": "-0.035750"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "Store ST-4007 · original score 0.984775\nOption A: [\"APP-100.12\",\"APP-100.13\"] → score 1.100550, uplift 0.115775\nOption B: [\"ELC-100.13\",\"HDW-146.18\"] → score 1.064800, uplift 0.080025\nDifference (B − A): -0.035750\nA retained/superseded classes: [\"1101\",\"310\",\"318\",\"412\",\"419\",\"509\",\"602\",\"606\",\"608\",\"706\",\"801\",\"803\",\"807\",\"901\",\"906\"] / []\nB retained/superseded classes: [\"1101\",\"310\",\"410\",\"412\",\"419\",\"509\",\"602\",\"606\",\"608\",\"706\",\"801\",\"803\",\"807\",\"901\",\"906\"] / [\"903\"]\nAssumption: Dimensionless assortment coefficient scores only. B minus A is not monetary sales or a percentage.\nSource: f56e00e3-f920-4605-9c40-c4058f09ea63:northside-outfitters:calculation:ST-4007:alternatives"
+}

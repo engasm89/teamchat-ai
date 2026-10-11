@@ -1,0 +1,3 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-Qxmz3l -p 50549 -U postgres -d teamchat -f /tmp/tc-clean-f2e60bcdca5e32ee5d2a144ebee8a204027c5629/db/migrations/002_notifications.sql
+(cwd ., exit 0, 13 ms)
+

@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-11T19:03:46.793Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 5380,
+   "sha256": "6e34bb3974ccbf58aa7b05505d4a0a795fc6e53e9c01a0708ee12b285b6768d4"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1126,
+   "sha256": "de5cc2720b992961cb3d0bf17815df1e35ba1503965cbf62dc18ee430a314008"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 10322,
+   "sha256": "b507550b7a0a0fd1c2e223efbce2096671b38c5fb6a6c9b096d37970ddb5a5a5"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 582,
+   "sha256": "be8251147ba502a16fc73f9547a9a2ec7d002f621bb3d95de649c98218d1718d"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3386,
+   "sha256": "c17e39444b3abb0d6586564aed01c4a5e90f369a2a2c06c79a0ac011392c658b"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 20795,
+   "sha256": "cd05c632bc4c740aaad4f3587fa8c39e9442447f1b310a807eb1e30910c08a75"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 2723,
+   "sha256": "6bb7e99f49e4361956217aaf3e775543240f20692aafabfd15e35d1700ac6ba5"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 1877,
+   "sha256": "3e27b6a286dcd98b3ab8cc13e4b9a86b393f1d0b3283c4d3a2725639f8230299"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 572,
+   "sha256": "38aee77640a36d6a592b493bb3eaa9b8f5e8eacba8f1aa055465b6ccbb9e21d6"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 608,
+   "sha256": "3a6712896a514cd18856e5a3050263512af845c8c07e3987de01a7f38de4c661"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 5151,
+   "sha256": "4347b98020d902cb3dc40c4a058d297ccfac0f1f59be0b55f1902c8309f59884"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1697,
+   "sha256": "6e0120b6dd895f32d82cfab20bd8355e7a5193c12a234f1d16684bca0a334d84"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2434,
+   "sha256": "d2692102e11adca567c423e512e7976c331ae0bd7a7f80680fd59e0efff5bc57"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1472,
+   "sha256": "3a349f892bff2f813d4f7d36110f0e2f76c12d988b70a5929af6617c1083f6c8"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 2802,
+   "sha256": "afbb955597212b3448a34df2a8d157c1f96dc1221913c2f75c70296f8e886641"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3738,
+   "sha256": "0eac431541354c737a068f2758877bb49c6490a68de9a2a235fa0b9350627f7c"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4129,
+   "sha256": "9c6a55b40eaafc98fb8d7e1a5b5519b408a57d88477deb1e60d21369ef5df2b3"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 856,
+   "sha256": "e9d4622b74538df50d8542a39a0baefe069941109a6b87a6d1191f5c85b87bec"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 657,
+   "sha256": "31710d53bef1b4c20c42ba825698ff911cecd602626e1e531a586ed31cab5ba3"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 708,
+   "sha256": "c39edac1827df143f36fd137f3fddbeebba22c12218677396f5c0ee99c65a84c"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 659,
+   "sha256": "ad303b379cc099300e3518b7b5ca484592359a072890b97fbbd0d3a39af615e9"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 1038,
+   "sha256": "16c9ef5fda5b323185661777d834baf7b58ac6aaf308315b57e559be7036e3a3"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 10380,
+   "sha256": "a726d025b46e0994d31aaa2d98d0944759af4222bbbe24ad2b4ee9a2f13bd7f4"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 659,
+   "sha256": "7b0e4695db48ee66474724b9170e3d3afdda8a7ee3e6eae2fb493028dc8a69b5"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4129,
+   "sha256": "6a1fa8e7db3a8349ff515d214032bd1a6fa7ff4c58e67e93076183bac2be2853"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 651,
+   "sha256": "624604986b0091753fad093ca539b9c36e740220dedfcf6a6470a11ad7493836"
+  },
+  {
+   "path": "results.json",
+   "bytes": 47707,
+   "sha256": "fc127f6fa6ddd24831f6b84ded56347c125bc24a69e39b694a5d647d98d9d23a"
+  }
+ ]
+}

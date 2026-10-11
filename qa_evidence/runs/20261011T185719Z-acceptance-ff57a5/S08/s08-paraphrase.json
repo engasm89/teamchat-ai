@@ -1,0 +1,43 @@
+{
+ "label": "s08-paraphrase",
+ "user": "northside.buyer2@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI What did Sarah's team decide about fans and energy accessories?",
+ "consent": false,
+ "turnId": "535664cd-2e21-4933-97f4-8004f018b199",
+ "messageSequence": 512,
+ "at": "2026-10-11T18:58:31.056Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "Sarah's team decision about fans and energy accessories"
+   },
+   "result": [
+    {
+     "ref": "535664cd-2e21-4933-97f4-8004f018b199:northside-outfitters:memory:mem-n-001",
+     "memory": {
+      "key": "cooling_accessory_bundling_policy",
+      "value": {
+       "review": "annually before season set",
+       "decision": "cooling units are ranged with energy accessories as a single planogram block",
+       "agreed_by": "Sarah Keane and the merchandising director",
+       "rationale": "attachment rate rose from 11% to 29% in the 2025 pilot",
+       "applies_from": "2026-03-14"
+      },
+      "distance": 0.36490152506004225,
+      "memory_id": "mem-n-001",
+      "created_at": "2026-03-14 10:22:00+00",
+      "created_by": "Sarah Keane",
+      "author_name": "Sarah Keane",
+      "source_room_id": "category-strategy"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "Recorded decision: cooling_accessory_bundling_policy\n{\"review\":\"annually before season set\",\"decision\":\"cooling units are ranged with energy accessories as a single planogram block\",\"agreed_by\":\"Sarah Keane and the merchandising director\",\"rationale\":\"attachment rate rose from 11% to 29% in the 2025 pilot\",\"applies_from\":\"2026-03-14\"}\nRecorded by: Sarah Keane on 2026-03-14 10:22:00+00 in #category-strategy\nSource: 535664cd-2e21-4933-97f4-8004f018b199:northside-outfitters:memory:mem-n-001"
+}

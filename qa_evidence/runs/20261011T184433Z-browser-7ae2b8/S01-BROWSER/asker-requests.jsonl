@@ -1,0 +1,6 @@
+{"t":1791744378447,"url":"https://focus-clean-4b9f4.web.app/","method":"GET","type":"document"}
+{"t":1791744378636,"url":"https://focus-clean-4b9f4.web.app/assets/index-DloCzopf.js","method":"GET","type":"script"}
+{"t":1791744378636,"url":"https://focus-clean-4b9f4.web.app/assets/index-BTnPilvg.css","method":"GET","type":"stylesheet"}
+{"t":1791744379574,"url":"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword","method":"POST","type":"fetch"}
+{"t":1791744380322,"url":"https://identitytoolkit.googleapis.com/v1/accounts:lookup","method":"POST","type":"fetch"}
+{"t":1791744380757,"url":"https://teamchat-api-1068908463902.us-central1.run.app/api/rooms","method":"GET","type":"fetch"}

@@ -1,0 +1,161 @@
+{
+ "retried": 1,
+ "sessions": [
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:01:11.531Z",
+   "attempts": [
+    {
+     "ms": 1233,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:01:15.389Z",
+   "attempts": [
+    {
+     "ms": 1300,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:02:25.036Z",
+   "attempts": [
+    {
+     "ms": 891,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:02:27.809Z",
+   "attempts": [
+    {
+     "ms": 781,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:02:57.051Z",
+   "attempts": [
+    {
+     "ms": 1113,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:03:01.076Z",
+   "attempts": [
+    {
+     "ms": 1359,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:03:14.912Z",
+   "attempts": [
+    {
+     "ms": 819,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:03:38.773Z",
+   "attempts": [
+    {
+     "ms": 6220,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:04:07.287Z",
+   "attempts": [
+    {
+     "ms": 1023,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:04:10.381Z",
+   "attempts": [
+    {
+     "ms": 914,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:04:53.210Z",
+   "attempts": [
+    {
+     "ms": 828,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:04:56.489Z",
+   "attempts": [
+    {
+     "ms": 1107,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:05:38.552Z",
+   "attempts": [
+    {
+     "ms": 1021,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n2",
+   "at": "2026-10-11T17:05:42.046Z",
+   "attempts": [
+    {
+     "ms": 1509,
+     "ok": true
+    }
+   ]
+  },
+  {
+   "account": "n1",
+   "at": "2026-10-11T17:06:32.007Z",
+   "attempts": [
+    {
+     "ms": 30002,
+     "ok": false,
+     "error": "TimeoutError: page.goto: Timeout 30000ms exceeded."
+    },
+    {
+     "ms": 61,
+     "ok": false,
+     "error": "Error: page.goto: net::ERR_TIMED_OUT at https://focus-clean-4b9f4.web.app/"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "label": "s02",
+ "user": "northside.buyer1@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI what does SEA-169.14 mean?",
+ "consent": false,
+ "turnId": "82df98b6-b0b0-436b-93d9-fbad5d2aec4d",
+ "messageSequence": 893,
+ "at": "2026-10-11T19:43:43.592Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "get_catalog_code",
+   "arguments": {
+    "catalog_code": "SEA-169.14"
+   },
+   "result": {
+    "ref": "82df98b6-b0b0-436b-93d9-fbad5d2aec4d:northside-outfitters:catalog:SEA-169.14",
+    "product": {
+     "department": "Seasonal",
+     "description": "Outdoor cooking, portable and tabletop",
+     "seasonality": "seasonal",
+     "specificity": "specified",
+     "catalog_code": "SEA-169.14",
+     "margin_class": "1101",
+     "product_family": "Outdoor cooking",
+     "margin_class_label": "Garden Powered Equipment"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "SEA-169.14 — Outdoor cooking, portable and tabletop\nMargin class: 1101\nSource: 82df98b6-b0b0-436b-93d9-fbad5d2aec4d:northside-outfitters:catalog:SEA-169.14"
+}

@@ -1,0 +1,26 @@
+{
+ "label": "s18-northside-store",
+ "user": "valley.buyer1@teamchat.internal",
+ "tenant": "valley-home-goods",
+ "room": "range-planning",
+ "prompt": "@AI Show me the assortment for store ST-4003.",
+ "consent": false,
+ "turnId": "896fa8a8-3d8e-45cb-8a1a-bf2c4e0b72d8",
+ "messageSequence": 116,
+ "at": "2026-10-11T19:36:55.097Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "get_store_assortment",
+   "arguments": {
+    "store_id": "ST-4003"
+   },
+   "result": {
+    "found": false,
+    "message": "No matching record is available."
+   }
+  }
+ ],
+ "renderedAnswer": "No matching record is available in this workspace."
+}

@@ -1,0 +1,4 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-gfXtWe -p 56470 -U postgres -d teamchat -f /tmp/tc-clean-d66da3d8a9f4908e20b99c3527a3396b479bacd2/db/migrations/006_ephemeral.sql
+(cwd ., exit 0, 16 ms)
+
+psql:/tmp/tc-clean-d66da3d8a9f4908e20b99c3527a3396b479bacd2/db/migrations/006_ephemeral.sql:8: NOTICE:  relation "typing_leases" already exists, skipping

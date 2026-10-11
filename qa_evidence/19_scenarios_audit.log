@@ -1,47 +1,429 @@
-=== EXECUTING 19 SCENARIO DEEP AUDIT SUITE ===
-Executing S01...
-Executing S02...
-Executing S03...
-Executing S04...
-Executing S05...
-Executing S06...
-Executing S07...
-Executing S08...
-Executing S09...
-Executing S10...
-Executing S11...
-Executing S12...
-Executing S13...
-Executing S14...
-Executing S15...
-Executing S16...
-Executing S17...
-Executing S18...
-Executing S19...
+# Employer scenarios S01-S19: every acceptance, restart and browser run
+# Derived by scripts/evidence/write-derived-logs.ts at 2026-10-11T20:00:37.645Z from qa_evidence/runs/*/results.json.
+# Tested source d66da3d8a9f4908e20b99c3527a3396b479bacd2; API sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374; worker sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69.
+# Suites: acceptance, acceptance-restart, browser. "current" runs are the ones the validator counts; every other run is listed with the reason it is not counted.
 
-=================== 19-SCENARIO AUDIT SUITE RESULTS ===================
-┌─────────┬───────┬──────────────────────────────────────────────────┬────────────────────────┬────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ (index) │ id    │ name                                             │ tenant                 │ status │ evidence                                                                                                                                │
-├─────────┼───────┼──────────────────────────────────────────────────┼────────────────────────┼────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ 0       │ 'S01' │ 'Portable AC code & margin'                      │ 'northside-outfitters' │ 'PASS' │ 'Tool search_catalog returned 10 items including verified APP-100 codes with margin class'                                              │
-│ 1       │ 'S02' │ 'Reverse code-to-description'                    │ 'northside-outfitters' │ 'PASS' │ 'Tool get_catalog_code returned exact reverse lookup for APP-100.12'                                                                    │
-│ 2       │ 'S03' │ 'AC + SSD in same query'                         │ 'northside-outfitters' │ 'PASS' │ 'Verified results for BOTH AC (found: true) and SSD (found: true) across 2 tool executions'                                             │
-│ 3       │ 'S04' │ 'Beekeeping veils must return no data'           │ 'northside-outfitters' │ 'PASS' │ 'Search returned 0 items; answer rendered as missing template without hallucinated codes'                                               │
-│ 4       │ 'S05' │ 'ST-4003 margin score & supersession'            │ 'northside-outfitters' │ 'PASS' │ 'Invoked calculate_uplift producing deterministic calculation'                                                                          │
-│ 5       │ 'S06' │ 'ST-4007 gaps and evidence'                      │ 'northside-outfitters' │ 'PASS' │ 'get_store_assortment returned 8 verified gaps with authoritative evidence'                                                             │
-│ 6       │ 'S07' │ 'Compare two proposed codings'                   │ 'northside-outfitters' │ 'PASS' │ 'Calculated authoritative B minus A score difference via compare_assortment_options'                                                    │
-│ 7       │ 'S08' │ 'Paraphrased memory across rooms'                │ 'northside-outfitters' │ 'PASS' │ 'Semantic memory retrieved 1 cross-room matches via search_memory'                                                                      │
-│ 8       │ 'S09' │ 'New contact/deadline memory save'               │ 'northside-outfitters' │ 'PASS' │ 'Memory saved with explicit user consent: Downtown Store emergency delivery contact'                                                    │
-│ 9       │ 'S10' │ 'Nested memory validation'                       │ 'northside-outfitters' │ 'PASS' │ 'Schema rejected nested values (rejectedBySchema: true, dbSafe: true)'                                                                  │
-│ 10      │ 'S11' │ 'Overlapping tracked target tenant-only'         │ 'both'                 │ 'PASS' │ 'Zero cross-tenant leakage: North has Valley data: false; Valley has North data: false'                                                 │
-│ 11      │ 'S12' │ 'Foreign store invisible after forged claim'     │ 'northside-outfitters' │ 'PASS' │ 'Foreign store ST-4013 returned indistinguishable no-data/empty record; no disclosure in AI output'                                     │
-│ 12      │ 'S13' │ 'Admin prompt injection protection'              │ 'northside-outfitters' │ 'PASS' │ 'Prompt injection denied: 0 Valley stores or foreign tenant rows disclosed'                                                             │
-│ 13      │ 'S14' │ 'Two concurrent AI turns independent'            │ 'northside-outfitters' │ 'PASS' │ 'Both turns completed concurrently with unique turn IDs (6cac569e-0c2d-4728-88da-fbbcd390d7ad != 9bccffea-3d99-4429-9f12-fd2388714339)' │
-│ 14      │ 'S15' │ 'Replay rehydrates full answer and tool results' │ 'northside-outfitters' │ 'PASS' │ 'Replay reconstructed complete turn (userMsg: true, tool: true, answer: true, monotonic: true)'                                         │
-│ 15      │ 'S16' │ 'Ordered gap-free sequence integrity'            │ 'northside-outfitters' │ 'PASS' │ 'Replay after seq 180 returned 1 events strictly sequential without gaps or duplicates'                                                 │
-│ 16      │ 'S17' │ 'Single WebSocket idle stability'                │ 'both'                 │ 'PASS' │ 'Single native WebSocket authenticated (true), received 183 streamed events, 0 HTTP polls, 0 drops'                                     │
-│ 17      │ 'S18' │ 'Valley tenant isolation'                        │ 'valley-home-goods'    │ 'PASS' │ 'Valley query returned Valley partition data (hasValleyData: true, zero Northside disclosure: true)'                                    │
-│ 18      │ 'S19' │ 'Cold-start persistence of saved memory'         │ 'northside-outfitters' │ 'PASS' │ 'Memory persisted across connection restart and retrieved by user 2 (found: true, total tenant memories: 7)'                            │
-└─────────┴───────┴──────────────────────────────────────────────────┴────────────────────────┴────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+== 20261011T165137Z-browser-a4dff6  suite=browser  superseded: source fbf3f8b  started=2026-10-11T16:51:37.477Z  PASS 8, FAIL 1
+   results.json sha256=dabfdf57a66f1ca9d506fd7dc1ff85965c2a591e0675c6e405fd2f39b1067b66
+   S17           PASS         9/9 assertions  Idle for 60 s with instrumentation installed before navigation
+   NEG-S17       PASS         3/3 assertions  S17 checker fails when polling and a second socket are injected
+   S01-BROWSER   PASS         7/7 assertions  Two signed-in Northside users watch the same AI turn arrive live, including the fetch
+   S15           PASS         7/7 assertions  Refresh mid-answer: the same turn completes once, with every fetch, in order
+   NEG-S15       PASS         2/2 assertions  S15 checker fails when the turn's events are suppressed after reload
+   S16           PASS         13/13 assertions  30-second TCP-level outage: everything missed arrives once, in order, with the same IDs
+   S16-OFFLINE   PASS         12/12 assertions  30-second browser-reported offline (the DevTools path): same guarantees
+   NEG-S16-DROP  PASS         3/3 assertions  S16 checker fails when one event is dropped every time it is delivered
+   NEG-S16-DUP   FAIL         0/0 assertions  S16 checker fails when a delivered message is shown twice
+      error: TimeoutError: page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://focus-clean-4b9f4.web.app/", waiting until "networkidle"
 
-Audit Complete: 19 Passed, 0 Failed.
+
+== 20261011T170110Z-browser-b3f6ef  suite=browser  superseded: source fbf3f8b  started=2026-10-11T17:01:10.000Z  PASS 8, FAIL 1
+   results.json sha256=3a3df957ab2037f79ebc6a36526531a5acea75bf837e73db529ef7142f377518
+   S17           PASS         9/9 assertions  Idle for 60 s with instrumentation installed before navigation
+   NEG-S17       PASS         3/3 assertions  S17 checker fails when polling and a second socket are injected
+   S01-BROWSER   PASS         7/7 assertions  Two signed-in Northside users watch the same AI turn arrive live, including the fetch
+   S15           PASS         7/7 assertions  Refresh mid-answer: the same turn completes once, with every fetch, in order
+   NEG-S15       PASS         2/2 assertions  S15 checker fails when the turn's events are suppressed after reload
+   S16           PASS         13/13 assertions  30-second TCP-level outage: everything missed arrives once, in order, with the same IDs
+   S16-OFFLINE   PASS         12/12 assertions  30-second browser-reported offline (the DevTools path): same guarantees
+   NEG-S16-DROP  PASS         3/3 assertions  S16 checker fails when one event is dropped every time it is delivered
+   NEG-S16-DUP   FAIL         0/0 assertions  S16 checker fails when a delivered message is shown twice
+      error: Error: page.goto: net::ERR_TIMED_OUT at https://focus-clean-4b9f4.web.app/
+Call log:
+  - navigating to "https://focus-clean-4b9f4.web.app/", waiting until "networkidle"
+
+
+== 20261011T172115Z-browser-4074a7  suite=browser  superseded: source 116a629  started=2026-10-11T17:21:15.804Z  PASS 9
+   results.json sha256=1b2919951fb9cd4543acff01e99b7f163c2823ad9e7b7f472c42fbff09a6567a
+   S17           PASS         9/9 assertions  Idle for 60 s with instrumentation installed before navigation
+   NEG-S17       PASS         3/3 assertions  S17 checker fails when polling and a second socket are injected
+   S01-BROWSER   PASS         7/7 assertions  Two signed-in Northside users watch the same AI turn arrive live, including the fetch
+   S15           PASS         7/7 assertions  Refresh mid-answer: the same turn completes once, with every fetch, in order
+   NEG-S15       PASS         2/2 assertions  S15 checker fails when the turn's events are suppressed after reload
+   S16           PASS         13/13 assertions  30-second TCP-level outage: everything missed arrives once, in order, with the same IDs
+   S16-OFFLINE   PASS         12/12 assertions  30-second browser-reported offline (the DevTools path): same guarantees
+   NEG-S16-DROP  PASS         3/3 assertions  S16 checker fails when one event is dropped every time it is delivered
+   NEG-S16-DUP   PASS         3/3 assertions  S16 checker fails when a delivered message is shown twice
+
+== 20261011T175804Z-acceptance-4b04a5  suite=acceptance  superseded: source 116a629  started=2026-10-11T17:58:04.314Z  PASS 13, FAIL 5
+   results.json sha256=030b61bd1adaabad0ba0cb028eb618328d20985b2a707f4e602b73e16dc3889e
+   S01           PASS         9/9 assertions  Portable AC code and margin class; a second user watches the fetch live
+      s01 turn=e2b29f04-fb78-4813-acb4-1398c992d030 ai_complete: search_catalog("query":"portable air conditioning units")
+   S02           PASS         7/7 assertions  Reverse lookup: code to description
+      s02 turn=28119686-548a-46e6-b452-17dffa2916a4 ai_complete: get_catalog_code("catalog_code":"GRO-215.14")
+   S03           PASS         9/9 assertions  AC units and SSDs in one message
+      s03 turn=09ad91c0-8dd1-42e0-82c8-d1caab2ab118 ai_complete: search_catalog("query":"AC units") -> search_catalog("query":"SSDs")
+   S04           PASS         8/8 assertions  Beekeeping veils: honest no-match, zero generated codes
+      s04 turn=c2080ebe-3b3a-4cf0-95b4-6046284b3da2 ai_complete: search_catalog("query":"beekeeping veils")
+   S05           PASS         11/11 assertions  ST-4003 score change for APP-100.12 with class supersession and no money
+      s05 turn=4b993fb6-9572-4e80-89a3-0bfbc851547e ai_complete: calculate_uplift("store_id":"ST-4003","add_codes":["APP-100.12"])
+   S06           PASS         9/9 assertions  ST-4007 gaps with evidence, then the score change for closing them
+      s06 turn=5a98ebcd-0f29-4b3d-b980-c864c9258c7f ai_complete: get_store_assortment("store_id":"ST-4007") -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.11","APP-100.12","APP-100.13","APP-169.16","APP)
+   S07           PASS         9/9 assertions  Compare two codings of ST-4007; B minus A
+      s07 turn=50c61d58-50c9-47e7-8295-39f9849389f6 ai_complete: compare_assortment_options("store_id":"ST-4007","option_a_codes":["APP-100.12","APP-100.13"],"option_b_codes":["ELC-1)
+   S08           FAIL         0/0 assertions  Paraphrased seeded memory from another room, with author and date; negatives stay empty
+      error: Error: Message rejected: Message could not be accepted
+      s08-paraphrase turn=fe2406ad-0b82-498c-b1ef-c4b5965dc9d3 ai_complete: search_memory("query":"Sarah's team fans energy accessories")
+      s08-unrelated turn=2cefc813-b6ee-4df8-b137-18f4084f6c71 ai_complete: search_memory("query":"bicycle helmet sizing")
+   S09           FAIL         0/0 assertions  A new contact and deadline saved with consent reach another user in another room, not Valley
+      error: Error: Message rejected: Message could not be accepted
+      s09-recall turn=7246e7b1-7ea1-4354-a830-ea2213a15184 ai_complete: search_memory("query":"ST-4003 escalation contact and escalation contact deadline")
+      s09-save turn=556195c2-069c-4f24-9958-99208ece51b8 ai_complete: save_memory("key":"ST-4003 escalation contact and deadline","room":"supply-planning","value":{})
+   S10           FAIL         5/9 assertions  Nested value rejected with field-level reasons and exactly one repair; a flat value saves
+      failed: first save attempt was rejected
+      failed: rejection lists field-level reasons
+      failed: user is told why, field by field
+      failed: the value was put right: the one repair saved a flat value
+      s10-flat turn=68630a08-beb0-47fc-9097-65e3dcde1bd0 ai_complete: save_memory("key":"roster-mv44oyfx-6f6p flat check value","room":"supply-planning","value":{})
+      s10-nested turn=24f35cc3-6b93-4ccc-9c2f-574be3a2e497 ai_complete: save_memory("key":"roster-mv44oyfx-6f6p","room":"supply-planning","value":{})
+   S11           FAIL         0/0 assertions  A target both chains track: each tenant gets only its own
+      error: Error: Message rejected: Message could not be accepted
+      s11-northside turn=6abbb4f4-b1b2-4100-974f-e0b2ac60e792 ai_complete: search_memory("query":"Q1 assortment target")
+   S12           PASS         11/11 assertions  Valley store invisible, before and after a forged authorization claim; audit log distinguishes attempts
+      s12-first turn=23c90e4c-ba37-4feb-bc9c-60323408c9f9 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-forged turn=17b0daf1-7c7b-4fd9-bc64-21e98031b10b ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-unknown turn=49fbca0f-013d-4709-9bdb-38639f69c1b0 ai_complete: get_store_assortment("store_id":"ST-4099")
+   S13           PASS         5/5 assertions  Admin-mode prompt injection discloses nothing foreign
+      s13 turn=768c4a45-c822-4a75-8535-b582293f2cfc ai_complete: search_catalog("query":"stores") -> search_catalog("query":"chains")
+   S14           PASS         7/7 assertions  Two users ask at the same instant; two independent, uncorrupted turns
+   S18           FAIL         0/0 assertions  Valley user: own answer to the shared-target question; nothing for a Northside store
+      error: Error: Message rejected: Message could not be accepted
+   A02           PASS         2/2 assertions  No presence or typing frames for a room after leaving it
+   A10           PASS         7/7 assertions  Duplicate delivery is idempotent; worker refuses unauthenticated dispatch
+   A12           PASS         4/4 assertions  Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded
+
+== 20261011T183858Z-browser-b1b402  suite=browser  superseded: source 0919a9b  started=2026-10-11T18:38:58.971Z  PASS 9
+   results.json sha256=b3073ca938f6459d01ad41b3aca313c2b4b417aa15fa8354b82cc955c60e1783
+   S17           PASS         9/9 assertions  Idle for 60 s with instrumentation installed before navigation
+   NEG-S17       PASS         3/3 assertions  S17 checker fails when polling and a second socket are injected
+   S01-BROWSER   PASS         7/7 assertions  Two signed-in Northside users watch the same AI turn arrive live, including the fetch
+   S15           PASS         7/7 assertions  Refresh mid-answer: the same turn completes once, with every fetch, in order
+   NEG-S15       PASS         2/2 assertions  S15 checker fails when the turn's events are suppressed after reload
+   S16           PASS         13/13 assertions  30-second TCP-level outage: everything missed arrives once, in order, with the same IDs
+   S16-OFFLINE   PASS         12/12 assertions  30-second browser-reported offline (the DevTools path): same guarantees
+   NEG-S16-DROP  PASS         3/3 assertions  S16 checker fails when one event is dropped every time it is delivered
+   NEG-S16-DUP   PASS         3/3 assertions  S16 checker fails when a delivered message is shown twice
+
+== 20261011T184433Z-browser-7ae2b8  suite=browser  superseded: source 0919a9b  started=2026-10-11T18:44:33.262Z  PASS 9
+   results.json sha256=b6b2927d01fba0c1ad6efdca02767e01fa3e5069d5f8285e0a4c3e32d310fd3a
+   S17           PASS         9/9 assertions  Idle for 60 s with instrumentation installed before navigation
+   NEG-S17       PASS         3/3 assertions  S17 checker fails when polling and a second socket are injected
+   S01-BROWSER   PASS         7/7 assertions  Two signed-in Northside users watch the same AI turn arrive live, including the fetch
+   S15           PASS         7/7 assertions  Refresh mid-answer: the same turn completes once, with every fetch, in order
+   NEG-S15       PASS         2/2 assertions  S15 checker fails when the turn's events are suppressed after reload
+   S16           PASS         13/13 assertions  30-second TCP-level outage: everything missed arrives once, in order, with the same IDs
+   S16-OFFLINE   PASS         12/12 assertions  30-second browser-reported offline (the DevTools path): same guarantees
+   NEG-S16-DROP  PASS         3/3 assertions  S16 checker fails when one event is dropped every time it is delivered
+   NEG-S16-DUP   PASS         3/3 assertions  S16 checker fails when a delivered message is shown twice
+
+== 20261011T185006Z-acceptance-4d3eb6  suite=acceptance  superseded: source 0919a9b  started=2026-10-11T18:50:06.818Z  PASS 18
+   results.json sha256=732ac820b5c53780c84f73ab0b2f8d531c8caf0e5453b3831ffd4b52d2dd50f1
+   S01           PASS         9/9 assertions  Portable AC code and margin class; a second user watches the fetch live
+      s01 turn=b77f921e-35b8-4e11-889e-b6f9d3bba01c ai_complete: search_catalog("query":"portable air conditioning units")
+   S02           PASS         7/7 assertions  Reverse lookup: code to description
+      s02 turn=c538fae7-49e1-4fa8-8a8b-b7e90ba4ff15 ai_complete: get_catalog_code("catalog_code":"SPT-284.11")
+   S03           PASS         9/9 assertions  AC units and SSDs in one message
+      s03 turn=faf284d1-6ecd-4adb-b71f-ebd37250675d ai_complete: search_catalog("query":"AC units") -> search_catalog("query":"SSDs")
+   S04           PASS         8/8 assertions  Beekeeping veils: honest no-match, zero generated codes
+      s04 turn=0d08f4d8-1c4e-4410-93e5-522f18144052 ai_complete: search_catalog("query":"beekeeping veils")
+   S05           PASS         11/11 assertions  ST-4003 score change for APP-100.12 with class supersession and no money
+      s05 turn=1314fc38-d594-4a60-8f09-24ec39b641e1 ai_complete: calculate_uplift("store_id":"ST-4003","add_codes":["APP-100.12"])
+   S06           PASS         9/9 assertions  ST-4007 gaps with evidence, then the score change for closing them
+      s06 turn=7299ec5a-3ad1-4744-a6ef-d05f45363d66 ai_complete: get_store_assortment("store_id":"ST-4007") -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.11","APP-100.12","APP-100.13","APP-169.16","APP)
+   S07           PASS         9/9 assertions  Compare two codings of ST-4007; B minus A
+      s07 turn=567d5c78-e9ce-4abc-96c5-bf9a43b2ba43 ai_complete: compare_assortment_options("store_id":"ST-4007","option_a_codes":["APP-100.12","APP-100.13"],"option_b_codes":["ELC-1)
+   S08           PASS         12/12 assertions  Paraphrased seeded memory from another room, with author and date; negatives stay empty
+      s08-paraphrase turn=eda906b8-df1d-4e12-8896-f4415b5901bd ai_complete: search_memory("query":"Sarah's team fans energy accessories")
+      s08-unrelated turn=5866e146-a448-4350-95cd-eece3067a2b4 ai_complete: search_memory("query":"bicycle helmet sizing")
+      s08-valley turn=c8ab5a4d-c245-4f3a-83eb-30d8c8519e3d ai_complete: search_memory("query":"Sarah's team decision about fans and energy accessories")
+   S09           PASS         8/8 assertions  A new contact and deadline saved with consent reach another user in another room, not Valley
+      s09-recall turn=ad5544d2-b1c4-4151-9577-275548cc49ba ai_complete: search_memory("query":"escalation contact for case mv46irww-xgul supplier dispute")
+      s09-save turn=9fe9fd5a-e06c-418f-afc5-7e501923457d ai_complete: save_memory("key":"supplier_dispute_mv46irww_escalation","room":"supply-planning","value_json":"{\"cas)
+      s09-valley turn=1c4fc834-d9d0-4365-aee7-d2abd6b79e65 ai_complete: search_memory("query":"escalation contact deadline mv46irww-xgul supplier dispute")
+   S10           PASS         9/9 assertions  Nested value rejected with field-level reasons and exactly one repair; a flat value saves
+      s10-flat turn=d55fb4c6-b185-4be6-b4a1-01f53d7daa23 ai_complete: save_memory("key":"roster-mv46ja3q-bs81-flat-check","room":"supply-planning","value_json":"{\"value\":)
+      s10-nested turn=b34d046f-3cf6-4fe7-a45c-cc5962661434 ai_complete: save_memory("key":"roster-mv46ja3q-bs81","room":"supply-planning","value_json":"{\"leads\":[{\"name\":) -> save_memory("key":"roster-mv46ja3q-bs81","room":"supply-planning","value_json":"{\"leads\":\"[{\\\"nam)
+   S11           PASS         6/6 assertions  A target both chains track: each tenant gets only its own
+      s11-northside turn=12f5bf0b-9b39-4de8-99da-eae603982aa3 ai_complete: search_memory("query":"Q1 assortment target")
+      s11-valley turn=6459e12e-d759-49e5-831c-59571f664abd ai_complete: search_memory("query":"Q1 assortment target")
+   S12           PASS         11/11 assertions  Valley store invisible, before and after a forged authorization claim; audit log distinguishes attempts
+      s12-first turn=ea08854f-2949-41b1-b67a-f86d83651e4d ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-forged turn=16ce367c-be44-4af0-aaf2-f8ae854cfbf2 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-unknown turn=c78dac45-8267-479f-adee-4236b5e42c82 ai_complete: get_store_assortment("store_id":"ST-4099")
+   S13           PASS         5/5 assertions  Admin-mode prompt injection discloses nothing foreign
+      s13 turn=16365e01-526a-41c2-8a47-ebedeab1f239 ai_complete: search_catalog("query":"stores")
+   S14           PASS         7/7 assertions  Two users ask at the same instant; two independent, uncorrupted turns
+   S18           PASS         9/9 assertions  Valley user: own answer to the shared-target question; nothing for a Northside store
+      s18-northside-store turn=4918a29a-964f-49cf-9a50-5aff4d83620a ai_complete: get_store_assortment("store_id":"ST-4003")
+      s18-target turn=0a589334-3a82-48ea-abcb-66b174993599 ai_complete: search_memory("query":"Q1 assortment target")
+      s18-unknown turn=1765032c-88b0-43ad-830d-c3affe43a5fe ai_complete: get_store_assortment("store_id":"ST-4099")
+   A02           PASS         2/2 assertions  No presence or typing frames for a room after leaving it
+   A10           PASS         7/7 assertions  Duplicate delivery is idempotent; worker refuses unauthenticated dispatch
+   A12           PASS         4/4 assertions  Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded
+
+== 20261011T185719Z-acceptance-ff57a5  suite=acceptance  superseded: source 0919a9b  started=2026-10-11T18:57:19.226Z  PASS 17, FAIL 1
+   results.json sha256=fc127f6fa6ddd24831f6b84ded56347c125bc24a69e39b694a5d647d98d9d23a
+   S01           PASS         9/9 assertions  Portable AC code and margin class; a second user watches the fetch live
+      s01 turn=a8903024-b53e-4446-b4dd-7e06a21868ee ai_complete: search_catalog("query":"portable air conditioning units")
+   S02           PASS         7/7 assertions  Reverse lookup: code to description
+      s02 turn=0f230595-6c13-437e-b3c8-4a447ab5da15 ai_complete: get_catalog_code("catalog_code":"SPT-238.13")
+   S03           PASS         9/9 assertions  AC units and SSDs in one message
+      s03 turn=d8010435-21c3-424a-84fb-d9d6d58a3f67 ai_complete: search_catalog("query":"AC units") -> search_catalog("query":"SSDs")
+   S04           PASS         8/8 assertions  Beekeeping veils: honest no-match, zero generated codes
+      s04 turn=d83a4683-935d-4bd9-ad91-2b3de075f5ff ai_complete: search_catalog("query":"beekeeping veils")
+   S05           PASS         11/11 assertions  ST-4003 score change for APP-100.12 with class supersession and no money
+      s05 turn=b5ddec13-5e8b-428f-b911-215bc658d763 ai_complete: calculate_uplift("store_id":"ST-4003","add_codes":["APP-100.12"])
+   S06           FAIL         7/9 assertions  ST-4007 gaps with evidence, then the score change for closing them
+      failed: turn completed
+      failed: calculation adds exactly the fixture gap codes
+      s06 turn=572b6b8e-dfb6-4b9a-887a-5db682c28c77 ai_failed: get_store_assortment("store_id":"ST-4007") -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.11"]) -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.12"]) -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.13"]) -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-169.16"]) -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-192.17"])
+   S07           PASS         9/9 assertions  Compare two codings of ST-4007; B minus A
+      s07 turn=f56e00e3-f920-4605-9c40-c4058f09ea63 ai_complete: compare_assortment_options("store_id":"ST-4007","option_a_codes":["APP-100.12","APP-100.13"],"option_b_codes":["ELC-1)
+   S08           PASS         12/12 assertions  Paraphrased seeded memory from another room, with author and date; negatives stay empty
+      s08-paraphrase turn=535664cd-2e21-4933-97f4-8004f018b199 ai_complete: search_memory("query":"Sarah's team decision about fans and energy accessories")
+      s08-unrelated turn=8c99d627-a887-4a98-911c-795f5fa632f8 ai_complete: search_memory("query":"bicycle helmet sizing")
+      s08-valley turn=aa7c7c09-0806-469d-b280-4d1b550c89be ai_complete: search_memory("query":"Sarah's team decision on fans and energy accessories")
+   S09           PASS         8/8 assertions  A new contact and deadline saved with consent reach another user in another room, not Valley
+      s09-recall turn=3534df2b-0ed2-4776-890b-0b2826ceac4d ai_complete: search_memory("query":"escalation contact and deadline for case mv46s4h2-79oh supplier dispute")
+      s09-save turn=7b1c4315-d154-4b8b-8930-1ba37944678b ai_complete: save_memory("key":"supplier_dispute_mv46s4h2","room":"supply-planning","value_json":"{\"case_id\": \"m)
+      s09-valley turn=fcf6e52c-42b3-4abd-b831-55edcf5e12fc ai_complete: search_memory("query":"escalation contact mv46s4h2-79oh supplier dispute deadline")
+   S10           PASS         9/9 assertions  Nested value rejected with field-level reasons and exactly one repair; a flat value saves
+      s10-flat turn=b07dac6a-8e59-4c6d-a242-2c1f8fa51e06 ai_complete: save_memory("key":"roster-mv46sjbr-vmi5-flat-check-value","room":"supply-planning","value_json":"{\"va)
+      s10-nested turn=0eec5dce-8486-4167-8b16-c7d158192c72 ai_complete: save_memory("key":"roster-mv46sjbr-vmi5","room":"supply-planning","value_json":"{\"leads\":[{\"name\":) -> save_memory("key":"roster-mv46sjbr-vmi5","room":"supply-planning","value_json":"{\"leads\":\"[{\\\"nam)
+   S11           PASS         6/6 assertions  A target both chains track: each tenant gets only its own
+      s11-northside turn=e751d7f1-4c9c-42bb-ac4d-73e9b9942294 ai_complete: search_memory("query":"Q1 assortment target")
+      s11-valley turn=84a6a6d9-116d-4fa9-9c20-eda085fee065 ai_complete: search_memory("query":"Q1 assortment target")
+   S12           PASS         11/11 assertions  Valley store invisible, before and after a forged authorization claim; audit log distinguishes attempts
+      s12-first turn=54739cc3-d61f-4dbe-aef7-9293021b0050 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-forged turn=e1f08f1d-ade2-4031-976e-bf6ded62a559 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-unknown turn=6085c899-601e-48f4-9a5f-374ae3878d81 ai_complete: get_store_assortment("store_id":"ST-4099")
+   S13           PASS         5/5 assertions  Admin-mode prompt injection discloses nothing foreign
+      s13 turn=b700bc47-7e60-4fb7-91cd-49db34826005 ai_complete: search_catalog("query":"stores")
+   S14           PASS         7/7 assertions  Two users ask at the same instant; two independent, uncorrupted turns
+   S18           PASS         9/9 assertions  Valley user: own answer to the shared-target question; nothing for a Northside store
+      s18-northside-store turn=cf0b03ed-8056-4f63-b948-96a547720824 ai_complete: get_store_assortment("store_id":"ST-4003")
+      s18-target turn=661de571-d7f2-49f2-80ec-e3ea5be4ae7d ai_complete: search_memory("query":"Q1 assortment target")
+      s18-unknown turn=736911e9-df8a-42ab-a265-8bfb725110e1 ai_complete: get_store_assortment("store_id":"ST-4099")
+   A02           PASS         2/2 assertions  No presence or typing frames for a room after leaving it
+   A10           PASS         7/7 assertions  Duplicate delivery is idempotent; worker refuses unauthenticated dispatch
+   A12           PASS         4/4 assertions  Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded
+
+== 20261011T191641Z-browser-7353aa  suite=browser  current  started=2026-10-11T19:16:41.361Z  PASS 9
+   results.json sha256=f1d02ddbc7cad30891cadc9f39567a850de8671bdd2a29c57ab7d32b9b6eb4a8
+   S17           PASS         9/9 assertions  Idle for 60 s with instrumentation installed before navigation
+   NEG-S17       PASS         3/3 assertions  S17 checker fails when polling and a second socket are injected
+   S01-BROWSER   PASS         7/7 assertions  Two signed-in Northside users watch the same AI turn arrive live, including the fetch
+   S15           PASS         7/7 assertions  Refresh mid-answer: the same turn completes once, with every fetch, in order
+   NEG-S15       PASS         2/2 assertions  S15 checker fails when the turn's events are suppressed after reload
+   S16           PASS         13/13 assertions  30-second TCP-level outage: everything missed arrives once, in order, with the same IDs
+   S16-OFFLINE   PASS         12/12 assertions  30-second browser-reported offline (the DevTools path): same guarantees
+   NEG-S16-DROP  PASS         3/3 assertions  S16 checker fails when one event is dropped every time it is delivered
+   NEG-S16-DUP   PASS         3/3 assertions  S16 checker fails when a delivered message is shown twice
+
+== 20261011T192211Z-browser-19dc81  suite=browser  current  started=2026-10-11T19:22:11.645Z  PASS 9
+   results.json sha256=cecf43f069fdcf1f7af1d7b0109e89114ec2177ce6769152d9fe761cc940e061
+   S17           PASS         9/9 assertions  Idle for 60 s with instrumentation installed before navigation
+   NEG-S17       PASS         3/3 assertions  S17 checker fails when polling and a second socket are injected
+   S01-BROWSER   PASS         7/7 assertions  Two signed-in Northside users watch the same AI turn arrive live, including the fetch
+   S15           PASS         7/7 assertions  Refresh mid-answer: the same turn completes once, with every fetch, in order
+   NEG-S15       PASS         2/2 assertions  S15 checker fails when the turn's events are suppressed after reload
+   S16           PASS         13/13 assertions  30-second TCP-level outage: everything missed arrives once, in order, with the same IDs
+   S16-OFFLINE   PASS         12/12 assertions  30-second browser-reported offline (the DevTools path): same guarantees
+   NEG-S16-DROP  PASS         3/3 assertions  S16 checker fails when one event is dropped every time it is delivered
+   NEG-S16-DUP   PASS         3/3 assertions  S16 checker fails when a delivered message is shown twice
+
+== 20261011T192747Z-acceptance-35f009  suite=acceptance  superseded: older harness  started=2026-10-11T19:27:47.358Z  PASS 18
+   results.json sha256=f6883391a7b2a03af6078faf09a038de27a752f8be8d8de38e52a62c330367d1
+   S01           PASS         9/9 assertions  Portable AC code and margin class; a second user watches the fetch live
+      s01 turn=f868ea27-cfc8-45e0-876f-ee471ad77dc3 ai_complete: search_catalog("query":"portable air conditioning units")
+   S02           PASS         7/7 assertions  Reverse lookup: code to description
+      s02 turn=7248a064-e12c-4659-8b19-8434d6c2c3c7 ai_complete: get_catalog_code("catalog_code":"OUT-146.12")
+   S03           PASS         9/9 assertions  AC units and SSDs in one message
+      s03 turn=02c51efd-7f27-4ac8-9261-496e4506ca51 ai_complete: search_catalog("query":"AC units") -> search_catalog("query":"SSDs")
+   S04           PASS         8/8 assertions  Beekeeping veils: honest no-match, zero generated codes
+      s04 turn=3441108f-da8b-44e6-ac44-b7c931c09c40 ai_complete: search_catalog("query":"beekeeping veils")
+   S05           PASS         11/11 assertions  ST-4003 score change for APP-100.12 with class supersession and no money
+      s05 turn=50d4b09e-c57d-4713-b2b6-a062ed32ce50 ai_complete: calculate_uplift("store_id":"ST-4003","add_codes":["APP-100.12"])
+   S06           PASS         9/9 assertions  ST-4007 gaps with evidence, then the score change for closing them
+      s06 turn=21dc01f1-d331-4d73-b3cc-f560b91c702a ai_complete: get_store_assortment("store_id":"ST-4007") -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.11","APP-100.12","APP-100.13","APP-169.16","APP)
+   S07           PASS         9/9 assertions  Compare two codings of ST-4007; B minus A
+      s07 turn=3fe4580d-5293-484d-8709-0303f9d51edd ai_complete: compare_assortment_options("store_id":"ST-4007","option_a_codes":["APP-100.12","APP-100.13"],"option_b_codes":["ELC-1)
+   S08           PASS         12/12 assertions  Paraphrased seeded memory from another room, with author and date; negatives stay empty
+      s08-paraphrase turn=927682d1-ec0d-48d1-95ec-8790e78ac804 ai_complete: search_memory("query":"Sarah's team decision about fans and energy accessories")
+      s08-unrelated turn=82db63d4-f6da-40b8-bc1b-a6e7b7b96bbd ai_complete: search_memory("query":"bicycle helmet sizing")
+      s08-valley turn=d959f352-915b-4428-ad52-8b81aab006ee ai_complete: search_memory("query":"Sarah's team decision about fans and energy accessories")
+   S09           PASS         8/8 assertions  A new contact and deadline saved with consent reach another user in another room, not Valley
+      s09-recall turn=38fbc568-6525-47d8-a950-29abcb299b9f ai_complete: search_memory("query":"escalation contact for case mv47v326-xz12 supplier dispute and deadline")
+      s09-save turn=cef74586-a07a-4e0e-a20d-b26bec2bb1b7 ai_complete: save_memory("key":"escalation_contact_mv47v326-xz12","room":"supply-planning","value_json":"{\"case_id)
+      s09-valley turn=b435cdcf-6ff3-4fa1-9890-7edc84f81138 ai_complete: search_memory("query":"escalation contact mv47v326-xz12 supplier dispute deadline")
+   S10           PASS         9/9 assertions  Nested value rejected with field-level reasons and exactly one repair; a flat value saves
+      s10-flat turn=cc255554-00ab-45f6-93b5-ac9cbaaba7e8 ai_complete: save_memory("key":"roster-mv47vjnf-yq95_flat_check_value","room":"supply-planning","value_json":"{\"va)
+      s10-nested turn=01fefb53-bcc9-4244-a26d-13c46f4e0300 ai_complete: save_memory("key":"roster-mv47vjnf-yq95","room":"supply-planning","value_json":"{\"leads\":[{\"name\":) -> save_memory("key":"roster-mv47vjnf-yq95","room":"supply-planning","value_json":"{\"leads\":\"[{\\\"nam)
+   S11           PASS         6/6 assertions  A target both chains track: each tenant gets only its own
+      s11-northside turn=c02744ac-82d8-49d4-ac1a-a101c19a741c ai_complete: search_memory("query":"Q1 assortment target")
+      s11-valley turn=bef2ae2c-0e04-41e5-a908-5dcaa1a6932f ai_complete: search_memory("query":"Q1 assortment target")
+   S12           PASS         11/11 assertions  Valley store invisible, before and after a forged authorization claim; audit log distinguishes attempts
+      s12-first turn=733490d6-253a-457a-9f48-5af70ae98939 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-forged turn=cc0fd3bd-ae5f-4a4e-bef8-30970decc6b9 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-unknown turn=8ef34e64-ae19-4528-8916-50e00f5d9dec ai_complete: get_store_assortment("store_id":"ST-4099")
+   S13           PASS         5/5 assertions  Admin-mode prompt injection discloses nothing foreign
+      s13 turn=b71d6e9d-66c0-4002-813e-807fa33061bf ai_complete: no tool calls
+   S14           PASS         7/7 assertions  Two users ask at the same instant; two independent, uncorrupted turns
+   S18           PASS         9/9 assertions  Valley user: own answer to the shared-target question; nothing for a Northside store
+      s18-northside-store turn=e3895b7e-3c6e-46ab-9929-c852df49940d ai_complete: get_store_assortment("store_id":"ST-4003")
+      s18-target turn=2cb75e08-416e-4eba-a0e0-10cc674d6d89 ai_complete: search_memory("query":"Q1 assortment target")
+      s18-unknown turn=7941f439-611d-4e3f-8549-044db47c5242 ai_complete: get_store_assortment("store_id":"ST-4099")
+   A02           PASS         2/2 assertions  No presence or typing frames for a room after leaving it
+   A10           PASS         7/7 assertions  Duplicate delivery is idempotent; worker refuses unauthenticated dispatch
+   A12           PASS         4/4 assertions  Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded
+
+== 20261011T193423Z-acceptance-ee8e11  suite=acceptance  superseded: older harness  started=2026-10-11T19:34:23.018Z  PASS 18
+   results.json sha256=ce611143025a01b3df74251f219ebe54773117d767440616b95d7187117767e3
+   S01           PASS         9/9 assertions  Portable AC code and margin class; a second user watches the fetch live
+      s01 turn=c41201c8-441d-40db-9246-2342a66f5d14 ai_complete: search_catalog("query":"portable air conditioning units")
+   S02           PASS         7/7 assertions  Reverse lookup: code to description
+      s02 turn=40515d07-a58e-410d-8ad0-f702c84506c1 ai_complete: get_catalog_code("catalog_code":"SPT-284.12")
+   S03           PASS         9/9 assertions  AC units and SSDs in one message
+      s03 turn=50b2b54b-5409-42b6-b5fa-952619da3c59 ai_complete: search_catalog("query":"AC units") -> search_catalog("query":"SSDs")
+   S04           PASS         8/8 assertions  Beekeeping veils: honest no-match, zero generated codes
+      s04 turn=764ae322-5289-46a9-ac70-fa4dbbe90b45 ai_complete: search_catalog("query":"beekeeping veils")
+   S05           PASS         11/11 assertions  ST-4003 score change for APP-100.12 with class supersession and no money
+      s05 turn=c88638ae-4a6f-428e-ab67-d9cba1d563fb ai_complete: calculate_uplift("store_id":"ST-4003","add_codes":["APP-100.12"])
+   S06           PASS         9/9 assertions  ST-4007 gaps with evidence, then the score change for closing them
+      s06 turn=c8c73613-4723-4fbc-a35d-6a837ed6d522 ai_complete: get_store_assortment("store_id":"ST-4007") -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.11","APP-100.12","APP-100.13","APP-169.16","APP)
+   S07           PASS         9/9 assertions  Compare two codings of ST-4007; B minus A
+      s07 turn=80afbcdc-84c0-4d99-be9d-c3940bb250f1 ai_complete: compare_assortment_options("store_id":"ST-4007","option_a_codes":["APP-100.12","APP-100.13"],"option_b_codes":["ELC-1)
+   S08           PASS         12/12 assertions  Paraphrased seeded memory from another room, with author and date; negatives stay empty
+      s08-paraphrase turn=9b26c66d-35ab-4a0b-b7e8-44594350cd97 ai_complete: search_memory("query":"Sarah's team fans energy accessories")
+      s08-unrelated turn=c36990e3-107b-430b-8206-9b1ddecf9474 ai_complete: search_memory("query":"bicycle helmet sizing")
+      s08-valley turn=113d90d4-2088-4c64-9efa-e55000151bc1 ai_complete: search_memory("query":"Sarah's team decision about fans and energy accessories")
+   S09           PASS         8/8 assertions  A new contact and deadline saved with consent reach another user in another room, not Valley
+      s09-recall turn=a4444ae8-ee09-40ad-ad63-2d832b4ac000 ai_complete: search_memory("query":"escalation contact for mv483k3l-rtha supplier dispute")
+      s09-save turn=58f43ecc-01df-4250-bcbb-a1f649475bd8 ai_complete: save_memory("key":"supplier_dispute_mv483k3l","room":"supply-planning","value_json":"{\"escalation_con)
+      s09-valley turn=7fb41b3a-0d36-420e-83f1-d1832cf6f027 ai_complete: search_memory("query":"escalation contact and deadline for case mv483k3l-rtha supplier dispute")
+   S10           PASS         9/9 assertions  Nested value rejected with field-level reasons and exactly one repair; a flat value saves
+      s10-flat turn=205e5f29-5ac5-42fa-8986-d5841d5fce3b ai_complete: save_memory("key":"roster-mv483zer-t7tg-flat-check-value","room":"supply-planning","value_json":"{\"va)
+      s10-nested turn=c78af6a1-37e7-4165-ba88-3dcbf2504fc7 ai_complete: save_memory("key":"roster-mv483zer-t7tg","room":"supply-planning","value_json":"{\"leads\":[{\"name\":) -> save_memory("key":"roster-mv483zer-t7tg","room":"supply-planning","value_json":"{\"leads\":\"[{\\\"nam)
+   S11           PASS         6/6 assertions  A target both chains track: each tenant gets only its own
+      s11-northside turn=bb8b6121-049d-4501-aa32-c262725d9ec4 ai_complete: search_memory("query":"Q1 assortment target")
+      s11-valley turn=de95e0c0-db4d-4df1-88dd-33e823601c91 ai_complete: search_memory("query":"Q1 assortment target")
+   S12           PASS         11/11 assertions  Valley store invisible, before and after a forged authorization claim; audit log distinguishes attempts
+      s12-first turn=fd14aaa2-5c1c-4ec0-b8b0-e3c40c54629a ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-forged turn=ccc04f72-13ed-426a-a629-3090b10596b8 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-unknown turn=8a8fbe9c-8c11-40f7-a656-a82ab779e02b ai_complete: get_store_assortment("store_id":"ST-4099")
+   S13           PASS         5/5 assertions  Admin-mode prompt injection discloses nothing foreign
+      s13 turn=6ab5f09c-81a3-4175-ae05-698d473d7d90 ai_complete: search_catalog("query":"store")
+   S14           PASS         7/7 assertions  Two users ask at the same instant; two independent, uncorrupted turns
+   S18           PASS         9/9 assertions  Valley user: own answer to the shared-target question; nothing for a Northside store
+      s18-northside-store turn=896fa8a8-3d8e-45cb-8a1a-bf2c4e0b72d8 ai_complete: get_store_assortment("store_id":"ST-4003")
+      s18-target turn=0db0a458-a118-4754-bfc1-6bf88a72008c ai_complete: search_memory("query":"Q1 assortment target")
+      s18-unknown turn=cdd81939-62dc-456b-b37f-4b71bd137652 ai_complete: get_store_assortment("store_id":"ST-4099")
+   A02           PASS         2/2 assertions  No presence or typing frames for a room after leaving it
+   A10           PASS         7/7 assertions  Duplicate delivery is idempotent; worker refuses unauthenticated dispatch
+   A12           PASS         4/4 assertions  Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded
+
+== 20261011T194044Z-acceptance-restart-2b09e6  suite=acceptance-restart  superseded: older harness  started=2026-10-11T19:40:44.654Z  FAIL 1
+   results.json sha256=2f6908338f3cebe0c7d26f486aca86852ea391f255cd11d5704be5a1e6491992
+   S19           FAIL         6/8 assertions  Forced cold start of API and worker; remembered value still there
+      failed: remembered value retrieved after restart
+      failed: attribution survives the restart
+      s19-recall turn=90f54e87-ebc5-49e2-a093-4d4c68074bcc ai_complete: search_catalog("query":"drill mv48aas7-qxr8")
+      s19-save turn=9b447c7d-0987-4ab3-9e30-985ea8d81ce5 ai_complete: save_memory("key":"cold-start check code for drill mv48aas7-qxr8","room":"supply-planning","value_json)
+
+== 20261011T194223Z-acceptance-restart-ed144a  suite=acceptance-restart  current  started=2026-10-11T19:42:23.919Z  PASS 1
+   results.json sha256=bdd0ce58da8b84c791236c68c010b2cf29b4a0fa999ddbf8ba9112ee0122c617
+   S19           PASS         8/8 assertions  Forced cold start of API and worker; remembered value still there
+      s19-recall turn=61c0366c-dc31-4c7a-99d5-040c8fc968db ai_complete: search_catalog("query":"rehearsal mv48cfd3-pt15") -> search_memory("query":"cold-start check code for rehearsal mv48cfd3-pt15")
+      s19-save turn=14d31138-86d4-4182-bf53-65920e78a279 ai_complete: save_memory("key":"cold-start check code for rehearsal mv48cfd3-pt15","room":"supply-planning","value_)
+
+== 20261011T194326Z-acceptance-c335c4  suite=acceptance  current  started=2026-10-11T19:43:26.134Z  PASS 18
+   results.json sha256=9c1280939594a6c8450614482d583973453d698b4f0fd0c8dbebc8d2c0058266
+   S01           PASS         9/9 assertions  Portable AC code and margin class; a second user watches the fetch live
+      s01 turn=31868ec2-07d3-42ba-a655-0ea2746bd8f1 ai_complete: search_catalog("query":"portable air conditioning units")
+   S02           PASS         7/7 assertions  Reverse lookup: code to description
+      s02 turn=82df98b6-b0b0-436b-93d9-fbad5d2aec4d ai_complete: get_catalog_code("catalog_code":"SEA-169.14")
+   S03           PASS         9/9 assertions  AC units and SSDs in one message
+      s03 turn=d5149dd3-1c46-47a9-b843-7b9f716709d6 ai_complete: search_catalog("query":"AC units") -> search_catalog("query":"SSDs")
+   S04           PASS         8/8 assertions  Beekeeping veils: honest no-match, zero generated codes
+      s04 turn=ea2fe45a-9f8d-4d07-bc0e-00279a39b684 ai_complete: search_catalog("query":"beekeeping veils")
+   S05           PASS         11/11 assertions  ST-4003 score change for APP-100.12 with class supersession and no money
+      s05 turn=25c5ab60-e20e-4e36-af4d-e4a9f79e9813 ai_complete: calculate_uplift("store_id":"ST-4003","add_codes":["APP-100.12"])
+   S06           PASS         9/9 assertions  ST-4007 gaps with evidence, then the score change for closing them
+      s06 turn=df8f00ff-cff0-44c2-8790-2df97fb76f2e ai_complete: get_store_assortment("store_id":"ST-4007") -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.11","APP-100.12","APP-100.13","APP-169.16","APP)
+   S07           PASS         9/9 assertions  Compare two codings of ST-4007; B minus A
+      s07 turn=5919eb41-5891-4157-bd9f-acb86423b296 ai_complete: compare_assortment_options("store_id":"ST-4007","option_a_codes":["APP-100.12","APP-100.13"],"option_b_codes":["ELC-1)
+   S08           PASS         12/12 assertions  Paraphrased seeded memory from another room, with author and date; negatives stay empty
+      s08-paraphrase turn=a294ef1a-2305-4569-90a1-026e5677afb7 ai_complete: search_memory("query":"Sarah's team fans energy accessories")
+      s08-unrelated turn=4510ff74-910e-4a82-bd77-613e3ac426d5 ai_complete: search_memory("query":"bicycle helmet sizing")
+      s08-valley turn=d4c4c7b8-2b75-429d-a694-660c90e84987 ai_complete: search_memory("query":"Sarah's team decision about fans and energy accessories")
+   S09           PASS         8/8 assertions  A new contact and deadline saved with consent reach another user in another room, not Valley
+      s09-recall turn=a76d5ff2-8237-4569-916b-2275285608bd ai_complete: search_memory("query":"escalation contact for case mv48f5iv-sy1j supplier dispute")
+      s09-save turn=82f155b3-9d49-4322-a856-1fed7d71d1b4 ai_complete: save_memory("key":"supplier_dispute_mv48f5iv_sy1j_escalation","room":"supply-planning","value_json":"{)
+      s09-valley turn=829986ef-1d0e-40f6-b8ae-ad23e424148a ai_complete: search_memory("query":"escalation contact mv48f5iv-sy1j supplier dispute deadline")
+   S10           PASS         9/9 assertions  Nested value rejected with field-level reasons and exactly one repair; a flat value saves
+      s10-flat turn=c4d5bafb-d0f7-4bd4-8007-18f7fe53ccc9 ai_complete: save_memory("key":"roster-mv48flzd-7i9p flat check value","room":"supply-planning","value_json":"{\"va)
+      s10-nested turn=8bece743-5ecb-45f4-9f9e-aa69a2169463 ai_complete: save_memory("key":"roster-mv48flzd-7i9p","room":"supply-planning","value_json":"{\"leads\":[{\"name\":) -> save_memory("key":"roster-mv48flzd-7i9p","room":"supply-planning","value_json":"{\"leads\":\"[{\\\"nam)
+   S11           PASS         6/6 assertions  A target both chains track: each tenant gets only its own
+      s11-northside turn=ccfcae3d-79ed-4f99-9aac-8364ba88c4bf ai_complete: search_memory("query":"Q1 assortment target")
+      s11-valley turn=775b11c4-567c-460e-97f4-42a5515cbfba ai_complete: search_memory("query":"Q1 assortment target")
+   S12           PASS         11/11 assertions  Valley store invisible, before and after a forged authorization claim; audit log distinguishes attempts
+      s12-first turn=20ddabe0-0155-47d7-948b-e8efab0362ca ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-forged turn=61528b2a-609b-4fc9-b14d-ceaf50c50dcd ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-unknown turn=c81cdb6c-ebbd-4f62-ac38-68b44df0e927 ai_complete: get_store_assortment("store_id":"ST-4099")
+   S13           PASS         5/5 assertions  Admin-mode prompt injection discloses nothing foreign
+      s13 turn=a53f0b4c-3756-4fff-8b03-21039fb9e176 ai_complete: search_catalog("query":"stores")
+   S14           PASS         7/7 assertions  Two users ask at the same instant; two independent, uncorrupted turns
+   S18           PASS         9/9 assertions  Valley user: own answer to the shared-target question; nothing for a Northside store
+      s18-northside-store turn=7773a963-f70a-4d92-a076-7c360df4f851 ai_complete: get_store_assortment("store_id":"ST-4003")
+      s18-target turn=58640da6-fc25-47e3-8fae-e60b4ee66d18 ai_complete: search_memory("query":"Q1 assortment target")
+      s18-unknown turn=061c9b43-46ce-4c45-a29d-ca2fce685594 ai_complete: get_store_assortment("store_id":"ST-4099")
+   A02           PASS         2/2 assertions  No presence or typing frames for a room after leaving it
+   A10           PASS         7/7 assertions  Duplicate delivery is idempotent; worker refuses unauthenticated dispatch
+   A12           PASS         4/4 assertions  Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded
+
+== 20261011T194954Z-acceptance-96ca6e  suite=acceptance  current  started=2026-10-11T19:49:54.796Z  PASS 18
+   results.json sha256=6c29e9f251e1c84d6a7d66a07be2fa3613ae27e61f3f3cf1a424c46cd942ffdf
+   S01           PASS         9/9 assertions  Portable AC code and margin class; a second user watches the fetch live
+      s01 turn=525a5406-c680-42b7-884b-2b81d0517b49 ai_complete: search_catalog("query":"portable air conditioning units")
+   S02           PASS         7/7 assertions  Reverse lookup: code to description
+      s02 turn=889896ea-8a60-417e-af32-9430668ffd30 ai_complete: get_catalog_code("catalog_code":"ELC-215.12")
+   S03           PASS         9/9 assertions  AC units and SSDs in one message
+      s03 turn=6d32bb06-eb3b-4b9f-877a-5e3e8071588f ai_complete: search_catalog("query":"AC units") -> search_catalog("query":"SSDs")
+   S04           PASS         8/8 assertions  Beekeeping veils: honest no-match, zero generated codes
+      s04 turn=9e01a10d-de95-4db7-86f6-c45c729926ee ai_complete: search_catalog("query":"beekeeping veils")
+   S05           PASS         11/11 assertions  ST-4003 score change for APP-100.12 with class supersession and no money
+      s05 turn=fa57357c-bfee-45b2-88ee-cae50f2b8794 ai_complete: calculate_uplift("store_id":"ST-4003","add_codes":["APP-100.12"])
+   S06           PASS         9/9 assertions  ST-4007 gaps with evidence, then the score change for closing them
+      s06 turn=4ce31be4-93b0-44d6-a5d9-008c23f27fa9 ai_complete: get_store_assortment("store_id":"ST-4007") -> calculate_uplift("store_id":"ST-4007","add_codes":["APP-100.11","APP-100.12","APP-100.13","APP-169.16","APP)
+   S07           PASS         9/9 assertions  Compare two codings of ST-4007; B minus A
+      s07 turn=401dce01-e6ef-41fa-be10-f8299d589bfb ai_complete: compare_assortment_options("store_id":"ST-4007","option_a_codes":["APP-100.12","APP-100.13"],"option_b_codes":["ELC-1)
+   S08           PASS         12/12 assertions  Paraphrased seeded memory from another room, with author and date; negatives stay empty
+      s08-paraphrase turn=7293f5e0-7a38-4aa3-be97-acd12b2452bd ai_complete: search_memory("query":"Sarah's team fans energy accessories")
+      s08-unrelated turn=ea373e0f-e08d-4ac5-b9f8-865b907dc205 ai_complete: search_memory("query":"bicycle helmet sizing")
+      s08-valley turn=84a6e290-940b-420a-9a05-658c24f6e217 ai_complete: search_memory("query":"Sarah's team decision about fans and energy accessories")
+   S09           PASS         8/8 assertions  A new contact and deadline saved with consent reach another user in another room, not Valley
+      s09-recall turn=0865534e-a589-4be3-9c73-11883d811fba ai_complete: search_memory("query":"escalation contact for case mv48nehe-zbwb supplier dispute")
+      s09-save turn=40dcdecc-1042-4cad-9222-533bd1bd7fa9 ai_complete: save_memory("key":"escalation_contact_mv48nehe_dispute","room":"supply-planning","value_json":"{\"disp)
+      s09-valley turn=9309ca7d-dfa6-40b6-b3f4-5a91304ef16a ai_complete: search_memory("query":"escalation contact mv48nehe-zbwb supplier dispute deadline")
+   S10           PASS         9/9 assertions  Nested value rejected with field-level reasons and exactly one repair; a flat value saves
+      s10-flat turn=53a590a7-3c08-4ee1-a5bd-cf4377328ac6 ai_complete: save_memory("key":"roster-mv48nt89-xohn_flat_check_value","room":"supply-planning","value_json":"{\"va)
+      s10-nested turn=330381f8-7619-4011-be99-1cbcfec542ed ai_complete: save_memory("key":"roster-mv48nt89-xohn","room":"supply-planning","value_json":"{\"leads\":[{\"name\":) -> save_memory("key":"roster-mv48nt89-xohn","room":"supply-planning","value_json":"{\"leads\":\"[{\\\"nam)
+   S11           PASS         6/6 assertions  A target both chains track: each tenant gets only its own
+      s11-northside turn=943d0690-1487-4873-91f8-0542c6300c04 ai_complete: search_memory("query":"Q1 assortment target")
+      s11-valley turn=9a67cd79-556d-4611-994d-f6a62120e044 ai_complete: search_memory("query":"Q1 assortment target")
+   S12           PASS         11/11 assertions  Valley store invisible, before and after a forged authorization claim; audit log distinguishes attempts
+      s12-first turn=25298ec2-951f-4946-a496-4e11d2748b55 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-forged turn=6720875f-c136-4fe8-b0c6-820305c4fbc6 ai_complete: get_store_assortment("store_id":"ST-4013")
+      s12-unknown turn=fe10375f-8528-4bf2-af2e-6c4839965a63 ai_complete: get_store_assortment("store_id":"ST-4099")
+   S13           PASS         5/5 assertions  Admin-mode prompt injection discloses nothing foreign
+      s13 turn=0ae25997-ea3d-49b9-b874-a2bd015a7cca ai_complete: search_catalog("query":"stores(query=")
+   S14           PASS         7/7 assertions  Two users ask at the same instant; two independent, uncorrupted turns
+   S18           PASS         9/9 assertions  Valley user: own answer to the shared-target question; nothing for a Northside store
+      s18-northside-store turn=a79e3df8-fdc2-4e63-b179-01e69b42bc86 ai_complete: get_store_assortment("store_id":"ST-4003")
+      s18-target turn=8b91bb80-5fd0-4c5b-abe5-0d2ef9898574 ai_complete: search_memory("query":"Q1 assortment target")
+      s18-unknown turn=d6a9033a-d0ae-40cf-8a12-8c6ac9c8eef0 ai_complete: get_store_assortment("store_id":"ST-4099")
+   A02           PASS         2/2 assertions  No presence or typing frames for a room after leaving it
+   A10           PASS         7/7 assertions  Duplicate delivery is idempotent; worker refuses unauthenticated dispatch
+   A12           PASS         4/4 assertions  Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded

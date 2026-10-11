@@ -1,0 +1,94 @@
+{
+ "label": "s09-recall",
+ "user": "northside.buyer2@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "category-strategy",
+ "prompt": "@AI Who is our escalation contact for ST-4003, and when is the deadline?",
+ "consent": false,
+ "turnId": "7246e7b1-7ea1-4354-a830-ea2213a15184",
+ "messageSequence": 54,
+ "at": "2026-10-11T18:00:07.370Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "ST-4003 escalation contact and escalation contact deadline"
+   },
+   "result": [
+    {
+     "ref": "7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:5498367a-9e6b-4bb1-b684-786c47715ad3",
+     "memory": {
+      "key": "ST-4003 escalation contact and deadline",
+      "value": {},
+      "distance": 0.15315442042459348,
+      "memory_id": "5498367a-9e6b-4bb1-b684-786c47715ad3",
+      "created_at": "2026-10-11 18:00:02.085797+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:1f7ffa4a-5c43-4d89-9fce-65e16c3c7126",
+     "memory": {
+      "key": "warehouse contact",
+      "value": {},
+      "distance": 0.49369555035339197,
+      "memory_id": "1f7ffa4a-5c43-4d89-9fce-65e16c3c7126",
+      "created_at": "2026-10-11 07:27:18.562322+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "category-strategy"
+     }
+    },
+    {
+     "ref": "7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:ee87179d-1815-45b4-82cc-e0a9c023ac2c",
+     "memory": {
+      "key": "Downtown Store emergency delivery contact",
+      "value": {},
+      "distance": 0.503432486163534,
+      "memory_id": "ee87179d-1815-45b4-82cc-e0a9c023ac2c",
+      "created_at": "2026-10-11 07:23:33.476818+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "assortment-review"
+     }
+    },
+    {
+     "ref": "7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:mem-n-004",
+     "memory": {
+      "key": "supplier_lead_time_assumption",
+      "value": {
+       "note": "seasonal commitments close two weeks earlier than the calendar suggests",
+       "source": "2025 season post-mortem",
+       "seasonal_weeks": 14,
+       "standard_weeks": 9
+      },
+      "distance": 0.516910116458131,
+      "memory_id": "mem-n-004",
+      "created_at": "2026-02-18 16:12:00+00",
+      "created_by": "D. Brennan",
+      "author_name": "D. Brennan",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:6be5e660-a3ef-481b-9c69-49c2eca181c9",
+     "memory": {
+      "key": "Downtown Store Emergency Delivery Contact",
+      "value": {},
+      "distance": 0.5182393245354655,
+      "memory_id": "6be5e660-a3ef-481b-9c69-49c2eca181c9",
+      "created_at": "2026-10-11 08:48:59.368384+00",
+      "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "assortment-review"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "Recorded decision: ST-4003 escalation contact and deadline\n{}\nRecorded by: Northside Buyer One on 2026-10-11 18:00:02.085797+00 in #supply-planning\nSource: 7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:5498367a-9e6b-4bb1-b684-786c47715ad3\n\nRecorded decision: warehouse contact\n{}\nRecorded by: Northside Buyer One on 2026-10-11 07:27:18.562322+00 in #category-strategy\nSource: 7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:1f7ffa4a-5c43-4d89-9fce-65e16c3c7126\n\nRecorded decision: Downtown Store emergency delivery contact\n{}\nRecorded by: Northside Buyer One on 2026-10-11 07:23:33.476818+00 in #assortment-review\nSource: 7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:ee87179d-1815-45b4-82cc-e0a9c023ac2c\n\nRecorded decision: supplier_lead_time_assumption\n{\"note\":\"seasonal commitments close two weeks earlier than the calendar suggests\",\"source\":\"2025 season post-mortem\",\"seasonal_weeks\":14,\"standard_weeks\":9}\nRecorded by: D. Brennan on 2026-02-18 16:12:00+00 in #supply-planning\nSource: 7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:mem-n-004\n\nRecorded decision: Downtown Store Emergency Delivery Contact\n{}\nRecorded by: Northside Buyer One on 2026-10-11 08:48:59.368384+00 in #assortment-review\nSource: 7246e7b1-7ea1-4354-a830-ea2213a15184:northside-outfitters:memory:6be5e660-a3ef-481b-9c69-49c2eca181c9"
+}

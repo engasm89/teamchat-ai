@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-11T19:49:45.167Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 5380,
+   "sha256": "573a3add085c0db44394e033104208db90d30079ba659ae91cbf923136c2785b"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1110,
+   "sha256": "c17156acf7a27018bc2eab8027d7d2811a9aeadf33bf94af0806a29647fc8c29"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 10322,
+   "sha256": "df13d82d4305f7199d08e35120f3569c2d422f6df3c02eefc4c3e9d44f47eca2"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 582,
+   "sha256": "ce2c199fece154ee5e4a88b4f573f2ff5ab609b52374a04909fd30e6a5280ae3"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3386,
+   "sha256": "5307a529b92e3a2e4993b2ad942c5be779f6fc654bf6999f13f5995d06c93175"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 8162,
+   "sha256": "14abb81d4481a0ce2be6d8e13cb93f5394d24812d8a74c7f76f27ccde8e0b0b9"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 2723,
+   "sha256": "3a19a017ea2a6bd52ad0c27b9456980df209846d3c13e853d7430ad7b58584d0"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 1857,
+   "sha256": "da72fe5a6ee33033aecd3cb1d7239fb4d0a8beeb0f9d8d7690a0ab2113e7ec74"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 572,
+   "sha256": "3dc9d23a3bbed9141be046d80d9290cb1df090e906303d759e380df10d67a85c"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 612,
+   "sha256": "dde3e530ddae5308705900357d4ba6fc71c23cdedf5554689147950341b33798"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 5631,
+   "sha256": "65e358bd6c04e1e0d2edc72121d95cd61623a8fd638de8eeaff766ed41fcf204"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1787,
+   "sha256": "2c9e1df63fe62dccf34c03d656eacdc71c361594b844365b67f2456b7570faf3"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2435,
+   "sha256": "39eb6788b72241a0b72a7996bd29bdaa12f92e55f5da9d7c5a2b6a237fe8c30f"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1472,
+   "sha256": "bf24ac6fcacf3bf97975904134107937df2fcfa75aa48630e8c5950783d93df3"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 2802,
+   "sha256": "307a14ffdfc61bff9405e64cb24bcdf5770eb7a74a5cecaa6a5e86969fb8d567"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3738,
+   "sha256": "d0d7da2ed059726fbb7150eb8c8213078057fca3ded5aee51111f789e192c4f2"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4130,
+   "sha256": "57127ba0b8d5c7128263d23b95cc70b92e71e09a318b633603f90b02d6a4196a"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 856,
+   "sha256": "799a893fc44574a181cde3ac4f8340f2bc3fc2b747934e3b542c4288039183d0"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 657,
+   "sha256": "4182e128e065872511052c2d62d8c8f1ac70618b5e13460c0ef57cf3b8ad8c9a"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 708,
+   "sha256": "44833617024b2c64a1d9819a14f8311d2dbe152c138d183c7ee3e74a061156f3"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 659,
+   "sha256": "381341b08f4cd4bd42c1debee8365f6cf9334c124b34f3361ab52c7e355dc909"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 1038,
+   "sha256": "e2f1c80772fed2e60827bd7894c6049d7bcbe7d813d58b22337b65b76fe47b00"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 10380,
+   "sha256": "f48821c51b290efccaec73d25e2425085ed4054611b10d2cbf86614a9f311718"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 660,
+   "sha256": "079b89126721c7452422f13ebb471a947003bcf8c6a6f3c57883ebdee53bc6fb"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4130,
+   "sha256": "7bb1ce69f6d6f283e348c1d60434048cb89248137bd48c7bc9951d0476926c41"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 652,
+   "sha256": "51e0e209c6de5601463541daa01f88cebacb401b5eed310b561ad69e098f7b4c"
+  },
+  {
+   "path": "results.json",
+   "bytes": 47766,
+   "sha256": "9c1280939594a6c8450614482d583973453d698b4f0fd0c8dbebc8d2c0058266"
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "label": "s09-save",
+ "user": "northside.buyer1@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that our escalation contact for the case mv46irww-xgul supplier dispute is Dana mv46irww-9i6h and the deadline is 2026-11-20.",
+ "consent": true,
+ "turnId": "9fe9fd5a-e06c-418f-afc5-7e501923457d",
+ "messageSequence": 397,
+ "at": "2026-10-11T18:51:34.763Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "supplier_dispute_mv46irww_escalation",
+    "room": "supply-planning",
+    "value_json": "{\"case_id\": \"mv46irww-xgul\", \"escalation_contact\": \"Dana mv46irww-9i6h\", \"deadline\": \"2026-11-20\"}"
+   },
+   "result": {
+    "ref": "9fe9fd5a-e06c-418f-afc5-7e501923457d:northside-outfitters:memory:e4f73cf7-9e0e-4314-a3a0-0e8c7b508f16",
+    "saved": true,
+    "memory": {
+     "key": "supplier_dispute_mv46irww_escalation",
+     "value": {
+      "case_id": "mv46irww-xgul",
+      "deadline": "2026-11-20",
+      "escalation_contact": "Dana mv46irww-9i6h"
+     },
+     "memory_id": "e4f73cf7-9e0e-4314-a3a0-0e8c7b508f16",
+     "created_at": "2026-10-11 18:51:34.025899+00",
+     "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "Saved to shared memory: supplier_dispute_mv46irww_escalation\n{\"case_id\":\"mv46irww-xgul\",\"deadline\":\"2026-11-20\",\"escalation_contact\":\"Dana mv46irww-9i6h\"}\nRecorded by: m8O2in6sSKViQgq6RpLAE3dep8Q2 on 2026-10-11 18:51:34.025899+00 in #supply-planning\nSource: 9fe9fd5a-e06c-418f-afc5-7e501923457d:northside-outfitters:memory:e4f73cf7-9e0e-4314-a3a0-0e8c7b508f16"
+}

@@ -1,0 +1,36 @@
+{
+ "label": "s10-nested",
+ "user": "northside.buyer1@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember this complex nested roster as roster-mv44oyfx-6f6p: {\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+ "consent": true,
+ "turnId": "24f35cc3-6b93-4ccc-9c2f-574be3a2e497",
+ "messageSequence": 170,
+ "at": "2026-10-11T18:00:13.481Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "roster-mv44oyfx-6f6p",
+    "room": "supply-planning",
+    "value": {}
+   },
+   "result": {
+    "ref": "24f35cc3-6b93-4ccc-9c2f-574be3a2e497:northside-outfitters:memory:2ac44b63-a3ae-47fc-8737-b45bf71b8a0f",
+    "saved": true,
+    "memory": {
+     "key": "roster-mv44oyfx-6f6p",
+     "value": {},
+     "memory_id": "2ac44b63-a3ae-47fc-8737-b45bf71b8a0f",
+     "created_at": "2026-10-11 18:00:11.716603+00",
+     "created_by": "m8O2in6sSKViQgq6RpLAE3dep8Q2",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "Saved to shared memory: roster-mv44oyfx-6f6p\n{}\nRecorded by: m8O2in6sSKViQgq6RpLAE3dep8Q2 on 2026-10-11 18:00:11.716603+00 in #supply-planning\nSource: 24f35cc3-6b93-4ccc-9c2f-574be3a2e497:northside-outfitters:memory:2ac44b63-a3ae-47fc-8737-b45bf71b8a0f"
+}

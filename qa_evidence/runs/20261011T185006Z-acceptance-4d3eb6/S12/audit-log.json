@@ -1,0 +1,38 @@
+{
+ "first": [
+  {
+   "jobAttempt": 1,
+   "message": "ai_tool_call",
+   "operationId": "r0-c0",
+   "outcome": "no_match",
+   "replayed": false,
+   "requested": {
+    "store_id": "ST-4013"
+   },
+   "roomId": "supply-planning",
+   "tenantId": "northside-outfitters",
+   "tool": "get_store_assortment",
+   "triggerSequence": 420,
+   "turnId": "ea08854f-2949-41b1-b67a-f86d83651e4d",
+   "uid": "m8O2in6sSKViQgq6RpLAE3dep8Q2"
+  }
+ ],
+ "forged": [
+  {
+   "jobAttempt": 1,
+   "message": "ai_tool_call",
+   "operationId": "r0-c0",
+   "outcome": "no_match",
+   "replayed": false,
+   "requested": {
+    "store_id": "ST-4013"
+   },
+   "roomId": "supply-planning",
+   "tenantId": "northside-outfitters",
+   "tool": "get_store_assortment",
+   "triggerSequence": 425,
+   "turnId": "16ce367c-be44-4af0-aaf2-f8ae854cfbf2",
+   "uid": "m8O2in6sSKViQgq6RpLAE3dep8Q2"
+  }
+ ]
+}

@@ -1,0 +1,4 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-obfaNV -p 52147 -U postgres -d teamchat -f /tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations/004_ai_consent.sql
+(cwd ., exit 0, 11 ms)
+
+psql:/tmp/tc-clean-0919a9b9234a54959c6a43d75c64753976d97232/db/migrations/004_ai_consent.sql:2: NOTICE:  column "memory_consent" of relation "ai_jobs" already exists, skipping

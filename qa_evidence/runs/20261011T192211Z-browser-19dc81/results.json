@@ -1,0 +1,1564 @@
+{
+ "schemaVersion": 1,
+ "suite": "browser",
+ "runId": "20261011T192211Z-browser-19dc81",
+ "environment": "production: https://focus-clean-4b9f4.web.app + https://teamchat-api-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-11T19:22:11.645Z",
+ "finishedAt": "2026-10-11T19:27:35.526Z",
+ "harness": {
+  "gitHead": "cbe052b10bb0f6d282b8b3bcd0573886438bd9fd",
+  "dirty": true,
+  "fingerprint": "9bbe7471913712301058bfd7bb39ecd658d0106442134952b1479ac1fd6a8041",
+  "files": [
+   "scripts/acceptance/browser/cut-proxy.ts",
+   "scripts/acceptance/browser/run-browser.ts",
+   "scripts/acceptance/common.ts",
+   "scripts/evidence/lib.ts"
+  ]
+ },
+ "source": {
+  "sha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-00014-72f",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00014-4v8",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "tests": [
+  {
+   "id": "S17",
+   "title": "Idle for 60 s with instrumentation installed before navigation",
+   "requirementIds": [
+    "G01",
+    "S17"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:22:11.679Z",
+   "finishedAt": "2026-10-11T19:23:27.119Z",
+   "details": {
+    "window": {
+     "start": "2026-10-11T19:22:26.344Z",
+     "end": "2026-10-11T19:23:26.436Z"
+    },
+    "metricsStart": {
+     "Timestamp": 726020.344055,
+     "AudioHandlers": 0,
+     "AudioWorkletProcessors": 0,
+     "Documents": 1,
+     "Frames": 1,
+     "JSEventListeners": 172,
+     "LayoutObjects": 6471,
+     "MediaKeySessions": 0,
+     "MediaKeys": 0,
+     "Nodes": 5497,
+     "Resources": 2,
+     "ContextLifecycleStateObservers": 5,
+     "V8PerContextDatas": 2,
+     "WorkerGlobalScopes": 0,
+     "UACSSResources": 0,
+     "RTCPeerConnections": 0,
+     "ResourceFetchers": 1,
+     "AdSubframes": 0,
+     "DetachedScriptStates": 0,
+     "ArrayBufferContents": 0,
+     "LayoutCount": 1,
+     "RecalcStyleCount": 0,
+     "LayoutDuration": 0.000109,
+     "RecalcStyleDuration": 0,
+     "DevToolsCommandDuration": 0.000016,
+     "ScriptDuration": 0.001945,
+     "V8CompileDuration": 0,
+     "TaskDuration": 0.038408,
+     "TaskOtherDuration": 0.036338,
+     "ThreadTime": 0.038616,
+     "ProcessTime": 0.84249,
+     "JSHeapUsedSize": 5788764,
+     "JSHeapTotalSize": 6373376,
+     "FirstMeaningfulPaint": 726006.287457,
+     "DomContentLoaded": 726006.214871,
+     "NavigationStart": 726005.744792
+    },
+    "metricsEnd": {
+     "Timestamp": 726080.460804,
+     "AudioHandlers": 0,
+     "AudioWorkletProcessors": 0,
+     "Documents": 1,
+     "Frames": 1,
+     "JSEventListeners": 172,
+     "LayoutObjects": 6471,
+     "MediaKeySessions": 0,
+     "MediaKeys": 0,
+     "Nodes": 5497,
+     "Resources": 2,
+     "ContextLifecycleStateObservers": 5,
+     "V8PerContextDatas": 2,
+     "WorkerGlobalScopes": 0,
+     "UACSSResources": 0,
+     "RTCPeerConnections": 0,
+     "ResourceFetchers": 1,
+     "AdSubframes": 0,
+     "DetachedScriptStates": 0,
+     "ArrayBufferContents": 0,
+     "LayoutCount": 1,
+     "RecalcStyleCount": 0,
+     "LayoutDuration": 0.000109,
+     "RecalcStyleDuration": 0,
+     "DevToolsCommandDuration": 0.000164,
+     "ScriptDuration": 0.007798,
+     "V8CompileDuration": 0,
+     "TaskDuration": 0.105738,
+     "TaskOtherDuration": 0.097667,
+     "ThreadTime": 0.111075,
+     "ProcessTime": 0.975683,
+     "JSHeapUsedSize": 5788764,
+     "JSHeapTotalSize": 6111232,
+     "FirstMeaningfulPaint": 726006.287457,
+     "DomContentLoaded": 726006.214871,
+     "NavigationStart": 726005.744792
+    },
+    "framesIn": {},
+    "framesOut": {},
+    "socketSamples": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "cloudMonitoringApiRequestsInWindow": {
+     "total": 4,
+     "note": "All clients of teamchat-api, not only this browser; informational",
+     "series": 3
+    }
+   },
+   "assertions": [
+    {
+     "name": "exactly one app WebSocket open at every sample",
+     "pass": true,
+     "expected": "all 1",
+     "actual": [
+      1,
+      1
+     ]
+    },
+    {
+     "name": "no HTTP requests while idle (allowlist: token refresh only)",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "client sends no frames while idle",
+     "pass": true,
+     "expected": {},
+     "actual": {}
+    },
+    {
+     "name": "only low-frequency liveness frames (≤1 per 5 s)",
+     "pass": true,
+     "expected": "≤12 presence/typing, no others",
+     "actual": {}
+    },
+    {
+     "name": "main-thread busy time under 5%",
+     "pass": true,
+     "expected": "<0.05",
+     "actual": 0.0011
+    },
+    {
+     "name": "JS heap growth after GC under 2 MB",
+     "pass": true,
+     "expected": "<2000000",
+     "actual": 0
+    },
+    {
+     "name": "DOM node growth under 100",
+     "pass": true,
+     "expected": "<100",
+     "actual": 0
+    },
+    {
+     "name": "event-listener growth under 50",
+     "pass": true,
+     "expected": "<50",
+     "actual": 0
+    },
+    {
+     "name": "a message sent after idling is delivered",
+     "pass": true,
+     "expected": true,
+     "actual": true
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-ws-frames.jsonl",
+     "sha256": "094efc339e554dcf6f6e3a9a78d8a71593b39c3fb796de15ce3306adce1c64fc",
+     "description": "idle-user: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-requests.jsonl",
+     "sha256": "800af7f8d58a5fa7c1c2f029402bae6af9b8a0648440263b120a4ed70e248bf0",
+     "description": "idle-user: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-sockets.json",
+     "sha256": "f4ee0a17d125d5aec38058c01907612297c5a6526b3a53606ff24fff3626c2b0",
+     "description": "idle-user: WebSocket lifecycle"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user.png",
+     "sha256": "7de4a4b7f7c8d07eb17ad64446a02e234eeb89655326abafabbcc8cc8db07918",
+     "description": "Idle user's window at the end of the 60 s idle period"
+    }
+   ]
+  },
+  {
+   "id": "NEG-S17",
+   "title": "S17 checker fails when polling and a second socket are injected",
+   "requirementIds": [
+    "G01",
+    "S17"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:23:27.120Z",
+   "finishedAt": "2026-10-11T19:23:59.656Z",
+   "details": {
+    "faultInjection": "init script in the test context only: fetch every 5 s plus a second WebSocket",
+    "checkerAssertions": [
+     {
+      "name": "exactly one app WebSocket open at every sample",
+      "pass": false,
+      "expected": "all 1",
+      "actual": [
+       2,
+       3
+      ]
+     },
+     {
+      "name": "no HTTP requests while idle (allowlist: token refresh only)",
+      "pass": false,
+      "expected": [],
+      "actual": [
+       {
+        "t": 1791746622594,
+        "url": "https://teamchat-api-1068908463902.us-central1.run.app/health",
+        "method": "GET",
+        "type": "fetch"
+       },
+       {
+        "t": 1791746627594,
+        "url": "https://teamchat-api-1068908463902.us-central1.run.app/health",
+        "method": "GET",
+        "type": "fetch"
+       },
+       {
+        "t": 1791746632592,
+        "url": "https://teamchat-api-1068908463902.us-central1.run.app/health",
+        "method": "GET",
+        "type": "fetch"
+       },
+       {
+        "t": 1791746637594,
+        "url": "https://teamchat-api-1068908463902.us-central1.run.app/health",
+        "method": "GET",
+        "type": "fetch"
+       }
+      ]
+     },
+     {
+      "name": "client sends no frames while idle",
+      "pass": true,
+      "expected": {},
+      "actual": {}
+     },
+     {
+      "name": "only low-frequency liveness frames (≤1 per 5 s)",
+      "pass": true,
+      "expected": "≤4 presence/typing, no others",
+      "actual": {}
+     },
+     {
+      "name": "main-thread busy time under 5%",
+      "pass": true,
+      "expected": "<0.05",
+      "actual": 0.0025
+     },
+     {
+      "name": "JS heap growth after GC under 2 MB",
+      "pass": true,
+      "expected": "<2000000",
+      "actual": 0
+     },
+     {
+      "name": "DOM node growth under 100",
+      "pass": true,
+      "expected": "<100",
+      "actual": 0
+     },
+     {
+      "name": "event-listener growth under 50",
+      "pass": true,
+      "expected": "<50",
+      "actual": 0
+     },
+     {
+      "name": "a message sent after idling is delivered",
+      "pass": true,
+      "expected": true,
+      "actual": true
+     }
+    ]
+   },
+   "assertions": [
+    {
+     "name": "checker reports the injected fault",
+     "pass": true,
+     "expected": "at least one failing assertion",
+     "actual": [
+      "exactly one app WebSocket open at every sample",
+      "no HTTP requests while idle (allowlist: token refresh only)"
+     ]
+    },
+    {
+     "name": "checker fails \"no HTTP requests while idle (allowlist: token refresh only)\"",
+     "pass": true,
+     "expected": "fail",
+     "actual": "see checkerAssertions"
+    },
+    {
+     "name": "checker fails \"exactly one app WebSocket open at every sample\"",
+     "pass": true,
+     "expected": "fail",
+     "actual": "see checkerAssertions"
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-ws-frames.jsonl",
+     "sha256": "2a96072e044d38200d49617789fa7c02595871625d150a896515d614228ab459",
+     "description": "injected-user: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-requests.jsonl",
+     "sha256": "dc2548a453ac4e83385438229cc91711a3f277d7ccaad390af1f960ddd557c70",
+     "description": "injected-user: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-sockets.json",
+     "sha256": "7be262a93285367fb7926bdd83355b6e430191b37c7378736a62295d4b1e40e3",
+     "description": "injected-user: WebSocket lifecycle"
+    }
+   ]
+  },
+  {
+   "id": "S01-BROWSER",
+   "title": "Two signed-in Northside users watch the same AI turn arrive live, including the fetch",
+   "requirementIds": [
+    "G05",
+    "S01",
+    "D01"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:23:59.656Z",
+   "finishedAt": "2026-10-11T19:24:17.298Z",
+   "details": {
+    "turnId": "35385a01-498b-4583-9981-318d600cabf8",
+    "peerTimeline": [
+     {
+      "t": 1791746651849,
+      "type": "ai_tool_start",
+      "seq": 623
+     },
+     {
+      "t": 1791746651930,
+      "type": "ai_tool",
+      "seq": 624
+     },
+     {
+      "t": 1791746651953,
+      "type": "ai_answer_block",
+      "seq": 625
+     },
+     {
+      "t": 1791746653999,
+      "type": "ai_complete",
+      "seq": 626
+     }
+    ],
+    "toolCalls": [
+     {
+      "name": "search_catalog",
+      "arguments": {
+       "query": "portable air conditioning units"
+      }
+     }
+    ]
+   },
+   "assertions": [
+    {
+     "name": "signed in through Firebase Hosting UI and authenticated the socket",
+     "pass": true,
+     "expected": true,
+     "actual": true
+    },
+    {
+     "name": "asker's view equals the database projection",
+     "pass": true,
+     "expected": "exact",
+     "actual": {
+      "exact": true,
+      "ordered": true,
+      "duplicates": [],
+      "missing": [],
+      "unexpected": [],
+      "actualCount": 5,
+      "expectedCount": 5
+     }
+    },
+    {
+     "name": "peer's view equals the database projection",
+     "pass": true,
+     "expected": "exact",
+     "actual": {
+      "exact": true,
+      "ordered": true,
+      "duplicates": [],
+      "missing": [],
+      "unexpected": [],
+      "actualCount": 5,
+      "expectedCount": 5
+     }
+    },
+    {
+     "name": "peer saw the fetch before the answer completed",
+     "pass": true,
+     "expected": "tool frame earlier than ai_complete",
+     "actual": {
+      "firstTool": {
+       "t": 1791746651849,
+       "type": "ai_tool_start",
+       "seq": 623
+      },
+      "complete": {
+       "t": 1791746653999,
+       "type": "ai_complete",
+       "seq": 626
+      }
+     }
+    },
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      "ai_tool_start",
+      "ai_tool",
+      "ai_answer_block",
+      "ai_complete"
+     ]
+    },
+    {
+     "name": "a catalog tool returned portable air-conditioner codes from the fixture",
+     "pass": true,
+     "expected": "fixture codes",
+     "actual": [
+      "APP-100.11",
+      "APP-100.12",
+      "APP-100.13",
+      "APP-100.14",
+      "APP-100.15",
+      "APP-100.16",
+      "APP-100.17",
+      "APP-100.18",
+      "APP-100.19",
+      "APP-100.99"
+     ]
+    },
+    {
+     "name": "rendered margin classes match the fixture",
+     "pass": true,
+     "expected": "fixture margin class per code",
+     "actual": [
+      [
+       "APP-100.11",
+       "318"
+      ],
+      [
+       "APP-100.12",
+       "318"
+      ],
+      [
+       "APP-100.13",
+       "318"
+      ],
+      [
+       "APP-100.14",
+       "318"
+      ],
+      [
+       "APP-100.15",
+       "318"
+      ],
+      [
+       "APP-100.16",
+       "318"
+      ],
+      [
+       "APP-100.17",
+       "318"
+      ],
+      [
+       "APP-100.18",
+       "318"
+      ],
+      [
+       "APP-100.19",
+       "318"
+      ],
+      [
+       "APP-100.99",
+       "not mapped"
+      ]
+     ]
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/db-events.json",
+     "sha256": "2bb153c341ada3119e50d458ba5ef78741a1dc7a31a538f5315f48171b06683a",
+     "description": "Authoritative events after the starting cursor (read as teamchat_api)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-ws-frames.jsonl",
+     "sha256": "81bea6876c2328069ab67ed73f3f7daa5edc1eb5d98cf772dbee3fad5509ccc5",
+     "description": "asker: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-requests.jsonl",
+     "sha256": "015916a9fba07fe8cc4d27a7dee8784f09f207c3386a65c1f70ab68a2981b71c",
+     "description": "asker: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-sockets.json",
+     "sha256": "4d4a974350038514e4886976d25eee222242ccfcd1292397e099c400bd6b26bd",
+     "description": "asker: WebSocket lifecycle"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-ws-frames.jsonl",
+     "sha256": "d22cac08fe0d19b177f861ad4ef347e49f8dad8e329b2028e4ab84721eb4fa04",
+     "description": "peer: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-requests.jsonl",
+     "sha256": "9ca811ad3c8f289911a2dfb9562f780acc29ea0310a2bd179302d152607c7655",
+     "description": "peer: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-sockets.json",
+     "sha256": "b81a80c0173825924011ffde57c5037f607428bce975332fbfe038a9b80f5ea7",
+     "description": "peer: WebSocket lifecycle"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker.png",
+     "sha256": "f655ad2d1117e0ca58e2fd4876f62fe2dfa67dc2cd75efc80ec96026e9a18508",
+     "description": "Asker's browser after the turn completed"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer.png",
+     "sha256": "c797c7661fc3f7ae18dd1175f02a3c9db65ee6133e9d525df6ca2d57f381082a",
+     "description": "Second user's browser after the same turn completed"
+    }
+   ]
+  },
+  {
+   "id": "S15",
+   "title": "Refresh mid-answer: the same turn completes once, with every fetch, in order",
+   "requirementIds": [
+    "S15"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:24:17.298Z",
+   "finishedAt": "2026-10-11T19:24:37.345Z",
+   "details": {
+    "turnId": "043ec810-2748-41d3-a78b-46d7289fbe3f",
+    "reloadAt": "2026-10-11T19:24:25.554Z",
+    "firstProgressEvent": "ai_tool_start",
+    "terminalSeenInDb": true
+   },
+   "assertions": [
+    {
+     "name": "reload happened before the turn finished (client view)",
+     "pass": true,
+     "expected": false,
+     "actual": false
+    },
+    {
+     "name": "reload happened before the turn finished (database time)",
+     "pass": true,
+     "expected": "terminal after 2026-10-11T19:24:25.554Z",
+     "actual": [
+      "2026-10-11 19:24:30.703668+00"
+     ]
+    },
+    {
+     "name": "turn completed exactly once",
+     "pass": true,
+     "expected": "one ai_complete",
+     "actual": [
+      "ai_complete"
+     ]
+    },
+    {
+     "name": "turn fetched at least one tool result",
+     "pass": true,
+     "expected": ">=1 ai_tool",
+     "actual": 2
+    },
+    {
+     "name": "rendered projection equals the database projection item by item",
+     "pass": true,
+     "expected": "exact",
+     "actual": {
+      "exact": true,
+      "ordered": true,
+      "duplicates": [],
+      "missing": [],
+      "unexpected": [],
+      "actualCount": 8,
+      "expectedCount": 8
+     }
+    },
+    {
+     "name": "no rendered item appears twice",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "every tool record of the turn is rendered",
+     "pass": true,
+     "expected": "all",
+     "actual": 2
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/before-reload.png",
+     "sha256": "b981c3766220288bfdc98780d9065e321b93e8e3bd747f34bdd27d0fb7b73533",
+     "description": "Transcript with the answer in progress, just before reload"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/db-events.json",
+     "sha256": "7db9ed6db67029dc46dc332f3a0177fdfe5f4745d876a6bd48fac124d06c509e",
+     "description": "Authoritative events after the starting cursor"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/rendered-projection.json",
+     "sha256": "48902c57ee55b1d4225435059b860f3b86cf9af8594d3709823befb097676a11",
+     "description": "Rendered transcript items after the starting cursor (data-event-id/seq/turn-id)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/after-reload.png",
+     "sha256": "552668dd7f23801543f3d4def47928b20522aef180e0c48ad6f1b4fc62bbab8e",
+     "description": "Transcript after reload and completion"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/user-ws-frames.jsonl",
+     "sha256": "2120c45d4da9fd07717198e349301dc45cf94cf97c24f3c85ac7ca0ce2e64688",
+     "description": "user: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/user-requests.jsonl",
+     "sha256": "632ec388732c95d3ff65c74cc12d9df752574b0af8f4dd118f32a598bffb35a2",
+     "description": "user: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/user-sockets.json",
+     "sha256": "3f55b742b40b3d36e31bffc0f6d895f5f6d841fa84c1e9dbce925d6bbbaf94c9",
+     "description": "user: WebSocket lifecycle"
+    }
+   ]
+  },
+  {
+   "id": "NEG-S15",
+   "title": "S15 checker fails when the turn's events are suppressed after reload",
+   "requirementIds": [
+    "S15"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:24:37.346Z",
+   "finishedAt": "2026-10-11T19:25:01.478Z",
+   "details": {
+    "turnId": "a54171d5-4da8-4d99-9439-60e7909a6e6a",
+    "reloadAt": "2026-10-11T19:24:43.070Z",
+    "firstProgressEvent": "ai_tool_start",
+    "terminalSeenInDb": true,
+    "faultInjection": "routeWebSocket in the test context drops every event of the target turn after reload",
+    "checkerAssertions": [
+     {
+      "name": "reload happened before the turn finished (client view)",
+      "pass": true,
+      "expected": false,
+      "actual": false
+     },
+     {
+      "name": "reload happened before the turn finished (database time)",
+      "pass": true,
+      "expected": "terminal after 2026-10-11T19:24:43.070Z",
+      "actual": [
+       "2026-10-11 19:24:47.936068+00"
+      ]
+     },
+     {
+      "name": "turn completed exactly once",
+      "pass": true,
+      "expected": "one ai_complete",
+      "actual": [
+       "ai_complete"
+      ]
+     },
+     {
+      "name": "turn fetched at least one tool result",
+      "pass": true,
+      "expected": ">=1 ai_tool",
+      "actual": 2
+     },
+     {
+      "name": "rendered projection equals the database projection item by item",
+      "pass": false,
+      "expected": "exact",
+      "actual": {
+       "exact": false,
+       "ordered": true,
+       "duplicates": [],
+       "missing": [
+        "e82d81ea-03c9-4b3c-ab63-ababbd75ca67",
+        "b6b2ff09-f110-40da-b590-5deb7d83dc5b",
+        "07149ee1-7f70-42c6-84c6-6724d88a0439",
+        "a09c666b-1dc6-417d-83d6-5caeaec57c5d",
+        "32355032-b4c1-4392-b2be-24f3c09dcaef",
+        "f363ed71-ae44-4364-9870-7bae12b10b05",
+        "253abb29-2434-44cf-9332-80bfe59322a2"
+       ],
+       "unexpected": [],
+       "actualCount": 1,
+       "expectedCount": 8
+      }
+     },
+     {
+      "name": "no rendered item appears twice",
+      "pass": true,
+      "expected": [],
+      "actual": []
+     },
+     {
+      "name": "every tool record of the turn is rendered",
+      "pass": false,
+      "expected": "all",
+      "actual": 0
+     }
+    ]
+   },
+   "assertions": [
+    {
+     "name": "checker reports the injected fault",
+     "pass": true,
+     "expected": "at least one failing assertion",
+     "actual": [
+      "rendered projection equals the database projection item by item",
+      "every tool record of the turn is rendered"
+     ]
+    },
+    {
+     "name": "checker fails \"rendered projection equals the database projection item by item\"",
+     "pass": true,
+     "expected": "fail",
+     "actual": "see checkerAssertions"
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/before-reload.png",
+     "sha256": "69950b62100ba09f065e01d1138d81d3de542fcaef58c4b15721729b0177388a",
+     "description": "Transcript with the answer in progress, just before reload"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/db-events.json",
+     "sha256": "27ed4325dd32722d7684bc0b6c1d4f196739b70451c6757fc0f9ebc904ef59e0",
+     "description": "Authoritative events after the starting cursor"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/rendered-projection.json",
+     "sha256": "388eaa1a757a3c76f2bd4b470ca1eb3daabca883beb0809cecef5a4a9bed4b14",
+     "description": "Rendered transcript items after the starting cursor (data-event-id/seq/turn-id)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/after-reload.png",
+     "sha256": "18ff4f6774aa12d92e7eaefddcef6e58203bcfd38a9a1d38e98759a50f9b703f",
+     "description": "Transcript after reload and completion"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/user-ws-frames.jsonl",
+     "sha256": "d207122f1258f2d26f1d70d406500dd745cfab79359d2e44e4936b5dc24bea0a",
+     "description": "user: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/user-requests.jsonl",
+     "sha256": "7bbedecc8f69e0dcffd61ec6e17a5f93531cde35902a73657cc775fb72a505b2",
+     "description": "user: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/user-sockets.json",
+     "sha256": "40067ff4bda6dae84d21583d17d9840a70640e39f19dd333cbcc0149db58c7ec",
+     "description": "user: WebSocket lifecycle"
+    }
+   ]
+  },
+  {
+   "id": "S16",
+   "title": "30-second TCP-level outage: everything missed arrives once, in order, with the same IDs",
+   "requirementIds": [
+    "S16"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:25:01.479Z",
+   "finishedAt": "2026-10-11T19:26:07.205Z",
+   "details": {
+    "outage": {
+     "mode": "tcp",
+     "cutAt": "2026-10-11T19:25:14.621Z",
+     "socketClosedAfterMs": 7,
+     "restoreAt": "2026-10-11T19:25:44.623Z",
+     "durationMs": 30002,
+     "statusDuring": "reconnecting",
+     "reconnectAttemptsDuringOutage": 7,
+     "proxyLog": [
+      {
+       "t": 1791746701556,
+       "event": "tunnel",
+       "host": "focus-clean-4b9f4.web.app"
+      },
+      {
+       "t": 1791746704915,
+       "event": "tunnel",
+       "host": "identitytoolkit.googleapis.com"
+      },
+      {
+       "t": 1791746706075,
+       "event": "tunnel",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746706075,
+       "event": "tunnel",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746714627,
+       "event": "cut",
+       "destroyed": 8
+      },
+      {
+       "t": 1791746714936,
+       "event": "refused",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746715495,
+       "event": "refused",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746716476,
+       "event": "refused",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746719000,
+       "event": "refused",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746722540,
+       "event": "refused",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746729190,
+       "event": "refused",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746743723,
+       "event": "refused",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      },
+      {
+       "t": 1791746744624,
+       "event": "restore"
+      },
+      {
+       "t": 1791746760436,
+       "event": "tunnel",
+       "host": "teamchat-api-1068908463902.us-central1.run.app"
+      }
+     ]
+    }
+   },
+   "assertions": [
+    {
+     "name": "client cursor matched the database before the outage",
+     "pass": true,
+     "expected": 642,
+     "actual": 642
+    },
+    {
+     "name": "the open WebSocket closed within 5 s of the outage starting",
+     "pass": true,
+     "expected": "≤5000 ms",
+     "actual": 7
+    },
+    {
+     "name": "outage lasted at least 30 s",
+     "pass": true,
+     "expected": "≥30000",
+     "actual": 30002
+    },
+    {
+     "name": "UI did not claim to be online during the outage",
+     "pass": true,
+     "expected": "not \"online\"",
+     "actual": "reconnecting"
+    },
+    {
+     "name": "no frame reached the client during the outage",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "reconnect attempts during the outage were refused",
+     "pass": true,
+     "expected": ">0",
+     "actual": 7
+    },
+    {
+     "name": "every missed message rendered exactly once",
+     "pass": true,
+     "expected": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "actual": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "name": "rendered projection equals the database projection item by item",
+     "pass": true,
+     "expected": "exact",
+     "actual": {
+      "exact": true,
+      "ordered": true,
+      "duplicates": [],
+      "missing": [],
+      "unexpected": [],
+      "actualCount": 5,
+      "expectedCount": 5
+     }
+    },
+    {
+     "name": "no rendered item appears twice",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "nothing missing",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "same IDs in the same order as the other browser",
+     "pass": true,
+     "expected": [
+      "9447d1d9-2f62-44d9-a32b-ed6a44a6e2be",
+      "aeb9e435-8feb-45cf-9651-bc99fb076bb1",
+      "b90a3bd9-9c46-4bd6-ac1a-b60222e237f8",
+      "d849d4f6-b53c-4c51-9058-9473da043b37",
+      "c331e6f1-501a-45a8-b5ba-e0387360a50b"
+     ],
+     "actual": [
+      "9447d1d9-2f62-44d9-a32b-ed6a44a6e2be",
+      "aeb9e435-8feb-45cf-9651-bc99fb076bb1",
+      "b90a3bd9-9c46-4bd6-ac1a-b60222e237f8",
+      "d849d4f6-b53c-4c51-9058-9473da043b37",
+      "c331e6f1-501a-45a8-b5ba-e0387360a50b"
+     ]
+    },
+    {
+     "name": "resubscribe resumed from the cursor held before the outage",
+     "pass": true,
+     "expected": 642,
+     "actual": 642
+    },
+    {
+     "name": "persisted cursor ends at the last authoritative sequence",
+     "pass": true,
+     "expected": 647,
+     "actual": 647
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/during-outage.png",
+     "sha256": "4b4afacc85ef51871806a19b274a1109feef4342a1b2e670894104b4fef9c45e",
+     "description": "Disconnected user's window during the outage"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/peer-during-outage.png",
+     "sha256": "3e11bca618b6ca906a0c8fe3465efe202acfb19afadf15c4b18b24ced858c6c8",
+     "description": "Peer's window during the outage, messages sent"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/db-events.json",
+     "sha256": "8545dfd4a7ea2488f534e9ee12711d799be9654b9e5d5cb56084fe345772c4cc",
+     "description": "Authoritative events after the pre-outage cursor"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/rendered-projection.json",
+     "sha256": "018fba441de67f2157a93de593edcb7e7a512d3bd42177c9eb0ef9c2ff9c7d8b",
+     "description": "Rendered transcript items after the pre-outage cursor in both browsers"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/after-recovery.png",
+     "sha256": "159ff3802fcab4a4ef8dd670f7a026d435cd5c2125d2699ce809d2f3df7bb364",
+     "description": "Disconnected user's window after recovery"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/disconnected-ws-frames.jsonl",
+     "sha256": "b8082ae07dce205bc89ab25d2a421c341213c9883cfda2ee0e8b5fad9e80062d",
+     "description": "disconnected: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/disconnected-requests.jsonl",
+     "sha256": "458f16ee26b495a03cdddaa8981602187faf0f6cb7890ca291a16a12eaaf4e15",
+     "description": "disconnected: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/disconnected-sockets.json",
+     "sha256": "dd22034abaf9e061750f555d0d4c3516d046c3a7bbeb0bff12f5ac90d9dd187b",
+     "description": "disconnected: WebSocket lifecycle"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/peer-ws-frames.jsonl",
+     "sha256": "f7972da88ddf2083c7db66e1adbdb9322a21be79fdedf89926a2ab159da04c86",
+     "description": "peer: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/peer-requests.jsonl",
+     "sha256": "b9d7f686f04b594462016c5a7c1e2cbbe5a532193d51ba1e0e7f0b9d6355ec6f",
+     "description": "peer: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/peer-sockets.json",
+     "sha256": "f5ea0c8e4894a98a49c4ad71c91532c330f0c4481f42b9b2ed8e671746e7c182",
+     "description": "peer: WebSocket lifecycle"
+    }
+   ]
+  },
+  {
+   "id": "S16-OFFLINE",
+   "title": "30-second browser-reported offline (the DevTools path): same guarantees",
+   "requirementIds": [
+    "S16"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:26:07.206Z",
+   "finishedAt": "2026-10-11T19:26:55.262Z",
+   "details": {
+    "outage": {
+     "mode": "offline",
+     "cutAt": "2026-10-11T19:26:19.645Z",
+     "socketClosedAfterMs": 171,
+     "restoreAt": "2026-10-11T19:26:49.646Z",
+     "durationMs": 30001,
+     "statusDuring": "offline",
+     "reconnectAttemptsDuringOutage": 0
+    }
+   },
+   "assertions": [
+    {
+     "name": "client cursor matched the database before the outage",
+     "pass": true,
+     "expected": 647,
+     "actual": 647
+    },
+    {
+     "name": "the open WebSocket closed within 5 s of the outage starting",
+     "pass": true,
+     "expected": "≤5000 ms",
+     "actual": 171
+    },
+    {
+     "name": "outage lasted at least 30 s",
+     "pass": true,
+     "expected": "≥30000",
+     "actual": 30001
+    },
+    {
+     "name": "UI did not claim to be online during the outage",
+     "pass": true,
+     "expected": "not \"online\"",
+     "actual": "offline"
+    },
+    {
+     "name": "client held reconnects while the browser reported offline",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    },
+    {
+     "name": "every missed message rendered exactly once",
+     "pass": true,
+     "expected": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "actual": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "name": "rendered projection equals the database projection item by item",
+     "pass": true,
+     "expected": "exact",
+     "actual": {
+      "exact": true,
+      "ordered": true,
+      "duplicates": [],
+      "missing": [],
+      "unexpected": [],
+      "actualCount": 5,
+      "expectedCount": 5
+     }
+    },
+    {
+     "name": "no rendered item appears twice",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "nothing missing",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "same IDs in the same order as the other browser",
+     "pass": true,
+     "expected": [
+      "e1187bcd-ba27-46db-bb21-ad5c62b59e3a",
+      "b8391d58-2518-4189-9cfb-5bc4d68c7cb8",
+      "f1ceae9d-75ee-44cd-9f4a-464eeb5ef7cf",
+      "ea3f2b87-a1d6-4785-bb8d-64b0fea934b7",
+      "b2e5929b-ff62-4b23-b9d3-a0136f6cbe01"
+     ],
+     "actual": [
+      "e1187bcd-ba27-46db-bb21-ad5c62b59e3a",
+      "b8391d58-2518-4189-9cfb-5bc4d68c7cb8",
+      "f1ceae9d-75ee-44cd-9f4a-464eeb5ef7cf",
+      "ea3f2b87-a1d6-4785-bb8d-64b0fea934b7",
+      "b2e5929b-ff62-4b23-b9d3-a0136f6cbe01"
+     ]
+    },
+    {
+     "name": "resubscribe resumed from the cursor held before the outage",
+     "pass": true,
+     "expected": 647,
+     "actual": 647
+    },
+    {
+     "name": "persisted cursor ends at the last authoritative sequence",
+     "pass": true,
+     "expected": 652,
+     "actual": 652
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/during-outage.png",
+     "sha256": "289ab82c802b4d371dcdac3ee11562125b8b16f0a16efb3cee519ea8140893fd",
+     "description": "Disconnected user's window during the outage"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/peer-during-outage.png",
+     "sha256": "af3eeca1b371b3724e8a7ad5c98581971289e4f7b2f8ed2dbb7a252f7eead860",
+     "description": "Peer's window during the outage, messages sent"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/db-events.json",
+     "sha256": "46a1b857405174b8efe1692d6d305d11235f47a1da9837336789e71bb5a3fb79",
+     "description": "Authoritative events after the pre-outage cursor"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/rendered-projection.json",
+     "sha256": "a146cbfeb48e67e99ea43941312fd448b159ff7423862af62317a25b0ba9ed94",
+     "description": "Rendered transcript items after the pre-outage cursor in both browsers"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/after-recovery.png",
+     "sha256": "dcc72229210e56cd881406ca27f0ef9a2ea6a22939fe016ed2b1e03d2a62ea6c",
+     "description": "Disconnected user's window after recovery"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/disconnected-ws-frames.jsonl",
+     "sha256": "5fb04194e75d50029319230cc05e7c3a56689a18e54fe3bf1d642a3e936db07e",
+     "description": "disconnected: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/disconnected-requests.jsonl",
+     "sha256": "956e250d45e8ff8fc10b0498a10db21afc7a3f532b70d22b8ad23076d8465b92",
+     "description": "disconnected: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/disconnected-sockets.json",
+     "sha256": "0737d9d6b070d4a7e8dec34831962cf985968bc2b1962073f909fe0a26dc04e7",
+     "description": "disconnected: WebSocket lifecycle"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/peer-ws-frames.jsonl",
+     "sha256": "7dea24ce70b0c41227d9111e52a5a1197e36eb7d3461f8329ed2c6043fe1b2c9",
+     "description": "peer: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/peer-requests.jsonl",
+     "sha256": "486d71fd680ab2d0a397d7980de9df8c5086f866dd6628c02fe2a96cd386181c",
+     "description": "peer: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/peer-sockets.json",
+     "sha256": "2006a038bfda951d2c370c5bc47f6c0ea19d9ed69fa55b5cf9dfd361845191e4",
+     "description": "peer: WebSocket lifecycle"
+    }
+   ]
+  },
+  {
+   "id": "NEG-S16-DROP",
+   "title": "S16 checker fails when one event is dropped every time it is delivered",
+   "requirementIds": [
+    "S16"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:26:55.262Z",
+   "finishedAt": "2026-10-11T19:27:21.616Z",
+   "details": {
+    "replayRequestsDuringControl": 104,
+    "faultInjection": "routeWebSocket in the test context drops the event carrying message #2 on every delivery, including replays",
+    "checkerAssertions": [
+     {
+      "name": "every missed message rendered exactly once",
+      "pass": false,
+      "expected": [
+       1,
+       1,
+       1
+      ],
+      "actual": [
+       1,
+       0,
+       0
+      ]
+     },
+     {
+      "name": "rendered projection equals the database projection item by item",
+      "pass": false,
+      "expected": "exact",
+      "actual": {
+       "exact": false,
+       "ordered": true,
+       "duplicates": [],
+       "missing": [
+        "9c177409-e550-4ee9-b1a7-2bbcfd6a7728",
+        "7c4bffe5-ee5b-477d-989e-da70f9aab403"
+       ],
+       "unexpected": [],
+       "actualCount": 1,
+       "expectedCount": 3
+      }
+     },
+     {
+      "name": "no rendered item appears twice",
+      "pass": true,
+      "expected": [],
+      "actual": []
+     },
+     {
+      "name": "nothing missing",
+      "pass": false,
+      "expected": [],
+      "actual": [
+       "9c177409-e550-4ee9-b1a7-2bbcfd6a7728",
+       "7c4bffe5-ee5b-477d-989e-da70f9aab403"
+      ]
+     },
+     {
+      "name": "same IDs in the same order as the other browser",
+      "pass": false,
+      "expected": [
+       "9a6de052-dd13-4251-98ae-51125e321cd3",
+       "9c177409-e550-4ee9-b1a7-2bbcfd6a7728",
+       "7c4bffe5-ee5b-477d-989e-da70f9aab403"
+      ],
+      "actual": [
+       "9a6de052-dd13-4251-98ae-51125e321cd3"
+      ]
+     },
+     {
+      "name": "resubscribe resumed from the cursor held before the outage",
+      "pass": true,
+      "expected": 652,
+      "actual": 652
+     },
+     {
+      "name": "persisted cursor ends at the last authoritative sequence",
+      "pass": false,
+      "expected": 655,
+      "actual": 653
+     }
+    ]
+   },
+   "assertions": [
+    {
+     "name": "checker reports the injected fault",
+     "pass": true,
+     "expected": "at least one failing assertion",
+     "actual": [
+      "every missed message rendered exactly once",
+      "rendered projection equals the database projection item by item",
+      "nothing missing",
+      "same IDs in the same order as the other browser",
+      "persisted cursor ends at the last authoritative sequence"
+     ]
+    },
+    {
+     "name": "checker fails \"every missed message rendered exactly once\"",
+     "pass": true,
+     "expected": "fail",
+     "actual": "see checkerAssertions"
+    },
+    {
+     "name": "checker fails \"nothing missing\"",
+     "pass": true,
+     "expected": "fail",
+     "actual": "see checkerAssertions"
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S16-DROP/faulted-ws-frames.jsonl",
+     "sha256": "6eee7d20db7f41dd980f994417779e5cbbd7539f693f2a1078e54a172e070fe5",
+     "description": "faulted: every WebSocket frame seen by Playwright (auth token redacted)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S16-DROP/faulted-requests.jsonl",
+     "sha256": "eba1398899f340d94da2e340d569bcf9e40529712bab648902efb6cbd0f59458",
+     "description": "faulted: every HTTP request (query strings removed)"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S16-DROP/faulted-sockets.json",
+     "sha256": "3c64edab66c514944956acc435480cb195f2cd876b8289dd5deacac66fe39ac2",
+     "description": "faulted: WebSocket lifecycle"
+    }
+   ]
+  },
+  {
+   "id": "NEG-S16-DUP",
+   "title": "S16 checker fails when a delivered message is shown twice",
+   "requirementIds": [
+    "S16"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T19:27:21.617Z",
+   "finishedAt": "2026-10-11T19:27:34.220Z",
+   "details": {
+    "faultInjection": "DOM clone of one rendered transcript item in the test page",
+    "checkerAssertions": [
+     {
+      "name": "every missed message rendered exactly once",
+      "pass": false,
+      "expected": [
+       1,
+       1
+      ],
+      "actual": [
+       2,
+       1
+      ]
+     },
+     {
+      "name": "rendered projection equals the database projection item by item",
+      "pass": false,
+      "expected": "exact",
+      "actual": {
+       "exact": false,
+       "ordered": false,
+       "duplicates": [
+        "68c2125a-4d80-479a-84c9-32fa3f7d2490"
+       ],
+       "missing": [],
+       "unexpected": [],
+       "actualCount": 3,
+       "expectedCount": 2
+      }
+     },
+     {
+      "name": "no rendered item appears twice",
+      "pass": false,
+      "expected": [],
+      "actual": [
+       "68c2125a-4d80-479a-84c9-32fa3f7d2490"
+      ]
+     },
+     {
+      "name": "nothing missing",
+      "pass": true,
+      "expected": [],
+      "actual": []
+     },
+     {
+      "name": "same IDs in the same order as the other browser",
+      "pass": false,
+      "expected": [
+       "68c2125a-4d80-479a-84c9-32fa3f7d2490",
+       "81008510-c999-41ef-b63d-72f5ed18151e"
+      ],
+      "actual": [
+       "68c2125a-4d80-479a-84c9-32fa3f7d2490",
+       "68c2125a-4d80-479a-84c9-32fa3f7d2490",
+       "81008510-c999-41ef-b63d-72f5ed18151e"
+      ]
+     },
+     {
+      "name": "resubscribe resumed from the cursor held before the outage",
+      "pass": true,
+      "expected": 655,
+      "actual": 655
+     },
+     {
+      "name": "persisted cursor ends at the last authoritative sequence",
+      "pass": true,
+      "expected": 657,
+      "actual": 657
+     }
+    ]
+   },
+   "assertions": [
+    {
+     "name": "checker reports the injected fault",
+     "pass": true,
+     "expected": "at least one failing assertion",
+     "actual": [
+      "every missed message rendered exactly once",
+      "rendered projection equals the database projection item by item",
+      "no rendered item appears twice",
+      "same IDs in the same order as the other browser"
+     ]
+    },
+    {
+     "name": "checker fails \"every missed message rendered exactly once\"",
+     "pass": true,
+     "expected": "fail",
+     "actual": "see checkerAssertions"
+    },
+    {
+     "name": "checker fails \"no rendered item appears twice\"",
+     "pass": true,
+     "expected": "fail",
+     "actual": "see checkerAssertions"
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S16-DUP/duplicated.png",
+     "sha256": "9a0d06c2230c32affdb3ed02a7739c1d59a25f5ac4b55055ff2475991e3a0c05",
+     "description": "Test page after the injected duplicate"
+    }
+   ]
+  }
+ ]
+}

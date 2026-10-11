@@ -1,0 +1,194 @@
+{
+ "asker1": {
+  "turnId": "1cd1ca10-be6e-4285-88ef-e927321e5e00",
+  "tools": [
+   {
+    "operationId": "r0-c0",
+    "name": "search_catalog",
+    "arguments": {
+     "query": "portable air conditioning units"
+    },
+    "result": [
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.11",
+      "department": "Appliances",
+      "description": "Portable air conditioners, 5,000 to 7,000 BTU",
+      "catalog_code": "APP-100.11",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.12",
+      "department": "Appliances",
+      "description": "Portable air conditioners, 8,000 to 10,000 BTU",
+      "catalog_code": "APP-100.12",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.13",
+      "department": "Appliances",
+      "description": "Portable air conditioners, 11,000 to 13,000 BTU",
+      "catalog_code": "APP-100.13",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.14",
+      "department": "Appliances",
+      "description": "Portable air conditioners, 14,000 BTU and above",
+      "catalog_code": "APP-100.14",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.15",
+      "department": "Appliances",
+      "description": "Portable air conditioners, dual-hose",
+      "catalog_code": "APP-100.15",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.16",
+      "department": "Appliances",
+      "description": "Portable air conditioners, single-hose",
+      "catalog_code": "APP-100.16",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.17",
+      "department": "Appliances",
+      "description": "Portable air conditioners, with heat pump",
+      "catalog_code": "APP-100.17",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.18",
+      "department": "Appliances",
+      "description": "Portable air conditioners, smart/app controlled",
+      "catalog_code": "APP-100.18",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.19",
+      "department": "Appliances",
+      "description": "Portable air conditioners, low-noise",
+      "catalog_code": "APP-100.19",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.99",
+      "department": "Appliances",
+      "description": "Portable air conditioners, unspecified",
+      "catalog_code": "APP-100.99",
+      "margin_class": null,
+      "product_family": "Portable air conditioners"
+     }
+    ],
+    "sequence": 753
+   }
+  ],
+  "answer": "APP-100.11 — Portable air conditioners, 5,000 to 7,000 BTU — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.11]\nAPP-100.12 — Portable air conditioners, 8,000 to 10,000 BTU — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.12]\nAPP-100.13 — Portable air conditioners, 11,000 to 13,000 BTU — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.13]\nAPP-100.14 — Portable air conditioners, 14,000 BTU and above — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.14]\nAPP-100.15 — Portable air conditioners, dual-hose — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.15]\nAPP-100.16 — Portable air conditioners, single-hose — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.16]\nAPP-100.17 — Portable air conditioners, with heat pump — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.17]\nAPP-100.18 — Portable air conditioners, smart/app controlled — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.18]\nAPP-100.19 — Portable air conditioners, low-noise — margin class 318 [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.19]\nAPP-100.99 — Portable air conditioners, unspecified — margin class not mapped [1cd1ca10-be6e-4285-88ef-e927321e5e00:northside-outfitters:catalog:APP-100.99]"
+ },
+ "asker2": {
+  "turnId": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1",
+  "tools": [
+   {
+    "operationId": "r0-c0",
+    "name": "search_catalog",
+    "arguments": {
+     "query": "solid state drives"
+    },
+    "result": [
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.11",
+      "department": "Electronics",
+      "description": "Internal solid state drives, SATA, under 500 GB",
+      "catalog_code": "ELC-100.11",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.12",
+      "department": "Electronics",
+      "description": "Internal solid state drives, SATA, 500 GB to 1 TB",
+      "catalog_code": "ELC-100.12",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.13",
+      "department": "Electronics",
+      "description": "Internal solid state drives, SATA, over 1 TB",
+      "catalog_code": "ELC-100.13",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.14",
+      "department": "Electronics",
+      "description": "Internal solid state drives, NVMe, under 500 GB",
+      "catalog_code": "ELC-100.14",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.15",
+      "department": "Electronics",
+      "description": "Internal solid state drives, NVMe, 500 GB to 1 TB",
+      "catalog_code": "ELC-100.15",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.16",
+      "department": "Electronics",
+      "description": "Internal solid state drives, NVMe, 1 to 2 TB",
+      "catalog_code": "ELC-100.16",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.17",
+      "department": "Electronics",
+      "description": "Internal solid state drives, NVMe, over 2 TB",
+      "catalog_code": "ELC-100.17",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.18",
+      "department": "Electronics",
+      "description": "Internal solid state drives, enterprise endurance",
+      "catalog_code": "ELC-100.18",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.19",
+      "department": "Electronics",
+      "description": "Internal solid state drives, mounting hardware",
+      "catalog_code": "ELC-100.19",
+      "margin_class": "410",
+      "product_family": "Internal solid state drives"
+     },
+     {
+      "ref": "7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.99",
+      "department": "Electronics",
+      "description": "Internal solid state drives, unspecified",
+      "catalog_code": "ELC-100.99",
+      "margin_class": null,
+      "product_family": "Internal solid state drives"
+     }
+    ],
+    "sequence": 756
+   }
+  ],
+  "answer": "ELC-100.11 — Internal solid state drives, SATA, under 500 GB — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.11]\nELC-100.12 — Internal solid state drives, SATA, 500 GB to 1 TB — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.12]\nELC-100.13 — Internal solid state drives, SATA, over 1 TB — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.13]\nELC-100.14 — Internal solid state drives, NVMe, under 500 GB — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.14]\nELC-100.15 — Internal solid state drives, NVMe, 500 GB to 1 TB — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.15]\nELC-100.16 — Internal solid state drives, NVMe, 1 to 2 TB — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.16]\nELC-100.17 — Internal solid state drives, NVMe, over 2 TB — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.17]\nELC-100.18 — Internal solid state drives, enterprise endurance — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.18]\nELC-100.19 — Internal solid state drives, mounting hardware — margin class 410 [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.19]\nELC-100.99 — Internal solid state drives, unspecified — margin class not mapped [7a557c4f-7291-48c5-9f94-2483ea6ef9a1:northside-outfitters:catalog:ELC-100.99]"
+ }
+}

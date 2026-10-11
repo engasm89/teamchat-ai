@@ -1,0 +1,50 @@
+[
+ {
+  "id": "62fea92e-3b48-46b4-a053-a5d5c99545db",
+  "seq": 280,
+  "turn": null,
+  "type": "message"
+ },
+ {
+  "id": "d4cd1ede-3ee5-4e3d-b40b-da3a9967a9f2",
+  "seq": 281,
+  "turn": "d022ff20-4d47-4efe-9bd0-f66f749712da",
+  "type": "ai_tool_start"
+ },
+ {
+  "id": "c2ea1539-a6c1-4df8-899d-a3785e6bcf98",
+  "seq": 282,
+  "turn": "d022ff20-4d47-4efe-9bd0-f66f749712da",
+  "type": "ai_tool"
+ },
+ {
+  "id": "be194c9d-15be-4dd0-94c1-de3f794ddf37",
+  "seq": 283,
+  "turn": "d022ff20-4d47-4efe-9bd0-f66f749712da",
+  "type": "ai_answer_block"
+ },
+ {
+  "id": "4250aeba-3699-41af-a7a7-d0253e5666a9",
+  "seq": 284,
+  "turn": "d022ff20-4d47-4efe-9bd0-f66f749712da",
+  "type": "ai_tool_start"
+ },
+ {
+  "id": "c073c2d1-59ff-4089-9371-79f17a0bea8c",
+  "seq": 285,
+  "turn": "d022ff20-4d47-4efe-9bd0-f66f749712da",
+  "type": "ai_tool"
+ },
+ {
+  "id": "6c3dc0be-c590-423c-9f70-7b80bd58d739",
+  "seq": 286,
+  "turn": "d022ff20-4d47-4efe-9bd0-f66f749712da",
+  "type": "ai_answer_block"
+ },
+ {
+  "id": "bfee1249-e76e-4bcb-b69c-0f8e9c0d5370",
+  "seq": 287,
+  "turn": "d022ff20-4d47-4efe-9bd0-f66f749712da",
+  "type": "ai_complete"
+ }
+]
