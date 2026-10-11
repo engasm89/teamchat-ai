@@ -4,6 +4,7 @@
  *   node --experimental-strip-types scripts/acceptance/run-employer-acceptance.ts
  *   node --experimental-strip-types scripts/acceptance/run-employer-acceptance.ts --restart   (S19 only)
  *   ... --only S05,S07   (debugging; partial runs still count as runs)
+ *   ... --scratch        (writes under qa_evidence/scratch/runs, outside the evidence set)
  * Requires cloud-sql-proxy on DB_PROXY_PORT (default 6543). */
 import fs from "node:fs";
 import path from "node:path";
@@ -24,7 +25,8 @@ const NROOM=QA_ROOM[N],VROOM=QA_ROOM[V];
 
 const {sourceSha,deployment}=bindDeployment();
 const pool=await openDb();
-const run=new RunRecorder({suite:RESTART?"acceptance-restart":"acceptance",environment:`production: ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS});
+const run=new RunRecorder({suite:RESTART?"acceptance-restart":"acceptance",environment:`production: ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
+ ...(args.includes("--scratch")?{runsDir:"qa_evidence/scratch/runs"}:{})});
 const clients:LiveClient[]=[];
 async function client(account:AccountKey,room?:string,url?:string){
  const c=await new LiveClient(account,url).connect();clients.push(c);if(room)await c.subscribe(room);return c;
@@ -208,12 +210,13 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("Valley answer contains no Northside memory text",!rendered(valley).includes(String(seed.value.decision)),"absent","")]);
  }],
  ["S09","A new contact and deadline saved with consent reach another user in another room, not Valley",["S09"],async t=>{
-  const name=`Dana ${tag("qa").slice(3)}`,deadline="2026-11-20";
+  // Memory keys are unique per tenant, so each run needs a topic no earlier run has saved.
+  const name=`Dana ${tag("qa").slice(3)}`,deadline="2026-11-20",dispute=`case ${tag("qa").slice(3)}`;
   const n1=await client("n1",NROOM),n2=await client("n2","category-strategy"),v1=await client("v1",VROOM);
-  const save=await ask(t,n1,NROOM,`@AI Remember that our escalation contact for ST-4003 is ${name} and the deadline is ${deadline}.`,"s09-save",true);
+  const save=await ask(t,n1,NROOM,`@AI Remember that our escalation contact for the ${dispute} supplier dispute is ${name} and the deadline is ${deadline}.`,"s09-save",true);
   const saved=save.tools.find(x=>x.name==="save_memory");
-  const recall=await ask(t,n2,"category-strategy","@AI Who is our escalation contact for ST-4003, and when is the deadline?","s09-recall");
-  const valley=await ask(t,v1,VROOM,"@AI Who is our escalation contact for ST-4003, and when is the deadline?","s09-valley");
+  const recall=await ask(t,n2,"category-strategy",`@AI Who is our escalation contact for the ${dispute} supplier dispute, and when is the deadline?`,"s09-recall");
+  const valley=await ask(t,v1,VROOM,`@AI Who is our escalation contact for the ${dispute} supplier dispute, and when is the deadline?`,"s09-valley");
   const hits=recall.tools.filter(x=>x.name==="search_memory").flatMap(x=>Array.isArray(x.result)?x.result.map((r:any)=>r.memory):[]);
   const mine=hits.find(m=>JSON.stringify(m.value).includes(name));
   record(t,[completed(save,"save"),completed(recall,"recall"),completed(valley,"valley"),
@@ -384,9 +387,9 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
 ];
 
 async function s19(t:TestRecorder){
- const value=`${tag("cold")}`;
+ const value=`${tag("cold")}`,drill=`drill ${tag("d").slice(2)}`;
  const n1=await client("n1",NROOM);
- const save=await ask(t,n1,NROOM,`@AI Remember that the cold-start check code is ${value}.`,"s19-save",true);
+ const save=await ask(t,n1,NROOM,`@AI Remember that the cold-start check code for ${drill} is ${value}.`,"s19-save",true);
  closeClients();
  const before=bindDeployment().deployment;const restartAt=new Date();
  for(const svc of ["teamchat-api","teamchat-worker"])
@@ -396,7 +399,7 @@ async function s19(t:TestRecorder){
   `resource.type="cloud_run_revision" AND (resource.labels.revision_name="${after.apiRevision}" OR resource.labels.revision_name="${after.workerRevision}") AND timestamp>="${restartAt.toISOString()}"`,
   "--project",GCP.project,"--freshness=1h","--limit=50","--format=json"],{encoding:"utf8"})) as any[];
  const n2=await client("n2","category-strategy");
- const recall=await ask(t,n2,"category-strategy","@AI What is the cold-start check code?","s19-recall");
+ const recall=await ask(t,n2,"category-strategy",`@AI What is the cold-start check code for ${drill}?`,"s19-recall");
  const hits=recall.tools.filter(x=>x.name==="search_memory").flatMap(x=>Array.isArray(x.result)?x.result.map((r:any)=>r.memory):[]);
  const mine=hits.find((m:any)=>JSON.stringify(m.value).includes(value));
  t.detail("revisions",{before,after}).detail("newRevisionLogLines",startLogs.length);
