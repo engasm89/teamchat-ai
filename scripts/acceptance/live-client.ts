@@ -14,7 +14,9 @@ export class LiveClient {
  uid="";tenant="";email="";
  private ws!:WebSocket;
  private waiters=new Set<()=>void>();
- constructor(readonly account:AccountKey,private readonly url=WS_URL){}
+ readonly account:AccountKey;
+ private readonly url:string;
+ constructor(account:AccountKey,url=WS_URL){this.account=account;this.url=url;}
 
  async connect(identity?:Awaited<ReturnType<typeof firebaseSignIn>>){
   const who=identity??await firebaseSignIn(this.account);this.uid=who.uid;this.tenant=who.tenant;this.email=who.email;
