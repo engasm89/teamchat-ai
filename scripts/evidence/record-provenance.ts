@@ -6,6 +6,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import {execFileSync} from "node:child_process";
 import {APPLICATION_PATHS,GCP,gcloudJson,liveDeployment,type Provenance} from "./lib.ts";
+import {ACCOUNTS,openDb} from "../acceptance/common.ts";
 
 const arg=(name:string)=>{const i=process.argv.indexOf(name);if(i<0||!process.argv[i+1])throw Error(`${name} is required`);return process.argv[i+1]!;};
 const buildId=arg("--build"),cleanClone=path.resolve(arg("--clean-clone"));
@@ -61,6 +62,26 @@ const assetsMatchLocalBuild=Object.keys(localBuildAssets).length===Object.keys(s
 if(!assetsMatchLocalBuild)throw Error("Served Hosting assets differ from the clean-clone build");
 const envFile=path.join(cleanClone,"apps/web/.env.production");
 
+const FIXTURE_DIR="teamchat-ai-assessment/teamchat-ai-seed-data";
+const fixtureHashes=Object.fromEntries(fs.readdirSync(FIXTURE_DIR).sort().map(f=>[f,sha256(fs.readFileSync(path.join(FIXTURE_DIR,f)))]));
+const pool=await openDb();
+const tenants:Record<string,{datasetVersions:Record<string,string>;memories:number;memoriesWithout768Embedding:number}>={};
+try{
+ for(const tenant of [...new Set(Object.values(ACCOUNTS).map(a=>a.tenant))].sort()){
+  const client=await pool.connect();
+  try{
+   await client.query("BEGIN");await client.query("SELECT set_config('app.tenant_id',$1,true)",[tenant]);
+   const versions=await client.query<{filename:string;sha256:string}>("SELECT filename,sha256 FROM teamchat.dataset_versions ORDER BY filename");
+   const memories=await client.query<{total:number;missing:number}>(
+    "SELECT COUNT(*)::int AS total,COUNT(*) FILTER(WHERE embedding IS NULL OR vector_dims(embedding)<>768)::int AS missing FROM teamchat.memories");
+   await client.query("COMMIT");
+   tenants[tenant]={datasetVersions:Object.fromEntries(versions.rows.map(r=>[r.filename,r.sha256])),memories:memories.rows[0]!.total,memoriesWithout768Embedding:memories.rows[0]!.missing};
+  }finally{client.release();}
+ }
+}finally{await pool.end();}
+const datasetHashesMatchFixtures=Object.values(tenants).every(t=>JSON.stringify(t.datasetVersions)===JSON.stringify(fixtureHashes));
+const memoriesWithout768Embedding=Object.values(tenants).reduce((n,t)=>n+t.memoriesWithout768Embedding,0);
+
 const workerEnv=gcloudJson(["run","services","describe","teamchat-worker","--region",GCP.region]).spec.template.spec.containers[0].env as Array<{name:string;value?:string}>;
 const sql=gcloudJson(["sql","instances","describe","teamchat-pg-instance"]);
 const secret=gcloudJson(["secrets","versions","list","teamchat-database-url"]) as Array<{name:string;state:string;createTime:string}>;
@@ -75,8 +96,10 @@ const provenance:Provenance={
    note:"Firebase web config and public API URLs; gitignored by the repository, copied into the clean clone for the build. Its values are visible in the served JavaScript."}},
  vertex:Object.fromEntries(workerEnv.filter(e=>/^VERTEX_/.test(e.name)).map(e=>[e.name,e.value??""])),
  database:{instance:sql.connectionName,version:sql.databaseVersion,tier:sql.settings.tier,applicationRole:"teamchat_api",
-  databaseUrlSecret:{name:"teamchat-database-url",versions:secret.map(v=>({version:v.name.split("/").pop(),state:v.state,createTime:v.createTime}))}},
+  databaseUrlSecret:{name:"teamchat-database-url",versions:secret.map(v=>({version:v.name.split("/").pop(),state:v.state,createTime:v.createTime}))},
+  fixtureHashes,tenants,datasetHashesMatchFixtures,memoriesWithout768Embedding,
+  readAs:"teamchat_api through cloud-sql-proxy, one transaction per tenant with app.tenant_id set (RLS enforced)"},
  priorDeployment:"qa_evidence/provenance/prior-deployment-dc70fc8.json",
 };
 fs.writeFileSync("qa_evidence/provenance.json",JSON.stringify(provenance,null,1)+"\n");
-console.log(JSON.stringify({sha,api:api.revision,apiDigest:api.digest,worker:worker.revision,workerDigest:worker.digest,hosting:release.version.name,assetsMatchLocalBuild}));
+console.log(JSON.stringify({sha,api:api.revision,apiDigest:api.digest,worker:worker.revision,workerDigest:worker.digest,hosting:release.version.name,assetsMatchLocalBuild,datasetHashesMatchFixtures,memoriesWithout768Embedding}));

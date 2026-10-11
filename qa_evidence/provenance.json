@@ -1,5 +1,5 @@
 {
- "capturedAt": "2026-10-11T16:51:04.251Z",
+ "capturedAt": "2026-10-11T17:02:24.253Z",
  "source": {
   "sha": "fbf3f8b8d3cf1417ad25c47359501453a6969914",
   "applicationPathsTreeHash": "38b058691615e540cb9b5248ce3be063d7f47b615714a27e2b22392ec1c26545",
@@ -85,7 +85,41 @@
      "createTime": "2026-10-11T08:22:32.866869Z"
     }
    ]
-  }
+  },
+  "fixtureHashes": {
+   "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+   "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+   "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+   "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+   "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+  },
+  "tenants": {
+   "northside-outfitters": {
+    "datasetVersions": {
+     "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+     "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+     "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+     "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+     "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+    },
+    "memories": 8,
+    "memoriesWithout768Embedding": 0
+   },
+   "valley-home-goods": {
+    "datasetVersions": {
+     "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+     "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+     "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+     "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+     "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+    },
+    "memories": 4,
+    "memoriesWithout768Embedding": 0
+   }
+  },
+  "datasetHashesMatchFixtures": true,
+  "memoriesWithout768Embedding": 0,
+  "readAs": "teamchat_api through cloud-sql-proxy, one transaction per tenant with app.tenant_id set (RLS enforced)"
  },
  "priorDeployment": "qa_evidence/provenance/prior-deployment-dc70fc8.json"
 }
