@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import {pathToFileURL} from "node:url";
 import {execFileSync} from "node:child_process";
 import {parse} from "csv-parse/sync";
@@ -40,6 +41,15 @@ export interface ValidateOptions {
  fetcher?:(url:string)=>Promise<{status:number;text:string}>;
  liveDeployment?:(p:Provenance)=>Promise<{apiRevision:string;apiDigest:string;workerRevision:string;workerDigest:string}>;
  gitRunner?:(args:string[])=>string;
+ /** Exact bytes of `file` at commit `rev`, or null when it is not there. */
+ gitShow?:(rev:string,file:string)=>Buffer|null;
+}
+
+/** Same construction as harnessFingerprint in scripts/evidence/lib.ts, over any byte source. */
+export function fingerprintOf(files:string[],read:(file:string)=>Buffer):string{
+ const h=crypto.createHash("sha256");
+ for(const file of [...files].sort()){h.update(file);h.update("\0");h.update(read(file));h.update("\0");}
+ return h.digest("hex");
 }
 
 const VERDICTS:Verdict[]=["PASS","FAIL","BLOCKED","NOT VERIFIED"];
@@ -76,6 +86,21 @@ export async function validate(options:ValidateOptions={}):Promise<ValidationRep
  const root=options.root??process.cwd();
  const abs=(p:string)=>path.resolve(root,p);
  const gitRun=options.gitRunner??((args:string[])=>execFileSync("git",args,{cwd:root,encoding:"utf8"}).trim());
+ const gitShow=options.gitShow??((rev:string,file:string)=>{
+  try{return execFileSync("git",["show",`${rev}:${file}`],{cwd:root,maxBuffer:64*1024*1024,stdio:["ignore","pipe","ignore"]});}catch{return null;}
+ });
+ // A run's harness counts as committed only if its recorded fingerprint is reproduced by the
+ // harness files as they are at the run's recorded commit. (The recorder's `dirty` flag reflects
+ // the whole tree, which always holds the untracked evidence of earlier runs.)
+ const committedHarness=new Map<string,boolean>();
+ const harnessCommitted=(h:RunResults["harness"])=>{
+  const key=`${h.gitHead}\0${h.fingerprint}\0${h.files.join("\0")}`;
+  if(!committedHarness.has(key)){
+   const bytes=new Map(h.files.map(f=>[f,gitShow(h.gitHead,f)]));
+   committedHarness.set(key,h.files.length>0&&[...bytes.values()].every(b=>b!==null)&&fingerprintOf(h.files,f=>bytes.get(f)!)===h.fingerprint);
+  }
+  return committedHarness.get(key)!;
+ };
  const fetcher=options.fetcher??defaultFetcher;
  const integrityErrors:string[]=[];
  const config=JSON.parse(fs.readFileSync(abs(options.checksFile??"docs/requirements/checks.json"),"utf8")) as ChecksConfig;
@@ -200,8 +225,9 @@ export async function validate(options:ValidateOptions={}):Promise<ValidationRep
     if(!candidates.length){out.notes.push(`No ${spec.suite} run against tested source${spec.requireDeployment?" and deployed image digests":""}`);return out;}
     // Every run of the newest harness counts; failures cannot be dropped by cherry-picking.
     const newest=[...candidates].sort((a,b)=>a.results.startedAt.localeCompare(b.results.startedAt)).at(-1)!;
-    const selected=candidates.filter(r=>r.results.harness.fingerprint===newest.results.harness.fingerprint&&!r.results.harness.dirty);
-    if(newest.results.harness.dirty){out.notes.push(`Newest ${spec.suite} run used an uncommitted harness`);return out;}
+    if(!harnessCommitted(newest.results.harness)){
+     out.notes.push(`Newest ${spec.suite} run used a harness that is not the one committed at ${newest.results.harness.gitHead.slice(0,7)}`);return out;}
+    const selected=candidates.filter(r=>r.results.harness.fingerprint===newest.results.harness.fingerprint&&harnessCommitted(r.results.harness));
     const verdicts:Verdict[]=[];
     for(const run of selected){
      out.evidence.push(path.relative(root,path.join(run.dir,"results.json")));
