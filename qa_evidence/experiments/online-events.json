@@ -1,0 +1,19 @@
+{
+ "startedAt": "2026-10-11T16:20:29.138Z",
+ "app": "https://focus-clean-4b9f4.web.app",
+ "setOffline": {
+  "onLineWhileOffline": false,
+  "events": [
+   "offline",
+   "online"
+  ]
+ },
+ "cdp": {
+  "onLineWhileOffline": false,
+  "events": [
+   "offline",
+   "online"
+  ]
+ },
+ "finishedAt": "2026-10-11T16:20:33.682Z"
+}

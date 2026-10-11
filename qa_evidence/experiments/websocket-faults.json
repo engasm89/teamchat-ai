@@ -1,0 +1,67 @@
+{
+ "startedAt": "2026-10-11T16:17:26.941Z",
+ "app": "https://focus-clean-4b9f4.web.app",
+ "playwright": "1.64.0",
+ "setOffline": {
+  "mode": "setOffline",
+  "socketsBefore": 1,
+  "originalSocketClosedWhileOffline": false,
+  "closeDelayMs": null,
+  "closeCode": null,
+  "statusesWhileOffline": [
+   "online"
+  ],
+  "statusesDuringRecovery": [
+   "online"
+  ],
+  "socketsAfterRecovery": 1,
+  "finalStatus": "online"
+ },
+ "cdpOffline": {
+  "mode": "cdp",
+  "socketsBefore": 1,
+  "originalSocketClosedWhileOffline": false,
+  "closeDelayMs": null,
+  "closeCode": null,
+  "statusesWhileOffline": [
+   "online"
+  ],
+  "statusesDuringRecovery": [
+   "online"
+  ],
+  "socketsAfterRecovery": 1,
+  "finalStatus": "online"
+ },
+ "routeWebSocket": {
+  "room": "supply-planning",
+  "proxiedOnline": true,
+  "frames": {
+   "clientToServer": 7,
+   "serverToClient": 625,
+   "duplicated": 1,
+   "dropped": [
+    2
+   ]
+  },
+  "duplicate": {
+   "arrived": true,
+   "renderedCount": 1
+  },
+  "drop": {
+   "renderedBeforeGapFilled": 0,
+   "laterMessageArrived": true,
+   "droppedMessageRecoveredByReplay": true
+  },
+  "forcedClose": {
+   "socketsBefore": 1,
+   "socketsAfter": 2,
+   "closeCode": 4000,
+   "statuses": [
+    "reconnecting",
+    "online"
+   ],
+   "messageAfterReconnectArrived": true
+  }
+ },
+ "finishedAt": "2026-10-11T16:19:46.138Z"
+}
