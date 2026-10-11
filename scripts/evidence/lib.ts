@@ -166,7 +166,7 @@ export interface Provenance {
  source:{sha:string;applicationPathsTreeHash:string};
  api:{service:string;revision:string;image:string;digest:string;labels:Record<string,string>;buildId?:string};
  worker:{service:string;revision:string;image:string;digest:string;labels:Record<string,string>;buildId?:string};
- hosting:{site:string;releaseVersion:string;releaseTime:string;servedAssets:Record<string,string>;localBuildAssets:Record<string,string>;assetsMatchLocalBuild:boolean};
+ hosting:{site:string;releaseVersion:string;releaseTime:string;servedAssets:Record<string,string>;localBuildAssets:Record<string,string>;assetsMatchLocalBuild:boolean;[key:string]:unknown};
  vertex:Record<string,string>;
  database:Record<string,unknown>;
  [key:string]:unknown;
@@ -178,13 +178,13 @@ export const GCP={project:"focus-clean-4b9f4",region:"us-central1"};
 export function gcloudJson(args:string[]):any{
  return JSON.parse(execFileSync("gcloud",[...args,"--project",GCP.project,"--format=json"],{encoding:"utf8"}));
 }
-/** Serving revision (100% traffic) and its image digest for each service. */
+/** Serving revision (100% traffic) and its bare sha256 image digest for each service. */
 export function liveDeployment(apiService:string,workerService:string):DeploymentRef{
  const serving=(service:string)=>{
   const svc=gcloudJson(["run","services","describe",service,"--region",GCP.region]);
   const revision=(svc.status.traffic as Array<{revisionName:string;percent:number}>).find(t=>t.percent===100)?.revisionName??"";
-  const digest=gcloudJson(["run","revisions","describe",revision,"--region",GCP.region]).status.imageDigest as string;
-  return {revision,digest};
+  const imageDigest=gcloudJson(["run","revisions","describe",revision,"--region",GCP.region]).status.imageDigest as string;
+  return {revision,digest:imageDigest.replace(/^.*@/,"")};
  };
  const api=serving(apiService),worker=serving(workerService);
  return {apiRevision:api.revision,apiDigest:api.digest,workerRevision:worker.revision,workerDigest:worker.digest};
