@@ -134,7 +134,7 @@ export class SqlToolExecutor{
        WHERE mem.tenant_id=$1 AND mem.embedding IS NOT NULL
        AND mem.embedding_model=$3 ORDER BY mem.embedding <=> $2::vector LIMIT 5`,
       [ctx.tenantId,queryVector!,this.embeddings!.modelId]);
-     return r.rows.filter(m=>m.distance<=0.45).map(m=>({ref:ledger.add("memory",String(m.memory_id),m),memory:m}));
+     return r.rows.filter(m=>m.distance<=0.55).map(m=>({ref:ledger.add("memory",String(m.memory_id),m),memory:m}));
     }
     case "save_memory":{
      const a=argsOf(raw,["key","value","room"]);if(!consent)throw Error("Shared-memory save not consented");
