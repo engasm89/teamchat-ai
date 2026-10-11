@@ -218,7 +218,8 @@ try{
    if(kind==="api")for(let i=0;i<3;i++){const ws=new WebSocket(`ws://127.0.0.1:${port}/ws`,{origin:APP_URL});const rec:{closedAt?:number;code?:number}={};sockets.push(rec);
     ws.on("close",(code:number)=>{rec.closedAt=Date.now();rec.code=code;});ws.on("error",()=>{});await new Promise<void>(r=>ws.once("open",()=>r()));}
    const keepAlive=net.connect(port,"127.0.0.1");await new Promise<void>(r=>keepAlive.once("connect",()=>r()));
-   keepAlive.write(`GET /health HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: keep-alive\r\n\r\n`);let keepAliveClosedAt:number|undefined;keepAlive.on("close",()=>{keepAliveClosedAt=Date.now();});keepAlive.on("error",()=>{});
+   let keepAliveClosedAt:number|undefined;keepAlive.on("close",()=>{keepAliveClosedAt=Date.now();});keepAlive.on("error",()=>{});keepAlive.resume();
+   keepAlive.write(`GET /health HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: keep-alive\r\n\r\n`);
    await sleep(500);
    const before=appConnections();const signalAt=Date.now();proc.kill("SIGTERM");
    const exit=await Promise.race([exited,sleep(15000).then(()=>null)]);
@@ -229,6 +230,7 @@ try{
    t.assert(`${kind} exits by itself with code 0 within 15 s of SIGTERM`,!!exit&&exit.code===0&&exit.signal===null,"code 0",results[kind]);
    t.assert(`${kind} held database connections before SIGTERM`,before>0,">0",before);
    t.assert(`${kind} released every database connection`,after===0,0,after);
+   t.assert(`${kind} closed the idle keep-alive HTTP connection`,keepAliveClosedAt!==undefined&&keepAliveClosedAt>=signalAt,"closed after SIGTERM",results[kind]);
    if(kind==="api")t.assert("api closed every open WebSocket",sockets.every(s=>s.closedAt!==undefined),"all closed",results[kind]);
   }
   t.detail("results",results);
