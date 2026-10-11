@@ -66,6 +66,7 @@ const productsIn=(turn:Turn)=>turn.tools.flatMap(x=>{
  if(r&&typeof r==="object"&&r.product)return [r.product];
  return [];
 });
+const parsed=(text:unknown):unknown=>{try{return JSON.parse(String(text));}catch{return undefined;}};
 const strip=(v:unknown):unknown=>JSON.parse(JSON.stringify(v,(k,x)=>k==="ref"||k==="operationId"?undefined:x));
 const noMatch=(turn:Turn)=>turn.tools.length>0&&turn.tools.every(x=>x.result?.found===false||(Array.isArray(x.result)&&x.result.length===0));
 
@@ -238,10 +239,10 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("user is told why, field by field",/Not saved — the value does not fit/.test(text)&&/• \w+: /.test(text),"visible reasons",text.slice(0,400)),
    a("at most one repair attempt was executed",executed.length<=2,"≤2 executed save_memory calls",executed.length),
    a("the value was put right: the one repair saved a flat value",!!stored&&executed.length===2&&rejected.length===1,"rejected once, then saved",saves.map(x=>x.result?.saved??x.result?.error??"rejected")),
-   a("stored value is flat and exactly what the repair sent",!!stored&&Object.values(stored.result.memory.value).every(v=>v===null||typeof v!=="object")&&
-    JSON.stringify(stored.result.memory.value)===JSON.stringify(stored.arguments.value),"flat, identical",stored&&{sent:stored.arguments.value,stored:stored.result.memory.value}),
+   a("stored value is flat and exactly what the repair sent",!!stored&&Object.keys(stored.result.memory.value).length>0&&Object.values(stored.result.memory.value).every(v=>v===null||typeof v!=="object")&&
+    JSON.stringify(stored.result.memory.value)===JSON.stringify(parsed(stored.arguments.value_json)),"flat, non-empty, identical",stored&&{sent:stored.arguments.value_json,stored:stored.result.memory.value}),
    completed(flat,"flat"),
-   a("a valid flat value saves",flatSave?.result?.saved===true,true,flatSave?.result)]);
+   a("a valid flat value saves with the requested content",flatSave?.result?.saved===true&&JSON.stringify(flatSave.result.memory?.value??{}).includes(`${key}-ok`),`saved, containing ${key}-ok`,flatSave?.result)]);
  }],
  ["S11","A target both chains track: each tenant gets only its own",["G04","S11"],async t=>{
   const nSeed=oracle.memories[N]!.find(m=>m.key==="q1_assortment_target")!,vSeed=oracle.memories[V]!.find(m=>m.key==="q1_assortment_target")!;

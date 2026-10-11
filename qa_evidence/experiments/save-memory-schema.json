@@ -1,0 +1,188 @@
+{
+ "ranAt": "2026-10-11T18:03:11.301Z",
+ "model": "gemini-2.5-flash",
+ "location": "us-central1",
+ "config": "temperature 0, maxOutputTokens 1024, mode ANY, production system instruction with consent GRANTED",
+ "results": [
+  {
+   "variant": "production: value OBJECT without properties",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "value": {},
+      "key": "ST-4003 Escalation Contact and Deadline"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production: value OBJECT without properties",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value": {},
+      "room": "supply-planning",
+      "key": "escalation contact for ST-4003"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production: value OBJECT without properties",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "roster-x1",
+      "value": {}
+     }
+    }
+   ]
+  },
+  {
+   "variant": "production: value OBJECT without properties",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value": {},
+      "room": "supply-planning",
+      "key": "roster-x1"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "JSON Schema: value object, open properties",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "ST-4003 Escalation Contact and Deadline",
+      "value": {}
+     }
+    }
+   ]
+  },
+  {
+   "variant": "JSON Schema: value object, open properties",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value": {},
+      "room": "supply-planning",
+      "key": "ST-4003 Escalation"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "JSON Schema: value object, open properties",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "roster-x1",
+      "value": {}
+     }
+    }
+   ]
+  },
+  {
+   "variant": "JSON Schema: value object, open properties",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value": {},
+      "room": "supply-planning",
+      "key": "roster-x1"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "value_json: JSON object text",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "ST-4003 escalation contact and deadline",
+      "value_json": "{\"contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "value_json: JSON object text",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"contact\": \"Dana Whitfield\", \"deadline\": \"2026-11-20\"}",
+      "room": "supply-planning",
+      "key": "ST-4003 Escalation"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "value_json: JSON object text",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "room": "supply-planning",
+      "key": "roster-x1"
+     }
+    }
+   ]
+  },
+  {
+   "variant": "value_json: JSON object text",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-x1"
+     }
+    }
+   ]
+  }
+ ]
+}

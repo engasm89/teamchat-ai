@@ -28,3 +28,28 @@ Chromium 1248. Raw output sits beside this file; the scripts are in
    close the proxied socket and refuse reconnects for the outage window, drop
    or duplicate frames, and suppress replay requests where a control needs
    the client's recovery to be defeated.
+
+# save_memory argument schema (2026-10-11)
+
+Acceptance run `20261011T175804Z-acceptance-4b04a5` showed every live
+`save_memory` call storing `{}` and reporting `saved: true` (S09 contact and
+deadline, S10 nested roster, S10 flat value). `scripts/experiments/save-memory-schema.ts`
+asks Vertex `gemini-2.5-flash` directly, with the production system instruction,
+temperature 0 and function-calling mode `ANY`, changing only the declaration of
+the value parameter. Two trials per prompt.
+
+| Declaration of the value | Flat contact/deadline prompt | Nested roster prompt |
+| --- | --- | --- |
+| `value: {type: OBJECT}` with no properties (deployed until the fix) | `{}` 2/2 | `{}` 2/2 |
+| JSON Schema `value: {type: object}`, open properties | `{}` 2/2 | `{}` 2/2 |
+| `value_json: STRING`, the text of a JSON object | correct fields 2/2 | full nested JSON 2/2 |
+
+Raw output: `save-memory-schema.json` (before the fix) and
+`save-memory-schema-after-fix.json` (with the fixed `src/tools.ts`, which
+now behaves like the `value_json` row).
+
+Consequence: with constrained decoding the model cannot put anything into an
+object parameter that declares no properties, so shared memory silently stored
+empty values, the exact "silent truncation" the S10 runbook forbids. The fix
+declares `value_json`, parses it on the server, keeps the field-level rejection
+of nested values, and rejects empty values.
