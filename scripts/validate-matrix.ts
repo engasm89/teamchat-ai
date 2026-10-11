@@ -133,7 +133,10 @@ export async function validate(options:ValidateOptions={}):Promise<ValidationRep
  const runs=loadRuns(abs("qa_evidence/runs"));
  const manifestProblems=new Map<string,string[]>(runs.map(r=>[r.dir,verifyManifest(r.dir)]));
  const artifactHashes=new Map<string,Set<string>>();
+ // Short process logs ("TeamChat API listening") are legitimately byte-identical across runs.
+ const MEDIA=/\.(png|jpe?g|gif|webp|webm|mp4|mov)$/i;
  const registerArtifact=(file:string,hash:string,sameAs?:string)=>{
+  if(!MEDIA.test(file))return;
   const key=sameAs?`sameAs:${sameAs}`:hash;
   if(!artifactHashes.has(hash))artifactHashes.set(hash,new Set());
   artifactHashes.get(hash)!.add(sameAs?key:file);

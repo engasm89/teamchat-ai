@@ -157,6 +157,16 @@ test("tampered artifacts and duplicated screenshots under different names fail",
  const report=await validate({root:duplicate,gitRunner:noGit,gitShow,offline:true});
  assert.equal(verdictOf(report,"S01").verdict,"FAIL");
  assert.ok(report.integrityErrors.some(e=>e.includes("Identical image content")));
+ const sameLog=fixture({requirements:{S01:["t"],S02:["u"]},checks:{t:testCheck,u:{...testCheck,appliesTo:["S02"],testId:"S02"}}},r=>{
+  const dir=writeRun(r,"run-1",[]);
+  fs.writeFileSync(path.join(dir,"a.log"),"TeamChat API listening\n");fs.writeFileSync(path.join(dir,"b.log"),"TeamChat API listening\n");
+  const art=(f:string)=>({path:`qa_evidence/runs/run-1/${f}`,sha256:sha256File(path.join(dir,f)),description:f});
+  writeRun(r,"run-1",[passing("S01","S01",{artifacts:[art("a.log")]}),passing("S02","S02",{artifacts:[art("b.log")]})]);
+  writeManifest(dir);
+ });
+ const logs=await validate({root:sameLog,gitRunner:noGit,gitShow,offline:true});
+ assert.equal(verdictOf(logs,"S01").verdict,"PASS");
+ assert.equal(logs.integrityErrors.length,0);
 });
 
 test("URL evidence must be reachable; offline validation leaves it NOT VERIFIED",async()=>{
