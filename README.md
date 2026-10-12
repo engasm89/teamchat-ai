@@ -3,7 +3,7 @@
 A multi-tenant team chat where an AI participant answers retail questions by calling tools against each chain's own data. Two chains (Northside Outfitters and Valley Home Goods) share one deployment and never see each other.
 
 - Live app: https://focus-clean-4b9f4.web.app
-- Walkthrough video (2 min 44 s): https://github.com/engasm89/teamchat-ai/releases/tag/walkthrough-2026-10-12
+- Walkthrough video, narrated and captioned (2 min 37 s): https://github.com/engasm89/teamchat-ai/releases/tag/walkthrough-2026-10-12
 - Technical brief as submitted on 8 October 2026: `reference/submitted_technical_brief_2026-10-08.pdf`
 - Requirement status, derived from evidence rather than written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md` and `docs/REQUIREMENTS_FINAL_MATRIX.md`
 - Release decision: `docs/FINAL_GO_NO_GO_REPORT.md`

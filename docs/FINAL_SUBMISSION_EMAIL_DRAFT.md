@@ -18,7 +18,7 @@ Here is my TeamChat AI submission.
 
 - Live app: https://focus-clean-4b9f4.web.app
 - Repository: https://github.com/engasm89/teamchat-ai (public, so @paluchi can read it without an invitation)
-- Walkthrough video, 2 min 44 s: https://github.com/engasm89/teamchat-ai/releases/tag/walkthrough-2026-10-12
+- Walkthrough video, narrated, 2 min 37 s: https://github.com/engasm89/teamchat-ai/releases/tag/walkthrough-2026-10-12
 - Technical brief: the one I sent on 8 October; a copy is in the repository under `reference/`.
 
 The README covers how to run and deploy it, the architecture, how real-time delivery works, how the model acts through tools and how its output is checked, how the brief changed during the build, and what does not work.

@@ -1,0 +1,216 @@
+{
+ "audio": {
+  "source": "HeyGen text-to-speech of the paragraphs below, one continuous take",
+  "sha256": "3a48afdc5e18b75f899f45908760403d93f5cb5ca65211569cb1f01620800089",
+  "durationSeconds": 155.266
+ },
+ "method": "Speech start and end of each paragraph: the longest pause (ffmpeg silencedetect, -38 dB, >=0.1 s) between the paragraph's last word and the next paragraph's first word, as timed by Whisper small.en word timestamps. Whisper heard every scripted word.",
+ "paneLeadSeconds": {
+  "left": 0.16,
+  "right": 0.47,
+  "method": "Both windows receive each broadcast at the same moment, yet the right pane's frames show it 0.31 s before the left's (median of 32 paired changes; 21 of them exactly 0.31 s). The left pane shows the typed message at 11.05 s, after the recorder's caption at 11.10 s plus Playwright's fill; the right pane's status turns offline at 118.80 s although the recorder takes it offline only after its caption at 119.24 s. Leads of 0.16 s and 0.47 s satisfy all three."
+ },
+ "anchorMethod": "Each anchor puts an on-screen event (recording seconds, after the pane leads) just before the words that describe it (audio seconds). Event times are the first changed frame of the pane; they agree with the server's created_at for the event plus about 0.4 s.",
+ "anchors": [
+  {
+   "scene": 1,
+   "recordingSeconds": 2.87,
+   "audioSeconds": 10.2,
+   "event": "Sign-in completes: the app replaces the login page"
+  },
+  {
+   "scene": 2,
+   "recordingSeconds": 12.07,
+   "audioSeconds": 17.4,
+   "event": "The left buyer's message appears in the right window"
+  },
+  {
+   "scene": 3,
+   "recordingSeconds": 27.3,
+   "audioSeconds": 27.3,
+   "event": "search_catalog rows appear in both windows"
+  },
+  {
+   "scene": 4,
+   "recordingSeconds": 39.9,
+   "audioSeconds": 35.4,
+   "event": "The calculate_uplift call and its result appear"
+  },
+  {
+   "scene": 5,
+   "recordingSeconds": 51.45,
+   "audioSeconds": 52.4,
+   "event": "search_catalog returns no rows and the no-match answer appears"
+  },
+  {
+   "scene": 6,
+   "recordingSeconds": 63.7,
+   "audioSeconds": 61.4,
+   "event": "The shared-memory search result appears"
+  },
+  {
+   "scene": 7,
+   "recordingSeconds": 75.15,
+   "audioSeconds": 74.0,
+   "event": "get_store_assortment returns found: false"
+  },
+  {
+   "scene": 8,
+   "recordingSeconds": 87.4,
+   "audioSeconds": 82.9,
+   "event": "The answer to the injection appears"
+  },
+  {
+   "scene": 9,
+   "recordingSeconds": 97.65,
+   "audioSeconds": 92.8,
+   "event": "The two-part question appears"
+  },
+  {
+   "scene": 9,
+   "recordingSeconds": 100.97,
+   "audioSeconds": 95.9,
+   "event": "The right window reloads"
+  },
+  {
+   "scene": 9,
+   "recordingSeconds": 105.9,
+   "audioSeconds": 98.5,
+   "event": "The turn completes"
+  },
+  {
+   "scene": 11,
+   "recordingSeconds": 119.27,
+   "audioSeconds": 112.6,
+   "event": "The right window's status turns offline"
+  },
+  {
+   "scene": 11,
+   "recordingSeconds": 120.31,
+   "audioSeconds": 116.1,
+   "event": "The left buyer posts the first message"
+  },
+  {
+   "scene": 11,
+   "recordingSeconds": 123.61,
+   "audioSeconds": 117.2,
+   "event": "The left buyer posts the second message"
+  },
+  {
+   "scene": 12,
+   "recordingSeconds": 138.87,
+   "audioSeconds": 120.9,
+   "event": "The right window's status turns online"
+  },
+  {
+   "scene": 12,
+   "recordingSeconds": 139.87,
+   "audioSeconds": 124.8,
+   "event": "Both missed messages appear in the right window"
+  },
+  {
+   "scene": 13,
+   "recordingSeconds": 151.07,
+   "audioSeconds": 133.0,
+   "event": "Signed in as the Valley buyer"
+  },
+  {
+   "scene": 13,
+   "recordingSeconds": 152.67,
+   "audioSeconds": 135.6,
+   "event": "The ST-4013 question appears"
+  },
+  {
+   "scene": 13,
+   "recordingSeconds": 153.87,
+   "audioSeconds": 139.0,
+   "event": "Valley's assortment for ST-4013 appears"
+  }
+ ],
+ "paragraphs": [
+  {
+   "scene": 1,
+   "speechStart": 0.0,
+   "speechEnd": 12.041,
+   "text": "This is TeamChat AI on the deployed stack: Firebase Hosting, Cloud Run, Vertex AI Gemini and Cloud SQL. Two Northside buyers sign in, side by side."
+  },
+  {
+   "scene": 2,
+   "speechStart": 12.511,
+   "speechEnd": 22.741,
+   "text": "Real time: one WebSocket per browser, no polling. The left buyer's message appears on the right as soon as it's saved. Senders show as raw user IDs."
+  },
+  {
+   "scene": 3,
+   "speechStart": 23.189,
+   "speechEnd": 34.307,
+   "text": "Gemini uses native function calling to search the catalog itself, and both screens show the fetched rows while the answer is built. Every code shown comes from the catalog, not the model."
+  },
+  {
+   "scene": 4,
+   "speechStart": 34.75,
+   "speechEnd": 47.06,
+   "text": "The uplift math runs on the server. ST-4003 already carries class 318, so the new code adds no class: the difference is zero. No money figure is invented."
+  },
+  {
+   "scene": 5,
+   "speechStart": 47.521,
+   "speechEnd": 57.971,
+   "text": "Next, an honesty check. Beekeeping veils aren't in the supplied catalog. The search finds no match, and the answer says so plainly. No product code is invented."
+  },
+  {
+   "scene": 6,
+   "speechStart": 58.428,
+   "speechEnd": 67.221,
+   "text": "Shared memory: a question asked in different words finds a decision recorded in another room, using vector search, and shows who made it and when."
+  },
+  {
+   "scene": 7,
+   "speechStart": 68.059,
+   "speechEnd": 79.955,
+   "text": "Tenant isolation: store ST-4013 belongs to Valley Home Goods. The database returns nothing to Northside, exactly the same answer as for a store that doesn't exist."
+  },
+  {
+   "scene": 8,
+   "speechStart": 80.371,
+   "speechEnd": 90.67,
+   "text": "A prompt injection claims admin mode. It changes nothing: every tool runs inside the tenant the server verified at sign-in, so there's no other chain's data to reveal."
+  },
+  {
+   "scene": 9,
+   "speechStart": 91.274,
+   "speechEnd": 98.698,
+   "text": "Refresh mid-answer: the left buyer asks a two-part question, and the right window reloads while the answer is still being built."
+  },
+  {
+   "scene": 10,
+   "speechStart": 99.129,
+   "speechEnd": 109.655,
+   "text": "After the reload, the right window replays the whole turn from the server: every fetched result and the answer, in order, once each. Nothing is lost or repeated."
+  },
+  {
+   "scene": 11,
+   "speechStart": 110.097,
+   "speechEnd": 120.316,
+   "text": "Next, reconnection. The right window goes offline, and while it's disconnected, the left buyer keeps posting messages to the room. The right side sees nothing yet."
+  },
+  {
+   "scene": 12,
+   "speechStart": 120.737,
+   "speechEnd": 129.981,
+   "text": "Back online, the right window replays from its saved position. Both messages it missed arrive once each, in the order they were sent, with no duplicates."
+  },
+  {
+   "scene": 13,
+   "speechStart": 130.747,
+   "speechEnd": 143.816,
+   "text": "The other chain. The right window signs in as a Valley Home Goods buyer. ST-4013 is Valley's own store, so Valley sees its assortment, the same store Northside was told doesn't exist."
+  },
+  {
+   "scene": 14,
+   "speechStart": 144.231,
+   "speechEnd": 155.082,
+   "text": "Every claim in this video is also checked automatically against the deployed stack. The results, including the raw WebSocket messages and database comparisons, are in the repository."
+  }
+ ]
+}

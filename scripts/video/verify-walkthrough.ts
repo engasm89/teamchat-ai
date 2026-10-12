@@ -4,6 +4,7 @@
  * pane size through Playwright's recorder, then the same H.264 encode): planted decoy credentials must be
  * found when visible and must not be readable under the recorder's redaction.
  * High-resolution crops of the redacted regions are written for visual review.
+ * A narrated cut (scripts/video/narrate-walkthrough.ts) is also checked for sync between its picture and its voice.
  * With VIDEO_URL set, the published copy is downloaded anonymously, compared by checksum and fully decoded.
  *   VIDEO_URL=... node --experimental-strip-types scripts/video/verify-walkthrough.ts [--dir qa_evidence/scratch/video] [--dry-run]
  * --dry-run writes the run under qa_evidence/scratch/dry-runs instead of the evidence directory.
@@ -12,13 +13,14 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
-import {execFileSync,execFile} from "node:child_process";
+import {execFileSync,execFile,spawnSync} from "node:child_process";
 import {promisify} from "node:util";
 import {chromium} from "playwright";
-import {RunRecorder,keychainPassword,sha256,sha256File} from "../evidence/lib.ts";
+import {RunRecorder,TestRecorder,keychainPassword,sha256,sha256File} from "../evidence/lib.ts";
 import {ACCOUNTS,API_URL,APP_URL,bindDeployment,sleep,type AccountKey} from "../acceptance/common.ts";
 
-const HARNESS=["scripts/video/verify-walkthrough.ts","scripts/video/record-walkthrough.ts","scripts/video/ocr.swift","scripts/acceptance/common.ts","scripts/evidence/lib.ts"];
+const HARNESS=["scripts/video/verify-walkthrough.ts","scripts/video/record-walkthrough.ts","scripts/video/narrate-walkthrough.ts","scripts/video/compose.ts",
+ "docs/video/narration-cues.json","scripts/video/ocr.swift","scripts/acceptance/common.ts","scripts/evidence/lib.ts"];
 const EXPECTED_STEPS=["sign-in","realtime","tools-grounding","retail-math","honesty","memory","isolation","injection","refresh","reconnect","valley","close"];
 const REDACTION_CSS='.sidebarfooter small,input[type="email"]{filter:blur(7px)}';
 const PANE={width:960,height:900},FOOTER={x:0,y:700,w:250,h:200};
@@ -80,7 +82,7 @@ async function sampleAndOcr(video:string,label:string):Promise<Array<{frame:stri
  return out.sort((a,b)=>a.frame.localeCompare(b.frame));
 }
 function ffprobe(file:string){
- return JSON.parse(execFileSync("ffprobe",["-v","error","-show_entries","format=duration,size:stream=codec_type,codec_name,width,height,pix_fmt,r_frame_rate,nb_frames","-of","json",file],{encoding:"utf8"}));
+ return JSON.parse(execFileSync("ffprobe",["-v","error","-show_entries","format=duration,size:stream=codec_type,codec_name,width,height,pix_fmt,r_frame_rate,nb_frames,duration","-of","json",file],{encoding:"utf8"}));
 }
 /** Crops one region at each time from both panes, enlarged 3x, and tiles them into one image. */
 function cropSheet(video:string,times:number[],box:{x:number;y:number;w:number;h:number},out:string){
@@ -130,6 +132,10 @@ try{
    return [...(all.includes(head)?[]:[head]),...(results.some(r=>norm(r.text).includes(lead))?[]:[`caption ${i+1}: ${c.text.split("\n")[0]}`])];
   });
   t.assert("every caption and its step header is legible in the video",missing.length===0,[],missing);
+  /** Caption times are recording time; the published cut is sped up per speedSegments. */
+  const toOutput=(s:number)=>(timeline.speedSegments as Array<{fromSeconds:number;toSeconds:number;speed:number}>)
+   .reduce((o,g)=>o+Math.max(0,Math.min(s,g.toSeconds)-g.fromSeconds)/g.speed,0);
+  if(timeline.narration)checkNarration(t,timeline,probe,toOutput);
 
   const decoy={password:crypto.randomBytes(12).toString("base64url"),email:`decoy.${crypto.randomBytes(3).toString("hex")}@example.org`};
   const decoySecrets:Secret[]=[{kind:"password:decoy",value:decoy.password,windowed:true},{kind:"email:decoy",value:decoy.email,windowed:false}];
@@ -154,9 +160,6 @@ try{
   const signInTimes=Array.from({length:8},(_,i)=>signIn.fromSeconds+0.5+i*(signIn.toSeconds-signIn.fromSeconds-1)/7);
   cropSheet(VIDEO,signInTimes,controls.emailBox,path.join(t.dir,"crops-email-field.jpg"));
   t.artifact("crops-email-field.jpg","E-mail field of both panes during sign-in, 3x, for visual review");
-  /** Caption times are recording time; the published cut is sped up per speedSegments. */
-  const toOutput=(s:number)=>(timeline.speedSegments as Array<{fromSeconds:number;toSeconds:number;speed:number}>)
-   .reduce((o,g)=>o+Math.max(0,Math.min(s,g.toSeconds)-g.fromSeconds)/g.speed,0);
   const valley=(timeline.captions as Array<{cast:string;fromSeconds:number;toSeconds:number}>).find(c=>c.cast.includes("VALLEY"))!;
   const [vFrom,vTo]=[toOutput(valley.fromSeconds),toOutput(valley.toSeconds)];
   cropSheet(VIDEO,Array.from({length:8},(_,i)=>vFrom+0.25+i*(vTo-vFrom-0.5)/7),controls.emailBox,path.join(t.dir,"crops-email-field-valley.jpg"));
@@ -190,6 +193,41 @@ try{
 }finally{
  run.finish();
  fs.rmSync(WORK,{recursive:true,force:true});
+}
+
+/** Narrated cut: reads the published file's own picture and sound. Each caption change (found in the caption band)
+ * must land where the timeline puts it and inside a pause in the voice, every paragraph must be spoken within its
+ * own scene, and every anchored event must play where its words are. */
+function checkNarration(t:TestRecorder,timeline:any,probe:any,toOutput:(s:number)=>number){
+ const n=timeline.narration as {cues:string;audioSha256:string;anchors:Array<{event:string;recordingSeconds:number;outputSeconds:number}>;
+  scenes:Array<{scene:number;speechFrom:number;speechTo:number}>};
+ const audio=probe.streams.filter((s:any)=>s.codec_type==="audio"),picture=probe.streams.find((s:any)=>s.codec_type==="video");
+ t.assert("narration: one AAC track as long as the picture",audio.length===1&&audio[0].codec_name==="aac"&&Math.abs(Number(audio[0].duration)-Number(picture.duration))<0.1,
+  "1 aac track, duration within 0.1 s",audio.map((s:any)=>[s.codec_name,Number(s.duration),Number(picture.duration)]));
+ t.assert("narration: the timeline names the audio the cues were timed against",JSON.parse(fs.readFileSync(n.cues,"utf8")).audio.sha256===n.audioSha256,n.cues,n.audioSha256);
+ const log=(a:string[])=>{
+  const r=spawnSync("ffmpeg",["-hide_banner","-nostats",...a,"-f","null","-"],{encoding:"utf8",maxBuffer:64<<20});
+  if(r.status!==0)throw Error(`ffmpeg ${a.join(" ")} exited ${r.status}`);
+  return r.stderr;
+ };
+ const pauses:Array<[number,number]>=[];let open=0;
+ for(const m of log(["-i",VIDEO,"-vn","-af","silencedetect=noise=-38dB:d=0.1"]).matchAll(/silence_(start|end): ([0-9.]+)/g)){
+  if(m[1]==="start")open=Number(m[2]);else pauses.push([open,Number(m[2])]);}
+ const changes=[...log(["-i",VIDEO,"-an","-vf",`crop=1920:180:0:${1080-180},select='gt(scene,0.01)',showinfo`]).matchAll(/pts_time:([0-9.]+)/g)].map(m=>Number(m[1]));
+ const captions=timeline.captions as Array<{fromSeconds:number;toSeconds:number}>;
+ const boundaries=captions.slice(1).map((c,i)=>{
+  const planned=toOutput(c.fromSeconds),seen=changes.find(x=>Math.abs(x-planned)<0.2)??null;
+  return {scene:i+2,planned:+planned.toFixed(2),captionChangeSeen:seen,pause:pauses.find(([a,b])=>seen!==null&&a<=seen&&seen<=b)??null};
+ });
+ const scenes=n.scenes.map((s,i)=>({...s,captionFrom:+toOutput(captions[i]!.fromSeconds).toFixed(2),captionTo:+toOutput(captions[i]!.toSeconds).toFixed(2)}));
+ const anchors=n.anchors.map(a=>({event:a.event,spokenAt:a.outputSeconds,playsAt:+toOutput(a.recordingSeconds).toFixed(2)}));
+ t.detail("narration",{pausesFound:pauses.length,captionChangesFound:changes.length,boundaries,scenes,anchors});
+ t.assert("narration: every caption change is in the picture where the timeline puts it, inside a pause in the voice",
+  boundaries.every(b=>b.captionChangeSeen!==null&&b.pause!==null),"all scene changes seen within 0.2 s and inside a pause",boundaries.filter(b=>b.captionChangeSeen===null||b.pause===null));
+ t.assert("narration: every paragraph is spoken while its own caption is on screen",
+  scenes.every(s=>s.speechFrom>=s.captionFrom-0.05&&s.speechTo<=s.captionTo+0.05),"speech inside its caption",scenes.filter(s=>s.speechFrom<s.captionFrom-0.05||s.speechTo>s.captionTo+0.05));
+ t.assert("narration: every anchored event plays where the words describing it are spoken",
+  anchors.every(a=>Math.abs(a.playsAt-a.spokenAt)<0.05),"within 0.05 s",anchors.filter(a=>Math.abs(a.playsAt-a.spokenAt)>=0.05));
 }
 
 /** Records the deployed login page twice at pane size: decoys visible, then under the recorder's redaction. */

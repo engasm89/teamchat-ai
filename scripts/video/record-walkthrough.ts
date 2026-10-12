@@ -5,14 +5,14 @@
  * Waiting on the model is sped up; every speed change is listed in timeline.json. */
 import fs from "node:fs";
 import path from "node:path";
-import {execFileSync} from "node:child_process";
 import {chromium,type BrowserContext,type Page} from "playwright";
 import {keychainPassword,sha256File} from "../evidence/lib.ts";
 import {ACCOUNTS,APP_URL,QA_ROOM,bindDeployment,sleep,tag,type AccountKey} from "../acceptance/common.ts";
+import {PANE,compose,recordedCut} from "./compose.ts";
 
 const args=process.argv.slice(2);
 const OUT=path.resolve(args.includes("--out")?args[args.indexOf("--out")+1]!:"qa_evidence/scratch/video");
-const PANE={width:960,height:900},BAND=180,ROOM=QA_ROOM["northside-outfitters"],VROOM=QA_ROOM["valley-home-goods"];
+const BAND=180,ROOM=QA_ROOM["northside-outfitters"],VROOM=QA_ROOM["valley-home-goods"];
 const REDACTION_CSS='.sidebarfooter small,input[type="email"]{filter:blur(7px)}';
 /** Applied before any page script on every navigation, so a reload never paints an unredacted frame. */
 const REDACTION_INIT=`(()=>{const add=()=>{const s=document.createElement("style");s.textContent=${JSON.stringify(REDACTION_CSS)};document.documentElement.appendChild(s);};
@@ -197,21 +197,9 @@ try{
 
 // ---------- compose ----------
 const sec=(ms:number)=>Math.max(0,(ms-t0)/1000);
-const totalEnd=sec(captions.at(-1)!.to);
-const segments=pace.map((p,i)=>({from:sec(p.at),to:i+1<pace.length?sec(pace[i+1]!.at):totalEnd,speed:p.speed})).filter(s=>s.to-s.from>0.05&&s.speed>0);
-const inputs=["-i",path.join(OUT,"raw","left.webm"),"-i",path.join(OUT,"raw","right.webm"),
- ...captions.flatMap((_,i)=>["-loop","1","-framerate","25","-t",String(totalEnd+1),"-i",path.join(OUT,"captions",`${String(i).padStart(2,"0")}.png`)])];
-const f:string[]=[
- `[0:v]trim=start=${(t0-left.videoStart)/1000},setpts=PTS-STARTPTS,fps=25[l]`,
- `[1:v]trim=start=${(t0-right.videoStart)/1000},setpts=PTS-STARTPTS,fps=25[r]`,
- `[l][r]hstack=inputs=2,pad=1920:1080:0:0:color=0x0f1d2e[b0]`];
-captions.forEach((c,i)=>f.push(`[b${i}][${i+2}:v]overlay=0:${PANE.height}:enable='between(t,${sec(c.from).toFixed(2)},${sec(c.to).toFixed(2)})'[b${i+1}]`));
-f.push(`[b${captions.length}]split=${segments.length}${segments.map((_,i)=>`[s${i}]`).join("")}`);
-segments.forEach((s,i)=>f.push(`[s${i}]trim=start=${s.from.toFixed(3)}:end=${s.to.toFixed(3)},setpts=(PTS-STARTPTS)/${s.speed}[o${i}]`));
-f.push(`${segments.map((_,i)=>`[o${i}]`).join("")}concat=n=${segments.length}:v=1:a=0,fps=25,format=yuv420p[out]`);
+const cut=recordedCut(OUT),{segments}=cut;
 const file=path.join(OUT,"teamchat-ai-walkthrough.mp4");
-execFileSync("ffmpeg",["-hide_banner","-loglevel","error","-y",...inputs,"-filter_complex",f.join(";"),"-map","[out]",
- "-c:v","libx264","-preset","medium","-crf","20","-movflags","+faststart",file],{stdio:"inherit"});
+compose({...cut,out:file});
 const timeline={sourceSha,deployment,recordedAt:new Date(t0).toISOString(),steps,
  captions:captions.map(c=>({text:c.text,cast:c.cast,fromSeconds:+sec(c.from).toFixed(2),toSeconds:+sec(c.to).toFixed(2)})),
  speedSegments:segments.map(s=>({fromSeconds:+s.from.toFixed(2),toSeconds:+s.to.toFixed(2),speed:s.speed})),
