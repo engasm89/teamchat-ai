@@ -1,0 +1,582 @@
+{
+ "schemaVersion": 1,
+ "suite": "handoff",
+ "runId": "20261012T053205Z-handoff-a9fd34",
+ "environment": "production: https://focus-clean-4b9f4.web.app + https://teamchat-api-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-12T05:32:05.900Z",
+ "finishedAt": "2026-10-12T05:33:08.720Z",
+ "harness": {
+  "gitHead": "351e8baff9a369b6cedd3d67b72027605db362d2",
+  "dirty": true,
+  "fingerprint": "68a0b5a2539220d8861ce15c17629deda662fcef255fda29aa2e7e89ceb2f76a",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/acceptance/live-client.ts",
+   "scripts/evidence/lib.ts",
+   "scripts/handoff/run-handoff.ts"
+  ]
+ },
+ "source": {
+  "sha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-00016-ct7",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00016-24v",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "tests": [
+  {
+   "id": "ACCOUNTS",
+   "title": "Six enabled Firebase accounts, three per tenant, sign in successfully",
+   "requirementIds": [
+    "D04",
+    "D09",
+    "A15"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-12T05:32:08.960Z",
+   "finishedAt": "2026-10-12T05:32:16.374Z",
+   "details": {
+    "accounts": [
+     {
+      "account": "n1",
+      "email": "northside.buyer1@teamchat.internal",
+      "expectedTenant": "northside-outfitters",
+      "signedIn": true,
+      "disabled": false,
+      "apiStatus": 200,
+      "apiTenant": "northside-outfitters",
+      "uid": "m8O2in6sSKViQgq6RpLAE3dep8Q2"
+     },
+     {
+      "account": "n2",
+      "email": "northside.buyer2@teamchat.internal",
+      "expectedTenant": "northside-outfitters",
+      "signedIn": true,
+      "disabled": false,
+      "apiStatus": 200,
+      "apiTenant": "northside-outfitters",
+      "uid": "gFs1zl6ayofuqRsSLCoTdh2xjwh2"
+     },
+     {
+      "account": "n3",
+      "email": "northside.analyst3@teamchat.internal",
+      "expectedTenant": "northside-outfitters",
+      "signedIn": true,
+      "disabled": false,
+      "apiStatus": 200,
+      "apiTenant": "northside-outfitters",
+      "uid": "djcCSVJVBYNz4p7JLIvToIj1JyC3"
+     },
+     {
+      "account": "v1",
+      "email": "valley.buyer1@teamchat.internal",
+      "expectedTenant": "valley-home-goods",
+      "signedIn": true,
+      "disabled": false,
+      "apiStatus": 200,
+      "apiTenant": "valley-home-goods",
+      "uid": "xM6WYYfOsUVm4htAYKoEnjPvRh03"
+     },
+     {
+      "account": "v2",
+      "email": "valley.buyer2@teamchat.internal",
+      "expectedTenant": "valley-home-goods",
+      "signedIn": true,
+      "disabled": false,
+      "apiStatus": 200,
+      "apiTenant": "valley-home-goods",
+      "uid": "zzYPoDqlwReWiVKnS6dphdH8a212"
+     },
+     {
+      "account": "v3",
+      "email": "valley.analyst3@teamchat.internal",
+      "expectedTenant": "valley-home-goods",
+      "signedIn": true,
+      "disabled": false,
+      "apiStatus": 200,
+      "apiTenant": "valley-home-goods",
+      "uid": "mlKH3GGyIBY1es6Couua08OIB872"
+     }
+    ],
+    "passwordSource": "macOS Keychain service teamchat-ai-reviewer (never written to evidence)"
+   },
+   "assertions": [
+    {
+     "name": "all six accounts sign in with their Keychain passwords",
+     "pass": true,
+     "expected": 6,
+     "actual": 6
+    },
+    {
+     "name": "no account is disabled",
+     "pass": true,
+     "expected": "none disabled",
+     "actual": [
+      [
+       "n1",
+       false
+      ],
+      [
+       "n2",
+       false
+      ],
+      [
+       "n3",
+       false
+      ],
+      [
+       "v1",
+       false
+      ],
+      [
+       "v2",
+       false
+      ],
+      [
+       "v3",
+       false
+      ]
+     ]
+    },
+    {
+     "name": "the deployed API maps every account to its expected tenant",
+     "pass": true,
+     "expected": "expected tenants",
+     "actual": [
+      [
+       "n1",
+       200,
+       "northside-outfitters"
+      ],
+      [
+       "n2",
+       200,
+       "northside-outfitters"
+      ],
+      [
+       "n3",
+       200,
+       "northside-outfitters"
+      ],
+      [
+       "v1",
+       200,
+       "valley-home-goods"
+      ],
+      [
+       "v2",
+       200,
+       "valley-home-goods"
+      ],
+      [
+       "v3",
+       200,
+       "valley-home-goods"
+      ]
+     ]
+    },
+    {
+     "name": "three distinct users per tenant",
+     "pass": true,
+     "expected": "3 per tenant",
+     "actual": {
+      "northside-outfitters": 3,
+      "valley-home-goods": 3
+     }
+    }
+   ],
+   "artifacts": []
+  },
+  {
+   "id": "MEMBERSHIPS",
+   "title": "Room memberships per tenant are populated",
+   "requirementIds": [
+    "D09"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-12T05:32:16.376Z",
+   "finishedAt": "2026-10-12T05:32:18.072Z",
+   "details": {
+    "roomsPerAccount": {
+     "n1": [
+      "assortment-review",
+      "category-strategy",
+      "supply-planning"
+     ],
+     "n2": [
+      "assortment-review",
+      "category-strategy",
+      "supply-planning"
+     ],
+     "n3": [
+      "assortment-review",
+      "category-strategy",
+      "supply-planning"
+     ],
+     "v1": [
+      "assortment-review",
+      "category-strategy",
+      "range-planning"
+     ],
+     "v2": [
+      "assortment-review",
+      "category-strategy",
+      "pricing"
+     ],
+     "v3": [
+      "assortment-review",
+      "category-strategy",
+      "strategy"
+     ]
+    },
+    "reviewerRooms": [
+     "assortment-review",
+     "category-strategy"
+    ]
+   },
+   "assertions": [
+    {
+     "name": "every account lists its rooms through the API",
+     "pass": true,
+     "expected": "6 lists",
+     "actual": 6
+    },
+    {
+     "name": "every account is a member of both reviewer rooms",
+     "pass": true,
+     "expected": [
+      "assortment-review",
+      "category-strategy"
+     ],
+     "actual": {
+      "n1": [
+       "assortment-review",
+       "category-strategy",
+       "supply-planning"
+      ],
+      "n2": [
+       "assortment-review",
+       "category-strategy",
+       "supply-planning"
+      ],
+      "n3": [
+       "assortment-review",
+       "category-strategy",
+       "supply-planning"
+      ],
+      "v1": [
+       "assortment-review",
+       "category-strategy",
+       "range-planning"
+      ],
+      "v2": [
+       "assortment-review",
+       "category-strategy",
+       "pricing"
+      ],
+      "v3": [
+       "assortment-review",
+       "category-strategy",
+       "strategy"
+      ]
+     }
+    }
+   ],
+   "artifacts": []
+  },
+  {
+   "id": "BOUNDARIES",
+   "title": "Each account sees only its own chain: API rejects missing or forged tokens; WebSocket replay holds only own-tenant events",
+   "requirementIds": [
+    "D04",
+    "G04"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-12T05:32:18.075Z",
+   "finishedAt": "2026-10-12T05:33:04.419Z",
+   "details": {
+    "unauthenticated": {
+     "noToken": 401,
+     "forgedToken": 401
+    },
+    "replayRoom": "assortment-review",
+    "accounts": [
+     {
+      "account": "n1",
+      "tenant": "northside-outfitters",
+      "replayed": 606,
+      "wrongTenantLabel": 0,
+      "notInOwnTenantDb": 0,
+      "inOtherTenantDb": 0,
+      "foreignOnlyRoom": "range-planning",
+      "foreignRoomEvents": 0,
+      "foreignRoomReplies": []
+     },
+     {
+      "account": "n2",
+      "tenant": "northside-outfitters",
+      "replayed": 606,
+      "wrongTenantLabel": 0,
+      "notInOwnTenantDb": 0,
+      "inOtherTenantDb": 0,
+      "foreignOnlyRoom": "range-planning",
+      "foreignRoomEvents": 0,
+      "foreignRoomReplies": []
+     },
+     {
+      "account": "n3",
+      "tenant": "northside-outfitters",
+      "replayed": 606,
+      "wrongTenantLabel": 0,
+      "notInOwnTenantDb": 0,
+      "inOtherTenantDb": 0,
+      "foreignOnlyRoom": "range-planning",
+      "foreignRoomEvents": 0,
+      "foreignRoomReplies": []
+     },
+     {
+      "account": "v1",
+      "tenant": "valley-home-goods",
+      "replayed": 63,
+      "wrongTenantLabel": 0,
+      "notInOwnTenantDb": 0,
+      "inOtherTenantDb": 0,
+      "foreignOnlyRoom": "supply-planning",
+      "foreignRoomEvents": 0,
+      "foreignRoomReplies": []
+     },
+     {
+      "account": "v2",
+      "tenant": "valley-home-goods",
+      "replayed": 63,
+      "wrongTenantLabel": 0,
+      "notInOwnTenantDb": 0,
+      "inOtherTenantDb": 0,
+      "foreignOnlyRoom": "supply-planning",
+      "foreignRoomEvents": 0,
+      "foreignRoomReplies": []
+     },
+     {
+      "account": "v3",
+      "tenant": "valley-home-goods",
+      "replayed": 63,
+      "wrongTenantLabel": 0,
+      "notInOwnTenantDb": 0,
+      "inOtherTenantDb": 0,
+      "foreignOnlyRoom": "supply-planning",
+      "foreignRoomEvents": 0,
+      "foreignRoomReplies": []
+     }
+    ]
+   },
+   "assertions": [
+    {
+     "name": "the API rejects a request without a token",
+     "pass": true,
+     "expected": 401,
+     "actual": 401
+    },
+    {
+     "name": "the API rejects a forged token",
+     "pass": true,
+     "expected": 401,
+     "actual": 401
+    },
+    {
+     "name": "every account replays a populated reviewer room",
+     "pass": true,
+     "expected": ">0 each",
+     "actual": [
+      [
+       "n1",
+       606
+      ],
+      [
+       "n2",
+       606
+      ],
+      [
+       "n3",
+       606
+      ],
+      [
+       "v1",
+       63
+      ],
+      [
+       "v2",
+       63
+      ],
+      [
+       "v3",
+       63
+      ]
+     ]
+    },
+    {
+     "name": "every replayed event belongs to the account's own tenant (label and database)",
+     "pass": true,
+     "expected": "0 foreign",
+     "actual": [
+      [
+       "n1",
+       0,
+       0,
+       0
+      ],
+      [
+       "n2",
+       0,
+       0,
+       0
+      ],
+      [
+       "n3",
+       0,
+       0,
+       0
+      ],
+      [
+       "v1",
+       0,
+       0,
+       0
+      ],
+      [
+       "v2",
+       0,
+       0,
+       0
+      ],
+      [
+       "v3",
+       0,
+       0,
+       0
+      ]
+     ]
+    },
+    {
+     "name": "subscribing to a room that exists only in the other chain yields no events",
+     "pass": true,
+     "expected": 0,
+     "actual": [
+      [
+       "n1",
+       "range-planning",
+       0,
+       []
+      ],
+      [
+       "n2",
+       "range-planning",
+       0,
+       []
+      ],
+      [
+       "n3",
+       "range-planning",
+       0,
+       []
+      ],
+      [
+       "v1",
+       "supply-planning",
+       0,
+       []
+      ],
+      [
+       "v2",
+       "supply-planning",
+       0,
+       []
+      ],
+      [
+       "v3",
+       "supply-planning",
+       0,
+       []
+      ]
+     ]
+    }
+   ],
+   "artifacts": []
+  },
+  {
+   "id": "SEEDED-HISTORY",
+   "title": "Both tenants have human message history and at least one genuine tool-backed AI exchange",
+   "requirementIds": [
+    "D01",
+    "D08",
+    "A15"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-12T05:33:04.420Z",
+   "finishedAt": "2026-10-12T05:33:08.716Z",
+   "details": {
+    "assortmentReview": {
+     "northside-outfitters": {
+      "events": 606,
+      "humanMessages": 125,
+      "distinctHumanAuthors": 3,
+      "toolBackedExchanges": 31,
+      "example": {
+       "turnId": "58c86ab5-271f-4326-b13c-219c86296a7f",
+       "tool": "search_catalog",
+       "arguments": {
+        "query": "portable air conditioners"
+       },
+       "resultCount": 10,
+       "question": "@AI What portable air conditioners do we have?"
+      }
+     },
+     "valley-home-goods": {
+      "events": 63,
+      "humanMessages": 13,
+      "distinctHumanAuthors": 3,
+      "toolBackedExchanges": 2,
+      "example": {
+       "turnId": "7430800a-194f-45cd-ae2e-f14f74e13432",
+       "tool": "search_memory",
+       "arguments": {
+        "query": "our strategy"
+       },
+       "resultCount": 1,
+       "question": "@AI What stores do we operate and what is our strategy?"
+      }
+     }
+    }
+   },
+   "assertions": [
+    {
+     "name": "northside-outfitters: three tenant users have posted in assortment-review",
+     "pass": true,
+     "expected": ">=3",
+     "actual": 3
+    },
+    {
+     "name": "northside-outfitters: at least one completed AI turn fetched a non-empty tool result",
+     "pass": true,
+     "expected": ">=1",
+     "actual": 31
+    },
+    {
+     "name": "valley-home-goods: three tenant users have posted in assortment-review",
+     "pass": true,
+     "expected": ">=3",
+     "actual": 3
+    },
+    {
+     "name": "valley-home-goods: at least one completed AI turn fetched a non-empty tool result",
+     "pass": true,
+     "expected": ">=1",
+     "actual": 2
+    }
+   ],
+   "artifacts": []
+  }
+ ]
+}

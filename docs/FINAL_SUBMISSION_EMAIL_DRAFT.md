@@ -1,63 +1,35 @@
-# DRAFT ONLY — CONTROLEASE TEAMCHAT AI SUBMISSION EMAIL
+# DRAFT — not sent
 
-> [!IMPORTANT]
-> **DO NOT SEND TO GONZALO, ELISA OR CONTROLEASE.**  
-> This document is an internal preparation draft for Ashraf Al-Madhoun's personal review and explicit sign-off. Under no circumstances should any automated tool or agent dispatch this message.
+Ashraf reviews, edits and sends this himself. No tool or agent sends it. Recipients match the thread in `docs/FINAL_HANDOFF_2026-10-09/EMAIL_CHRONOLOGY.md`: the technical brief went to Gonzalo with Elisa in copy on 8 October, and Gonzalo set the deadline to Friday 16 October.
 
----
-
-**To:** Gonzalo Alessandrelli (`gonzalo@controlease.net`)  
-**Cc:** Elisa Pérez Montenegro (`elisa@controlease.net`)  
-**From:** Ashraf Al-Madhoun (`eng.asm.89@gmail.com`)  
-**Subject:** TeamChat AI Technical Assessment Submission — Ashraf Al-Madhoun  
-**Date:** October 11, 2026 (Ahead of Friday, October 16, 2026 deadline)  
+Before sending:
+- Send the reviewer passwords separately, as `docs/REVIEWER_ACCESS.md` describes, and fill in the channel below.
+- Open the three links from a private browser window.
 
 ---
 
-Dear Gonzalo and Elisa,
+**To:** gonzalo@controlease.net
+**Cc:** elisa@controlease.net
+**Subject:** TeamChat AI assessment: submission
 
-I am pleased to formally submit my completed **TeamChat AI Technical Assessment** deliverable ahead of our Friday, October 16, 2026 deadline.
+Hi Gonzalo, Elisa,
 
-In accordance with the assessment brief, architectural discussions, and email clarifications, the entire system is built, independently verified, and running live in production on Google Cloud Platform and Firebase.
+Here is my TeamChat AI submission.
 
-### 1. Key Project & Delivery Coordinates
-- **GitHub Repository (Public):** [https://github.com/engasm89/teamchat-ai](https://github.com/engasm89/teamchat-ai)
-- **Evaluator Access:** Read permissions open to `@paluchi` and all reviewers.
-- **Engine Git Commit:** `dc70fc81ba5724e9692f64ade1cf19b7b217feed`
-- **Live Production Web Application:** [https://focus-clean-4b9f4.web.app](https://focus-clean-4b9f4.web.app)
-- **Production API & WebSocket Service (Cloud Run):** [https://teamchat-api-1068908463902.us-central1.run.app](https://teamchat-api-1068908463902.us-central1.run.app)
-- **Production AI Asynchronous Worker (Cloud Run):** `https://teamchat-worker-1068908463902.us-central1.run.app`
-- **Database:** Google Cloud SQL PostgreSQL 17 with strict Row-Level Security (`teamchat_runtime` least-privilege role)
-- **Vertex AI:** `gemini-2.5-flash` (deterministic tool calling) & `text-embedding-004` (768-dimensional semantic memory)
+- Live app: https://focus-clean-4b9f4.web.app
+- Repository: https://github.com/engasm89/teamchat-ai (public, so @paluchi can read it without an invitation)
+- Walkthrough video, 2 min 44 s: https://github.com/engasm89/teamchat-ai/releases/tag/walkthrough-2026-10-12
+- Technical brief: the one I sent on 8 October; a copy is in the repository under `reference/`.
 
-### 2. Pre-Seeded Reviewer Accounts & Access Instructions
-Six reviewer accounts are pre-provisioned and active across both tenant partitions:
+The README covers how to run and deploy it, the architecture, how real-time delivery works, how the model acts through tools and how its output is checked, how the brief changed during the build, and what does not work.
 
-**Northside Outfitters (`northside-outfitters` tenant):**
-1. `northside.buyer1@teamchat.internal` (Buyer 1 — Assortment reviews & tool invocations)
-2. `northside.buyer2@teamchat.internal` (Buyer 2 — Peer real-time collaborator)
-3. `northside.analyst3@teamchat.internal` (Analyst 3 — Category strategy & semantic memory)
+Test accounts: three per chain, Northside Outfitters and Valley Home Goods. I am sending the six sign-in details separately through [CHANNEL]. The README's "Test credentials" section explains how to check the isolation between the two chains yourself.
 
-**Valley Home Goods (`valley-home-goods` tenant):**
-4. `valley.buyer1@teamchat.internal` (Buyer 1 — Partitioned store operations)
-5. `valley.buyer2@teamchat.internal` (Buyer 2 — Peer real-time collaborator)
-6. `valley.analyst3@teamchat.internal` (Analyst 3 — Partitioned memory)
+Every requirement's status is derived from recorded test runs against the deployed build rather than written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md` lists them, and each links to its evidence in `qa_evidence/runs`.
 
-*(Note: Reviewer passwords are held in protected private storage and will be securely transmitted directly to Gonzalo via private channel upon request. No passwords or service secrets are stored in Git history or public repositories.)*
+A few things I'd rather you hear from me than find. Messages show the sender's raw Firebase user ID instead of a name. The chat does not auto-scroll. The model's answers are terse. Cloud SQL backups are off for this demo deployment. The full list is under "What does not work" in the README.
 
-### 3. Summary of Independent Technical & QA Verification
-- **Authoritative 61-Requirement Matrix:** 100% verified across Correspondence (E01–E05), Ground Rules (G01–G06), Acceptance Scenarios (S01–S19), Architecture/Packaging (B01–B06), Database & Security (D01–D09), and Browser/Engineering (A01–A16).
-- **All 19 Scenarios (S01–S19):** Fully executed and validated against live Cloud SQL and Vertex AI (`qa_evidence/19_scenarios_audit.log`).
-- **Playwright Browser Suite (S15, S16, S17):**
-  - **S15:** Mid-turn reload rehydrates the identical in-flight turn ID without duplicating UI components.
-  - **S16:** Real 30-second network disconnection followed by monotonic, duplicate-free sequence replay.
-  - **S17:** 60-second idle measurement verifying exactly 1 native WebSocket connection, zero recurring HTTP data polls, and stable memory usage.
-- **Multi-Tenant Isolation:** Enforced at database engine level via PostgreSQL `ALTER TABLE ... FORCE ROW LEVEL SECURITY` on all tenant tables (`stores`, `memories`, `room_events`, `ai_turns`).
-- **Walkthrough Demonstration Video:** Available in `qa_evidence/videos/playwright_acceptance_s15_s16_s17_demo.webm` demonstrating live login, two-client chat, tool calling, rehydration, and reconnection recovery.
+I'm happy to walk you through a single AI turn end to end whenever suits you.
 
-Please let me know if you would like to schedule our technical debrief interview at your convenience.
-
-Best regards,  
-**Ashraf Al-Madhoun**  
-Principal Software Engineer  
-`eng.asm.89@gmail.com`  
+Best regards,
+Ashraf Al-Madhoun

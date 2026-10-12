@@ -1,0 +1,409 @@
+{
+ "schemaVersion": 1,
+ "suite": "video",
+ "runId": "20261011T222305Z-video-a27a9b",
+ "environment": "production: https://focus-clean-4b9f4.web.app + https://teamchat-api-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-11T22:23:05.611Z",
+ "finishedAt": "2026-10-11T22:27:22.446Z",
+ "harness": {
+  "gitHead": "626cc3246307ca3f03f63a450998508960dc7904",
+  "dirty": true,
+  "fingerprint": "1ba6056cec12b65d394a59056fc38511fac5e11fe50ef1f4a44d86d2c6102c28",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/evidence/lib.ts",
+   "scripts/video/ocr.swift",
+   "scripts/video/record-walkthrough.ts",
+   "scripts/video/verify-walkthrough.ts"
+  ]
+ },
+ "source": {
+  "sha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-00016-ct7",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00016-24v",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "tests": [
+  {
+   "id": "DEMO-VIDEO",
+   "title": "Captioned walkthrough: <=5 min, 1080p H.264, bound to the deployed build, no credentials or addresses readable",
+   "requirementIds": [
+    "D06"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-11T22:23:05.640Z",
+   "finishedAt": "2026-10-11T22:27:22.444Z",
+   "details": {
+    "video": {
+     "sha256": "cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26",
+     "bytes": 8289211,
+     "durationSeconds": 163.56,
+     "codec": "h264",
+     "width": 1920,
+     "height": 1080,
+     "pixFmt": "yuv420p",
+     "frameRate": "25/1",
+     "audioStreams": 0
+    },
+    "scan": {
+     "sampledFrames": 327,
+     "sampleFps": 2,
+     "ocr": "whole frame plus 21 overlapping quarter-width, half-height tiles",
+     "secretsChecked": [
+      "password:n1",
+      "account:n1",
+      "password:n2",
+      "account:n2",
+      "password:n3",
+      "account:n3",
+      "password:v1",
+      "account:v1",
+      "password:v2",
+      "account:v2",
+      "password:v3",
+      "account:v3"
+     ],
+     "patterns": [
+      "email: [A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)+",
+      "internal-domain: teamchat\\.internal",
+      "jwt: eyJ[A-Za-z0-9_-]{8,}",
+      "google-api-key: AIza[0-9A-Za-z_-]{20,}"
+     ],
+     "findings": [],
+     "charactersRead": 2881617
+    },
+    "controls": {
+     "method": "deployed login page at the recorder's pane size, recorded by Playwright (VP8) and re-encoded with the recorder's libx264 settings; a decoy sidebar footer uses the app's own .sidebarfooter styles",
+     "plain": {
+      "setup": "no redaction; password input switched to type=text",
+      "renderedSizes": {
+       "input[type=email]": {
+        "fontSize": "13px",
+        "filter": "none",
+        "type": "email"
+       },
+       ".sidebarfooter small": {
+        "fontSize": "13.3333px",
+        "filter": "none",
+        "type": null
+       },
+       "input[autocomplete=\"current-password\"]": {
+        "fontSize": "13px",
+        "filter": "none",
+        "type": "text"
+       }
+      },
+      "findings": [
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ],
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ],
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ],
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ],
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ]
+      ],
+      "ocr": [
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\n[REDACTED:email]\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\nıck\nent account to continue.\nrg\n4 TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSig\ndoray CafE7 Nvamalo crd\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\nıck\nent account to continue.\nrg\nn in\n_rcxkr-nwwgnidle\nSig\n[REDACTED:email]\nSign out\n-rcxkr-nwwgnidle\nSign in\nn in",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\n[REDACTED:email]\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\nıck\nent account to continue.\nrg\n4 TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSig\ndoray CafE7 Nvamalo crd\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\nıck\nent account to continue.\nrg\nn in\n-roxkr-nwwgnidte\nSig\n[REDACTED:email]\nSign out\n-roxkr-nwwgnidte\nSign in\nn in",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\n[REDACTED:email]\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\nıck\nent account to continue.\nrg\n4 TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n_ok[REDACTED:password:decoy]1E\nSig\ndoray CafE7 Nvamalo crd\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\nıck\nent account to continue.\nrg\nn in\n-rcxkr-nwwgnidle\nSig\n[REDACTED:email]\nSign out\n-rcxkr-nwwgnidle\nSign in\nn in",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]/\nSign in\n[REDACTED:email]\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\nıck\nent account to continue.\nrg\n4 TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSig\ndoray CafE7 Nvamalo crd\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\nıck\nent account to continue.\nrg\nn in\n-roxkr-nwwgnidte\nSig\n[REDACTED:email]\nSign out\n-roxkr-nwwgnidte\nSign in\nn in",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\n[REDACTED:email]\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\nıck\nent account to continue.\nrg\n4 TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\n[REDACTED:email]\nPassword\n_ro[REDACTED:password:decoy]ld1E\nSig\ndoray CafE7 Nvamalo crd\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\n[REDACTED:email]\nPassword\n[REDACTED:password:decoy][REDACTED:password:decoy]\nSign in\nıck\nent account to continue.\nrg\nn in\n-rcxkr-nwwgnidle\nSig\n[REDACTED:email]\nSign out\n-rcxkr-nwwgnidle\nSign in\nn in"
+      ]
+     },
+     "redacted": {
+      "setup": "recorder redaction CSS (.sidebarfooter small,input[type=\"email\"]{filter:blur(7px)}); password input left masked",
+      "renderedSizes": {
+       "input[type=email]": {
+        "fontSize": "13px",
+        "filter": "blur(7px)",
+        "type": "email"
+       },
+       ".sidebarfooter small": {
+        "fontSize": "13.3333px",
+        "filter": "blur(7px)",
+        "type": null
+       },
+       "input[autocomplete=\"current-password\"]": {
+        "fontSize": "13px",
+        "filter": "none",
+        "type": "password"
+       }
+      },
+      "findings": [
+       [],
+       [],
+       [],
+       [],
+       []
+      ],
+      "ocr": [
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSign out\n→ TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\n.....\nSign in\nıck\nent account to continue.\nn in\nSign out\nSig\nSign in\nnin",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSignout\n→ TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\n....\nSign in\nıck\nent account to continue.\nn in\n....\nSig\nSign out\nSign in\nnin",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSign out\n→ TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nıck\nent account to continue.\nn in\nSign out\nSig\nSign in\nnin",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSignout\n→ TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\n....\nSign in\nıck\nent account to continue.\nn in\n....\nSig\nSign out\n....\nSign in\nnin",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSign out\n→ TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nıck\nent account to continue.\nn in\nSign out\nSig\nSign in\nnin"
+      ]
+     },
+     "decoyValuesAreRandomAndUnused": true
+    },
+    "publicCopy": {
+     "url": "https://github.com/engasm89/teamchat-ai/releases/download/walkthrough-2026-10-12/teamchat-ai-walkthrough.mp4",
+     "finalHost": "release-assets.githubusercontent.com",
+     "status": 200,
+     "contentType": "application/octet-stream",
+     "bytes": 8289211,
+     "sha256": "cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26",
+     "decodedDurationSeconds": 163.56,
+     "decodeErrors": "",
+     "credentials": "none (no cookies or Authorization header)"
+    }
+   },
+   "assertions": [
+    {
+     "name": "duration is at most 5 minutes",
+     "pass": true,
+     "expected": "<=300s",
+     "actual": 163.56
+    },
+    {
+     "name": "1920x1080 H.264 yuv420p",
+     "pass": true,
+     "expected": "h264 1920x1080 yuv420p",
+     "actual": [
+      "h264",
+      1920,
+      1080,
+      "yuv420p"
+     ]
+    },
+    {
+     "name": "file checksum equals the recorder's",
+     "pass": true,
+     "expected": "cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26",
+     "actual": "cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26"
+    },
+    {
+     "name": "recorded against the source under test",
+     "pass": true,
+     "expected": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
+     "actual": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+    },
+    {
+     "name": "recorded against the live API and worker images",
+     "pass": true,
+     "expected": [
+      "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+      "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69"
+     ],
+     "actual": [
+      "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+      "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69"
+     ]
+    },
+    {
+     "name": "every scripted step completed",
+     "pass": true,
+     "expected": [
+      "sign-in",
+      "realtime",
+      "tools-grounding",
+      "retail-math",
+      "honesty",
+      "memory",
+      "isolation",
+      "injection",
+      "refresh",
+      "reconnect",
+      "valley",
+      "close"
+     ],
+     "actual": [
+      "sign-in",
+      "realtime",
+      "tools-grounding",
+      "retail-math",
+      "honesty",
+      "memory",
+      "isolation",
+      "injection",
+      "refresh",
+      "reconnect",
+      "valley",
+      "close"
+     ]
+    },
+    {
+     "name": "the recorder applies the redaction rule the controls test",
+     "pass": true,
+     "expected": ".sidebarfooter small,input[type=\"email\"]{filter:blur(7px)}",
+     "actual": "see scripts/video/record-walkthrough.ts"
+    },
+    {
+     "name": "OCR read text from every sampled frame",
+     "pass": true,
+     "expected": 327,
+     "actual": 327
+    },
+    {
+     "name": "no password, account name, e-mail address, JWT or API key is readable in any sampled frame",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "every caption and its step header is legible in the video",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "positive control: the planted e-mail and password are found in every sampled frame",
+     "pass": true,
+     "expected": "password:decoy and email:decoy in all frames",
+     "actual": [
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ],
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ],
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ],
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ],
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ]
+     ]
+    },
+    {
+     "name": "positive control: the planted password is rendered unmasked",
+     "pass": true,
+     "expected": "type=text with value",
+     "actual": {
+      "type": "text",
+      "filled": true
+     }
+    },
+    {
+     "name": "redaction control: the password input holds the decoy but stays masked",
+     "pass": true,
+     "expected": "type=password with value",
+     "actual": {
+      "type": "password",
+      "filled": true
+     }
+    },
+    {
+     "name": "redaction control: the same planted values are unreadable in every sampled frame",
+     "pass": true,
+     "expected": [],
+     "actual": [
+      [],
+      [],
+      [],
+      [],
+      []
+     ]
+    },
+    {
+     "name": "anonymous download succeeds",
+     "pass": true,
+     "expected": 200,
+     "actual": 200
+    },
+    {
+     "name": "anonymously downloaded bytes equal the verified file",
+     "pass": true,
+     "expected": "cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26",
+     "actual": "cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26"
+    },
+    {
+     "name": "the downloaded copy decodes end to end without errors at the verified duration",
+     "pass": true,
+     "expected": 163.56,
+     "actual": {
+      "decoded": 163.56,
+      "decodeErrors": ""
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261011T222305Z-video-a27a9b/DEMO-VIDEO/timeline.json",
+     "sha256": "31f050f62b0582da543cb0a46908b8b3f979e671d93691a87fc23831df4aa979",
+     "description": "Recorder timeline: captions, speed-ups, steps, bound deployment, output checksum"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T222305Z-video-a27a9b/DEMO-VIDEO/ffprobe.json",
+     "sha256": "cdc4245bef80b3c73482714f50686b5bc574326353e9bcf12747f31ab94c79f2",
+     "description": "ffprobe of the published file"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T222305Z-video-a27a9b/DEMO-VIDEO/ocr.jsonl",
+     "sha256": "6085fba279c923a85e5a38fe73b3447cf3083d707cf38f2c44ca577922855f7f",
+     "description": "OCR text (whole frame plus overlapping tiles) of every sampled frame; matches redacted before writing"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T222305Z-video-a27a9b/DEMO-VIDEO/control-plain.png",
+     "sha256": "56ec3f67a04913f7589645f702a21208bbfce333aa26eea8fa50001abe2c5063",
+     "description": "Positive control frame: decoy credentials visible"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T222305Z-video-a27a9b/DEMO-VIDEO/control-redacted.png",
+     "sha256": "0d19ea025d85c792b52569953615b4fcf94da8691f597f7a596f0b61fb43cd26",
+     "description": "Redaction control frame: same decoy credentials under the recorder's redaction"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T222305Z-video-a27a9b/DEMO-VIDEO/crops-email-field.jpg",
+     "sha256": "c87efb394829461e5f48025196253743659541e67e05f54bd31d6775d92589b9",
+     "description": "E-mail field of both panes during sign-in, 3x, for visual review"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T222305Z-video-a27a9b/DEMO-VIDEO/crops-sidebar-footer.jpg",
+     "sha256": "4cd6d3c9be71e26a4408f90ba615f2d72934cb09f2e7c065b53fa3962b0001a4",
+     "description": "Signed-in account footer of both panes across the video, 3x, for visual review"
+    },
+    {
+     "path": "qa_evidence/runs/20261011T222305Z-video-a27a9b/DEMO-VIDEO/contact-sheet.jpg",
+     "sha256": "d624eca53be1ff62ee655439b2d3112264a4f2c4bba8fd7aa7e02c5aa63a209a",
+     "description": "Twelve evenly spaced frames from the published video"
+    }
+   ]
+  }
+ ]
+}

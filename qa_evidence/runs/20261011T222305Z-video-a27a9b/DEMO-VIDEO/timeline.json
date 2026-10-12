@@ -1,0 +1,216 @@
+{
+ "sourceSha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
+ "deployment": {
+  "apiRevision": "teamchat-api-00016-ct7",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00016-24v",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "recordedAt": "2026-10-11T22:05:46.704Z",
+ "steps": [
+  "sign-in",
+  "realtime",
+  "tools-grounding",
+  "retail-math",
+  "honesty",
+  "memory",
+  "isolation",
+  "injection",
+  "refresh",
+  "reconnect",
+  "valley",
+  "close"
+ ],
+ "captions": [
+  {
+   "text": "TeamChat AI on the deployed stack: Firebase Hosting → Cloud Run API → Cloud Tasks → worker → Vertex Gemini → Cloud SQL.\nSource d66da3d · API teamchat-api-00016-ct7 · worker teamchat-worker-00016-24v. Two Northside buyers sign in (passwords masked; account emails blurred by the recording).",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 0.04,
+   "toSeconds": 11.1
+  },
+  {
+   "text": "Real-time: one WebSocket per browser, no polling. The left buyer's message appears on the right as it is saved.\nKnown limits shown as-is: senders appear as Firebase user IDs, and the recording script scrolls each transcript (no auto-scroll yet).",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 11.1,
+   "toSeconds": 22.19
+  },
+  {
+   "text": "Native function calling: Gemini calls search_catalog itself. Both screens show the fetched rows while the answer is built.\nEvery catalog code and margin class shown comes from the supplied catalog, not from the model.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 22.19,
+   "toSeconds": 36.9
+  },
+  {
+   "text": "Retail math: calculate_uplift computes the coefficient score on the server and lists superseded classes (1003, 506).\nST-4003 already carries class 318 via APP-100.11, so APP-100.12 adds no new class: difference 0. No money figure is invented.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 36.9,
+   "toSeconds": 49.18
+  },
+  {
+   "text": "Honesty: beekeeping veils are not in the supplied catalog. search_catalog finds no match, and the answer says so.\nNo code is invented: catalog codes can only reach the screen from a fetched row.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 49.18,
+   "toSeconds": 61.05
+  },
+  {
+   "text": "Shared memory: a paraphrased question finds a decision recorded in another room (pgvector, 768-dimension embeddings),\nwith its author and date.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 61.05,
+   "toSeconds": 72.91
+  },
+  {
+   "text": "Tenant isolation: ST-4013 belongs to Valley Home Goods. Postgres row-level security returns nothing to Northside,\nthe same answer as for a store that does not exist.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 72.91,
+   "toSeconds": 84.74
+  },
+  {
+   "text": "Prompt injection: the admin-mode line changes nothing. Every tool runs with the tenant the server verified\nfrom the Firebase token, inside Postgres row-level security, so there is no other chain's data to reveal.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 84.74,
+   "toSeconds": 96.63
+  },
+  {
+   "text": "Refresh mid-answer: the left buyer asks a two-part question, and the right window reloads\nas soon as the first fetch appears, while the answer is still being built.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 96.63,
+   "toSeconds": 107.86
+  },
+  {
+   "text": "After the reload the right window replays the whole turn from the server:\nevery fetched result and the answer, in order, once each.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 107.86,
+   "toSeconds": 119.24
+  },
+  {
+   "text": "Reconnect: the right window goes offline while the left buyer keeps posting.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 119.24,
+   "toSeconds": 138.15
+  },
+  {
+   "text": "Back online: the right window replays from its saved cursor. Both missed messages arrive once each, in order.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 138.15,
+   "toSeconds": 149.5
+  },
+  {
+   "text": "The other chain: the right window signs out and signs in as a Valley Home Goods buyer.\nST-4013 is Valley's own store, so Valley gets its assortment: the same store Northside was told does not exist.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · #supply-planning · RIGHT: VALLEY BUYER 1 · #range-planning",
+   "fromSeconds": 149.5,
+   "toSeconds": 163.58
+  },
+  {
+   "text": "Every claim in this video is also checked automatically against the deployed stack.\nResults, raw WebSocket frames and database comparisons: qa_evidence/runs in the repository.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 163.58,
+   "toSeconds": 174.95
+  }
+ ],
+ "speedSegments": [
+  {
+   "fromSeconds": 0.04,
+   "toSeconds": 7.47,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 7.47,
+   "toSeconds": 17.32,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 17.32,
+   "toSeconds": 26.76,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 26.76,
+   "toSeconds": 29.6,
+   "speed": 2.5
+  },
+  {
+   "fromSeconds": 29.6,
+   "toSeconds": 41.48,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 41.48,
+   "toSeconds": 41.89,
+   "speed": 2.5
+  },
+  {
+   "fromSeconds": 41.89,
+   "toSeconds": 53.76,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 53.76,
+   "toSeconds": 65.64,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 65.64,
+   "toSeconds": 77.46,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 77.47,
+   "toSeconds": 89.33,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 89.34,
+   "toSeconds": 97.16,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 97.16,
+   "toSeconds": 99.19,
+   "speed": 2.5
+  },
+  {
+   "fromSeconds": 99.19,
+   "toSeconds": 102.2,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 102.2,
+   "toSeconds": 107.86,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 107.87,
+   "toSeconds": 115.18,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 115.18,
+   "toSeconds": 125.97,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 125.97,
+   "toSeconds": 138.15,
+   "speed": 3
+  },
+  {
+   "fromSeconds": 138.15,
+   "toSeconds": 147.06,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 147.06,
+   "toSeconds": 156.28,
+   "speed": 1
+  },
+  {
+   "fromSeconds": 156.29,
+   "toSeconds": 174.95,
+   "speed": 1
+  }
+ ],
+ "removedSpans": 0,
+ "file": "teamchat-ai-walkthrough.mp4",
+ "sha256": "cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26"
+}

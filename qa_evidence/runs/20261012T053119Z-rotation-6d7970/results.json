@@ -1,0 +1,366 @@
+{
+ "schemaVersion": 1,
+ "suite": "rotation",
+ "runId": "20261012T053119Z-rotation-6d7970",
+ "environment": "production: https://focus-clean-4b9f4.web.app + https://teamchat-api-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-12T05:31:19.550Z",
+ "finishedAt": "2026-10-12T05:31:47.781Z",
+ "harness": {
+  "gitHead": "351e8baff9a369b6cedd3d67b72027605db362d2",
+  "dirty": true,
+  "fingerprint": "69002c2af03c0d3008981094fd93f720b48dceb8db1e67b40c8b86e8f353d3c4",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/evidence/lib.ts",
+   "scripts/handoff/rotate-passwords.ts"
+  ]
+ },
+ "source": {
+  "sha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-00016-ct7",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00016-24v",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "tests": [
+  {
+   "id": "ROTATION",
+   "title": "Six reviewer passwords rotated, earlier sessions revoked, new passwords only in Keychain",
+   "requirementIds": [
+    "D04"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-12T05:31:19.586Z",
+   "finishedAt": "2026-10-12T05:31:47.780Z",
+   "details": {
+    "accounts": [
+     {
+      "account": "n1",
+      "disabled": false,
+      "oldPasswordSignedInBefore": true,
+      "uidMatches": true,
+      "staged": true,
+      "sessionsRevokedAfterRotation": true,
+      "newPasswordSignsIn": true,
+      "oldPasswordRejected": true,
+      "oldPasswordError": "INVALID_LOGIN_CREDENTIALS",
+      "earlierRefreshTokenRefused": true,
+      "earlierRefreshTokenError": "TOKEN_EXPIRED",
+      "keychainMainHoldsNewPassword": true,
+      "rotatedAt": "2026-10-12T05:31:25.465Z"
+     },
+     {
+      "account": "n2",
+      "disabled": false,
+      "oldPasswordSignedInBefore": true,
+      "uidMatches": true,
+      "staged": true,
+      "sessionsRevokedAfterRotation": true,
+      "newPasswordSignsIn": true,
+      "oldPasswordRejected": true,
+      "oldPasswordError": "INVALID_LOGIN_CREDENTIALS",
+      "earlierRefreshTokenRefused": true,
+      "earlierRefreshTokenError": "TOKEN_EXPIRED",
+      "keychainMainHoldsNewPassword": true,
+      "rotatedAt": "2026-10-12T05:31:29.951Z"
+     },
+     {
+      "account": "n3",
+      "disabled": false,
+      "oldPasswordSignedInBefore": true,
+      "uidMatches": true,
+      "staged": true,
+      "sessionsRevokedAfterRotation": true,
+      "newPasswordSignsIn": true,
+      "oldPasswordRejected": true,
+      "oldPasswordError": "INVALID_LOGIN_CREDENTIALS",
+      "earlierRefreshTokenRefused": true,
+      "earlierRefreshTokenError": "TOKEN_EXPIRED",
+      "keychainMainHoldsNewPassword": true,
+      "rotatedAt": "2026-10-12T05:31:34.368Z"
+     },
+     {
+      "account": "v1",
+      "disabled": false,
+      "oldPasswordSignedInBefore": true,
+      "uidMatches": true,
+      "staged": true,
+      "sessionsRevokedAfterRotation": true,
+      "newPasswordSignsIn": true,
+      "oldPasswordRejected": true,
+      "oldPasswordError": "INVALID_LOGIN_CREDENTIALS",
+      "earlierRefreshTokenRefused": true,
+      "earlierRefreshTokenError": "TOKEN_EXPIRED",
+      "keychainMainHoldsNewPassword": true,
+      "rotatedAt": "2026-10-12T05:31:38.857Z"
+     },
+     {
+      "account": "v2",
+      "disabled": false,
+      "oldPasswordSignedInBefore": true,
+      "uidMatches": true,
+      "staged": true,
+      "sessionsRevokedAfterRotation": true,
+      "newPasswordSignsIn": true,
+      "oldPasswordRejected": true,
+      "oldPasswordError": "INVALID_LOGIN_CREDENTIALS",
+      "earlierRefreshTokenRefused": true,
+      "earlierRefreshTokenError": "TOKEN_EXPIRED",
+      "keychainMainHoldsNewPassword": true,
+      "rotatedAt": "2026-10-12T05:31:43.371Z"
+     },
+     {
+      "account": "v3",
+      "disabled": false,
+      "oldPasswordSignedInBefore": true,
+      "uidMatches": true,
+      "staged": true,
+      "sessionsRevokedAfterRotation": true,
+      "newPasswordSignsIn": true,
+      "oldPasswordRejected": true,
+      "oldPasswordError": "INVALID_LOGIN_CREDENTIALS",
+      "earlierRefreshTokenRefused": true,
+      "earlierRefreshTokenError": "TOKEN_EXPIRED",
+      "keychainMainHoldsNewPassword": true,
+      "rotatedAt": "2026-10-12T05:31:47.779Z"
+     }
+    ],
+    "keychain": {
+     "service": "teamchat-ai-reviewer",
+     "staging": "teamchat-ai-reviewer-next",
+     "writeMethod": "security -i on stdin (never argv)"
+    },
+    "passwordsRecorded": false
+   },
+   "assertions": [
+    {
+     "name": "all six Firebase users are enabled",
+     "pass": true,
+     "expected": "enabled",
+     "actual": [
+      [
+       "n1",
+       false
+      ],
+      [
+       "n2",
+       false
+      ],
+      [
+       "n3",
+       false
+      ],
+      [
+       "v1",
+       false
+      ],
+      [
+       "v2",
+       false
+      ],
+      [
+       "v3",
+       false
+      ]
+     ]
+    },
+    {
+     "name": "the pre-rotation Keychain passwords signed in as the expected users",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      [
+       "n1",
+       true,
+       true
+      ],
+      [
+       "n2",
+       true,
+       true
+      ],
+      [
+       "n3",
+       true,
+       true
+      ],
+      [
+       "v1",
+       true,
+       true
+      ],
+      [
+       "v2",
+       true,
+       true
+      ],
+      [
+       "v3",
+       true,
+       true
+      ]
+     ]
+    },
+    {
+     "name": "every new password signs in",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      [
+       "n1",
+       true
+      ],
+      [
+       "n2",
+       true
+      ],
+      [
+       "n3",
+       true
+      ],
+      [
+       "v1",
+       true
+      ],
+      [
+       "v2",
+       true
+      ],
+      [
+       "v3",
+       true
+      ]
+     ]
+    },
+    {
+     "name": "every old password is rejected",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      [
+       "n1",
+       "INVALID_LOGIN_CREDENTIALS"
+      ],
+      [
+       "n2",
+       "INVALID_LOGIN_CREDENTIALS"
+      ],
+      [
+       "n3",
+       "INVALID_LOGIN_CREDENTIALS"
+      ],
+      [
+       "v1",
+       "INVALID_LOGIN_CREDENTIALS"
+      ],
+      [
+       "v2",
+       "INVALID_LOGIN_CREDENTIALS"
+      ],
+      [
+       "v3",
+       "INVALID_LOGIN_CREDENTIALS"
+      ]
+     ]
+    },
+    {
+     "name": "refresh tokens issued before the rotation are refused",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      [
+       "n1",
+       "TOKEN_EXPIRED"
+      ],
+      [
+       "n2",
+       "TOKEN_EXPIRED"
+      ],
+      [
+       "n3",
+       "TOKEN_EXPIRED"
+      ],
+      [
+       "v1",
+       "TOKEN_EXPIRED"
+      ],
+      [
+       "v2",
+       "TOKEN_EXPIRED"
+      ],
+      [
+       "v3",
+       "TOKEN_EXPIRED"
+      ]
+     ]
+    },
+    {
+     "name": "Firebase records the revocation time after the rotation started",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      [
+       "n1",
+       true
+      ],
+      [
+       "n2",
+       true
+      ],
+      [
+       "n3",
+       true
+      ],
+      [
+       "v1",
+       true
+      ],
+      [
+       "v2",
+       true
+      ],
+      [
+       "v3",
+       true
+      ]
+     ]
+    },
+    {
+     "name": "the Keychain main item holds each new password; no staged copy remains",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      [
+       "n1",
+       true
+      ],
+      [
+       "n2",
+       true
+      ],
+      [
+       "n3",
+       true
+      ],
+      [
+       "v1",
+       true
+      ],
+      [
+       "v2",
+       true
+      ],
+      [
+       "v3",
+       true
+      ]
+     ]
+    }
+   ],
+   "artifacts": []
+  }
+ ]
+}

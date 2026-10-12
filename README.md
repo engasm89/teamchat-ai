@@ -144,7 +144,7 @@ Six accounts: three per chain, all members of `#assortment-review` and `#categor
 | Northside Outfitters | buyer 1, buyer 2, analyst 3 |
 | Valley Home Goods | buyer 1, buyer 2, analyst 3 |
 
-Addresses and passwords are sent privately with the submission; they are not in this repository, its history, the video or the evidence.
+Passwords are sent privately, separately from the submission e-mail; they are not in this repository, its history, the video or the evidence. (The account addresses appear in the test harness, `scripts/acceptance/common.ts`, and are blurred in the video.)
 
 To check isolation yourself: sign in as a Northside user and ask `@AI Show me the assortment for store ST-4013.` (a Valley store; you should get "No matching record is available in this workspace", the same answer as for `ST-4099`, which does not exist). Then sign in as a Valley user in another browser and ask the same question; Valley gets its store. Asking either chain `@AI What is our Q1 assortment target?` returns that chain's own figure only.
 

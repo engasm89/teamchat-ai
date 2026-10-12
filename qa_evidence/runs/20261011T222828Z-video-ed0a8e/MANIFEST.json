@@ -1,0 +1,55 @@
+{
+ "generatedAt": "2026-10-11T23:26:06.928Z",
+ "files": [
+  {
+   "path": "DEMO-VIDEO/contact-sheet.jpg",
+   "bytes": 227840,
+   "sha256": "d624eca53be1ff62ee655439b2d3112264a4f2c4bba8fd7aa7e02c5aa63a209a"
+  },
+  {
+   "path": "DEMO-VIDEO/control-plain.png",
+   "bytes": 85618,
+   "sha256": "f8c6f2d830cc38413a196a49214f2bf955f695d51c1a9d1b8a9f81a7fb8f60b1"
+  },
+  {
+   "path": "DEMO-VIDEO/control-redacted.png",
+   "bytes": 76534,
+   "sha256": "17ba4e3b47ec62d796b6d0994bd1850efab6b8075de78a4a60af77539044e571"
+  },
+  {
+   "path": "DEMO-VIDEO/crops-email-field-valley.jpg",
+   "bytes": 492486,
+   "sha256": "f149f25584f975ad382aaeabda0bba1bac4704b36f3e8c1193164e6faa56b662"
+  },
+  {
+   "path": "DEMO-VIDEO/crops-email-field.jpg",
+   "bytes": 199151,
+   "sha256": "c87efb394829461e5f48025196253743659541e67e05f54bd31d6775d92589b9"
+  },
+  {
+   "path": "DEMO-VIDEO/crops-sidebar-footer.jpg",
+   "bytes": 412161,
+   "sha256": "4cd6d3c9be71e26a4408f90ba615f2d72934cb09f2e7c065b53fa3962b0001a4"
+  },
+  {
+   "path": "DEMO-VIDEO/ffprobe.json",
+   "bytes": 296,
+   "sha256": "cdc4245bef80b3c73482714f50686b5bc574326353e9bcf12747f31ab94c79f2"
+  },
+  {
+   "path": "DEMO-VIDEO/ocr.jsonl",
+   "bytes": 3130942,
+   "sha256": "6085fba279c923a85e5a38fe73b3447cf3083d707cf38f2c44ca577922855f7f"
+  },
+  {
+   "path": "DEMO-VIDEO/timeline.json",
+   "bytes": 7074,
+   "sha256": "31f050f62b0582da543cb0a46908b8b3f979e671d93691a87fc23831df4aa979"
+  },
+  {
+   "path": "results.json",
+   "bytes": 17897,
+   "sha256": "a0d07f4064c446644c7d92a332d5d8a7a157e458ee378a03f0ffe31b3ec36c03"
+  }
+ ]
+}

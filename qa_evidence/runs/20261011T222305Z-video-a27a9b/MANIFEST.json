@@ -1,0 +1,50 @@
+{
+ "generatedAt": "2026-10-11T22:27:22.449Z",
+ "files": [
+  {
+   "path": "DEMO-VIDEO/contact-sheet.jpg",
+   "bytes": 227840,
+   "sha256": "d624eca53be1ff62ee655439b2d3112264a4f2c4bba8fd7aa7e02c5aa63a209a"
+  },
+  {
+   "path": "DEMO-VIDEO/control-plain.png",
+   "bytes": 85134,
+   "sha256": "56ec3f67a04913f7589645f702a21208bbfce333aa26eea8fa50001abe2c5063"
+  },
+  {
+   "path": "DEMO-VIDEO/control-redacted.png",
+   "bytes": 76141,
+   "sha256": "0d19ea025d85c792b52569953615b4fcf94da8691f597f7a596f0b61fb43cd26"
+  },
+  {
+   "path": "DEMO-VIDEO/crops-email-field.jpg",
+   "bytes": 199151,
+   "sha256": "c87efb394829461e5f48025196253743659541e67e05f54bd31d6775d92589b9"
+  },
+  {
+   "path": "DEMO-VIDEO/crops-sidebar-footer.jpg",
+   "bytes": 412161,
+   "sha256": "4cd6d3c9be71e26a4408f90ba615f2d72934cb09f2e7c065b53fa3962b0001a4"
+  },
+  {
+   "path": "DEMO-VIDEO/ffprobe.json",
+   "bytes": 296,
+   "sha256": "cdc4245bef80b3c73482714f50686b5bc574326353e9bcf12747f31ab94c79f2"
+  },
+  {
+   "path": "DEMO-VIDEO/ocr.jsonl",
+   "bytes": 3130942,
+   "sha256": "6085fba279c923a85e5a38fe73b3447cf3083d707cf38f2c44ca577922855f7f"
+  },
+  {
+   "path": "DEMO-VIDEO/timeline.json",
+   "bytes": 7074,
+   "sha256": "31f050f62b0582da543cb0a46908b8b3f979e671d93691a87fc23831df4aa979"
+  },
+  {
+   "path": "results.json",
+   "bytes": 19060,
+   "sha256": "c380f4e02a3e66d77ef971cbb29dfea813d07a21dd39de820268bd1736b4edc7"
+  }
+ ]
+}
