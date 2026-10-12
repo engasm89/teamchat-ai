@@ -39,8 +39,12 @@ type Finding={kind:string;frame:string};
 /** Passwords match on any 8-character window, so one misread character elsewhere cannot hide them;
  * account names match whole, because their fragments ("orthside") are ordinary caption words. */
 type Secret={kind:string;value:string;windowed:boolean};
-const compact=(s:string)=>s.replace(/\s+/g,"");
-const windows=(s:Secret)=>!s.windowed||s.value.length<=8?[s.value]:Array.from({length:s.value.length-7},(_,i)=>s.value.slice(i,i+8));
+/** OCR swaps lookalike glyphs (Cyrillic М for M, 0 for o, l for I), so text and secrets are folded the same way before matching. */
+const LOOKALIKE:Record<string,string>={"А":"a","В":"b","Е":"e","К":"k","М":"m","Н":"h","О":"o","Р":"p","С":"c","Т":"t","Х":"x","а":"a","е":"e","о":"o","р":"p",
+ "с":"c","у":"y","х":"x","і":"i","Α":"a","Β":"b","Ε":"e","Ι":"i","Κ":"k","Μ":"m","Ν":"n","Ο":"o","Ρ":"p","Τ":"t","Χ":"x","Ζ":"z"};
+const fold=(s:string)=>[...s.normalize("NFKC").replace(/\s+/g,"")].map(c=>LOOKALIKE[c]??c).join("").toLowerCase()
+ .replace(/[o0]/g,"0").replace(/[il1|!]/g,"1").replace(/[s5]/g,"5").replace(/[z2]/g,"2").replace(/_/g,"-");
+const windows=(s:Secret)=>{const v=fold(s.value);return !s.windowed||v.length<=8?[v]:Array.from({length:v.length-7},(_,i)=>v.slice(i,i+8));};
 const PATTERNS:Array<[string,RegExp]>=[
  ["email",/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+/g],
  ["internal-domain",/teamchat\.internal/gi],
@@ -48,10 +52,16 @@ const PATTERNS:Array<[string,RegExp]>=[
  ["google-api-key",/AIza[0-9A-Za-z_-]{20,}/g]];
 
 function scan(text:string,secrets:Secret[]):{kinds:string[];redacted:string}{
- const kinds=new Set<string>();let redacted=text;
- for(const [kind,re] of PATTERNS){if(re.test(text)){kinds.add(kind);redacted=redacted.replace(re,`[REDACTED:${kind}]`);}re.lastIndex=0;}
- for(const s of secrets)if(windows(s).some(w=>compact(text).includes(w))){kinds.add(s.kind);for(const w of windows(s))redacted=redacted.split(w).join(`[REDACTED:${s.kind}]`);}
- return {kinds:[...kinds].sort(),redacted};
+ const kinds=new Set<string>();let lines=text.split("\n");
+ for(const [kind,re] of PATTERNS){if(re.test(text)){kinds.add(kind);lines=lines.map(l=>l.replace(re,`[REDACTED:${kind}]`));}re.lastIndex=0;}
+ const whole=fold(text);
+ for(const s of secrets){
+  const w=windows(s);if(!w.some(x=>whole.includes(x)))continue;
+  kinds.add(s.kind);let hit=false;
+  lines=lines.map(l=>w.some(x=>fold(l).includes(x))?(hit=true,`[REDACTED:${s.kind}]`):l);
+  if(!hit)lines=[`[REDACTED:${s.kind} spans lines; frame text withheld]`];
+ }
+ return {kinds:[...kinds].sort(),redacted:lines.join("\n")};
 }
 async function sampleAndOcr(video:string,label:string):Promise<Array<{frame:string;seconds:number;text:string}>>{
  const dir=path.join(WORK,label);fs.mkdirSync(dir,{recursive:true});
@@ -160,14 +170,18 @@ try{
 
   const url=process.env.VIDEO_URL;
   if(!url){t.block("VIDEO_URL not set: the public copy has not been verified");return;}
-  const res=await fetch(url,{redirect:"follow",headers:{"user-agent":"teamchat-ai-video-check"}});
-  const body=Buffer.from(await res.arrayBuffer());
+  let res!:Response,body=Buffer.alloc(0),attempts=0;
+  for(;;){
+   attempts++;
+   try{res=await fetch(url,{redirect:"follow",headers:{"user-agent":"teamchat-ai-video-check"}});body=Buffer.from(await res.arrayBuffer());break;}
+   catch(error){if(attempts>=3)throw error;await sleep(10_000);}
+  }
   const copy=path.join(WORK,"published.mp4");fs.writeFileSync(copy,body);
   let decodeErrors="";
   try{decodeErrors=execFileSync("ffmpeg",["-hide_banner","-v","error","-i",copy,"-f","null","-"],{encoding:"utf8",stdio:["ignore","pipe","pipe"]});}
   catch(error){decodeErrors=String((error as {stderr?:string}).stderr??error);}
   const decoded=res.ok?Number(ffprobe(copy).format.duration):0;
-  t.detail("publicCopy",{url,finalHost:new URL(res.url).host,status:res.status,contentType:res.headers.get("content-type"),bytes:body.length,sha256:sha256(body),
+  t.detail("publicCopy",{url,finalHost:new URL(res.url).host,status:res.status,contentType:res.headers.get("content-type"),bytes:body.length,sha256:sha256(body),downloadAttempts:attempts,
    decodedDurationSeconds:decoded,decodeErrors,credentials:"none (no cookies or Authorization header)"});
   t.assert("anonymous download succeeds",res.status===200,200,res.status);
   t.assert("anonymously downloaded bytes equal the verified file",sha256(body)===fileSha,fileSha,sha256(body));
