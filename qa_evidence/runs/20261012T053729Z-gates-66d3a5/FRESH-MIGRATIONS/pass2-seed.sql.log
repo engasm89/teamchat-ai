@@ -1,0 +1,13 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-FYS7pf -p 62705 -U postgres -d teamchat -f /tmp/tc-gates-1791783444/db/generated/seed.sql
+(cwd ., exit 0, 96 ms)
+
+      set_config      
+----------------------
+ northside-outfitters
+(1 row)
+
+    set_config     
+-------------------
+ valley-home-goods
+(1 row)
+

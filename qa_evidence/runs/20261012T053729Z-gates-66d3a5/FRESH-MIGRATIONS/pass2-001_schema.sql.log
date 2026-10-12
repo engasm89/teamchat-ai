@@ -1,0 +1,30 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-FYS7pf -p 62705 -U postgres -d teamchat -f /tmp/tc-gates-1791783444/db/migrations/001_schema.sql
+(cwd ., exit 0, 22 ms)
+
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:4: NOTICE:  schema "teamchat" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:5: NOTICE:  extension "pgcrypto" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:10: NOTICE:  relation "tenants" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:18: NOTICE:  relation "user_memberships" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:26: NOTICE:  relation "rooms" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:34: NOTICE:  relation "room_memberships" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:47: NOTICE:  relation "catalog" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:55: NOTICE:  relation "margin_classes" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:67: NOTICE:  relation "supersession_edges" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:73: NOTICE:  relation "segment_coefficients" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:83: NOTICE:  relation "stores" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:89: NOTICE:  relation "store_carried_codes" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:96: NOTICE:  relation "store_gaps" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:107: NOTICE:  relation "memories" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:113: NOTICE:  relation "memory_versions" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:123: NOTICE:  relation "messages" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:134: NOTICE:  relation "ai_jobs" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:145: NOTICE:  relation "room_events" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:152: NOTICE:  relation "task_outbox" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:160: NOTICE:  relation "tool_calls" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:168: NOTICE:  relation "answer_blocks" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:175: NOTICE:  relation "presence_leases" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:181: NOTICE:  relation "dataset_versions" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:197: NOTICE:  relation "messages_room_idx" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:198: NOTICE:  relation "events_replay_idx" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:199: NOTICE:  relation "memories_lookup_idx" already exists, skipping
+psql:/tmp/tc-gates-1791783444/db/migrations/001_schema.sql:200: NOTICE:  relation "gaps_lookup_idx" already exists, skipping

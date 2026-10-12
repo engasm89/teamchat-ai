@@ -1,15 +1,15 @@
 {
- "validatedAt": "2026-10-11T16:16:27.046Z",
+ "validatedAt": "2026-10-12T05:38:39.687Z",
  "inventorySha256": "0179576f862974afef6f4bf3390d5318ed29550d554c993f9f7c246f65e097e0",
  "integrityErrors": [],
- "sourceSha": null,
- "apiRevision": null,
- "workerRevision": null,
+ "sourceSha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
+ "apiRevision": "teamchat-api-00014-72f",
+ "workerRevision": "teamchat-worker-00014-4v8",
  "counts": {
-  "PASS": 11,
-  "FAIL": 8,
-  "BLOCKED": 1,
-  "NOT VERIFIED": 41
+  "PASS": 58,
+  "FAIL": 0,
+  "BLOCKED": 3,
+  "NOT VERIFIED": 0
  },
  "requirements": [
   {
@@ -141,16 +141,13 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Draft for explicit user review; do not send automatically"
    },
-   "verdict": "FAIL",
+   "verdict": "BLOCKED",
    "checks": [
     {
      "id": "DRAFT-EMAIL",
      "kind": "file",
-     "verdict": "FAIL",
-     "notes": [
-      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md lacks required content /^\\*\\*To:\\*\\* gonzalo@controlease\\.net/",
-      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md lacks required content /^\\*\\*Cc:\\*\\* elisa@controlease\\.net/"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md"
      ]
@@ -178,34 +175,56 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Inspect browser DevTools for a minute / no polling"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "BROWSER-S17",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S17/idle-user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S17/idle-user-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S17/idle-user-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S17/idle-user.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user.png"
+     ]
     },
     {
      "id": "BROWSER-NEG-S17",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S17/injected-user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S17/injected-user-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S17/injected-user-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-sockets.json"
+     ]
     },
     {
      "id": "GATES-FORBIDDEN-TRANSPORT",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json"
+     ]
     }
    ],
    "notes": []
@@ -221,34 +240,47 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Run live tool-driven prompts, inspect tool traces"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S01",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S01/s01.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S01/s01.json"
+     ]
     },
     {
      "id": "ACC-S03",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S03/s03.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S03/s03.json"
+     ]
     },
     {
      "id": "GATES-UNIT-TESTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/UNIT-TESTS/npm-test.log"
+     ]
     }
    ],
    "notes": []
@@ -264,34 +296,49 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Attempt 20 unfetched codes, foreign facts and malicious memories"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S04",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S04/s04.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S04/s04.json"
+     ]
     },
     {
      "id": "ACC-S05",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S05/s05.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S05/s05.json"
+     ]
     },
     {
      "id": "ACC-S13",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S13/s13.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S13/s13.json"
+     ]
     }
    ],
    "notes": []
@@ -307,52 +354,99 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Run required real PostgreSQL tests + adversarial attacks"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S11",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S11/s11-northside.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S11/s11-valley.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S11/s11-northside.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S11/s11-valley.json"
+     ]
     },
     {
      "id": "ACC-S12",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S12/s12-first.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S12/s12-forged.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S12/s12-unknown.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S12/audit-log.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S12/s12-first.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S12/s12-forged.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S12/s12-unknown.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S12/audit-log.json"
+     ]
     },
     {
      "id": "ACC-S13",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S13/s13.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S13/s13.json"
+     ]
     },
     {
      "id": "ACC-S18",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S18/s18-target.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S18/s18-northside-store.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S18/s18-unknown.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S18/s18-target.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S18/s18-northside-store.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S18/s18-unknown.json"
+     ]
     },
     {
      "id": "GATES-POSTGRES-RLS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/POSTGRES-RLS/postgres-required.log"
+     ]
+    },
+    {
+     "id": "HANDOFF-BOUNDARIES",
+     "kind": "test",
+     "verdict": "PASS",
+     "notes": [
+      "2/2 run(s) passed"
+     ],
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
     }
    ],
    "notes": []
@@ -368,15 +462,13 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Prove Firebase Hosting + Cloud Run + real login"
    },
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "PROV-API-SOURCE",
      "kind": "json",
-     "verdict": "FAIL",
-     "notes": [
-      "Missing qa_evidence/provenance.json"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "qa_evidence/provenance.json#/api/labels/org.opencontainers.image.revision"
      ]
@@ -384,10 +476,8 @@
     {
      "id": "PROV-WORKER-SOURCE",
      "kind": "json",
-     "verdict": "FAIL",
-     "notes": [
-      "Missing qa_evidence/provenance.json"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "qa_evidence/provenance.json#/worker/labels/org.opencontainers.image.revision"
      ]
@@ -395,10 +485,8 @@
     {
      "id": "PROV-HOSTING-MATCH",
      "kind": "json",
-     "verdict": "FAIL",
-     "notes": [
-      "Missing qa_evidence/provenance.json"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "qa_evidence/provenance.json#/hosting/assetsMatchLocalBuild"
      ]
@@ -406,12 +494,11 @@
     {
      "id": "LIVE-DEPLOYMENT",
      "kind": "live-deployment",
-     "verdict": "NOT VERIFIED",
-     "notes": [
-      "No provenance to compare"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
-      "gcloud run services describe (live)"
+      "gcloud run services describe (live)",
+      "serving teamchat-api-00016-ct7 / teamchat-worker-00016-24v"
      ]
     },
     {
@@ -426,22 +513,41 @@
     {
      "id": "URL-API-HEALTH",
      "kind": "url",
-     "verdict": "FAIL",
-     "notes": [
-      "https://teamchat-api-1068908463902.us-central1.run.app/healthz returned HTTP 404"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
-      "https://teamchat-api-1068908463902.us-central1.run.app/healthz"
+      "https://teamchat-api-1068908463902.us-central1.run.app/health"
      ]
     },
     {
      "id": "BROWSER-S01",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/db-events.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/db-events.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer.png"
+     ]
     }
    ],
    "notes": []
@@ -457,24 +563,25 @@
     "status": "✅ GREEN — documented/offline verified",
     "closure": "Verify fixture hashes on target deployment"
    },
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-FIXTURES",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FIXTURES/verify-fixtures.log"
+     ]
     },
     {
      "id": "PROV-DB-DATASETS",
      "kind": "json",
-     "verdict": "FAIL",
-     "notes": [
-      "Missing qa_evidence/provenance.json"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "qa_evidence/provenance.json#/database/datasetHashesMatchFixtures"
      ]
@@ -493,25 +600,51 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Two live browsers; trace/logs/code"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S01",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S01/s01.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S01/s01.json"
+     ]
     },
     {
      "id": "BROWSER-S01",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/db-events.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/db-events.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer.png"
+     ]
     }
    ],
    "notes": []
@@ -527,16 +660,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Live get_catalog_code call"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S02",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S02/s02.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S02/s02.json"
+     ]
     }
    ],
    "notes": []
@@ -552,16 +690,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Real native Gemini calls; both families"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S03",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S03/s03.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S03/s03.json"
+     ]
     }
    ],
    "notes": []
@@ -577,16 +720,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Live no-match and zero invented codes"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S04",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S04/s04.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S04/s04.json"
+     ]
     }
    ],
    "notes": []
@@ -602,16 +750,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Check retained/removed classes and no fabricated money"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S05",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S05/s05.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S05/s05.json"
+     ]
     }
    ],
    "notes": []
@@ -627,16 +780,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Store + calculation tools in order; source refs"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S06",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S06/s06.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S06/s06.json"
+     ]
     }
    ],
    "notes": []
@@ -652,16 +810,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Direct B-minus-A authoritative result"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S07",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S07/s07.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S07/s07.json"
+     ]
     }
    ],
    "notes": []
@@ -677,16 +840,25 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Real Vertex embeddings/backfill; author/date/ref"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S08",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S08/s08-paraphrase.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S08/s08-unrelated.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S08/s08-valley.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S08/s08-paraphrase.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S08/s08-unrelated.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S08/s08-valley.json"
+     ]
     }
    ],
    "notes": []
@@ -702,16 +874,25 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Save consent; refresh user B, search other room"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S09",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S09/s09-save.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S09/s09-recall.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S09/s09-valley.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S09/s09-save.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S09/s09-recall.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S09/s09-valley.json"
+     ]
     }
    ],
    "notes": []
@@ -727,16 +908,36 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Actual invalid nested payload and repair path"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S10",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S10/s10-nested.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S10/s10-flat.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S10/s10-nested.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S10/s10-flat.json"
+     ]
+    },
+    {
+     "id": "GATES-MEMORY-REPAIR",
+     "kind": "test",
+     "verdict": "PASS",
+     "notes": [
+      "1/1 run(s) passed"
+     ],
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/MEMORY-REPAIR/memory-repair-driver.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/MEMORY-REPAIR/memory-repair.json"
+     ]
     }
    ],
    "notes": []
@@ -752,16 +953,23 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Both tenants same intent, isolation verified"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S11",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S11/s11-northside.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S11/s11-valley.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S11/s11-northside.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S11/s11-valley.json"
+     ]
     }
    ],
    "notes": []
@@ -777,16 +985,27 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Unknown == foreign response; logs generic"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S12",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S12/s12-first.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S12/s12-forged.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S12/s12-unknown.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S12/audit-log.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S12/s12-first.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S12/s12-forged.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S12/s12-unknown.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S12/audit-log.json"
+     ]
     }
    ],
    "notes": []
@@ -802,16 +1021,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Attack prompt and memory injection live"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S13",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S13/s13.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S13/s13.json"
+     ]
     }
    ],
    "notes": []
@@ -827,16 +1051,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Two simultaneous turns, separate tool IDs"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S14",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S14/turns.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S14/turns.json"
+     ]
     }
    ],
    "notes": []
@@ -852,25 +1081,59 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Refresh browser during active Gemini call"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "BROWSER-S15",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S15/before-reload.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S15/db-events.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S15/rendered-projection.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S15/after-reload.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S15/user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S15/user-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S15/user-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/before-reload.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/db-events.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/rendered-projection.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/after-reload.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/user-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S15/user-sockets.json"
+     ]
     },
     {
      "id": "BROWSER-NEG-S15",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S15/before-reload.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S15/db-events.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S15/rendered-projection.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S15/after-reload.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S15/user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S15/user-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S15/user-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/before-reload.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/db-events.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/rendered-projection.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/after-reload.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/user-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S15/user-sockets.json"
+     ]
     }
    ],
    "notes": []
@@ -886,34 +1149,107 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Network offline 30s; no missing/duplicates"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "BROWSER-S16",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/during-outage.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/peer-during-outage.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/db-events.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/rendered-projection.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/after-recovery.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/disconnected-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/disconnected-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/disconnected-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16/peer-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/during-outage.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/peer-during-outage.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/db-events.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/rendered-projection.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/after-recovery.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/disconnected-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/disconnected-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/disconnected-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16/peer-sockets.json"
+     ]
+    },
+    {
+     "id": "BROWSER-S16-OFFLINE",
+     "kind": "test",
+     "verdict": "PASS",
+     "notes": [
+      "2/2 run(s) passed"
+     ],
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/during-outage.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/peer-during-outage.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/db-events.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/rendered-projection.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/after-recovery.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/disconnected-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/disconnected-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/disconnected-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S16-OFFLINE/peer-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/during-outage.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/peer-during-outage.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/db-events.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/rendered-projection.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/after-recovery.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/disconnected-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/disconnected-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/disconnected-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S16-OFFLINE/peer-sockets.json"
+     ]
     },
     {
      "id": "BROWSER-NEG-S16-DROP",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S16-DROP/faulted-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S16-DROP/faulted-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S16-DROP/faulted-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S16-DROP/faulted-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S16-DROP/faulted-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S16-DROP/faulted-sockets.json"
+     ]
     },
     {
      "id": "BROWSER-NEG-S16-DUP",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S16-DUP/duplicated.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S16-DUP/duplicated.png"
+     ]
     }
    ],
    "notes": []
@@ -929,25 +1265,45 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Browser network/CPU/heap on idle"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "BROWSER-S17",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S17/idle-user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S17/idle-user-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S17/idle-user-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S17/idle-user.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S17/idle-user.png"
+     ]
     },
     {
      "id": "BROWSER-NEG-S17",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S17/injected-user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S17/injected-user-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/NEG-S17/injected-user-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/NEG-S17/injected-user-sockets.json"
+     ]
     }
    ],
    "notes": []
@@ -963,16 +1319,25 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Test both tenants, foreign/no-match equivalence"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S18",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S18/s18-target.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S18/s18-northside-store.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S18/s18-unknown.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S18/s18-target.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S18/s18-northside-store.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S18/s18-unknown.json"
+     ]
     }
    ],
    "notes": []
@@ -988,16 +1353,20 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Scale down/restart worker+API, query memory"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S19",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194223Z-acceptance-restart-ed144a/results.json",
+      "qa_evidence/runs/20261011T194223Z-acceptance-restart-ed144a/S19/s19-save.json",
+      "qa_evidence/runs/20261011T194223Z-acceptance-restart-ed144a/S19/s19-recall.json"
+     ]
     }
    ],
    "notes": []
@@ -1172,7 +1541,7 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Deploy and verify public URL"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "URL-HOSTING",
@@ -1186,30 +1555,53 @@
     {
      "id": "BROWSER-S01",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/results.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/db-events.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer-sockets.json",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/asker.png",
+      "qa_evidence/runs/20261011T191641Z-browser-7353aa/S01-BROWSER/peer.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/results.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/db-events.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-ws-frames.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-requests.jsonl",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer-sockets.json",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/asker.png",
+      "qa_evidence/runs/20261011T192211Z-browser-19dc81/S01-BROWSER/peer.png"
+     ]
     },
     {
      "id": "HANDOFF-SEEDED-HISTORY",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
     },
     {
      "id": "LIVE-DEPLOYMENT",
      "kind": "live-deployment",
-     "verdict": "NOT VERIFIED",
-     "notes": [
-      "No provenance to compare"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
-      "gcloud run services describe (live)"
+      "gcloud run services describe (live)",
+      "serving teamchat-api-00016-ct7 / teamchat-worker-00016-24v"
      ]
     }
    ],
@@ -1226,7 +1618,7 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Push source to GitHub; git secret scanner; README"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "URL-REPO-PUBLIC",
@@ -1240,20 +1632,47 @@
     {
      "id": "GATES-SECRET-SCAN",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/SECRET-SCAN/gitleaks-history.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/SECRET-SCAN/gitleaks-history.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/SECRET-SCAN/gitleaks-triage.json"
+     ]
     },
     {
      "id": "GATES-FRESH-MIGRATIONS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/initdb.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pg-start.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-001_schema.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-002_notifications.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-003_auth_grants.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-004_ai_consent.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-005_job_lookup.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-006_ephemeral.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-007_semantic_memory.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-provision_runtime_role.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-seed.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-001_schema.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-002_notifications.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-003_auth_grants.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-004_ai_consent.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-005_job_lookup.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-006_ephemeral.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-007_semantic_memory.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-provision_runtime_role.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-seed.sql.log"
+     ]
     }
    ],
    "notes": []
@@ -1269,21 +1688,13 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Update instructions after live verification"
    },
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "DOC-README-SECTIONS",
      "kind": "file",
-     "verdict": "FAIL",
-     "notes": [
-      "README.md lacks required content /^## How to run/",
-      "README.md lacks required content /^## How it is deployed/",
-      "README.md lacks required content /^## Real-time delivery/",
-      "README.md lacks required content /^## How the model acts/",
-      "README.md lacks required content /^## How the brief changed/",
-      "README.md lacks required content /^## What does not work/",
-      "README.md lacks required content /^## Test credentials/"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "README.md"
      ]
@@ -1307,11 +1718,26 @@
     {
      "id": "HANDOFF-ACCOUNTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
+    },
+    {
+     "id": "HANDOFF-BOUNDARIES",
+     "kind": "test",
+     "verdict": "PASS",
+     "notes": [
+      "2/2 run(s) passed"
+     ],
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
     },
     {
      "id": "HUMAN-CREDENTIAL-DELIVERY",
@@ -1336,25 +1762,31 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Run actual RLS with restricted login and Gemini adversarial tests"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-UNIT-TESTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/UNIT-TESTS/npm-test.log"
+     ]
     },
     {
      "id": "GATES-POSTGRES-RLS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/POSTGRES-RLS/postgres-required.log"
+     ]
     }
    ],
    "notes": []
@@ -1370,26 +1802,35 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Record truthful 5m or shorter video"
    },
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "VIDEO-DEMO",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T052525Z-video-179bab/results.json",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/timeline.json",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/ffprobe.json",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/ocr.jsonl",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/control-plain.png",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/control-redacted.png",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/crops-email-field.jpg",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/crops-email-field-valley.jpg",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/crops-sidebar-footer.jpg",
+      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/contact-sheet.jpg"
+     ]
     },
     {
      "id": "URL-VIDEO",
      "kind": "url",
-     "verdict": "FAIL",
-     "notes": [
-      "https://drive.google.com/uc?export=download&id=PENDING_UPLOAD returned HTTP 404"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
-      "https://drive.google.com/uc?export=download&id=PENDING_UPLOAD"
+      "https://github.com/engasm89/teamchat-ai/releases/download/walkthrough-2026-10-12/teamchat-ai-walkthrough.mp4"
      ]
     }
    ],
@@ -1406,16 +1847,13 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Draft final email after passing gates"
    },
-   "verdict": "FAIL",
+   "verdict": "BLOCKED",
    "checks": [
     {
      "id": "DRAFT-EMAIL",
      "kind": "file",
-     "verdict": "FAIL",
-     "notes": [
-      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md lacks required content /^\\*\\*To:\\*\\* gonzalo@controlease\\.net/",
-      "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md lacks required content /^\\*\\*Cc:\\*\\* elisa@controlease\\.net/"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "docs/FINAL_SUBMISSION_EMAIL_DRAFT.md"
      ]
@@ -1452,16 +1890,19 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Run genuine model/tool exchange, inspect DB replay"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "HANDOFF-SEEDED-HISTORY",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
     }
    ],
    "notes": []
@@ -1477,25 +1918,31 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Create real Firebase accounts and room memberships"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "HANDOFF-ACCOUNTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
     },
     {
      "id": "HANDOFF-MEMBERSHIPS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
     }
    ],
    "notes": []
@@ -1511,25 +1958,32 @@
     "status": "✅ GREEN — documented/offline verified",
     "closure": "Live send SIGTERM and verify exit/drain"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-SIGTERM-DRAIN",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/SIGTERM-DRAIN/api-process.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/SIGTERM-DRAIN/worker-process.log"
+     ]
     },
     {
      "id": "GATES-UNIT-TESTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/UNIT-TESTS/npm-test.log"
+     ]
     }
    ],
    "notes": []
@@ -1545,25 +1999,31 @@
     "status": "✅ GREEN — documented/offline verified",
     "closure": "Live switch rooms under rapid typing and presence"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-A02",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json"
+     ]
     },
     {
      "id": "GATES-UNIT-TESTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/UNIT-TESTS/npm-test.log"
+     ]
     }
    ],
    "notes": []
@@ -1579,16 +2039,19 @@
     "status": "✅ GREEN — documented/offline verified",
     "closure": "Run again after installing pinned dependencies"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-UNIT-TESTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/UNIT-TESTS/npm-test.log"
+     ]
     }
    ],
    "notes": []
@@ -1604,16 +2067,19 @@
     "status": "✅ GREEN — documented/offline verified",
     "closure": "npm ci and repeat in clean CI"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-TYPECHECK",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/TYPECHECK/typecheck.log"
+     ]
     }
    ],
    "notes": []
@@ -1629,16 +2095,19 @@
     "status": "✅ GREEN — documented/offline verified",
     "closure": "Do not mutate fixture data"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-FIXTURES",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FIXTURES/verify-fixtures.log"
+     ]
     }
    ],
    "notes": []
@@ -1654,16 +2123,19 @@
     "status": "✅ GREEN — documented/offline verified",
     "closure": "Run actual migrations + seed twice"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-SEED-SQL",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/SEED-SQL/seed-sql.log"
+     ]
     }
    ],
    "notes": []
@@ -1679,16 +2151,20 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Generate genuine locks using registry, npm ci twice"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-NPM-CI",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/NPM-CI/npm-ci-root.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/NPM-CI/npm-ci-web.log"
+     ]
     }
    ],
    "notes": []
@@ -1704,25 +2180,50 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Prove with restricted teamchat_api login"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-POSTGRES-RLS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/POSTGRES-RLS/postgres-required.log"
+     ]
     },
     {
      "id": "GATES-FRESH-MIGRATIONS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/initdb.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pg-start.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-001_schema.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-002_notifications.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-003_auth_grants.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-004_ai_consent.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-005_job_lookup.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-006_ephemeral.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-007_semantic_memory.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-provision_runtime_role.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass1-seed.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-001_schema.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-002_notifications.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-003_auth_grants.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-004_ai_consent.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-005_job_lookup.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-006_ephemeral.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-007_semantic_memory.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-provision_runtime_role.sql.log",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/FRESH-MIGRATIONS/pass2-seed.sql.log"
+     ]
     }
    ],
    "notes": []
@@ -1738,24 +2239,25 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "npm --prefix apps/web ci && npm --prefix apps/web run build"
    },
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "GATES-WEB-BUILD",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/WEB-BUILD/web-build.log"
+     ]
     },
     {
      "id": "PROV-HOSTING-MATCH",
      "kind": "json",
-     "verdict": "FAIL",
-     "notes": [
-      "Missing qa_evidence/provenance.json"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "qa_evidence/provenance.json#/hosting/assetsMatchLocalBuild"
      ]
@@ -1774,25 +2276,31 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Inject failures and verify end-to-end terminal state"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-A10",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json"
+     ]
     },
     {
      "id": "GATES-UNIT-TESTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "1/1 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/results.json",
+      "qa_evidence/runs/20261012T053729Z-gates-66d3a5/UNIT-TESTS/npm-test.log"
+     ]
     }
    ],
    "notes": []
@@ -1808,25 +2316,35 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Real Vertex calls under pinned model"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S03",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S03/s03.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S03/s03.json"
+     ]
     },
     {
      "id": "ACC-S06",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S06/s06.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S06/s06.json"
+     ]
     }
    ],
    "notes": []
@@ -1842,16 +2360,21 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Deploy 2 instances, network loss, leak tests"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-A12",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/A12/local-instance.log",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/A12/local-instance.log"
+     ]
     }
    ],
    "notes": []
@@ -1867,7 +2390,7 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Implement verified user-provided baseline or document cut explicitly"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "DOC-README-MONETARY",
@@ -1881,11 +2404,16 @@
     {
      "id": "ACC-S05",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S05/s05.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S05/s05.json"
+     ]
     }
    ],
    "notes": []
@@ -1901,24 +2429,31 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Backfill and test cross-room paraphrases"
    },
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "ACC-S08",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/results.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S08/s08-paraphrase.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S08/s08-unrelated.json",
+      "qa_evidence/runs/20261011T194326Z-acceptance-c335c4/S08/s08-valley.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/results.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S08/s08-paraphrase.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S08/s08-unrelated.json",
+      "qa_evidence/runs/20261011T194954Z-acceptance-96ca6e/S08/s08-valley.json"
+     ]
     },
     {
      "id": "PROV-DB-EMBEDDINGS",
      "kind": "json",
-     "verdict": "FAIL",
-     "notes": [
-      "Missing qa_evidence/provenance.json"
-     ],
+     "verdict": "PASS",
+     "notes": [],
      "evidence": [
       "qa_evidence/provenance.json#/database/memoriesWithout768Embedding"
      ]
@@ -1937,25 +2472,31 @@
     "status": "❌ RED — not proven end-to-end",
     "closure": "Run script and verify as reviewer"
    },
-   "verdict": "NOT VERIFIED",
+   "verdict": "PASS",
    "checks": [
     {
      "id": "HANDOFF-SEEDED-HISTORY",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
     },
     {
      "id": "HANDOFF-ACCOUNTS",
      "kind": "test",
-     "verdict": "NOT VERIFIED",
+     "verdict": "PASS",
      "notes": [
-      "Provenance file qa_evidence/provenance.json missing"
+      "2/2 run(s) passed"
      ],
-     "evidence": []
+     "evidence": [
+      "qa_evidence/runs/20261011T222335Z-handoff-2d22a9/results.json",
+      "qa_evidence/runs/20261012T053205Z-handoff-a9fd34/results.json"
+     ]
     }
    ],
    "notes": []

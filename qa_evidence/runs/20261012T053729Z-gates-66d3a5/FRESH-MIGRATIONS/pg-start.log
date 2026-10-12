@@ -1,0 +1,5 @@
+$ /opt/homebrew/opt/postgresql@17/bin/pg_ctl -D /var/folders/zn/ngr7t1ws30b4nrg7r09mjm9r0000gn/T/teamchat-gates-pg-UCRFcd -l /var/folders/zn/ngr7t1ws30b4nrg7r09mjm9r0000gn/T/teamchat-gates-pg-UCRFcd/server.log -w -o -p 62705 -k /tmp/tcpg-FYS7pf -c listen_addresses=127.0.0.1 start
+(cwd ., exit 0, 129 ms)
+
+waiting for server to start.... done
+server started

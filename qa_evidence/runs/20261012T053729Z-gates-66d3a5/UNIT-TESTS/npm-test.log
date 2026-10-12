@@ -1,0 +1,887 @@
+$ npm test
+(cwd ., exit 0, 976 ms)
+
+
+> teamchat-ai-assessment@0.2.0 test
+> node --experimental-strip-types --test tests/*.test.ts
+
+TAP version 13
+# Subtest: independent oracle and application agree on every store, alone and with each gap added
+ok 1 - independent oracle and application agree on every store, alone and with each gap added
+  ---
+  duration_ms: 49.510625
+  type: 'test'
+  ...
+# Subtest: adding a code whose class the store already has changes nothing (ST-4003 + APP-100.12)
+ok 2 - adding a code whose class the store already has changes nothing (ST-4003 + APP-100.12)
+  ---
+  duration_ms: 0.222375
+  type: 'test'
+  ...
+# Subtest: retry removes persisted partial blocks and emits one durable reset before new execution
+ok 3 - retry removes persisted partial blocks and emits one durable reset before new execution
+  ---
+  duration_ms: 0.836
+  type: 'test'
+  ...
+# Subtest: initial claim and retry without partial blocks do not reset transcript
+ok 4 - initial claim and retry without partial blocks do not reset transcript
+  ---
+  duration_ms: 0.23
+  type: 'test'
+  ...
+# Subtest: every tool starts with a fenced durable plan, then completes against exactly that plan
+ok 5 - every tool starts with a fenced durable plan, then completes against exactly that plan
+  ---
+  duration_ms: 1.002334
+  type: 'test'
+  ...
+# Subtest: replayed history supersedes only the interrupted turn's old answer blocks
+ok 6 - replayed history supersedes only the interrupted turn's old answer blocks
+  ---
+  duration_ms: 0.203208
+  type: 'test'
+  ...
+# Subtest: a tool result cannot be completed without the exact durable plan
+ok 7 - a tool result cannot be completed without the exact durable plan
+  ---
+  duration_ms: 0.458167
+  type: 'test'
+  ...
+# Subtest: the explicit @AI wakeup recognizes punctuation and mixed case
+ok 8 - the explicit @AI wakeup recognizes punctuation and mixed case
+  ---
+  duration_ms: 1.636
+  type: 'test'
+  ...
+# Subtest: Firebase token verification requires an explicitly configured project
+ok 9 - Firebase token verification requires an explicitly configured project
+  ---
+  duration_ms: 0.802666
+  type: 'test'
+  ...
+# Subtest: verified UID maps through restricted function and checks active membership
+ok 10 - verified UID maps through restricted function and checks active membership
+  ---
+  duration_ms: 0.298125
+  type: 'test'
+  ...
+# Subtest: unknown and deactivated identities never obtain context
+ok 11 - unknown and deactivated identities never obtain context
+  ---
+  duration_ms: 0.192333
+  type: 'test'
+  ...
+# Subtest: API/worker startup fails closed on owner, superuser and bypassrls roles
+ok 12 - API/worker startup fails closed on owner, superuser and bypassrls roles
+  ---
+  duration_ms: 0.222542
+  type: 'test'
+  ...
+# Subtest: websocket fanout requires authorized subscription; different opaque room never receives data
+ok 13 - websocket fanout requires authorized subscription; different opaque room never receives data
+  ---
+  duration_ms: 3.78525
+  type: 'test'
+  ...
+# Subtest: socket replay denied room never leaks message data
+ok 14 - socket replay denied room never leaks message data
+  ---
+  duration_ms: 0.174667
+  type: 'test'
+  ...
+# Subtest: unsubscribing a room removes fanout and database presence/typing leases
+ok 15 - unsubscribing a room removes fanout and database presence/typing leases
+  ---
+  duration_ms: 0.446792
+  type: 'test'
+  ...
+# Subtest: WebSocket token lifetime is bounded by signed token expiry
+ok 16 - WebSocket token lifetime is bounded by signed token expiry
+  ---
+  duration_ms: 0.615583
+  type: 'test'
+  ...
+# Subtest: browser uses Firebase only for authentication and does not poll or use managed realtime
+ok 17 - browser uses Firebase only for authentication and does not poll or use managed realtime
+  ---
+  duration_ms: 0.807833
+  type: 'test'
+  ...
+# Subtest: Gemini owns tool selection and the server never broadcasts raw candidate text
+ok 18 - Gemini owns tool selection and the server never broadcasts raw candidate text
+  ---
+  duration_ms: 0.122333
+  type: 'test'
+  ...
+# Subtest: the repeatable live history bootstrap uses a real Gemini call and verifies persisted fetch
+ok 19 - the repeatable live history bootstrap uses a real Gemini call and verifies persisted fetch
+  ---
+  duration_ms: 0.240291
+  type: 'test'
+  ...
+# Subtest: server token verification enforces checkRevoked=true against Firebase Admin
+ok 20 - server token verification enforces checkRevoked=true against Firebase Admin
+  ---
+  duration_ms: 2.721583
+  type: 'test'
+  ...
+# Subtest: ignore events for unsubscribed rooms and malformed replay envelopes
+ok 21 - ignore events for unsubscribed rooms and malformed replay envelopes
+  ---
+  duration_ms: 23.027084
+  type: 'test'
+  ...
+# Subtest: closing a session clears pending sends from account storage by default
+ok 22 - closing a session clears pending sends from account storage by default
+  ---
+  duration_ms: 0.619084
+  type: 'test'
+  ...
+# Subtest: outbound queue rejects invalid or oversized messages before storing
+ok 23 - outbound queue rejects invalid or oversized messages before storing
+  ---
+  duration_ms: 0.974667
+  type: 'test'
+  ...
+# Subtest: offline pending sends are bounded to 100 rather than retaining unlimited messages
+ok 24 - offline pending sends are bounded to 100 rather than retaining unlimited messages
+  ---
+  duration_ms: 3.870666
+  type: 'test'
+  ...
+# Subtest: terminal send rejection removes pending message while a transient server error retains it
+ok 25 - terminal send rejection removes pending message while a transient server error retains it
+  ---
+  duration_ms: 15.97075
+  type: 'test'
+  ...
+# Subtest: browser does not send room commands before Firebase authentication succeeds
+ok 26 - browser does not send room commands before Firebase authentication succeeds
+  ---
+  duration_ms: 21.318334
+  type: 'test'
+  ...
+# Subtest: switching rooms unsubscribes the old room and replays only active subscriptions on reconnect
+ok 27 - switching rooms unsubscribes the old room and replays only active subscriptions on reconnect
+  ---
+  duration_ms: 0.289667
+  type: 'test'
+  ...
+# Subtest: late frames from a logged-out or replaced socket cannot restore session state
+ok 28 - late frames from a logged-out or replaced socket cannot restore session state
+  ---
+  duration_ms: 0.136416
+  type: 'test'
+  ...
+# Subtest: a browser offline event disconnects, holds reconnects, and resumes from the cursor when online
+ok 29 - a browser offline event disconnects, holds reconnects, and resumes from the cursor when online
+  ---
+  duration_ms: 0.471125
+  type: 'test'
+  ...
+# Subtest: presence and typing frames from a departed room cannot reappear
+ok 30 - presence and typing frames from a departed room cannot reappear
+  ---
+  duration_ms: 0.176667
+  type: 'test'
+  ...
+# Subtest: two abbreviated categories cannot starve each other
+ok 31 - two abbreviated categories cannot starve each other
+  ---
+  duration_ms: 17.568125
+  type: 'test'
+  ...
+# Subtest: nonexistent goods never return a plausible unrelated product
+ok 32 - nonexistent goods never return a plausible unrelated product
+  ---
+  duration_ms: 5.457542
+  type: 'test'
+  ...
+# Subtest: buyer code punctuation and store numbers normalize without making up records
+ok 33 - buyer code punctuation and store numbers normalize without making up records
+  ---
+  duration_ms: 0.248959
+  type: 'test'
+  ...
+# Subtest: portable AC ranks the exact portable air conditioner family ahead of unrelated air products
+ok 34 - portable AC ranks the exact portable air conditioner family ahead of unrelated air products
+  ---
+  duration_ms: 12.641458
+  type: 'test'
+  ...
+# Subtest: SSD abbreviation expands inside retrieval, without routing tools
+ok 35 - SSD abbreviation expands inside retrieval, without routing tools
+  ---
+  duration_ms: 3.206208
+  type: 'test'
+  ...
+# Subtest: absent or trivial terms produce zero candidates, without invented catalog codes
+ok 36 - absent or trivial terms produce zero candidates, without invented catalog codes
+  ---
+  duration_ms: 1.857583
+  type: 'test'
+  ...
+# Subtest: Cloud Tasks client closes after a successful dispatch
+ok 37 - Cloud Tasks client closes after a successful dispatch
+  ---
+  duration_ms: 0.93975
+  type: 'test'
+  ...
+# Subtest: Cloud Tasks client closes after an API rejection without altering the error
+ok 38 - Cloud Tasks client closes after an API rejection without altering the error
+  ---
+  duration_ms: 0.316166
+  type: 'test'
+  ...
+# Subtest: client cleanup failures never turn a confirmed task creation into a retry
+ok 39 - client cleanup failures never turn a confirmed task creation into a retry
+  ---
+  duration_ms: 0.133667
+  type: 'test'
+  ...
+# Subtest: direct two-option comparison uses fixture math, transitive supersession and explicit B-minus-A
+ok 40 - direct two-option comparison uses fixture math, transitive supersession and explicit B-minus-A
+  ---
+  duration_ms: 2.495958
+  type: 'test'
+  ...
+# Subtest: duplicate class does not multiply uplift when comparing alternatives
+ok 41 - duplicate class does not multiply uplift when comparing alternatives
+  ---
+  duration_ms: 0.935333
+  type: 'test'
+  ...
+# Subtest: comparison is tenant bounded and an absent code cannot be invented
+ok 42 - comparison is tenant bounded and an absent code cannot be invented
+  ---
+  duration_ms: 0.758583
+  type: 'test'
+  ...
+# Subtest: comparison forbids model-supplied tenant overrides and invalid code arrays
+ok 43 - comparison forbids model-supplied tenant overrides and invalid code arrays
+  ---
+  duration_ms: 0.36925
+  type: 'test'
+  ...
+# Subtest: store 4007 without ST prefix resolves to the same verified comparison as ST-4007
+ok 44 - store 4007 without ST prefix resolves to the same verified comparison as ST-4007
+  ---
+  duration_ms: 1.234625
+  type: 'test'
+  ...
+# Subtest: Cloud Tasks admission fails before serving requests with missing or unsafe OIDC configuration
+ok 45 - Cloud Tasks admission fails before serving requests with missing or unsafe OIDC configuration
+  ---
+  duration_ms: 0.739625
+  type: 'test'
+  ...
+# Subtest: CSV parser handles quoted comma and embedded newline
+ok 46 - CSV parser handles quoted comma and embedded newline
+  ---
+  duration_ms: 0.866791
+  type: 'test'
+  ...
+# Subtest: all five unchanged fixtures are parsed and integrity-checked
+ok 47 - all five unchanged fixtures are parsed and integrity-checked
+  ---
+  duration_ms: 0.19325
+  type: 'test'
+  ...
+# Subtest: online socket does not authorize sending into an unlisted room
+ok 48 - online socket does not authorize sending into an unlisted room
+  ---
+  duration_ms: 3.425
+  type: 'test'
+  ...
+# Subtest: authorized store results are readable and preserve evidence without inventing seasonal relevance
+ok 49 - authorized store results are readable and preserve evidence without inventing seasonal relevance
+  ---
+  duration_ms: 0.796333
+  type: 'test'
+  ...
+# Subtest: a rejected memory value shows each field-level reason instead of raw JSON
+ok 50 - a rejected memory value shows each field-level reason instead of raw JSON
+  ---
+  duration_ms: 0.203042
+  type: 'test'
+  ...
+# Subtest: the two-option comparison renders the authoritative source-backed difference
+ok 51 - the two-option comparison renders the authoritative source-backed difference
+  ---
+  duration_ms: 0.095167
+  type: 'test'
+  ...
+# Subtest: SIGTERM invokes real cleanup once and unregisters both handlers
+ok 52 - SIGTERM invokes real cleanup once and unregisters both handlers
+  ---
+  duration_ms: 4.308209
+  type: 'test'
+  ...
+# Subtest: cleanup failure sets nonzero exit code without an unhandled rejection
+ok 53 - cleanup failure sets nonzero exit code without an unhandled rejection
+  ---
+  duration_ms: 3.406833
+  type: 'test'
+  ...
+# Subtest: cleanup hooks can be unregistered independently
+ok 54 - cleanup hooks can be unregistered independently
+  ---
+  duration_ms: 0.528625
+  type: 'test'
+  ...
+# Subtest: Gemini cannot introduce an unverified monetary baseline
+ok 55 - Gemini cannot introduce an unverified monetary baseline
+  ---
+  duration_ms: 23.449916
+  type: 'test'
+  ...
+# Subtest: idle lease renewals do not repeatedly resend unchanged presence
+ok 56 - idle lease renewals do not repeatedly resend unchanged presence
+  ---
+  duration_ms: 10.564625
+  type: 'test'
+  ...
+# Subtest: every OBJECT tool parameter declares its properties (Gemini emits {} for one that does not)
+ok 57 - every OBJECT tool parameter declares its properties (Gemini emits {} for one that does not)
+  ---
+  duration_ms: 0.989542
+  type: 'test'
+  ...
+# Subtest: memory value JSON: flat values parse; nested, empty and malformed values get field-level reasons
+ok 58 - memory value JSON: flat values parse; nested, empty and malformed values get field-level reasons
+  ---
+  duration_ms: 1.428541
+  type: 'test'
+  ...
+# Subtest: the controlled repair re-encodes nested fields as JSON text and drops nothing
+ok 59 - the controlled repair re-encodes nested fields as JSON text and drops nothing
+  ---
+  duration_ms: 0.344917
+  type: 'test'
+  ...
+# Subtest: the requester's own JSON object is found in their message, exactly and only when there is one
+ok 60 - the requester's own JSON object is found in their message, exactly and only when there is one
+  ---
+  duration_ms: 0.253333
+  type: 'test'
+  ...
+# Subtest: save_memory rejects nested and empty values without writing, and refuses the old object argument
+ok 61 - save_memory rejects nested and empty values without writing, and refuses the old object argument
+  ---
+  duration_ms: 1.151208
+  type: 'test'
+  ...
+# Subtest: shared memory commits a version-one history row in the same tenant transaction
+ok 62 - shared memory commits a version-one history row in the same tenant transaction
+  ---
+  duration_ms: 1.585625
+  type: 'test'
+  ...
+# Subtest: memory history write failure rolls back the memory creation
+ok 63 - memory history write failure rolls back the memory creation
+  ---
+  duration_ms: 0.465834
+  type: 'test'
+  ...
+# Subtest: invalid and conflicting client messages get terminal rejection, not infinite retries
+ok 64 - invalid and conflicting client messages get terminal rejection, not infinite retries
+  ---
+  duration_ms: 2.416042
+  type: 'test'
+  ...
+# Subtest: invalid JSON command field types are permanently rejected without touching PostgreSQL
+ok 65 - invalid JSON command field types are permanently rejected without touching PostgreSQL
+  ---
+  duration_ms: 1.022666
+  type: 'test'
+  ...
+# Subtest: streaming Gemini planner buffers untrusted text and extracts complete native tool calls
+ok 66 - streaming Gemini planner buffers untrusted text and extracts complete native tool calls
+  ---
+  duration_ms: 1.089042
+  type: 'test'
+  ...
+# Subtest: streaming incomplete or conflicting calls fail before a tool can execute
+ok 67 - streaming incomplete or conflicting calls fail before a tool can execute
+  ---
+  duration_ms: 0.440167
+  type: 'test'
+  ...
+# Subtest: cancelled native stream never produces executable operations
+ok 68 - cancelled native stream never produces executable operations
+  ---
+  duration_ms: 0.146083
+  type: 'test'
+  ...
+# Subtest: release preflight rejects missing or stale root and web npm lockfiles
+ok 69 - release preflight rejects missing or stale root and web npm lockfiles
+  ---
+  duration_ms: 5.267542
+  type: 'test'
+  ...
+# Subtest: transaction sets local verified tenant and always releases client
+ok 70 - transaction sets local verified tenant and always releases client
+  ---
+  duration_ms: 1.157834
+  type: 'test'
+  ...
+# Subtest: transaction rolls back and releases on error
+ok 71 - transaction rolls back and releases on error
+  ---
+  duration_ms: 0.324917
+  type: 'test'
+  ...
+# Subtest: foreign-room request fails before querying event history
+ok 72 - foreign-room request fails before querying event history
+  ---
+  duration_ms: 0.200041
+  type: 'test'
+  ...
+# Subtest: durable send uses authorization, dedupe, room lock, durable insert then commit
+ok 73 - durable send uses authorization, dedupe, room lock, durable insert then commit
+  ---
+  duration_ms: 1.252583
+  type: 'test'
+  ...
+# Subtest: retries same clientMessageId do not allocate new sequence
+ok 74 - retries same clientMessageId do not allocate new sequence
+  ---
+  duration_ms: 0.158125
+  type: 'test'
+  ...
+# Subtest: replaying an AI message cannot silently change shared-memory consent
+ok 75 - replaying an AI message cannot silently change shared-memory consent
+  ---
+  duration_ms: 0.265958
+  type: 'test'
+  ...
+# Subtest: @AI message commits durable AI job and outbox atomically before acknowledgement
+ok 76 - @AI message commits durable AI job and outbox atomically before acknowledgement
+  ---
+  duration_ms: 0.641917
+  type: 'test'
+  ...
+# Subtest: auth directory cannot be SELECTed directly by runtime role
+ok 77 - auth directory cannot be SELECTed directly by runtime role
+  ---
+  duration_ms: 0.64225
+  type: 'test'
+  ...
+# Subtest: job directory is private and contains no model inputs or business text
+ok 78 - job directory is private and contains no model inputs or business text
+  ---
+  duration_ms: 0.132042
+  type: 'test'
+  ...
+# Subtest: native Gemini function declarations and tool executor not keyword router
+ok 79 - native Gemini function declarations and tool executor not keyword router
+  ---
+  duration_ms: 0.209959
+  type: 'test'
+  ...
+# Subtest: websocket origin, payload and idle safeguards installed
+ok 80 - websocket origin, payload and idle safeguards installed
+  ---
+  duration_ms: 0.155041
+  type: 'test'
+  ...
+# Subtest: consented memory saving is informed by the persisted trusted job state
+ok 81 - consented memory saving is informed by the persisted trusted job state
+  ---
+  duration_ms: 0.762334
+  type: 'test'
+  ...
+# Subtest: calculate_uplift tells the model to price a set of additions in one call
+ok 82 - calculate_uplift tells the model to price a set of additions in one call
+  ---
+  duration_ms: 0.245375
+  type: 'test'
+  ...
+# Subtest: memory authority cannot be invented by a user prompt
+ok 83 - memory authority cannot be invented by a user prompt
+  ---
+  duration_ms: 5.399167
+  type: 'test'
+  ...
+# Subtest: the current user prompt remains complete and older memory instructions are labelled untrusted
+ok 84 - the current user prompt remains complete and older memory instructions are labelled untrusted
+  ---
+  duration_ms: 7.960916
+  type: 'test'
+  ...
+# Subtest: ST-4003 fixture score and duplicate margin class
+ok 85 - ST-4003 fixture score and duplicate margin class
+  ---
+  duration_ms: 1.299167
+  type: 'test'
+  ...
+# Subtest: ST-4007 uplift, transitive supersession and duplicate class
+ok 86 - ST-4007 uplift, transitive supersession and duplicate class
+  ---
+  duration_ms: 0.315792
+  type: 'test'
+  ...
+# Subtest: no invented baseline or percentage
+ok 87 - no invented baseline or percentage
+  ---
+  duration_ms: 0.214
+  type: 'test'
+  ...
+# Subtest: cycle rejected, valid diamond accepted
+ok 88 - cycle rejected, valid diamond accepted
+  ---
+  duration_ms: 0.604584
+  type: 'test'
+  ...
+# Subtest: full precision decimals
+ok 89 - full precision decimals
+  ---
+  duration_ms: 0.080625
+  type: 'test'
+  ...
+# Subtest: runtime SQL operations are granted explicitly to nonowner teamchat_api
+ok 90 - runtime SQL operations are granted explicitly to nonowner teamchat_api
+  ---
+  duration_ms: 21.425042
+  type: 'test'
+  ...
+# Subtest: migration defines transaction-local fail-closed forced RLS on all tenant tables
+ok 91 - migration defines transaction-local fail-closed forced RLS on all tenant tables
+  ---
+  duration_ms: 0.633375
+  type: 'test'
+  ...
+# Subtest: room notification is opaque and has no business text
+ok 92 - room notification is opaque and has no business text
+  ---
+  duration_ms: 0.084166
+  type: 'test'
+  ...
+# Subtest: SQL seed has both isolated tenant partitions and no raw secret env
+ok 93 - SQL seed has both isolated tenant partitions and no raw secret env
+  ---
+  duration_ms: 1.713792
+  type: 'test'
+  ...
+# Subtest: restricted runtime role supports AI reclaim without expanding tenant powers
+ok 94 - restricted runtime role supports AI reclaim without expanding tenant powers
+  ---
+  duration_ms: 0.655209
+  type: 'test'
+  ...
+# Subtest: forged/unresolved tenant contexts fail closed
+ok 95 - forged/unresolved tenant contexts fail closed
+  ---
+  duration_ms: 0.70825
+  type: 'test'
+  ...
+# Subtest: foreign store ID indistinguishable from unknown ID
+ok 96 - foreign store ID indistinguishable from unknown ID
+  ---
+  duration_ms: 0.626458
+  type: 'test'
+  ...
+# Subtest: shared key is isolated to each tenant
+ok 97 - shared key is isolated to each tenant
+  ---
+  duration_ms: 0.333875
+  type: 'test'
+  ...
+# Subtest: nested or oversized memory is refused without mutation
+ok 98 - nested or oversized memory is refused without mutation
+  ---
+  duration_ms: 2.549166
+  type: 'test'
+  ...
+# Subtest: valid tenant-shared memory provenance comes from server ctx
+ok 99 - valid tenant-shared memory provenance comes from server ctx
+  ---
+  duration_ms: 0.329375
+  type: 'test'
+  ...
+# Subtest: turn source ledger refuses hallucinated IDs and fields
+ok 100 - turn source ledger refuses hallucinated IDs and fields
+  ---
+  duration_ms: 0.301667
+  type: 'test'
+  ...
+# Subtest: event replay preserves order, dedupes, and isolates tenants
+ok 101 - event replay preserves order, dedupes, and isolates tenants
+  ---
+  duration_ms: 0.466
+  type: 'test'
+  ...
+# Subtest: embedding input validates dimension, non-finite and zero vectors
+ok 102 - embedding input validates dimension, non-finite and zero vectors
+  ---
+  duration_ms: 2.083958
+  type: 'test'
+  ...
+# Subtest: semantic document text has deterministic key ordering
+ok 103 - semantic document text has deterministic key ordering
+  ---
+  duration_ms: 10.004917
+  type: 'test'
+  ...
+# Subtest: semantic search is tenant-scoped, uses model-specific vectors, and suppresses weak matches
+ok 104 - semantic search is tenant-scoped, uses model-specific vectors, and suppresses weak matches
+  ---
+  duration_ms: 0.842292
+  type: 'test'
+  ...
+# Subtest: memory saves require consent before embedding/model invocation
+ok 105 - memory saves require consent before embedding/model invocation
+  ---
+  duration_ms: 0.194833
+  type: 'test'
+  ...
+# Subtest: disconnect during lease INSERT does not resurrect a socket subscription
+ok 106 - disconnect during lease INSERT does not resurrect a socket subscription
+  ---
+  duration_ms: 1.696167
+  type: 'test'
+  ...
+# Subtest: simultaneous subscribe then unsubscribe respects arrival order despite slow PostgreSQL
+ok 107 - simultaneous subscribe then unsubscribe respects arrival order despite slow PostgreSQL
+  ---
+  duration_ms: 0.755458
+  type: 'test'
+  ...
+# Subtest: failed Cloud Tasks attempts are durable and exhaust the twelve-attempt budget
+ok 108 - failed Cloud Tasks attempts are durable and exhaust the twelve-attempt budget
+  ---
+  duration_ms: 3.177375
+  type: 'test'
+  ...
+# Subtest: competing dispatchers reserve only one remote attempt until retry window
+ok 109 - competing dispatchers reserve only one remote attempt until retry window
+  ---
+  duration_ms: 0.714792
+  type: 'test'
+  ...
+# Subtest: Cloud Tasks ALREADY_EXISTS is acknowledged but ambiguous failures are retried
+ok 110 - Cloud Tasks ALREADY_EXISTS is acknowledged but ambiguous failures are retried
+  ---
+  duration_ms: 0.160334
+  type: 'test'
+  ...
+# Subtest: Gemini tools declare no tenant override
+ok 111 - Gemini tools declare no tenant override
+  ---
+  duration_ms: 0.546459
+  type: 'test'
+  ...
+# Subtest: catalog lookups return validated source references
+ok 112 - catalog lookups return validated source references
+  ---
+  duration_ms: 0.962667
+  type: 'test'
+  ...
+# Subtest: model cannot override tenant via tool args
+ok 113 - model cannot override tenant via tool args
+  ---
+  duration_ms: 0.289083
+  type: 'test'
+  ...
+# Subtest: foreign store is same as unknown and prompt cannot elevate
+ok 114 - foreign store is same as unknown and prompt cannot elevate
+  ---
+  duration_ms: 0.19975
+  type: 'test'
+  ...
+# Subtest: calculate_uplift tool returns dimensionless data and source ledger
+ok 115 - calculate_uplift tool returns dimensionless data and source ledger
+  ---
+  duration_ms: 1.002917
+  type: 'test'
+  ...
+# Subtest: memory mutation is denied without explicit user consent
+ok 116 - memory mutation is denied without explicit user consent
+  ---
+  duration_ms: 0.1195
+  type: 'test'
+  ...
+# Subtest: tenant rollback failure causes pooled connection eviction
+ok 117 - tenant rollback failure causes pooled connection eviction
+  ---
+  duration_ms: 0.92375
+  type: 'test'
+  ...
+# Subtest: verified identity lookup works with a one-connection pool (no self-deadlock)
+ok 118 - verified identity lookup works with a one-connection pool (no self-deadlock)
+  ---
+  duration_ms: 0.217166
+  type: 'test'
+  ...
+# Subtest: a rejected memory value gets exactly one repair attempt
+ok 119 - a rejected memory value gets exactly one repair attempt
+  ---
+  duration_ms: 0.738334
+  type: 'test'
+  ...
+# Subtest: a successful repair or unrelated failures do not consume the repair budget
+ok 120 - a successful repair or unrelated failures do not consume the repair budget
+  ---
+  duration_ms: 0.095417
+  type: 'test'
+  ...
+# Subtest: tool audit records identify the attempt without logging result rows
+ok 121 - tool audit records identify the attempt without logging result rows
+  ---
+  duration_ms: 0.580292
+  type: 'test'
+  ...
+# Subtest: memory audit records keep the key and field names, not the stored values
+ok 122 - memory audit records keep the key and field names, not the stored values
+  ---
+  duration_ms: 0.275042
+  type: 'test'
+  ...
+# Subtest: inventory parser handles quoted commas and keeps the 61 authoritative rows verbatim
+ok 123 - inventory parser handles quoted commas and keeps the 61 authoritative rows verbatim
+  ---
+  duration_ms: 7.20625
+  type: 'test'
+  ...
+# Subtest: validator runs and reports NOT VERIFIED when no evidence is mapped (never requires PASS to run)
+ok 124 - validator runs and reports NOT VERIFIED when no evidence is mapped (never requires PASS to run)
+  ---
+  duration_ms: 9.031834
+  type: 'test'
+  ...
+# Subtest: combine never produces PASS from empty, failing, blocked or unverified evidence
+ok 125 - combine never produces PASS from empty, failing, blocked or unverified evidence
+  ---
+  duration_ms: 0.095667
+  type: 'test'
+  ...
+# Subtest: file checks fail for a missing file, a checksum mismatch and absent required content
+ok 126 - file checks fail for a missing file, a checksum mismatch and absent required content
+  ---
+  duration_ms: 5.859083
+  type: 'test'
+  ...
+# Subtest: evidence cited for a requirement it does not apply to fails
+ok 127 - evidence cited for a requirement it does not apply to fails
+  ---
+  duration_ms: 4.570084
+  type: 'test'
+  ...
+# Subtest: a test result passes only against the tested commit and deployed revisions
+ok 128 - a test result passes only against the tested commit and deployed revisions
+  ---
+  duration_ms: 14.821958
+  type: 'test'
+  ...
+# Subtest: stale evidence: application source changed after the tested commit
+ok 129 - stale evidence: application source changed after the tested commit
+  ---
+  duration_ms: 3.988417
+  type: 'test'
+  ...
+# Subtest: contradictory, assertion-free and undeclared test results fail
+ok 130 - contradictory, assertion-free and undeclared test results fail
+  ---
+  duration_ms: 8.165834
+  type: 'test'
+  ...
+# Subtest: every run of the current harness counts: one failing repetition fails the requirement
+ok 131 - every run of the current harness counts: one failing repetition fails the requirement
+  ---
+  duration_ms: 15.753666
+  type: 'test'
+  ...
+# Subtest: tampered artifacts and duplicated screenshots under different names fail
+ok 132 - tampered artifacts and duplicated screenshots under different names fail
+  ---
+  duration_ms: 7.618584
+  type: 'test'
+  ...
+# Subtest: URL evidence must be reachable; offline validation leaves it NOT VERIFIED
+ok 133 - URL evidence must be reachable; offline validation leaves it NOT VERIFIED
+  ---
+  duration_ms: 2.991541
+  type: 'test'
+  ...
+# Subtest: pending human action is BLOCKED, and done without evidence fails
+ok 134 - pending human action is BLOCKED, and done without evidence fails
+  ---
+  duration_ms: 2.139125
+  type: 'test'
+  ...
+# Subtest: a modified requirement inventory is an integrity error
+ok 135 - a modified requirement inventory is an integrity error
+  ---
+  duration_ms: 2.221584
+  type: 'test'
+  ...
+# Subtest: live deployment drift from the tested revision fails
+ok 136 - live deployment drift from the tested revision fails
+  ---
+  duration_ms: 2.932792
+  type: 'test'
+  ...
+# Subtest: generated CSV round-trips through a standards-compliant parser
+ok 137 - generated CSV round-trips through a standards-compliant parser
+  ---
+  duration_ms: 6.232458
+  type: 'test'
+  ...
+# Subtest: unknown catalog items and absent decisions use explicitly truthful fixed server messages
+ok 138 - unknown catalog items and absent decisions use explicitly truthful fixed server messages
+  ---
+  duration_ms: 2.997958
+  type: 'test'
+  ...
+# Subtest: a source-backed catalog answer retains code, margin mapping and source reference
+ok 139 - a source-backed catalog answer retains code, margin mapping and source reference
+  ---
+  duration_ms: 0.169375
+  type: 'test'
+  ...
+# Subtest: fenced write extends live lease before data mutation
+ok 140 - fenced write extends live lease before data mutation
+  ---
+  duration_ms: 0.733125
+  type: 'test'
+  ...
+# Subtest: exhausted AI job produces one durable failure event and terminal state
+ok 141 - exhausted AI job produces one durable failure event and terminal state
+  ---
+  duration_ms: 0.232875
+  type: 'test'
+  ...
+# Subtest: scheduler retries expired running jobs and ignores active workers
+ok 142 - scheduler retries expired running jobs and ignores active workers
+  ---
+  duration_ms: 0.522583
+  type: 'test'
+  ...
+# Subtest: job renewal and retry are bounded by tenant, turn ID and fencing token
+ok 143 - job renewal and retry are bounded by tenant, turn ID and fencing token
+  ---
+  duration_ms: 0.92275
+  type: 'test'
+  ...
+# Subtest: dispatch exhaustion emits a durable failure event and fails job and outbox
+ok 144 - dispatch exhaustion emits a durable failure event and fails job and outbox
+  ---
+  duration_ms: 0.278666
+  type: 'test'
+  ...
+# Subtest: AI retry may reuse an operation only when its name and arguments match
+ok 145 - AI retry may reuse an operation only when its name and arguments match
+  ---
+  duration_ms: 9.538417
+  type: 'test'
+  ...
+1..145
+# tests 145
+# suites 0
+# pass 145
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 801.471334
