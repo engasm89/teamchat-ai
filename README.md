@@ -4,7 +4,7 @@ A multi-tenant team chat where an AI participant answers retail questions by cal
 
 - Live app: https://focus-clean-4b9f4.web.app
 - Walkthrough video, narrated and captioned (2 min 37 s): https://github.com/engasm89/teamchat-ai/releases/tag/walkthrough-2026-10-12
-- Technical brief as submitted on 8 October 2026: `reference/submitted_technical_brief_2026-10-08.pdf`
+- Technical brief as submitted on 8 October 2026: [`reference/TeamChat_AI_Technical_Brief_SUBMITTED_2026-10-08.pdf`](reference/TeamChat_AI_Technical_Brief_SUBMITTED_2026-10-08.pdf)
 - Requirement status, derived from evidence rather than written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md` and `docs/REQUIREMENTS_FINAL_MATRIX.md`
 - Release decision: `docs/FINAL_GO_NO_GO_REPORT.md`
 
@@ -155,3 +155,10 @@ To check isolation yourself: sign in as a Northside user and ask `@AI Show me th
 - `scripts/acceptance` — the employer scenarios S01–S19 against the deployed stack, a browser suite for S01/S15/S16/S17 with negative controls, and an independent oracle that reads the supplied datasets directly.
 - `scripts/handoff`, `scripts/video`, `scripts/gates` — reviewer accounts and isolation, the walkthrough and its secret scan, and clean-clone build and test gates.
 - `qa_evidence/runs/<run>/` — `results.json` (assertions, inputs, expected and actual values, tool traces), raw artifacts and a `MANIFEST.json` of checksums for each run.
+- `docs/history/` — superseded audits, status reports and planning-agent instructions from before the deployment, kept for the record.
+
+## Commit identity
+
+58 of the first 74 commits on `main` (every commit from 9 October, 22:00 +03:00, onward) show the author `TeamChat Release Engineer <release@controlease.net>`. An AI coding agent I was using set that name and address in this clone's local Git configuration on 9 October, and I didn't notice before pushing. It is not an address I own or was given, and nobody at Controlease wrote or reviewed these commits. All of them are my work, done with AI coding assistants; commits marked `Co-authored-by: Cursor` say so, and the few early `*@local.invalid` and `*@users.noreply.github.com` authors come from the same agent-assisted workflow.
+
+The setting was removed on 12 October, and later commits carry my own identity. I have not rewritten history, because the test evidence, the deployment provenance (`qa_evidence/provenance.json`), the release notes and the deployed images' revision labels all reference these commit hashes. `.mailmap` maps the placeholder identities to mine for `git log` and `git shortlog`.

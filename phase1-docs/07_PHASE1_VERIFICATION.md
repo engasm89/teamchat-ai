@@ -10,7 +10,6 @@
 - Sent: **8 October 2026, 18:05:07 (+03:00)** (mailbox connector email timestamp).
 - To: `gonzalo@controlease.net`; CC: `elisa@controlease.net`.
 - Attachment: `TeamChat_AI_Technical_Brief_Ashraf.pdf`, preserved byte-for-byte in this package under `TeamChat_AI_Technical_Brief_SUBMITTED_2026-10-08.pdf`.
-- Gmail conversation link: https://mail.google.com/mail/u/?authuser=eng.asm.89%40gmail.com#all/1a11cb0c10ca3fc6
 - PDF: **6 pages**, rendered and visually reviewed, includes user stories and acceptance checks, implicit requirements, design/alternatives, data model, cuts and risks.
 - This establishes email submission. The ordering relative to the *first application code commit* must be checked when the actual repository is located. No runnable application appears in the two provided ZIP packages.
 

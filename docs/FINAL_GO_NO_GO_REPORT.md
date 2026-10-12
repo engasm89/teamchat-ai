@@ -2,7 +2,7 @@
 
 12 October 2026. Every requirement a machine can check passes. Of the 61 requirements, 58 pass, none fail, none are unverified, and 3 are blocked only on actions Ashraf takes himself: sending the submission e-mail and delivering the reviewer passwords. Nothing has been sent to anyone.
 
-The counts come from `scripts/validate-matrix.ts` (validated 2026-10-12T16:29:21Z), which derives each verdict from recorded test runs, the deployment's provenance and live checks. Nothing in the matrix is written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md`, `docs/REQUIREMENTS_FINAL_MATRIX.md`, `qa_evidence/matrix-validation.json`.
+The counts come from `scripts/validate-matrix.ts` (validated 2026-10-12T17:59:22Z), which derives each verdict from recorded test runs, the deployment's provenance and live checks. Nothing in the matrix is written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md`, `docs/REQUIREMENTS_FINAL_MATRIX.md`, `qa_evidence/matrix-validation.json`.
 
 ## What was tested
 
@@ -90,15 +90,12 @@ The previous version of this report claimed GO on revision 00007, a different co
 
 - **Rotation.** The six reviewer passwords were rotated on 12 October at about 05:31Z. They exist only in the macOS login keychain (service `teamchat-ai-reviewer`).
 - **Repository.** No file in the workspace contains them, the source ZIP included (`scripts/handoff/scan-credentials.ts`).
-- **Copies of older passwords, all now dead:**
-  - Removed from the two workspace-root reports and from three Antigravity scratch files.
-  - Still present in Antigravity's own conversation database and transcript logs under `~/.gemini/antigravity-ide/`. These are left for Ashraf to decide on.
+- **Older passwords** written down before the rotation no longer work.
 
 ## Raise separately
 
 These were found during the audit and were deliberately not changed here:
 
-- `~/.gemini/antigravity-ide/brain/5dc0b142-…/scratch/new_db_password.txt` appears to hold a plaintext database password, written by another agent on 11 October. If it is the live Cloud SQL password, rotate it, update the `teamchat-database-url` secret, and delete the file.
 - Cloud SQL has backups disabled, a public IP, and allows unencrypted connections (no authorized networks are configured). This is fine for a demo, but not for production.
 - Setting `GEMINI_API_KEY` silently moves the worker from Vertex AI to the Gemini Developer API.
 - No Cloud Scheduler job is deployed to recover AI jobs that were recorded but never dispatched.
