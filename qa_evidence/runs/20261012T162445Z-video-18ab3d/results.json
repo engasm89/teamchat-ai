@@ -1,0 +1,1061 @@
+{
+ "schemaVersion": 1,
+ "suite": "video",
+ "runId": "20261012T162445Z-video-18ab3d",
+ "environment": "production: https://focus-clean-4b9f4.web.app + https://teamchat-api-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-12T16:24:45.075Z",
+ "finishedAt": "2026-10-12T16:29:03.296Z",
+ "harness": {
+  "gitHead": "57d8587e12e41439e37898b9d196e56d9d1c2014",
+  "dirty": false,
+  "fingerprint": "5a9877399c3567ccf1cf295fd6229e502372a897a9daa63a9653ddfb4726c372",
+  "files": [
+   "docs/video/narration-cues.json",
+   "scripts/acceptance/common.ts",
+   "scripts/evidence/lib.ts",
+   "scripts/video/compose.ts",
+   "scripts/video/narrate-walkthrough.ts",
+   "scripts/video/ocr.swift",
+   "scripts/video/record-walkthrough.ts",
+   "scripts/video/verify-walkthrough.ts"
+  ]
+ },
+ "source": {
+  "sha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-00016-ct7",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00016-24v",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "tests": [
+  {
+   "id": "DEMO-VIDEO",
+   "title": "Captioned walkthrough: <=5 min, 1080p H.264, bound to the deployed build, no credentials or addresses readable",
+   "requirementIds": [
+    "D06"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-12T16:24:45.111Z",
+   "finishedAt": "2026-10-12T16:29:03.295Z",
+   "details": {
+    "video": {
+     "sha256": "821651ae5bca0f9fd0f86aea9a0ea791837926ec00a852f527ad8207fffdc82c",
+     "bytes": 10778477,
+     "durationSeconds": 156.682,
+     "codec": "h264",
+     "width": 1920,
+     "height": 1080,
+     "pixFmt": "yuv420p",
+     "frameRate": "25/1",
+     "audioStreams": 1
+    },
+    "scan": {
+     "sampledFrames": 313,
+     "sampleFps": 2,
+     "ocr": "whole frame plus 21 overlapping quarter-width, half-height tiles",
+     "secretsChecked": [
+      "password:n1",
+      "account:n1",
+      "password:n2",
+      "account:n2",
+      "password:n3",
+      "account:n3",
+      "password:v1",
+      "account:v1",
+      "password:v2",
+      "account:v2",
+      "password:v3",
+      "account:v3"
+     ],
+     "patterns": [
+      "email: [A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)+",
+      "internal-domain: teamchat\\.internal",
+      "jwt: eyJ[A-Za-z0-9_-]{8,}",
+      "google-api-key: AIza[0-9A-Za-z_-]{20,}"
+     ],
+     "findings": [],
+     "charactersRead": 2653365
+    },
+    "narration": {
+     "pausesFound": 94,
+     "captionChangesFound": 13,
+     "boundaries": [
+      {
+       "scene": 2,
+       "planned": 12.68,
+       "captionChangeSeen": 12.76,
+       "pause": [
+        12.441104,
+        12.911375
+       ]
+      },
+      {
+       "scene": 3,
+       "planned": 23.36,
+       "captionChangeSeen": 23.36,
+       "pause": [
+        23.160917,
+        23.588687
+       ]
+      },
+      {
+       "scene": 4,
+       "planned": 34.93,
+       "captionChangeSeen": 34.92,
+       "pause": [
+        34.707146,
+        35.149542
+       ]
+      },
+      {
+       "scene": 5,
+       "planned": 47.69,
+       "captionChangeSeen": 47.72,
+       "pause": [
+        47.460958,
+        47.921354
+       ]
+      },
+      {
+       "scene": 6,
+       "planned": 58.6,
+       "captionChangeSeen": 58.6,
+       "pause": [
+        58.37125,
+        58.82775
+       ]
+      },
+      {
+       "scene": 7,
+       "planned": 68.04,
+       "captionChangeSeen": 68.04,
+       "pause": [
+        67.621,
+        68.458646
+       ]
+      },
+      {
+       "scene": 8,
+       "planned": 80.56,
+       "captionChangeSeen": 80.56,
+       "pause": [
+        80.354604,
+        80.764854
+       ]
+      },
+      {
+       "scene": 9,
+       "planned": 91.37,
+       "captionChangeSeen": 91.36,
+       "pause": [
+        91.07025,
+        91.674146
+       ]
+      },
+      {
+       "scene": 10,
+       "planned": 99.31,
+       "captionChangeSeen": 99.32,
+       "pause": [
+        99.097771,
+        99.528646
+       ]
+      },
+      {
+       "scene": 11,
+       "planned": 110.28,
+       "captionChangeSeen": 110.24,
+       "pause": [
+        110.055292,
+        110.497479
+       ]
+      },
+      {
+       "scene": 12,
+       "planned": 120.93,
+       "captionChangeSeen": 120.92,
+       "pause": [
+        120.716354,
+        121.137
+       ]
+      },
+      {
+       "scene": 13,
+       "planned": 130.77,
+       "captionChangeSeen": 130.76,
+       "pause": [
+        130.432375,
+        131.169958
+       ]
+      },
+      {
+       "scene": 14,
+       "planned": 144.43,
+       "captionChangeSeen": 144.44,
+       "pause": [
+        144.241125,
+        144.654354
+       ]
+      }
+     ],
+     "scenes": [
+      {
+       "scene": 1,
+       "outputFrom": 0,
+       "outputTo": 12.676,
+       "speechFrom": 0.4,
+       "speechTo": 12.441,
+       "spans": [
+        {
+         "recordingFrom": 0.04,
+         "recordingTo": 2.87,
+         "outputFrom": 0,
+         "outputTo": 10.6,
+         "speedFactor": 0.267
+        },
+        {
+         "recordingFrom": 2.87,
+         "recordingTo": 11.1,
+         "outputFrom": 10.6,
+         "outputTo": 12.676,
+         "speedFactor": 3.9644
+        }
+       ],
+       "captionFrom": 0,
+       "captionTo": 12.68
+      },
+      {
+       "scene": 2,
+       "outputFrom": 12.676,
+       "outputTo": 23.365,
+       "speechFrom": 12.911,
+       "speechTo": 23.141,
+       "spans": [
+        {
+         "recordingFrom": 11.1,
+         "recordingTo": 12.07,
+         "outputFrom": 12.676,
+         "outputTo": 17.8,
+         "speedFactor": 0.1893
+        },
+        {
+         "recordingFrom": 12.07,
+         "recordingTo": 22.19,
+         "outputFrom": 17.8,
+         "outputTo": 23.365,
+         "speedFactor": 1.8185
+        }
+       ],
+       "captionFrom": 12.68,
+       "captionTo": 23.36
+      },
+      {
+       "scene": 3,
+       "outputFrom": 23.365,
+       "outputTo": 34.928,
+       "speechFrom": 23.589,
+       "speechTo": 34.707,
+       "spans": [
+        {
+         "recordingFrom": 22.19,
+         "recordingTo": 27.3,
+         "outputFrom": 23.365,
+         "outputTo": 27.7,
+         "speedFactor": 1.1045
+        },
+        {
+         "recordingFrom": 27.3,
+         "recordingTo": 36.9,
+         "outputFrom": 27.7,
+         "outputTo": 34.928,
+         "speedFactor": 1.137
+        }
+       ],
+       "captionFrom": 23.36,
+       "captionTo": 34.93
+      },
+      {
+       "scene": 4,
+       "outputFrom": 34.928,
+       "outputTo": 47.691,
+       "speechFrom": 35.15,
+       "speechTo": 47.46,
+       "spans": [
+        {
+         "recordingFrom": 36.9,
+         "recordingTo": 39.9,
+         "outputFrom": 34.928,
+         "outputTo": 35.8,
+         "speedFactor": 3.4423
+        },
+        {
+         "recordingFrom": 39.9,
+         "recordingTo": 49.18,
+         "outputFrom": 35.8,
+         "outputTo": 47.691,
+         "speedFactor": 0.76
+        }
+       ],
+       "captionFrom": 34.93,
+       "captionTo": 47.69
+      },
+      {
+       "scene": 5,
+       "outputFrom": 47.691,
+       "outputTo": 58.599,
+       "speechFrom": 47.921,
+       "speechTo": 58.371,
+       "spans": [
+        {
+         "recordingFrom": 49.18,
+         "recordingTo": 51.45,
+         "outputFrom": 47.691,
+         "outputTo": 52.8,
+         "speedFactor": 0.4443
+        },
+        {
+         "recordingFrom": 51.45,
+         "recordingTo": 61.05,
+         "outputFrom": 52.8,
+         "outputTo": 58.599,
+         "speedFactor": 1.6546
+        }
+       ],
+       "captionFrom": 47.69,
+       "captionTo": 58.6
+      },
+      {
+       "scene": 6,
+       "outputFrom": 58.599,
+       "outputTo": 68.04,
+       "speechFrom": 58.828,
+       "speechTo": 67.621,
+       "spans": [
+        {
+         "recordingFrom": 61.05,
+         "recordingTo": 63.7,
+         "outputFrom": 58.599,
+         "outputTo": 61.8,
+         "speedFactor": 0.828
+        },
+        {
+         "recordingFrom": 63.7,
+         "recordingTo": 72.91,
+         "outputFrom": 61.8,
+         "outputTo": 68.04,
+         "speedFactor": 1.4756
+        }
+       ],
+       "captionFrom": 58.6,
+       "captionTo": 68.04
+      },
+      {
+       "scene": 7,
+       "outputFrom": 68.04,
+       "outputTo": 80.563,
+       "speechFrom": 68.459,
+       "speechTo": 80.355,
+       "spans": [
+        {
+         "recordingFrom": 72.91,
+         "recordingTo": 75.15,
+         "outputFrom": 68.04,
+         "outputTo": 74.4,
+         "speedFactor": 0.3522
+        },
+        {
+         "recordingFrom": 75.15,
+         "recordingTo": 84.74,
+         "outputFrom": 74.4,
+         "outputTo": 80.563,
+         "speedFactor": 1.5552
+        }
+       ],
+       "captionFrom": 68.04,
+       "captionTo": 80.56
+      },
+      {
+       "scene": 8,
+       "outputFrom": 80.563,
+       "outputTo": 91.372,
+       "speechFrom": 80.771,
+       "speechTo": 91.07,
+       "spans": [
+        {
+         "recordingFrom": 84.74,
+         "recordingTo": 87.4,
+         "outputFrom": 80.563,
+         "outputTo": 83.3,
+         "speedFactor": 0.9719
+        },
+        {
+         "recordingFrom": 87.4,
+         "recordingTo": 96.63,
+         "outputFrom": 83.3,
+         "outputTo": 91.372,
+         "speedFactor": 1.1428
+        }
+       ],
+       "captionFrom": 80.56,
+       "captionTo": 91.37
+      },
+      {
+       "scene": 9,
+       "outputFrom": 91.372,
+       "outputTo": 99.314,
+       "speechFrom": 91.674,
+       "speechTo": 99.098,
+       "spans": [
+        {
+         "recordingFrom": 96.63,
+         "recordingTo": 97.65,
+         "outputFrom": 91.372,
+         "outputTo": 93.2,
+         "speedFactor": 0.3985
+        },
+        {
+         "recordingFrom": 97.65,
+         "recordingTo": 100.97,
+         "outputFrom": 93.2,
+         "outputTo": 96.3,
+         "speedFactor": 0.7731
+        },
+        {
+         "recordingFrom": 100.97,
+         "recordingTo": 105.9,
+         "outputFrom": 96.3,
+         "outputTo": 98.9,
+         "speedFactor": 1.8962
+        },
+        {
+         "recordingFrom": 105.9,
+         "recordingTo": 107.86,
+         "outputFrom": 98.9,
+         "outputTo": 99.314,
+         "speedFactor": 4.74
+        }
+       ],
+       "captionFrom": 91.37,
+       "captionTo": 99.31
+      },
+      {
+       "scene": 10,
+       "outputFrom": 99.314,
+       "outputTo": 110.276,
+       "speechFrom": 99.529,
+       "speechTo": 110.055,
+       "spans": [
+        {
+         "recordingFrom": 107.86,
+         "recordingTo": 119.24,
+         "outputFrom": 99.314,
+         "outputTo": 110.276,
+         "speedFactor": 1.0377
+        }
+       ],
+       "captionFrom": 99.31,
+       "captionTo": 110.28
+      },
+      {
+       "scene": 11,
+       "outputFrom": 110.276,
+       "outputTo": 120.927,
+       "speechFrom": 110.497,
+       "speechTo": 120.716,
+       "spans": [
+        {
+         "recordingFrom": 119.24,
+         "recordingTo": 119.27,
+         "outputFrom": 110.276,
+         "outputTo": 113,
+         "speedFactor": 0.011
+        },
+        {
+         "recordingFrom": 119.27,
+         "recordingTo": 120.31,
+         "outputFrom": 113,
+         "outputTo": 116.5,
+         "speedFactor": 0.2971
+        },
+        {
+         "recordingFrom": 120.31,
+         "recordingTo": 123.61,
+         "outputFrom": 116.5,
+         "outputTo": 117.6,
+         "speedFactor": 3
+        },
+        {
+         "recordingFrom": 123.61,
+         "recordingTo": 138.15,
+         "outputFrom": 117.6,
+         "outputTo": 120.927,
+         "speedFactor": 1.93
+        }
+       ],
+       "captionFrom": 110.28,
+       "captionTo": 120.93
+      },
+      {
+       "scene": 12,
+       "outputFrom": 120.927,
+       "outputTo": 130.764,
+       "speechFrom": 121.137,
+       "speechTo": 130.381,
+       "spans": [
+        {
+         "recordingFrom": 138.15,
+         "recordingTo": 138.87,
+         "outputFrom": 120.927,
+         "outputTo": 121.3,
+         "speedFactor": 1.9277
+        },
+        {
+         "recordingFrom": 138.87,
+         "recordingTo": 139.87,
+         "outputFrom": 121.3,
+         "outputTo": 125.2,
+         "speedFactor": 0.2564
+        },
+        {
+         "recordingFrom": 139.87,
+         "recordingTo": 149.5,
+         "outputFrom": 125.2,
+         "outputTo": 130.764,
+         "speedFactor": 1.7308
+        }
+       ],
+       "captionFrom": 120.93,
+       "captionTo": 130.77
+      },
+      {
+       "scene": 13,
+       "outputFrom": 130.764,
+       "outputTo": 144.424,
+       "speechFrom": 131.147,
+       "speechTo": 144.216,
+       "spans": [
+        {
+         "recordingFrom": 149.5,
+         "recordingTo": 151.07,
+         "outputFrom": 130.764,
+         "outputTo": 133.4,
+         "speedFactor": 0.5956
+        },
+        {
+         "recordingFrom": 151.07,
+         "recordingTo": 152.67,
+         "outputFrom": 133.4,
+         "outputTo": 136,
+         "speedFactor": 0.6154
+        },
+        {
+         "recordingFrom": 152.67,
+         "recordingTo": 153.87,
+         "outputFrom": 136,
+         "outputTo": 139.4,
+         "speedFactor": 0.3529
+        },
+        {
+         "recordingFrom": 153.87,
+         "recordingTo": 163.58,
+         "outputFrom": 139.4,
+         "outputTo": 144.424,
+         "speedFactor": 1.9313
+        }
+       ],
+       "captionFrom": 130.77,
+       "captionTo": 144.43
+      },
+      {
+       "scene": 14,
+       "outputFrom": 144.424,
+       "outputTo": 156.682,
+       "speechFrom": 144.631,
+       "speechTo": 155.482,
+       "spans": [
+        {
+         "recordingFrom": 163.58,
+         "recordingTo": 174.95,
+         "outputFrom": 144.424,
+         "outputTo": 156.682,
+         "speedFactor": 0.9275
+        }
+       ],
+       "captionFrom": 144.43,
+       "captionTo": 156.69
+      }
+     ],
+     "anchors": [
+      {
+       "event": "Sign-in completes: the app replaces the login page",
+       "spokenAt": 10.6,
+       "playsAt": 10.6
+      },
+      {
+       "event": "The left buyer's message appears in the right window",
+       "spokenAt": 17.8,
+       "playsAt": 17.8
+      },
+      {
+       "event": "search_catalog rows appear in both windows",
+       "spokenAt": 27.7,
+       "playsAt": 27.7
+      },
+      {
+       "event": "The calculate_uplift call and its result appear",
+       "spokenAt": 35.8,
+       "playsAt": 35.8
+      },
+      {
+       "event": "search_catalog returns no rows and the no-match answer appears",
+       "spokenAt": 52.8,
+       "playsAt": 52.8
+      },
+      {
+       "event": "The shared-memory search result appears",
+       "spokenAt": 61.8,
+       "playsAt": 61.8
+      },
+      {
+       "event": "get_store_assortment returns found: false",
+       "spokenAt": 74.4,
+       "playsAt": 74.4
+      },
+      {
+       "event": "The answer to the injection appears",
+       "spokenAt": 83.3,
+       "playsAt": 83.3
+      },
+      {
+       "event": "The two-part question appears",
+       "spokenAt": 93.2,
+       "playsAt": 93.2
+      },
+      {
+       "event": "The right window reloads",
+       "spokenAt": 96.3,
+       "playsAt": 96.3
+      },
+      {
+       "event": "The turn completes",
+       "spokenAt": 98.9,
+       "playsAt": 98.9
+      },
+      {
+       "event": "The right window's status turns offline",
+       "spokenAt": 113,
+       "playsAt": 113
+      },
+      {
+       "event": "The left buyer posts the first message",
+       "spokenAt": 116.5,
+       "playsAt": 116.5
+      },
+      {
+       "event": "The left buyer posts the second message",
+       "spokenAt": 117.6,
+       "playsAt": 117.6
+      },
+      {
+       "event": "The right window's status turns online",
+       "spokenAt": 121.3,
+       "playsAt": 121.3
+      },
+      {
+       "event": "Both missed messages appear in the right window",
+       "spokenAt": 125.2,
+       "playsAt": 125.2
+      },
+      {
+       "event": "Signed in as the Valley buyer",
+       "spokenAt": 133.4,
+       "playsAt": 133.4
+      },
+      {
+       "event": "The ST-4013 question appears",
+       "spokenAt": 136,
+       "playsAt": 136
+      },
+      {
+       "event": "Valley's assortment for ST-4013 appears",
+       "spokenAt": 139.4,
+       "playsAt": 139.4
+      }
+     ]
+    },
+    "controls": {
+     "method": "deployed login page at the recorder's pane size, recorded by Playwright (VP8) and re-encoded with the recorder's libx264 settings; a decoy sidebar footer uses the app's own .sidebarfooter styles",
+     "plain": {
+      "setup": "no redaction; password input switched to type=text",
+      "renderedSizes": {
+       "input[type=email]": {
+        "fontSize": "13px",
+        "filter": "none",
+        "type": "email"
+       },
+       ".sidebarfooter small": {
+        "fontSize": "13.3333px",
+        "filter": "none",
+        "type": null
+       },
+       "input[autocomplete=\"current-password\"]": {
+        "fontSize": "13px",
+        "filter": "none",
+        "type": "text"
+       }
+      },
+      "findings": [
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ],
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ],
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ],
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ],
+       [
+        "email",
+        "email:decoy",
+        "password:decoy"
+       ]
+      ],
+      "ocr": [
+       "[REDACTED:email:decoy spans lines; frame text withheld]",
+       "[REDACTED:email:decoy spans lines; frame text withheld]",
+       "[REDACTED:email:decoy spans lines; frame text withheld]",
+       "[REDACTED:email:decoy spans lines; frame text withheld]",
+       "[REDACTED:email:decoy spans lines; frame text withheld]"
+      ]
+     },
+     "redacted": {
+      "setup": "recorder redaction CSS (.sidebarfooter small,input[type=\"email\"]{filter:blur(7px)}); password input left masked",
+      "renderedSizes": {
+       "input[type=email]": {
+        "fontSize": "13px",
+        "filter": "blur(7px)",
+        "type": "email"
+       },
+       ".sidebarfooter small": {
+        "fontSize": "13.3333px",
+        "filter": "blur(7px)",
+        "type": null
+       },
+       "input[autocomplete=\"current-password\"]": {
+        "fontSize": "13px",
+        "filter": "none",
+        "type": "password"
+       }
+      },
+      "findings": [
+       [],
+       [],
+       [],
+       [],
+       []
+      ],
+      "ocr": [
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n...\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nıck\nent account to continue.\nn in\nSign out\nSig\nSign in\nnin",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\n....\nSign in\nıck\nent account to continue.\nn in\n....\nSig\nSign out\nSign in\nnin",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n...\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nıck\nent account to continue.\nn in\nSign out\nSig\nSign in\nnin",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n....\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\n....\nSign in\nıck\nent account to continue.\nn in\n....\nSig\nSign out\nSign in\nnin",
+       "• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nSign out\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n4 TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nıck\nent account to continue.\n• TeamChat Al\nWelcome ba\nSign in with an assessme\nEmail\nPassword\n...\nSig\n• TeamChat Al\nWelcome back\nSign in with an assessment account to continue.\nEmail\nPassword\nSign in\nıck\nent account to continue.\nn in\nSign out\nSig\nSign in\nnin"
+      ]
+     },
+     "decoyValuesAreRandomAndUnused": true
+    },
+    "publicCopy": {
+     "url": "https://github.com/engasm89/teamchat-ai/releases/download/walkthrough-2026-10-12/teamchat-ai-walkthrough.mp4",
+     "finalHost": "release-assets.githubusercontent.com",
+     "status": 200,
+     "contentType": "application/octet-stream",
+     "bytes": 10778477,
+     "sha256": "821651ae5bca0f9fd0f86aea9a0ea791837926ec00a852f527ad8207fffdc82c",
+     "downloadAttempts": 1,
+     "decodedDurationSeconds": 156.682,
+     "decodeErrors": "",
+     "credentials": "none (no cookies or Authorization header)"
+    }
+   },
+   "assertions": [
+    {
+     "name": "duration is at most 5 minutes",
+     "pass": true,
+     "expected": "<=300s",
+     "actual": 156.682
+    },
+    {
+     "name": "1920x1080 H.264 yuv420p",
+     "pass": true,
+     "expected": "h264 1920x1080 yuv420p",
+     "actual": [
+      "h264",
+      1920,
+      1080,
+      "yuv420p"
+     ]
+    },
+    {
+     "name": "file checksum equals the recorder's",
+     "pass": true,
+     "expected": "821651ae5bca0f9fd0f86aea9a0ea791837926ec00a852f527ad8207fffdc82c",
+     "actual": "821651ae5bca0f9fd0f86aea9a0ea791837926ec00a852f527ad8207fffdc82c"
+    },
+    {
+     "name": "recorded against the source under test",
+     "pass": true,
+     "expected": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
+     "actual": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+    },
+    {
+     "name": "recorded against the live API and worker images",
+     "pass": true,
+     "expected": [
+      "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+      "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69"
+     ],
+     "actual": [
+      "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+      "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69"
+     ]
+    },
+    {
+     "name": "every scripted step completed",
+     "pass": true,
+     "expected": [
+      "sign-in",
+      "realtime",
+      "tools-grounding",
+      "retail-math",
+      "honesty",
+      "memory",
+      "isolation",
+      "injection",
+      "refresh",
+      "reconnect",
+      "valley",
+      "close"
+     ],
+     "actual": [
+      "sign-in",
+      "realtime",
+      "tools-grounding",
+      "retail-math",
+      "honesty",
+      "memory",
+      "isolation",
+      "injection",
+      "refresh",
+      "reconnect",
+      "valley",
+      "close"
+     ]
+    },
+    {
+     "name": "the recorder applies the redaction rule the controls test",
+     "pass": true,
+     "expected": ".sidebarfooter small,input[type=\"email\"]{filter:blur(7px)}",
+     "actual": "see scripts/video/record-walkthrough.ts"
+    },
+    {
+     "name": "OCR read text from every sampled frame",
+     "pass": true,
+     "expected": 313,
+     "actual": 313
+    },
+    {
+     "name": "no password, account name, e-mail address, JWT or API key is readable in any sampled frame",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "every caption and its step header is legible in the video",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "narration: one AAC track as long as the picture",
+     "pass": true,
+     "expected": "1 aac track, duration within 0.1 s",
+     "actual": [
+      [
+       "aac",
+       156.682,
+       156.68
+      ]
+     ]
+    },
+    {
+     "name": "narration: the timeline names the audio the cues were timed against",
+     "pass": true,
+     "expected": "docs/video/narration-cues.json",
+     "actual": "3a48afdc5e18b75f899f45908760403d93f5cb5ca65211569cb1f01620800089"
+    },
+    {
+     "name": "narration: every caption change is in the picture where the timeline puts it, inside a pause in the voice",
+     "pass": true,
+     "expected": "all scene changes seen within 0.2 s and inside a pause",
+     "actual": []
+    },
+    {
+     "name": "narration: every paragraph is spoken while its own caption is on screen",
+     "pass": true,
+     "expected": "speech inside its caption",
+     "actual": []
+    },
+    {
+     "name": "narration: every anchored event plays where the words describing it are spoken",
+     "pass": true,
+     "expected": "within 0.05 s",
+     "actual": []
+    },
+    {
+     "name": "positive control: the planted e-mail and password are found in every sampled frame",
+     "pass": true,
+     "expected": "password:decoy and email:decoy in all frames",
+     "actual": [
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ],
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ],
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ],
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ],
+      [
+       "email",
+       "email:decoy",
+       "password:decoy"
+      ]
+     ]
+    },
+    {
+     "name": "positive control: the planted password is rendered unmasked",
+     "pass": true,
+     "expected": "type=text with value",
+     "actual": {
+      "type": "text",
+      "filled": true
+     }
+    },
+    {
+     "name": "redaction control: the password input holds the decoy but stays masked",
+     "pass": true,
+     "expected": "type=password with value",
+     "actual": {
+      "type": "password",
+      "filled": true
+     }
+    },
+    {
+     "name": "redaction control: the same planted values are unreadable in every sampled frame",
+     "pass": true,
+     "expected": [],
+     "actual": [
+      [],
+      [],
+      [],
+      [],
+      []
+     ]
+    },
+    {
+     "name": "anonymous download succeeds",
+     "pass": true,
+     "expected": 200,
+     "actual": 200
+    },
+    {
+     "name": "anonymously downloaded bytes equal the verified file",
+     "pass": true,
+     "expected": "821651ae5bca0f9fd0f86aea9a0ea791837926ec00a852f527ad8207fffdc82c",
+     "actual": "821651ae5bca0f9fd0f86aea9a0ea791837926ec00a852f527ad8207fffdc82c"
+    },
+    {
+     "name": "the downloaded copy decodes end to end without errors at the verified duration",
+     "pass": true,
+     "expected": 156.682,
+     "actual": {
+      "decoded": 156.682,
+      "decodeErrors": ""
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/timeline.json",
+     "sha256": "69e822062ebdbd0b78bd7355baa16a9971b800987fa03f94fa6b493a7f9fba40",
+     "description": "Recorder timeline: captions, speed-ups, steps, bound deployment, output checksum"
+    },
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/ffprobe.json",
+     "sha256": "1af5e1c2e79151f4fd0cad449e01113a0683c3ca47783534ff59b1c0f59e7b0d",
+     "description": "ffprobe of the published file"
+    },
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/ocr.jsonl",
+     "sha256": "a196bd0b22b4d821abf426f72f98ebf9b51c21990cb3ba811f8f05332fe1a06b",
+     "description": "OCR text (whole frame plus overlapping tiles) of every sampled frame; matches redacted before writing"
+    },
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/control-plain.png",
+     "sha256": "b28c9052e977b167bdc56c5181e4cb1d57becce92d8ff3e6fcaf74f906b6b99b",
+     "description": "Positive control frame: decoy credentials visible"
+    },
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/control-redacted.png",
+     "sha256": "aefb09dde778d264637876323f84b8f076ebb81700b8b19769fac3267629d20e",
+     "description": "Redaction control frame: same decoy credentials under the recorder's redaction"
+    },
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/crops-email-field.jpg",
+     "sha256": "42b6b680ec43cbb77819549a08a169130cc6f854f6dae0150cadbe7960d167d5",
+     "description": "E-mail field of both panes during sign-in, 3x, for visual review"
+    },
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/crops-email-field-valley.jpg",
+     "sha256": "c552b01930f72dbca9ebc30208719fbf719bc569bcd2c96c0360fa1bd933d44e",
+     "description": "E-mail field of both panes while the right pane re-signs in as Valley, 3x, for visual review"
+    },
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/crops-sidebar-footer.jpg",
+     "sha256": "cf9f2b94baa2b7464dfe2e97d7de9f8a10b154bf3ff34e6c97506a310c607d7d",
+     "description": "Signed-in account footer of both panes across the video, 3x, for visual review"
+    },
+    {
+     "path": "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/contact-sheet.jpg",
+     "sha256": "65cc8c59508fac4bd06cfa8edab144a550d02141689e511193d8368317f7dac6",
+     "description": "Twelve evenly spaced frames from the published video"
+    }
+   ]
+  }
+ ]
+}

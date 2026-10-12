@@ -1,0 +1,882 @@
+{
+ "sourceSha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
+ "deployment": {
+  "apiRevision": "teamchat-api-00016-ct7",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00016-24v",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "recordedAt": "2026-10-11T22:05:46.704Z",
+ "steps": [
+  "sign-in",
+  "realtime",
+  "tools-grounding",
+  "retail-math",
+  "honesty",
+  "memory",
+  "isolation",
+  "injection",
+  "refresh",
+  "reconnect",
+  "valley",
+  "close"
+ ],
+ "captions": [
+  {
+   "text": "TeamChat AI on the deployed stack: Firebase Hosting → Cloud Run API → Cloud Tasks → worker → Vertex Gemini → Cloud SQL.\nSource d66da3d · API teamchat-api-00016-ct7 · worker teamchat-worker-00016-24v. Two Northside buyers sign in (passwords masked; account emails blurred by the recording).",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 0.04,
+   "toSeconds": 11.1
+  },
+  {
+   "text": "Real-time: one WebSocket per browser, no polling. The left buyer's message appears on the right as it is saved.\nKnown limits shown as-is: senders appear as Firebase user IDs, and the recording script scrolls each transcript (no auto-scroll yet).",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 11.1,
+   "toSeconds": 22.19
+  },
+  {
+   "text": "Native function calling: Gemini calls search_catalog itself. Both screens show the fetched rows while the answer is built.\nEvery catalog code and margin class shown comes from the supplied catalog, not from the model.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 22.19,
+   "toSeconds": 36.9
+  },
+  {
+   "text": "Retail math: calculate_uplift computes the coefficient score on the server and lists superseded classes (1003, 506).\nST-4003 already carries class 318 via APP-100.11, so APP-100.12 adds no new class: difference 0. No money figure is invented.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 36.9,
+   "toSeconds": 49.18
+  },
+  {
+   "text": "Honesty: beekeeping veils are not in the supplied catalog. search_catalog finds no match, and the answer says so.\nNo code is invented: catalog codes can only reach the screen from a fetched row.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 49.18,
+   "toSeconds": 61.05
+  },
+  {
+   "text": "Shared memory: a paraphrased question finds a decision recorded in another room (pgvector, 768-dimension embeddings),\nwith its author and date.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 61.05,
+   "toSeconds": 72.91
+  },
+  {
+   "text": "Tenant isolation: ST-4013 belongs to Valley Home Goods. Postgres row-level security returns nothing to Northside,\nthe same answer as for a store that does not exist.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 72.91,
+   "toSeconds": 84.74
+  },
+  {
+   "text": "Prompt injection: the admin-mode line changes nothing. Every tool runs with the tenant the server verified\nfrom the Firebase token, inside Postgres row-level security, so there is no other chain's data to reveal.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 84.74,
+   "toSeconds": 96.63
+  },
+  {
+   "text": "Refresh mid-answer: the left buyer asks a two-part question, and the right window reloads\nas soon as the first fetch appears, while the answer is still being built.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 96.63,
+   "toSeconds": 107.86
+  },
+  {
+   "text": "After the reload the right window replays the whole turn from the server:\nevery fetched result and the answer, in order, once each.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 107.86,
+   "toSeconds": 119.24
+  },
+  {
+   "text": "Reconnect: the right window goes offline while the left buyer keeps posting.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 119.24,
+   "toSeconds": 138.15
+  },
+  {
+   "text": "Back online: the right window replays from its saved cursor. Both missed messages arrive once each, in order.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 138.15,
+   "toSeconds": 149.5
+  },
+  {
+   "text": "The other chain: the right window signs out and signs in as a Valley Home Goods buyer.\nST-4013 is Valley's own store, so Valley gets its assortment: the same store Northside was told does not exist.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · #supply-planning · RIGHT: VALLEY BUYER 1 · #range-planning",
+   "fromSeconds": 149.5,
+   "toSeconds": 163.58
+  },
+  {
+   "text": "Every claim in this video is also checked automatically against the deployed stack.\nResults, raw WebSocket frames and database comparisons: qa_evidence/runs in the repository.",
+   "cast": "LEFT: NORTHSIDE BUYER 1 · RIGHT: NORTHSIDE BUYER 2 · #supply-planning",
+   "fromSeconds": 163.58,
+   "toSeconds": 174.95
+  }
+ ],
+ "speedSegments": [
+  {
+   "fromSeconds": 0.04,
+   "toSeconds": 2.87,
+   "speed": 0.267
+  },
+  {
+   "fromSeconds": 2.87,
+   "toSeconds": 7.466,
+   "speed": 3.9644
+  },
+  {
+   "fromSeconds": 7.466,
+   "toSeconds": 11.1,
+   "speed": 3.9644
+  },
+  {
+   "fromSeconds": 11.1,
+   "toSeconds": 12.07,
+   "speed": 0.1893
+  },
+  {
+   "fromSeconds": 12.07,
+   "toSeconds": 17.319,
+   "speed": 1.8185
+  },
+  {
+   "fromSeconds": 17.319,
+   "toSeconds": 22.19,
+   "speed": 1.8185
+  },
+  {
+   "fromSeconds": 22.19,
+   "toSeconds": 26.763,
+   "speed": 1.1045
+  },
+  {
+   "fromSeconds": 26.763,
+   "toSeconds": 27.3,
+   "speed": 2.7611
+  },
+  {
+   "fromSeconds": 27.3,
+   "toSeconds": 29.602,
+   "speed": 2.8425
+  },
+  {
+   "fromSeconds": 29.602,
+   "toSeconds": 36.9,
+   "speed": 1.137
+  },
+  {
+   "fromSeconds": 36.9,
+   "toSeconds": 39.9,
+   "speed": 3.4423
+  },
+  {
+   "fromSeconds": 39.9,
+   "toSeconds": 41.484,
+   "speed": 0.76
+  },
+  {
+   "fromSeconds": 41.484,
+   "toSeconds": 41.89,
+   "speed": 1.8999
+  },
+  {
+   "fromSeconds": 41.89,
+   "toSeconds": 49.18,
+   "speed": 0.76
+  },
+  {
+   "fromSeconds": 49.18,
+   "toSeconds": 51.45,
+   "speed": 0.4443
+  },
+  {
+   "fromSeconds": 51.45,
+   "toSeconds": 53.757,
+   "speed": 1.6546
+  },
+  {
+   "fromSeconds": 53.761,
+   "toSeconds": 61.05,
+   "speed": 1.6546
+  },
+  {
+   "fromSeconds": 61.05,
+   "toSeconds": 63.7,
+   "speed": 0.828
+  },
+  {
+   "fromSeconds": 63.7,
+   "toSeconds": 65.635,
+   "speed": 1.4756
+  },
+  {
+   "fromSeconds": 65.637,
+   "toSeconds": 72.91,
+   "speed": 1.4756
+  },
+  {
+   "fromSeconds": 72.91,
+   "toSeconds": 75.15,
+   "speed": 0.3522
+  },
+  {
+   "fromSeconds": 75.15,
+   "toSeconds": 77.464,
+   "speed": 1.5552
+  },
+  {
+   "fromSeconds": 77.469,
+   "toSeconds": 84.74,
+   "speed": 1.5552
+  },
+  {
+   "fromSeconds": 84.74,
+   "toSeconds": 87.4,
+   "speed": 0.9719
+  },
+  {
+   "fromSeconds": 87.4,
+   "toSeconds": 89.332,
+   "speed": 1.1428
+  },
+  {
+   "fromSeconds": 89.337,
+   "toSeconds": 96.63,
+   "speed": 1.1428
+  },
+  {
+   "fromSeconds": 96.63,
+   "toSeconds": 97.164,
+   "speed": 0.3985
+  },
+  {
+   "fromSeconds": 97.164,
+   "toSeconds": 97.65,
+   "speed": 0.9962
+  },
+  {
+   "fromSeconds": 97.65,
+   "toSeconds": 99.189,
+   "speed": 1.9327
+  },
+  {
+   "fromSeconds": 99.189,
+   "toSeconds": 100.97,
+   "speed": 0.7731
+  },
+  {
+   "fromSeconds": 100.97,
+   "toSeconds": 102.205,
+   "speed": 1.8962
+  },
+  {
+   "fromSeconds": 102.205,
+   "toSeconds": 105.9,
+   "speed": 1.8962
+  },
+  {
+   "fromSeconds": 105.9,
+   "toSeconds": 107.86,
+   "speed": 4.74
+  },
+  {
+   "fromSeconds": 107.86,
+   "toSeconds": 107.863,
+   "speed": 1.0377
+  },
+  {
+   "fromSeconds": 107.867,
+   "toSeconds": 115.182,
+   "speed": 1.0377
+  },
+  {
+   "fromSeconds": 115.182,
+   "toSeconds": 119.24,
+   "speed": 1.0377
+  },
+  {
+   "fromSeconds": 119.24,
+   "toSeconds": 119.27,
+   "speed": 0.011
+  },
+  {
+   "fromSeconds": 119.27,
+   "toSeconds": 120.31,
+   "speed": 0.2971
+  },
+  {
+   "fromSeconds": 120.31,
+   "toSeconds": 123.61,
+   "speed": 3
+  },
+  {
+   "fromSeconds": 123.61,
+   "toSeconds": 125.967,
+   "speed": 1.93
+  },
+  {
+   "fromSeconds": 125.967,
+   "toSeconds": 138.147,
+   "speed": 5.7899
+  },
+  {
+   "fromSeconds": 138.147,
+   "toSeconds": 138.15,
+   "speed": 1.93
+  },
+  {
+   "fromSeconds": 138.15,
+   "toSeconds": 138.87,
+   "speed": 1.9277
+  },
+  {
+   "fromSeconds": 138.87,
+   "toSeconds": 139.87,
+   "speed": 0.2564
+  },
+  {
+   "fromSeconds": 139.87,
+   "toSeconds": 147.058,
+   "speed": 1.7308
+  },
+  {
+   "fromSeconds": 147.058,
+   "toSeconds": 149.5,
+   "speed": 1.7308
+  },
+  {
+   "fromSeconds": 149.5,
+   "toSeconds": 151.07,
+   "speed": 0.5956
+  },
+  {
+   "fromSeconds": 151.07,
+   "toSeconds": 152.67,
+   "speed": 0.6154
+  },
+  {
+   "fromSeconds": 152.67,
+   "toSeconds": 153.87,
+   "speed": 0.3529
+  },
+  {
+   "fromSeconds": 153.87,
+   "toSeconds": 156.28,
+   "speed": 1.9313
+  },
+  {
+   "fromSeconds": 156.288,
+   "toSeconds": 163.58,
+   "speed": 1.9313
+  },
+  {
+   "fromSeconds": 163.58,
+   "toSeconds": 174.95,
+   "speed": 0.9275
+  }
+ ],
+ "removedSpans": 0,
+ "file": "teamchat-ai-walkthrough.mp4",
+ "sha256": "821651ae5bca0f9fd0f86aea9a0ea791837926ec00a852f527ad8207fffdc82c",
+ "narration": {
+  "cues": "docs/video/narration-cues.json",
+  "audioSha256": "3a48afdc5e18b75f899f45908760403d93f5cb5ca65211569cb1f01620800089",
+  "leadSeconds": 0.4,
+  "tailSeconds": 1.2,
+  "paneLeadSeconds": {
+   "left": 0.16,
+   "right": 0.47,
+   "method": "Both windows receive each broadcast at the same moment, yet the right pane's frames show it 0.31 s before the left's (median of 32 paired changes; 21 of them exactly 0.31 s). The left pane shows the typed message at 11.05 s, after the recorder's caption at 11.10 s plus Playwright's fill; the right pane's status turns offline at 118.80 s although the recorder takes it offline only after its caption at 119.24 s. Leads of 0.16 s and 0.47 s satisfy all three."
+  },
+  "silentCutSha256": "cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26",
+  "anchors": [
+   {
+    "scene": 1,
+    "recordingSeconds": 2.87,
+    "audioSeconds": 10.2,
+    "event": "Sign-in completes: the app replaces the login page",
+    "outputSeconds": 10.6
+   },
+   {
+    "scene": 2,
+    "recordingSeconds": 12.07,
+    "audioSeconds": 17.4,
+    "event": "The left buyer's message appears in the right window",
+    "outputSeconds": 17.8
+   },
+   {
+    "scene": 3,
+    "recordingSeconds": 27.3,
+    "audioSeconds": 27.3,
+    "event": "search_catalog rows appear in both windows",
+    "outputSeconds": 27.7
+   },
+   {
+    "scene": 4,
+    "recordingSeconds": 39.9,
+    "audioSeconds": 35.4,
+    "event": "The calculate_uplift call and its result appear",
+    "outputSeconds": 35.8
+   },
+   {
+    "scene": 5,
+    "recordingSeconds": 51.45,
+    "audioSeconds": 52.4,
+    "event": "search_catalog returns no rows and the no-match answer appears",
+    "outputSeconds": 52.8
+   },
+   {
+    "scene": 6,
+    "recordingSeconds": 63.7,
+    "audioSeconds": 61.4,
+    "event": "The shared-memory search result appears",
+    "outputSeconds": 61.8
+   },
+   {
+    "scene": 7,
+    "recordingSeconds": 75.15,
+    "audioSeconds": 74,
+    "event": "get_store_assortment returns found: false",
+    "outputSeconds": 74.4
+   },
+   {
+    "scene": 8,
+    "recordingSeconds": 87.4,
+    "audioSeconds": 82.9,
+    "event": "The answer to the injection appears",
+    "outputSeconds": 83.3
+   },
+   {
+    "scene": 9,
+    "recordingSeconds": 97.65,
+    "audioSeconds": 92.8,
+    "event": "The two-part question appears",
+    "outputSeconds": 93.2
+   },
+   {
+    "scene": 9,
+    "recordingSeconds": 100.97,
+    "audioSeconds": 95.9,
+    "event": "The right window reloads",
+    "outputSeconds": 96.3
+   },
+   {
+    "scene": 9,
+    "recordingSeconds": 105.9,
+    "audioSeconds": 98.5,
+    "event": "The turn completes",
+    "outputSeconds": 98.9
+   },
+   {
+    "scene": 11,
+    "recordingSeconds": 119.27,
+    "audioSeconds": 112.6,
+    "event": "The right window's status turns offline",
+    "outputSeconds": 113
+   },
+   {
+    "scene": 11,
+    "recordingSeconds": 120.31,
+    "audioSeconds": 116.1,
+    "event": "The left buyer posts the first message",
+    "outputSeconds": 116.5
+   },
+   {
+    "scene": 11,
+    "recordingSeconds": 123.61,
+    "audioSeconds": 117.2,
+    "event": "The left buyer posts the second message",
+    "outputSeconds": 117.6
+   },
+   {
+    "scene": 12,
+    "recordingSeconds": 138.87,
+    "audioSeconds": 120.9,
+    "event": "The right window's status turns online",
+    "outputSeconds": 121.3
+   },
+   {
+    "scene": 12,
+    "recordingSeconds": 139.87,
+    "audioSeconds": 124.8,
+    "event": "Both missed messages appear in the right window",
+    "outputSeconds": 125.2
+   },
+   {
+    "scene": 13,
+    "recordingSeconds": 151.07,
+    "audioSeconds": 133,
+    "event": "Signed in as the Valley buyer",
+    "outputSeconds": 133.4
+   },
+   {
+    "scene": 13,
+    "recordingSeconds": 152.67,
+    "audioSeconds": 135.6,
+    "event": "The ST-4013 question appears",
+    "outputSeconds": 136
+   },
+   {
+    "scene": 13,
+    "recordingSeconds": 153.87,
+    "audioSeconds": 139,
+    "event": "Valley's assortment for ST-4013 appears",
+    "outputSeconds": 139.4
+   }
+  ],
+  "scenes": [
+   {
+    "scene": 1,
+    "outputFrom": 0,
+    "outputTo": 12.676,
+    "speechFrom": 0.4,
+    "speechTo": 12.441,
+    "spans": [
+     {
+      "recordingFrom": 0.04,
+      "recordingTo": 2.87,
+      "outputFrom": 0,
+      "outputTo": 10.6,
+      "speedFactor": 0.267
+     },
+     {
+      "recordingFrom": 2.87,
+      "recordingTo": 11.1,
+      "outputFrom": 10.6,
+      "outputTo": 12.676,
+      "speedFactor": 3.9644
+     }
+    ]
+   },
+   {
+    "scene": 2,
+    "outputFrom": 12.676,
+    "outputTo": 23.365,
+    "speechFrom": 12.911,
+    "speechTo": 23.141,
+    "spans": [
+     {
+      "recordingFrom": 11.1,
+      "recordingTo": 12.07,
+      "outputFrom": 12.676,
+      "outputTo": 17.8,
+      "speedFactor": 0.1893
+     },
+     {
+      "recordingFrom": 12.07,
+      "recordingTo": 22.19,
+      "outputFrom": 17.8,
+      "outputTo": 23.365,
+      "speedFactor": 1.8185
+     }
+    ]
+   },
+   {
+    "scene": 3,
+    "outputFrom": 23.365,
+    "outputTo": 34.928,
+    "speechFrom": 23.589,
+    "speechTo": 34.707,
+    "spans": [
+     {
+      "recordingFrom": 22.19,
+      "recordingTo": 27.3,
+      "outputFrom": 23.365,
+      "outputTo": 27.7,
+      "speedFactor": 1.1045
+     },
+     {
+      "recordingFrom": 27.3,
+      "recordingTo": 36.9,
+      "outputFrom": 27.7,
+      "outputTo": 34.928,
+      "speedFactor": 1.137
+     }
+    ]
+   },
+   {
+    "scene": 4,
+    "outputFrom": 34.928,
+    "outputTo": 47.691,
+    "speechFrom": 35.15,
+    "speechTo": 47.46,
+    "spans": [
+     {
+      "recordingFrom": 36.9,
+      "recordingTo": 39.9,
+      "outputFrom": 34.928,
+      "outputTo": 35.8,
+      "speedFactor": 3.4423
+     },
+     {
+      "recordingFrom": 39.9,
+      "recordingTo": 49.18,
+      "outputFrom": 35.8,
+      "outputTo": 47.691,
+      "speedFactor": 0.76
+     }
+    ]
+   },
+   {
+    "scene": 5,
+    "outputFrom": 47.691,
+    "outputTo": 58.599,
+    "speechFrom": 47.921,
+    "speechTo": 58.371,
+    "spans": [
+     {
+      "recordingFrom": 49.18,
+      "recordingTo": 51.45,
+      "outputFrom": 47.691,
+      "outputTo": 52.8,
+      "speedFactor": 0.4443
+     },
+     {
+      "recordingFrom": 51.45,
+      "recordingTo": 61.05,
+      "outputFrom": 52.8,
+      "outputTo": 58.599,
+      "speedFactor": 1.6546
+     }
+    ]
+   },
+   {
+    "scene": 6,
+    "outputFrom": 58.599,
+    "outputTo": 68.04,
+    "speechFrom": 58.828,
+    "speechTo": 67.621,
+    "spans": [
+     {
+      "recordingFrom": 61.05,
+      "recordingTo": 63.7,
+      "outputFrom": 58.599,
+      "outputTo": 61.8,
+      "speedFactor": 0.828
+     },
+     {
+      "recordingFrom": 63.7,
+      "recordingTo": 72.91,
+      "outputFrom": 61.8,
+      "outputTo": 68.04,
+      "speedFactor": 1.4756
+     }
+    ]
+   },
+   {
+    "scene": 7,
+    "outputFrom": 68.04,
+    "outputTo": 80.563,
+    "speechFrom": 68.459,
+    "speechTo": 80.355,
+    "spans": [
+     {
+      "recordingFrom": 72.91,
+      "recordingTo": 75.15,
+      "outputFrom": 68.04,
+      "outputTo": 74.4,
+      "speedFactor": 0.3522
+     },
+     {
+      "recordingFrom": 75.15,
+      "recordingTo": 84.74,
+      "outputFrom": 74.4,
+      "outputTo": 80.563,
+      "speedFactor": 1.5552
+     }
+    ]
+   },
+   {
+    "scene": 8,
+    "outputFrom": 80.563,
+    "outputTo": 91.372,
+    "speechFrom": 80.771,
+    "speechTo": 91.07,
+    "spans": [
+     {
+      "recordingFrom": 84.74,
+      "recordingTo": 87.4,
+      "outputFrom": 80.563,
+      "outputTo": 83.3,
+      "speedFactor": 0.9719
+     },
+     {
+      "recordingFrom": 87.4,
+      "recordingTo": 96.63,
+      "outputFrom": 83.3,
+      "outputTo": 91.372,
+      "speedFactor": 1.1428
+     }
+    ]
+   },
+   {
+    "scene": 9,
+    "outputFrom": 91.372,
+    "outputTo": 99.314,
+    "speechFrom": 91.674,
+    "speechTo": 99.098,
+    "spans": [
+     {
+      "recordingFrom": 96.63,
+      "recordingTo": 97.65,
+      "outputFrom": 91.372,
+      "outputTo": 93.2,
+      "speedFactor": 0.3985
+     },
+     {
+      "recordingFrom": 97.65,
+      "recordingTo": 100.97,
+      "outputFrom": 93.2,
+      "outputTo": 96.3,
+      "speedFactor": 0.7731
+     },
+     {
+      "recordingFrom": 100.97,
+      "recordingTo": 105.9,
+      "outputFrom": 96.3,
+      "outputTo": 98.9,
+      "speedFactor": 1.8962
+     },
+     {
+      "recordingFrom": 105.9,
+      "recordingTo": 107.86,
+      "outputFrom": 98.9,
+      "outputTo": 99.314,
+      "speedFactor": 4.74
+     }
+    ]
+   },
+   {
+    "scene": 10,
+    "outputFrom": 99.314,
+    "outputTo": 110.276,
+    "speechFrom": 99.529,
+    "speechTo": 110.055,
+    "spans": [
+     {
+      "recordingFrom": 107.86,
+      "recordingTo": 119.24,
+      "outputFrom": 99.314,
+      "outputTo": 110.276,
+      "speedFactor": 1.0377
+     }
+    ]
+   },
+   {
+    "scene": 11,
+    "outputFrom": 110.276,
+    "outputTo": 120.927,
+    "speechFrom": 110.497,
+    "speechTo": 120.716,
+    "spans": [
+     {
+      "recordingFrom": 119.24,
+      "recordingTo": 119.27,
+      "outputFrom": 110.276,
+      "outputTo": 113,
+      "speedFactor": 0.011
+     },
+     {
+      "recordingFrom": 119.27,
+      "recordingTo": 120.31,
+      "outputFrom": 113,
+      "outputTo": 116.5,
+      "speedFactor": 0.2971
+     },
+     {
+      "recordingFrom": 120.31,
+      "recordingTo": 123.61,
+      "outputFrom": 116.5,
+      "outputTo": 117.6,
+      "speedFactor": 3
+     },
+     {
+      "recordingFrom": 123.61,
+      "recordingTo": 138.15,
+      "outputFrom": 117.6,
+      "outputTo": 120.927,
+      "speedFactor": 1.93
+     }
+    ]
+   },
+   {
+    "scene": 12,
+    "outputFrom": 120.927,
+    "outputTo": 130.764,
+    "speechFrom": 121.137,
+    "speechTo": 130.381,
+    "spans": [
+     {
+      "recordingFrom": 138.15,
+      "recordingTo": 138.87,
+      "outputFrom": 120.927,
+      "outputTo": 121.3,
+      "speedFactor": 1.9277
+     },
+     {
+      "recordingFrom": 138.87,
+      "recordingTo": 139.87,
+      "outputFrom": 121.3,
+      "outputTo": 125.2,
+      "speedFactor": 0.2564
+     },
+     {
+      "recordingFrom": 139.87,
+      "recordingTo": 149.5,
+      "outputFrom": 125.2,
+      "outputTo": 130.764,
+      "speedFactor": 1.7308
+     }
+    ]
+   },
+   {
+    "scene": 13,
+    "outputFrom": 130.764,
+    "outputTo": 144.424,
+    "speechFrom": 131.147,
+    "speechTo": 144.216,
+    "spans": [
+     {
+      "recordingFrom": 149.5,
+      "recordingTo": 151.07,
+      "outputFrom": 130.764,
+      "outputTo": 133.4,
+      "speedFactor": 0.5956
+     },
+     {
+      "recordingFrom": 151.07,
+      "recordingTo": 152.67,
+      "outputFrom": 133.4,
+      "outputTo": 136,
+      "speedFactor": 0.6154
+     },
+     {
+      "recordingFrom": 152.67,
+      "recordingTo": 153.87,
+      "outputFrom": 136,
+      "outputTo": 139.4,
+      "speedFactor": 0.3529
+     },
+     {
+      "recordingFrom": 153.87,
+      "recordingTo": 163.58,
+      "outputFrom": 139.4,
+      "outputTo": 144.424,
+      "speedFactor": 1.9313
+     }
+    ]
+   },
+   {
+    "scene": 14,
+    "outputFrom": 144.424,
+    "outputTo": 156.682,
+    "speechFrom": 144.631,
+    "speechTo": 155.482,
+    "spans": [
+     {
+      "recordingFrom": 163.58,
+      "recordingTo": 174.95,
+      "outputFrom": 144.424,
+      "outputTo": 156.682,
+      "speedFactor": 0.9275
+     }
+    ]
+   }
+  ]
+ }
+}

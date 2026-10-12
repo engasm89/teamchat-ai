@@ -2,7 +2,7 @@
 
 12 October 2026. Every requirement a machine can check passes. Of the 61 requirements, 58 pass, none fail, none are unverified, and 3 are blocked only on actions Ashraf takes himself: sending the submission e-mail and delivering the reviewer passwords. Nothing has been sent to anyone.
 
-The counts come from `scripts/validate-matrix.ts` (validated 2026-10-12T05:38:39Z), which derives each verdict from recorded test runs, the deployment's provenance and live checks. Nothing in the matrix is written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md`, `docs/REQUIREMENTS_FINAL_MATRIX.md`, `qa_evidence/matrix-validation.json`.
+The counts come from `scripts/validate-matrix.ts` (validated 2026-10-12T16:29:21Z), which derives each verdict from recorded test runs, the deployment's provenance and live checks. Nothing in the matrix is written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md`, `docs/REQUIREMENTS_FINAL_MATRIX.md`, `qa_evidence/matrix-validation.json`.
 
 ## What was tested
 
@@ -26,7 +26,7 @@ Provenance records revisions 00014. The S19 restart test replaced them with 0001
 | Real-browser checks | `20261011T191641Z-browser-7353aa`, `20261011T192211Z-browser-19dc81` | Pass |
 | Reviewer accounts and boundaries | `20261011T222335Z-handoff-2d22a9` (before rotation), `20261012T053205Z-handoff-a9fd34` (after) | 4 of 4 each: six accounts sign in, room memberships, own-chain-only replay, missing or forged token refused, seeded history |
 | Password rotation | `20261012T053119Z-rotation-6d7970` | Six new passwords sign in, old ones refused, every earlier session refused, new passwords only in Keychain |
-| Walkthrough video | `20261012T052525Z-video-179bab` | 17 of 17, including the anonymous download from the GitHub Release |
+| Narrated walkthrough video | `20261012T162445Z-video-18ab3d` | 22 of 22, including picture-voice sync and the anonymous download from the GitHub Release |
 
 **Secret scan.** gitleaks ran over all 73 commits. Its 2,286 findings are all public values:
 - 2,282 memory slot names in recorded WebSocket frames, such as `q1_assortment_target`;
@@ -40,7 +40,7 @@ The 1,354 publishable files contain none of the six current reviewer passwords, 
 - App: https://focus-clean-4b9f4.web.app (200)
 - API health: https://teamchat-api-1068908463902.us-central1.run.app/health returns `{"up":true}`
 - Repository: https://github.com/engasm89/teamchat-ai (public)
-- Video: https://github.com/engasm89/teamchat-ai/releases/tag/walkthrough-2026-10-12 (2 min 44 s, 1920x1080 H.264, SHA-256 `cddf1284c1f15fbe6ea5cf478db3c2aac2086c4f7c34af3293d9cbd9b141bb26`; downloaded without credentials, byte-identical, decodes end to end)
+- Video: https://github.com/engasm89/teamchat-ai/releases/tag/walkthrough-2026-10-12 (narrated, 2 min 37 s, 1920x1080 H.264 with AAC audio, SHA-256 `821651ae5bca0f9fd0f86aea9a0ea791837926ec00a852f527ad8207fffdc82c`; downloaded without credentials, byte-identical, decodes end to end)
 
 ## Left for Ashraf, not done
 
@@ -74,6 +74,14 @@ The previous version of this report claimed GO on revision 00007, a different co
 - **Revocation missed sessions started in the same second.**
   - Cause: Firebase stores revocation time in whole seconds, so a session started in that second survives it. An experiment confirmed it twice: same second accepted; two seconds earlier refused.
   - Fix: rotation now waits two seconds after the last pre-rotation sign-in. Every real earlier session predates that by far.
+- **The video drifted against its own timeline.**
+  - Cause: each speed segment was trimmed to whole frames, losing up to a frame per segment. The first narrated build's picture ended 0.68 s before its sound.
+  - Fix: one time map for the whole cut, resampled to 25 fps once. Audio and picture now both last 156.68 s.
+- **The right window was recorded about half a second early.**
+  - What happened: its status turned offline at 118.80 s, before the recorder took it offline at 119.24 s, and it showed every broadcast 0.31 s before the left window did.
+  - Fix: the narrated cut takes off measured capture leads of 0.47 s (right) and 0.16 s (left), recorded with the method in `docs/video/narration-cues.json`.
+- **Narration sync is checked on the published file.** Each caption change is found in the picture and must fall inside a pause in the voice; each paragraph must be spoken under its own caption; each of 19 named events (a message arriving, a tool result, the reload, going offline, the replay) must play where its words are spoken. The first version of this check read the wrong output stream and failed; once fixed, it caught one caption changing 0.24 s late, as the next paragraph started. That was a rounding difference magnified by a held frame, and it is fixed.
+- **The new video run checks the current passwords.** The recording typed the reviewer passwords that were rotated afterwards; those are dead, were masked on screen, and the earlier run `20261012T052525Z-video-179bab` found none of them readable in the same recording.
 - **The secret scan crashed on large evidence files.**
   - Cause: a 1 MB process buffer. gitleaks also flagged memory slot names, because the JSON field is called `key`.
   - Fix: a large buffer, and triage by the flagged value's shape or exact value, recorded per finding.

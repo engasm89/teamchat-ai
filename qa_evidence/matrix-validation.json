@@ -1,5 +1,5 @@
 {
- "validatedAt": "2026-10-12T05:38:39.687Z",
+ "validatedAt": "2026-10-12T16:29:21.740Z",
  "inventorySha256": "0179576f862974afef6f4bf3390d5318ed29550d554c993f9f7c246f65e097e0",
  "integrityErrors": [],
  "sourceSha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
@@ -1812,16 +1812,16 @@
       "1/1 run(s) passed"
      ],
      "evidence": [
-      "qa_evidence/runs/20261012T052525Z-video-179bab/results.json",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/timeline.json",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/ffprobe.json",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/ocr.jsonl",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/control-plain.png",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/control-redacted.png",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/crops-email-field.jpg",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/crops-email-field-valley.jpg",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/crops-sidebar-footer.jpg",
-      "qa_evidence/runs/20261012T052525Z-video-179bab/DEMO-VIDEO/contact-sheet.jpg"
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/results.json",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/timeline.json",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/ffprobe.json",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/ocr.jsonl",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/control-plain.png",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/control-redacted.png",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/crops-email-field.jpg",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/crops-email-field-valley.jpg",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/crops-sidebar-footer.jpg",
+      "qa_evidence/runs/20261012T162445Z-video-18ab3d/DEMO-VIDEO/contact-sheet.jpg"
      ]
     },
     {
