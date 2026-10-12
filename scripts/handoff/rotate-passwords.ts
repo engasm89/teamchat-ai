@@ -14,7 +14,7 @@ import {execFileSync} from "node:child_process";
 import {initializeApp} from "firebase-admin/app";
 import {getAuth} from "firebase-admin/auth";
 import {RunRecorder,keychainPassword} from "../evidence/lib.ts";
-import {ACCOUNTS,API_URL,APP_URL,bindDeployment,firebaseApiKey,type AccountKey} from "../acceptance/common.ts";
+import {ACCOUNTS,API_URL,APP_URL,bindDeployment,firebaseApiKey,sleep,type AccountKey} from "../acceptance/common.ts";
 
 const MAIN="teamchat-ai-reviewer",STAGED="teamchat-ai-reviewer-next";
 const HARNESS=["scripts/handoff/rotate-passwords.ts","scripts/acceptance/common.ts","scripts/evidence/lib.ts"];
@@ -56,6 +56,8 @@ try{
    const old=keychainPassword(email,MAIN);
    const before=await signIn(email,old);row.oldPasswordSignedInBefore=before.ok;row.uidMatches=before.uid===user.uid;
    if(check||!before.ok||!before.refreshToken)continue;
+   // Firebase stores the revocation time in whole seconds; a session started in that same second survives it.
+   await sleep(2000);
    const startedAt=Date.now();
    const next=newPassword();
    keychainWrite(STAGED,email,next);row.staged=true;
