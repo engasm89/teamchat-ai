@@ -275,7 +275,7 @@ try{
  await run.run("SECRET-SCAN","gitleaks over full history plus reviewer-password and JWT scan of evidence",["D02"],async t=>{
   const report=path.resolve(t.dir,"gitleaks-history.json");
   const g=sh(t,"gitleaks-history.log","gitleaks",["git","--redact","--no-banner","--report-format","json","--report-path",report,clone]);
-  const findings=JSON.parse(fs.readFileSync(report,"utf8")) as Array<{RuleID:string;File:string;StartLine:number;Commit:string}>;
+  const findings=JSON.parse(fs.readFileSync(report,"utf8")) as Array<{RuleID:string;File:string;StartLine:number;Commit:string;Match:string}>;
   t.artifact("gitleaks-history.json","gitleaks findings over the full Git history (secrets redacted by gitleaks)");
   const commits=execFileSync("git",["-C",clone,"rev-list","--all","--count"],{encoding:"utf8"}).trim();
   // Publishable tree of the working repository: tracked plus untracked-but-not-ignored files.
@@ -292,19 +292,41 @@ try{
    if(PRIVATE_KEY.test(text))hits.push({file:f,kind:"private key"});
   }
   const ruleCounts=findings.reduce<Record<string,number>>((a,f)=>{a[f.RuleID]=(a[f.RuleID]??0)+1;return a;},{});
-  // A finding is triaged only when its exact value is the public Firebase web key shipped in the
-  // served bundle (WEB-BUILD proves the clone's dist equals what Hosting serves).
+  // A finding is triaged only when the value it flags is shown to be public:
+  //  - the Firebase web key shipped in the served bundle (WEB-BUILD proves the clone's dist equals what Hosting serves);
+  //  - in recorded evidence, a JSON "key" field whose every value on the line is a memory slot name
+  //    (short words joined by space, _ or -), a shape no credential format here takes;
+  //  - an image digest equal to the tested API or worker digest.
   const dist=path.join(clone,"apps/web/dist/assets");
   const bundle=fs.existsSync(dist)?fs.readdirSync(dist).filter(f=>f.endsWith(".js")).map(f=>fs.readFileSync(path.join(dist,f),"utf8")).join("\n"):"";
+  const shown=new Map<string,string[]>();
+  const lineOf=(f:{Commit:string;File:string;StartLine:number})=>{
+   const k=`${f.Commit}:${f.File}`;
+   if(!shown.has(k))shown.set(k,execFileSync("git",["-C",clone,"show",k],{encoding:"utf8",maxBuffer:1<<28}).split("\n"));
+   return shown.get(k)![f.StartLine-1]??"";
+  };
+  const SLOT_NAME=/^[A-Za-z0-9]{1,16}([ _-][A-Za-z0-9]{1,16})+$/;
+  const digests=[provenance.api.digest,provenance.worker.digest];
   const triage=findings.map(f=>{
-   const line=execFileSync("git",["-C",clone,"show",`${f.Commit}:${f.File}`],{encoding:"utf8"}).split("\n")[f.StartLine-1]??"";
-   const key=/AIza[0-9A-Za-z_-]{35}/.exec(line)?.[0];
-   const publicWebKey=f.RuleID==="gcp-api-key"&&!!key&&bundle.includes(key);
-   return {rule:f.RuleID,file:f.File,line:f.StartLine,commit:f.Commit.slice(0,12),triaged:publicWebKey?"public Firebase web API key, identical to the value served in the Hosting bundle":null};
+   const line=lineOf(f);let triaged:string|null=null;
+   if(f.RuleID==="gcp-api-key"){
+    const key=/AIza[0-9A-Za-z_-]{35}/.exec(line)?.[0];
+    if(key&&bundle.includes(key))triaged="public Firebase web API key, identical to the value served in the Hosting bundle";
+   }else if(f.RuleID==="generic-api-key"&&/^key"\s*:\s*"/.test(f.Match)&&f.File.startsWith("qa_evidence/")){
+    const values=[...line.matchAll(/"key"\s*:\s*"([^"]*)"/g)].map(m=>m[1]!);
+    if(values.length&&values.every(v=>SLOT_NAME.test(v)))triaged="memory slot name in recorded evidence";
+   }else if(f.RuleID==="generic-api-key"&&/sha256:REDACTED/.test(f.Match)){
+    const found=[...line.matchAll(/sha256:[0-9a-f]{64}/g)].map(m=>m[0]);
+    if(found.length&&found.every(d=>digests.includes(d)))triaged="tested image digest";
+   }
+   return {rule:f.RuleID,file:f.File,line:f.StartLine,commit:f.Commit.slice(0,12),triaged};
   });
   const untriaged=triage.filter(x=>!x.triaged);
+  fs.writeFileSync(path.join(t.dir,"gitleaks-triage.json"),JSON.stringify(triage,null,1)+"\n");
+  t.artifact("gitleaks-triage.json","Each gitleaks finding with the reason it is public, or null if it is not");
+  const triageCounts=triage.reduce<Record<string,number>>((a,x)=>{const k=`${x.rule}: ${x.triaged??"UNTRIAGED"}`;a[k]=(a[k]??0)+1;return a;},{});
   t.detail("gitleaksVersion",execFileSync("gitleaks",["version"],{encoding:"utf8"}).trim()).detail("commitsScanned",Number(commits))
-   .detail("gitleaksRuleCounts",ruleCounts).detail("gitleaksFindings",triage)
+   .detail("gitleaksRuleCounts",ruleCounts).detail("gitleaksTriageCounts",triageCounts).detail("gitleaksUntriaged",untriaged)
    .detail("publishableFilesScanned",files.length).detail("literalSecretsChecked",literal.length).detail("evidenceHits",hits);
   t.assert("gitleaks completed",g.status===0||g.status===1,"exit 0 or 1",g.status);
   t.assert("every gitleaks finding in any commit is a verified public value",untriaged.length===0,[],untriaged);

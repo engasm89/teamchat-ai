@@ -1,0 +1,249 @@
+{
+ "nested": {
+  "key": "gate-nested-bb3640",
+  "turnId": "9bee1782-a58f-4885-8d2a-d456884c79c0",
+  "first": {
+   "status": "completed",
+   "blocks": 2
+  },
+  "again": {
+   "status": "completed"
+  },
+  "modelRounds": 2,
+  "eventCountAfterFirstRun": 7,
+  "eventCountAfterSecondRun": 7,
+  "tools": [
+   {
+    "name": "save_memory",
+    "result": {
+     "saved": false,
+     "validation_errors": [
+      {
+       "field": "leads",
+       "issue": "Nested values and arrays are not allowed"
+      }
+     ]
+    },
+    "arguments": {
+     "key": "gate-nested-bb3640",
+     "room": "gate-room",
+     "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}],\"site\":\"north\"}"
+    },
+    "operationId": "r0-c0"
+   },
+   {
+    "name": "save_memory",
+    "result": {
+     "ref": "9bee1782-a58f-4885-8d2a-d456884c79c0:northside-outfitters:memory:a85c7f08-711e-4ece-84ef-40d22796982b",
+     "saved": true,
+     "memory": {
+      "key": "gate-nested-bb3640",
+      "value": {
+       "site": "north",
+       "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]"
+      },
+      "memory_id": "a85c7f08-711e-4ece-84ef-40d22796982b",
+      "created_at": "2026-10-12 08:35:36.610284+03",
+      "created_by": "gate-user",
+      "source_room_id": "gate-room"
+     }
+    },
+    "arguments": {
+     "key": "gate-nested-bb3640",
+     "room": "gate-room",
+     "value_json": "{\"leads\":\"[{\\\"name\\\":\\\"Ana\\\",\\\"shifts\\\":[{\\\"day\\\":\\\"Mon\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\"]}]},{\\\"name\\\":\\\"Ben\\\",\\\"shifts\\\":[{\\\"day\\\":\\\"Tue\\\",\\\"stores\\\":[\\\"ST-4003\\\"]}]}]\",\"site\":\"north\"}"
+    },
+    "operationId": "r0-c1"
+   }
+  ],
+  "answerBlocks": [
+   "save_memory",
+   "save_memory"
+  ],
+  "terminal": [
+   "ai_complete"
+  ],
+  "stored": [
+   {
+    "key": "gate-nested-bb3640",
+    "value": {
+     "site": "north",
+     "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]"
+    }
+   }
+  ]
+ },
+ "reshaped": {
+  "key": "gate-reshaped-1ca309",
+  "turnId": "d1c89c53-3a2b-48b7-8515-1e4f117d6a34",
+  "first": {
+   "status": "completed",
+   "blocks": 2
+  },
+  "again": {
+   "status": "completed"
+  },
+  "modelRounds": 2,
+  "eventCountAfterFirstRun": 7,
+  "eventCountAfterSecondRun": 7,
+  "tools": [
+   {
+    "name": "save_memory",
+    "result": {
+     "saved": false,
+     "validation_errors": [
+      {
+       "field": "leads",
+       "issue": "Nested values and arrays are not allowed"
+      }
+     ]
+    },
+    "arguments": {
+     "key": "gate-reshaped-1ca309",
+     "room": "gate-room",
+     "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}],\"site\":\"north\"}"
+    },
+    "operationId": "r0-c0"
+   },
+   {
+    "name": "save_memory",
+    "result": {
+     "ref": "d1c89c53-3a2b-48b7-8515-1e4f117d6a34:northside-outfitters:memory:fa399069-8199-4221-bf4d-a38310024292",
+     "saved": true,
+     "memory": {
+      "key": "gate-reshaped-1ca309",
+      "value": {
+       "site": "north",
+       "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]"
+      },
+      "memory_id": "fa399069-8199-4221-bf4d-a38310024292",
+      "created_at": "2026-10-12 08:35:36.630395+03",
+      "created_by": "gate-user",
+      "source_room_id": "gate-room"
+     }
+    },
+    "arguments": {
+     "key": "gate-reshaped-1ca309",
+     "room": "gate-room",
+     "value_json": "{\"leads\":\"[{\\\"name\\\":\\\"Ana\\\",\\\"shifts\\\":[{\\\"day\\\":\\\"Mon\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\"]}]},{\\\"name\\\":\\\"Ben\\\",\\\"shifts\\\":[{\\\"day\\\":\\\"Tue\\\",\\\"stores\\\":[\\\"ST-4003\\\"]}]}]\",\"site\":\"north\"}"
+    },
+    "operationId": "r0-c1"
+   }
+  ],
+  "answerBlocks": [
+   "save_memory",
+   "save_memory"
+  ],
+  "terminal": [
+   "ai_complete"
+  ],
+  "stored": [
+   {
+    "key": "gate-reshaped-1ca309",
+    "value": {
+     "site": "north",
+     "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]"
+    }
+   }
+  ]
+ },
+ "unrepairable": {
+  "key": "gate-unrepairable-584019",
+  "turnId": "261125d2-1f9e-492b-9cc9-a533caf5e868",
+  "first": {
+   "status": "completed",
+   "blocks": 3
+  },
+  "again": {
+   "status": "completed"
+  },
+  "modelRounds": 3,
+  "eventCountAfterFirstRun": 10,
+  "eventCountAfterSecondRun": 10,
+  "tools": [
+   {
+    "name": "save_memory",
+    "result": {
+     "saved": false,
+     "validation_errors": [
+      {
+       "field": "leads",
+       "issue": "Nested values and arrays are not allowed"
+      }
+     ]
+    },
+    "arguments": {
+     "key": "gate-unrepairable-584019",
+     "room": "gate-room",
+     "value_json": "{\"leads\":[{\"name\":\"Lead 0\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 1\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 2\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 3\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 4\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 5\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 6\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 7\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 8\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 9\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 10\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 11\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 12\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 13\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 14\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 15\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 16\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 17\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 18\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 19\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 20\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 21\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 22\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 23\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 24\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 25\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 26\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 27\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 28\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 29\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 30\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 31\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 32\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 33\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 34\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 35\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 36\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 37\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 38\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 39\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 40\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 41\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 42\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 43\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 44\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 45\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 46\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 47\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 48\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 49\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 50\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 51\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 52\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 53\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 54\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 55\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 56\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 57\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 58\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 59\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]}]}"
+    },
+    "operationId": "r0-c0"
+   },
+   {
+    "name": "save_memory",
+    "result": {
+     "saved": false,
+     "validation_errors": [
+      {
+       "field": "leads",
+       "issue": "Maximum 2048 characters"
+      }
+     ]
+    },
+    "arguments": {
+     "key": "gate-unrepairable-584019",
+     "room": "gate-room",
+     "value_json": "{\"leads\":\"[{\\\"name\\\":\\\"Lead 0\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 1\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 2\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 3\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 4\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 5\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 6\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 7\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 8\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 9\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 10\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 11\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 12\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 13\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 14\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 15\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 16\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 17\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 18\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 19\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 20\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 21\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 22\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 23\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 24\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 25\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 26\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 27\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 28\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 29\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 30\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 31\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 32\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 33\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 34\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 35\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 36\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 37\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 38\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 39\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 40\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 41\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 42\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 43\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 44\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 45\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 46\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 47\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 48\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 49\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 50\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 51\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 52\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 53\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 54\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 55\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 56\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 57\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 58\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]},{\\\"name\\\":\\\"Lead 59\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\",\\\"ST-4003\\\"]}]\"}"
+    },
+    "operationId": "r0-c1"
+   },
+   {
+    "name": "save_memory",
+    "result": {
+     "error": "Repair limit reached: the value was rejected and its one repair attempt was also rejected, so nothing was stored",
+     "saved": false
+    },
+    "arguments": {
+     "key": "gate-unrepairable-584019",
+     "room": "gate-room",
+     "value_json": "{\"leads\":[{\"name\":\"Lead 0\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 1\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 2\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 3\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 4\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 5\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 6\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 7\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 8\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 9\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 10\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 11\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 12\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 13\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 14\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 15\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 16\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 17\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 18\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 19\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 20\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 21\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 22\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 23\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 24\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 25\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 26\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 27\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 28\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 29\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 30\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 31\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 32\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 33\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 34\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 35\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 36\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 37\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 38\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 39\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 40\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 41\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 42\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 43\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 44\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 45\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 46\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 47\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 48\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 49\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 50\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 51\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 52\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 53\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 54\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 55\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 56\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 57\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 58\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]},{\"name\":\"Lead 59\",\"stores\":[\"ST-4001\",\"ST-4002\",\"ST-4003\"]}]}"
+    },
+    "operationId": "r1-c2"
+   }
+  ],
+  "answerBlocks": [
+   "save_memory",
+   "save_memory",
+   "save_memory"
+  ],
+  "terminal": [
+   "ai_complete"
+  ],
+  "stored": []
+ },
+ "originalLeads": [
+  {
+   "name": "Ana",
+   "shifts": [
+    {
+     "day": "Mon",
+     "stores": [
+      "ST-4001",
+      "ST-4002"
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Ben",
+   "shifts": [
+    {
+     "day": "Tue",
+     "stores": [
+      "ST-4003"
+     ]
+    }
+   ]
+  }
+ ]
+}

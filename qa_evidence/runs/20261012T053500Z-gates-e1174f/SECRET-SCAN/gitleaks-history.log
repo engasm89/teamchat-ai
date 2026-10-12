@@ -1,0 +1,6 @@
+$ gitleaks git --redact --no-banner --report-format json --report-path /Users/macbook/NotSynced/TeamChat_AI_Final_Audit_IDE_Agent_Handoff_v13_2026-10-09/teamchat-ai/qa_evidence/runs/20261012T053500Z-gates-e1174f/SECRET-SCAN/gitleaks-history.json /tmp/tc-gates-1791783291
+(cwd ., exit 1, 4650 ms)
+
+8:35AM INF 72 commits scanned.
+8:35AM INF scanned ~99770349 bytes (99.77 MB) in 4.36s
+8:35AM WRN leaks found: 2262

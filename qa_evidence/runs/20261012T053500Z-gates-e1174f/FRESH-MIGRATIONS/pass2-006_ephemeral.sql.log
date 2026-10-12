@@ -1,0 +1,4 @@
+$ /opt/homebrew/opt/postgresql@17/bin/psql -v ON_ERROR_STOP=1 -X -q -h /tmp/tcpg-aoH2G1 -p 62424 -U postgres -d teamchat -f /tmp/tc-gates-1791783291/db/migrations/006_ephemeral.sql
+(cwd ., exit 0, 13 ms)
+
+psql:/tmp/tc-gates-1791783291/db/migrations/006_ephemeral.sql:8: NOTICE:  relation "typing_leases" already exists, skipping
