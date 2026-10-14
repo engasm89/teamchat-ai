@@ -10,23 +10,25 @@ import fs from "node:fs";
 import path from "node:path";
 import {isDeepStrictEqual} from "node:util";
 import {spawn,execFileSync} from "node:child_process";
-import {RunRecorder,GCP,type Assertion,type TestRecorder} from "../evidence/lib.ts";
-import {API_URL,APP_URL,QA_ROOM,bindDeployment,openDb,authoritativeEvents,firebaseSignIn,sleep,tag,type AccountKey} from "./common.ts";
+import {RunRecorder,type Assertion,type TestRecorder} from "../evidence/lib.ts";
+import {API_URL,APP_URL,QA_ROOM,TARGET,bindDeployment,openDb,proxiedDatabaseUrl,authoritativeEvents,firebaseSignIn,sleep,tag,type AccountKey} from "./common.ts";
+import {assertRestartableTarget} from "./target.ts";
 import {LiveClient,type Turn} from "./live-client.ts";
 import * as oracle from "./oracle.ts";
 import {renderVerifiedBlock} from "../../apps/web/src/verified.ts";
 
 const HARNESS=["scripts/acceptance/run-employer-acceptance.ts","scripts/acceptance/live-client.ts","scripts/acceptance/oracle.ts",
- "scripts/acceptance/common.ts","scripts/evidence/lib.ts"];
+ "scripts/acceptance/common.ts","scripts/acceptance/target.ts","scripts/evidence/lib.ts"];
 const args=process.argv.slice(2);
 const RESTART=args.includes("--restart");
 const ONLY=args.includes("--only")?new Set(args[args.indexOf("--only")+1]!.split(",")):null;
 const N="northside-outfitters",V="valley-home-goods";
 const NROOM=QA_ROOM[N],VROOM=QA_ROOM[V];
 
+if(RESTART)assertRestartableTarget(TARGET);
 const {sourceSha,deployment}=bindDeployment();
 const pool=await openDb();
-const run=new RunRecorder({suite:RESTART?"acceptance-restart":"acceptance",environment:`production: ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
+const run=new RunRecorder({suite:RESTART?"acceptance-restart":"acceptance",environment:`${TARGET.name}: ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
  ...(args.includes("--scratch")?{runsDir:"qa_evidence/scratch/runs"}:{})});
 const clients:LiveClient[]=[];
 async function client(account:AccountKey,room?:string,url?:string){
@@ -35,7 +37,8 @@ async function client(account:AccountKey,room?:string,url?:string){
 function closeClients(){for(const c of clients.splice(0))c.close();}
 
 // ---------- helpers ----------
-const rendered=(turn:Turn)=>turn.blocks.map(b=>renderVerifiedBlock(b)).join("\n\n");
+/** What a reader sees: the answer segments, then the verified source blocks. */
+const rendered=(turn:Turn)=>[...turn.segments.map(s=>String(s.rendered??"")),...turn.blocks.map(b=>renderVerifiedBlock(b))].join("\n\n");
 const toolText=(turn:Turn)=>JSON.stringify(turn.tools.map(t=>t.result));
 async function ask(t:TestRecorder,c:LiveClient,room:string,prompt:string,label:string,consent=false):Promise<Turn>{
  const sent=await c.post(room,prompt,consent);
@@ -74,9 +77,9 @@ const strip=(v:unknown):unknown=>JSON.parse(JSON.stringify(v,(k,x)=>k==="ref"||k
 const noMatch=(turn:Turn)=>turn.tools.length>0&&turn.tools.every(x=>x.result?.found===false||(Array.isArray(x.result)&&x.result.length===0));
 
 async function auditLog(turnId:string):Promise<any[]>{
- const filter=`resource.type="cloud_run_revision" AND resource.labels.service_name="teamchat-worker" AND jsonPayload.message="ai_tool_call" AND jsonPayload.turnId="${turnId}"`;
+ const filter=`resource.type="cloud_run_revision" AND resource.labels.service_name="${TARGET.workerService}" AND jsonPayload.message="ai_tool_call" AND jsonPayload.turnId="${turnId}"`;
  for(let i=0;i<12;i++){
-  const out=JSON.parse(execFileSync("gcloud",["logging","read",filter,"--project",GCP.project,"--freshness=2h","--format=json"],{encoding:"utf8"}));
+  const out=JSON.parse(execFileSync("gcloud",["logging","read",filter,"--project",TARGET.project,"--freshness=2h","--format=json"],{encoding:"utf8"}));
   if(out.length)return out.map((e:any)=>e.jsonPayload);
   await sleep(10000);
  }
@@ -344,7 +347,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
   const messages=db.filter(e=>e.type==="message"&&e.payload?.client_message_id===id);
   const terminals=db.filter(e=>e.turn_id===first.turnId&&["ai_complete","ai_failed"].includes(e.type));
   const tools=db.filter(e=>e.turn_id===first.turnId&&e.type==="ai_tool").map(e=>e.payload.operationId);
-  const worker="https://teamchat-worker-1068908463902.us-central1.run.app";
+  const worker=TARGET.workerUrl;
   const anon=await fetch(`${worker}/internal/turn`,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({turnId:first.turnId})});
   const forged=await fetch(`${worker}/internal/turn`,{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.e30.invalid"},body:JSON.stringify({turnId:first.turnId})});
   record(t,[completed(turn),
@@ -357,10 +360,8 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
  }],
  ["A12","Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded",["A12"],async t=>{
   const port=18080;
-  const dbUrl=execFileSync("gcloud",["secrets","versions","access","latest","--secret=teamchat-database-url","--project",GCP.project],{encoding:"utf8"}).trim();
-  const m=/^postgres(?:ql)?:\/\/([^:/@]+):([^@]+)@[^/]*\/([A-Za-z0-9_]+)/.exec(dbUrl);if(!m)throw Error("Unexpected database URL form");
-  const env={...process.env,DATABASE_URL:`postgres://${m[1]}:${encodeURIComponent(decodeURIComponent(m[2]!))}@127.0.0.1:${process.env.DB_PROXY_PORT??"6543"}/${m[3]}`,
-   FIREBASE_PROJECT_ID:GCP.project,GOOGLE_CLOUD_PROJECT:GCP.project,ALLOWED_ORIGINS:APP_URL,PORT:String(port),LOCAL_TASK_WORKER:"1",PG_POOL_MAX:"3"};
+  const env={...process.env,DATABASE_URL:proxiedDatabaseUrl(),DB_RUNTIME_ROLE:TARGET.dbRole,
+   FIREBASE_PROJECT_ID:TARGET.project,GOOGLE_CLOUD_PROJECT:TARGET.project,ALLOWED_ORIGINS:APP_URL,PORT:String(port),LOCAL_TASK_WORKER:"1",PG_POOL_MAX:"3"};
   const logFile=path.join(t.dir,"local-instance.log");const out=fs.openSync(logFile,"w");
   const proc=spawn(process.execPath,["--experimental-strip-types","src/server/start.ts"],{env,stdio:["ignore",out,out]});
   try{
@@ -393,13 +394,14 @@ async function s19(t:TestRecorder){
  const n1=await client("n1",NROOM);
  const save=await ask(t,n1,NROOM,`@AI Remember that the cold-start check code for ${drill} is ${value}.`,"s19-save",true);
  closeClients();
+ assertRestartableTarget(TARGET);
  const before=bindDeployment().deployment;const restartAt=new Date();
- for(const svc of ["teamchat-api","teamchat-worker"])
-  execFileSync("gcloud",["run","services","update",svc,"--region",GCP.region,"--project",GCP.project,`--update-labels=qa-restart=${Date.now()}`,"--quiet"],{stdio:"ignore"});
+ for(const svc of [TARGET.apiService,TARGET.workerService])
+  execFileSync("gcloud",["run","services","update",svc,"--region",TARGET.region,"--project",TARGET.project,`--update-labels=qa-restart=${Date.now()}`,"--quiet"],{stdio:"ignore"});
  const after=bindDeployment().deployment;
  const startLogs=JSON.parse(execFileSync("gcloud",["logging","read",
   `resource.type="cloud_run_revision" AND (resource.labels.revision_name="${after.apiRevision}" OR resource.labels.revision_name="${after.workerRevision}") AND timestamp>="${restartAt.toISOString()}"`,
-  "--project",GCP.project,"--freshness=1h","--limit=50","--format=json"],{encoding:"utf8"})) as any[];
+  "--project",TARGET.project,"--freshness=1h","--limit=50","--format=json"],{encoding:"utf8"})) as any[];
  const n2=await client("n2","category-strategy");
  const recall=await ask(t,n2,"category-strategy",`@AI What is the cold-start check code for ${drill}?`,"s19-recall");
  const hits=recall.tools.filter(x=>x.name==="search_memory").flatMap(x=>Array.isArray(x.result)?x.result.map((r:any)=>r.memory):[]);

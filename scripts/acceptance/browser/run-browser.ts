@@ -9,15 +9,15 @@ import path from "node:path";
 import {execFileSync} from "node:child_process";
 import {parse} from "csv-parse/sync";
 import {chromium,type BrowserContext,type Page,type CDPSession} from "playwright";
-import {RunRecorder,keychainPassword,GCP,type Assertion,type TestRecorder} from "../../evidence/lib.ts";
-import {ACCOUNTS,API_URL,APP_URL,QA_ROOM,bindDeployment,openDb,authoritativeEvents,lastSequence,expectedProjection,compareProjection,
+import {RunRecorder,type Assertion,type TestRecorder} from "../../evidence/lib.ts";
+import {ACCOUNTS,API_URL,APP_URL,QA_ROOM,TARGET,accountPassword,bindDeployment,openDb,authoritativeEvents,lastSequence,expectedProjection,compareProjection,
  sleep,tag,type AccountKey,type ProjectionItem} from "../common.ts";
 import {CutProxy} from "./cut-proxy.ts";
 import type {PersistedEvent} from "../../../src/persistence/postgres.ts";
 
-const HARNESS=["scripts/acceptance/browser/run-browser.ts","scripts/acceptance/browser/cut-proxy.ts","scripts/acceptance/common.ts","scripts/evidence/lib.ts"];
+const HARNESS=["scripts/acceptance/browser/run-browser.ts","scripts/acceptance/browser/cut-proxy.ts","scripts/acceptance/common.ts","scripts/acceptance/target.ts","scripts/evidence/lib.ts"];
 const TERMINAL=new Set(["ai_complete","ai_failed"]);
-const PROGRESS=new Set(["ai_tool_start","ai_tool","ai_answer_block"]);
+const PROGRESS=new Set(["ai_tool_start","ai_tool","ai_answer_block","ai_answer_segment"]);
 
 // ---------- instrumentation (attached before navigation) ----------
 interface FrameRec {t:number;socket:number;dir:"in"|"out";frame:any;source:"page"|"route"}
@@ -84,7 +84,7 @@ async function openSession(account:AccountKey,opts:{proxy?:string;init?:string;f
  }
  navigations.push({account,at:new Date().toISOString(),attempts});
  await page.fill('input[type="email"]',email);
- await page.fill('input[type="password"]',keychainPassword(email));
+ await page.fill('input[type="password"]',accountPassword(email));
  await page.click('button:has-text("Sign in")');
  await selectRoom(page,room);
  const uid=await page.evaluate(()=>Object.keys(sessionStorage).find(k=>k.startsWith("teamchat-pending-v1:"))?.slice("teamchat-pending-v1:".length)??"");
@@ -211,7 +211,7 @@ const {sourceSha,deployment}=bindDeployment();
 const pool=await openDb();
 const args=process.argv.slice(2);
 const ONLY=args.includes("--only")?new Set(args[args.indexOf("--only")+1]!.split(",")):null;
-const run=new RunRecorder({suite:"browser",environment:`production: ${APP_URL} + ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
+const run=new RunRecorder({suite:"browser",environment:`${TARGET.name}: ${APP_URL} + ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
  ...(args.includes("--scratch")?{runsDir:"qa_evidence/scratch/runs"}:{})});
 const test=(id:string,title:string,requirementIds:string[],body:(t:TestRecorder)=>Promise<void>)=>ONLY&&!ONLY.has(id)?Promise.resolve():run.run(id,title,requirementIds,body);
 const monitoringWindows:Record<string,{start:number;end:number}>={};
@@ -257,9 +257,12 @@ try{
    const peerText=await peer.page.locator(`article.message[data-turn-id="${turnId}"]`).allInnerTexts();
    const text=peerText.join("\n");
    const renderedClasses=[...text.matchAll(/(APP-100\.\d\d) — [^\n]*— margin class ([^\s[]+(?: mapped)?)/g),
-    ...text.matchAll(/(APP-100\.\d\d) — [^\n]*\nMargin class: (\S+(?: mapped)?)/g)].map(m=>[m[1]!,m[2]!] as const);
+    ...text.matchAll(/(APP-100\.\d\d) — [^\n]*\nMargin class: (\S+(?: mapped)?)/g),
+    ...text.matchAll(/(APP-100\.\d\d) (?:is “[^”\n]*”[^\n]*? It is in|has) margin class ([^\s.(]+)/g),
+    ...[...text.matchAll(/(APP-100\.\d\d) (?:is “[^”\n]*”[^\n]*? It|) ?has no margin class mapped/g)].map(m=>[m[0],m[1],"not mapped"])]
+    .map(m=>[m[1]!,m[2]!] as const);
    t.detail("turnId",turnId).detail("peerTimeline",peerTimeline).detail("toolCalls",tools.map(e=>({name:e.payload.name,arguments:e.payload.arguments})));
-   t.writeJson("db-events.json",db,"Authoritative events after the starting cursor (read as teamchat_api)");
+   t.writeJson("db-events.json",db,`Authoritative events after the starting cursor (read as ${TARGET.dbRole})`);
    t.assert("signed in through Firebase Hosting UI and authenticated the socket",s.log.frames.some(f=>f.frame?.type==="auth_ok")&&peer.log.frames.some(f=>f.frame?.type==="auth_ok"),true,true);
    t.assert("asker's view equals the database projection",compareProjection(domA,expected).exact,"exact",compareProjection(domA,expected));
    t.assert("peer's view equals the database projection",compareProjection(domB,expected).exact,"exact",compareProjection(domB,expected));
@@ -397,12 +400,12 @@ try{
   try{
    const token=execFileSync("gcloud",["auth","print-access-token"],{encoding:"utf8"}).trim();
    const {start,end}=monitoringWindows.S17;
-   const filter=`metric.type="run.googleapis.com/request_count" AND resource.labels.service_name="teamchat-api"`;
-   const url=`https://monitoring.googleapis.com/v3/projects/${GCP.project}/timeSeries?filter=${encodeURIComponent(filter)}&interval.startTime=${new Date(start).toISOString()}&interval.endTime=${new Date(end).toISOString()}`;
+   const filter=`metric.type="run.googleapis.com/request_count" AND resource.labels.service_name="${TARGET.apiService}"`;
+   const url=`https://monitoring.googleapis.com/v3/projects/${TARGET.project}/timeSeries?filter=${encodeURIComponent(filter)}&interval.startTime=${new Date(start).toISOString()}&interval.endTime=${new Date(end).toISOString()}`;
    const res=await fetch(url,{headers:{authorization:`Bearer ${token}`}});const body=await res.json() as any;
    const total=(body.timeSeries??[]).flatMap((s:any)=>s.points??[]).reduce((n:number,p:any)=>n+Number(p.value?.int64Value??0),0);
    const s17=run.results.tests.find(x=>x.id==="S17");
-   if(s17)s17.details.cloudMonitoringApiRequestsInWindow={total,note:"All clients of teamchat-api, not only this browser; informational",series:(body.timeSeries??[]).length};
+   if(s17)s17.details.cloudMonitoringApiRequestsInWindow={total,note:`All clients of ${TARGET.apiService}, not only this browser; informational`,series:(body.timeSeries??[]).length};
   }catch(e){const s17=run.results.tests.find(x=>x.id==="S17");if(s17)s17.details.cloudMonitoringError=String(e);}
  }
 }finally{

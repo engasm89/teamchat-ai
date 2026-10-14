@@ -10,18 +10,18 @@ import net from "node:net";
 import {isDeepStrictEqual} from "node:util";
 import {spawn,spawnSync,execFileSync} from "node:child_process";
 import WebSocket from "ws";
-import {RunRecorder,deploymentRef,loadProvenance,keychainPassword,GCP,type TestRecorder} from "../evidence/lib.ts";
-import {ACCOUNTS,APP_URL,firebaseSignIn,sleep} from "../acceptance/common.ts";
+import {RunRecorder,deploymentRef,loadProvenance,GCP,type TestRecorder} from "../evidence/lib.ts";
+import {ACCOUNTS,APP_URL,TARGET,accountPassword,firebaseSignIn,sleep} from "../acceptance/common.ts";
 
-const HARNESS=["scripts/gates/run-gates.ts","scripts/gates/memory-repair-driver.ts","scripts/evidence/lib.ts","scripts/acceptance/common.ts"];
+const HARNESS=["scripts/gates/run-gates.ts","scripts/gates/memory-repair-driver.ts","scripts/evidence/lib.ts","scripts/acceptance/common.ts","scripts/acceptance/target.ts"];
 const arg=(name:string)=>{const i=process.argv.indexOf(name);if(i<0||!process.argv[i+1])throw Error(`${name} is required`);return process.argv[i+1]!;};
 const clone=path.resolve(arg("--clone"));
 const ORIGINAL_ZIP=path.resolve("reference/original_employer_assessment.zip");
 const FIXTURES=["product_codes.csv","promo_coefficients.csv","segment_coefficients.csv","stores.json","team_memory_seed.json"];
 const sha256=(data:Buffer|string)=>crypto.createHash("sha256").update(data).digest("hex");
 
-const provenance=loadProvenance();
-if(!provenance)throw Error("qa_evidence/provenance.json missing");
+const provenance=loadProvenance(TARGET.provenance);
+if(!provenance)throw Error(`${TARGET.provenance} missing`);
 const head=execFileSync("git",["-C",clone,"rev-parse","HEAD"],{encoding:"utf8"}).trim();
 if(head!==provenance.source.sha)throw Error(`Clone is at ${head}; provenance source is ${provenance.source.sha}`);
 if(execFileSync("git",["-C",clone,"status","--porcelain","--untracked-files=no"],{encoding:"utf8"}).trim())throw Error("Clone has tracked modifications");
@@ -36,7 +36,7 @@ function sh(t:TestRecorder,log:string,cmd:string,args:string[],opts:{cwd?:string
  return {status:r.status,stdout:r.stdout??"",stderr:r.stderr??"",ms:Date.now()-started};
 }
 function cloudDb(){
- const url=execFileSync("gcloud",["secrets","versions","access","latest","--secret=teamchat-database-url","--project",GCP.project],{encoding:"utf8"}).trim();
+ const url=execFileSync("gcloud",["secrets","versions","access","latest",`--secret=${TARGET.databaseSecret}`,"--project",TARGET.project],{encoding:"utf8"}).trim();
  const m=/^postgres(?:ql)?:\/\/([^:/@]+):([^@]+)@[^/]*\/([A-Za-z0-9_]+)/.exec(url);if(!m)throw Error("Unexpected database URL form");
  const password=decodeURIComponent(m[2]!);secrets.push(password,encodeURIComponent(password));
  return {user:m[1]!,password,proxyUrl:`postgres://${m[1]}:${encodeURIComponent(password)}@127.0.0.1:${process.env.DB_PROXY_PORT??"6543"}/${m[3]}`};
@@ -280,7 +280,7 @@ try{
   const commits=execFileSync("git",["-C",clone,"rev-list","--all","--count"],{encoding:"utf8"}).trim();
   // Publishable tree of the working repository: tracked plus untracked-but-not-ignored files.
   const files=execFileSync("git",["ls-files","-co","--exclude-standard"],{encoding:"utf8"}).split("\n").filter(Boolean).filter(f=>fs.existsSync(f)&&fs.statSync(f).isFile());
-  const reviewerPasswords=Object.values(ACCOUNTS).map(a=>keychainPassword(a.email));
+  const reviewerPasswords=Object.values(ACCOUNTS).map(a=>accountPassword(a.email));
   const literal=[...reviewerPasswords,cloudDb().password].filter(Boolean);
   const JWT=/eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}/;
   const PRIVATE_KEY=/-----BEGIN [A-Z ]*PRIVATE KEY-----/;

@@ -1,0 +1,23 @@
+{
+ "name": "staging",
+ "project": "focus-clean-4b9f4",
+ "region": "us-central1",
+ "appUrl": "https://focus-clean-4b9f4--staging.web.app",
+ "apiUrl": "https://teamchat-api-staging-1068908463902.us-central1.run.app",
+ "workerUrl": "https://teamchat-worker-staging-1068908463902.us-central1.run.app",
+ "apiService": "teamchat-api-staging",
+ "workerService": "teamchat-worker-staging",
+ "database": "teamchat_staging",
+ "databaseSecret": "teamchat-staging-database-url",
+ "dbRole": "teamchat_api_staging",
+ "keychainService": "teamchat-ai-staging",
+ "provenance": "qa_evidence/staging/provenance.json",
+ "accounts": {
+  "n1": {"email": "northside.buyer1.staging@teamchat.internal", "tenant": "northside-outfitters"},
+  "n2": {"email": "northside.buyer2.staging@teamchat.internal", "tenant": "northside-outfitters"},
+  "n3": {"email": "northside.analyst3.staging@teamchat.internal", "tenant": "northside-outfitters"},
+  "v1": {"email": "valley.buyer1.staging@teamchat.internal", "tenant": "valley-home-goods"},
+  "v2": {"email": "valley.buyer2.staging@teamchat.internal", "tenant": "valley-home-goods"},
+  "v3": {"email": "valley.analyst3.staging@teamchat.internal", "tenant": "valley-home-goods"}
+ }
+}
