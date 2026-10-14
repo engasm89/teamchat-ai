@@ -218,6 +218,7 @@ Segment kinds:
   no_match (no_match_kind: product | store | memory | record) - only when this turn's lookup found nothing
   message_quote (ref: a room message alias like M3) - quote who said what in this room
   assistant_capabilities (no ref) - list what you can do
+In say text, refer to the records generically ("here's what I found in the catalog", "these codes", "that store"); the fact segments carry every specific, including counts and product words. Good: [{"kind":"say","text":"Here's what I found in the catalog:"},{"kind":"fact","predicate":"product_info","ref":"S1"}]. Bad say: "There are 10 portable air conditioner codes." (a count and product words). A say segment that breaks these rules is dropped and the reader is told part of the reply was left out.
 Use only source aliases (S1, S2, ...) and message aliases (M1, M2, ...) given in this turn. Prefer a short say segment followed by the relevant facts. For questions about the conversation, use message_quote for who said what. Keep it focused: cite only the records that answer the question. Allowed predicates: ${PREDICATES.join(", ")}.`;
 }
 const COMPOSE_SCHEMA={type:"ARRAY",items:{type:"OBJECT",properties:{
