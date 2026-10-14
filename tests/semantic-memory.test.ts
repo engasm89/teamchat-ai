@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {validateEmbedding,vectorSql,memoryEmbeddingText,type EmbeddingProvider} from "../src/worker/embeddings.ts";
+import {validateEmbedding,vectorSql,memoryEmbeddingText,withEmbeddingTimeout,type EmbeddingProvider} from "../src/worker/embeddings.ts";
 import {SqlToolExecutor} from "../src/server/sql-tools.ts";
 import {SourceLedger} from "../src/grounding.ts";
 import {resolvedContext} from "../src/tenant.ts";
@@ -43,4 +43,17 @@ test("memory saves require consent before embedding/model invocation",async()=>{
  const sql:SqlPool={connect:async()=>{throw Error("DB should not be accessed");}};
  await assert.rejects(new SqlToolExecutor(sql,never).execute(ctx,"assortment-review","save_memory",{key:"a",value_json:JSON.stringify({note:"x"}),room:"assortment-review"},new SourceLedger(ctx,"t"),false),/consent/);
  assert.equal(called,0);
+});
+
+test("a stalled embedding request is abandoned after its timeout and retried once, never left hanging",async t=>{
+ let calls=0;const started=Date.now();
+ // AbortSignal.timeout does not hold the event loop open; the worker's HTTP server does.
+ const alive=setInterval(()=>{},1000);t.after(()=>clearInterval(alive));
+ const stalled=(signal:AbortSignal)=>{calls++;return new Promise<number[]>((_,reject)=>signal.addEventListener("abort",()=>reject(signal.reason)));};
+ await assert.rejects(withEmbeddingTimeout(stalled,50,2),/TimeoutError|aborted|timed out/i);
+ assert.equal(calls,2);
+ assert.ok(Date.now()-started<1000,"two 50 ms attempts, not a 300 s wait");
+ let tries=0;
+ assert.deepEqual(await withEmbeddingTimeout(async()=>{if(++tries===1)throw Error("fetch failed");return good;},50,2),good);
+ assert.equal(tries,2);
 });

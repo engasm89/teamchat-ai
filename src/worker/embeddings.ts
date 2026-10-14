@@ -18,6 +18,14 @@ export function vectorSql(value: number[]): string {
 export function memoryEmbeddingText(key: string, value: Record<string,unknown>): string {
   return `${key}\n${Object.entries(value).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>`${k}: ${String(v)}`).join("\n")}`.slice(0,8_192);
 }
+/** A stalled Vertex request otherwise waits for undici's 300 s header timeout,
+ * outliving the turn's deadline while the room shows "reading…". */
+export async function withEmbeddingTimeout<T>(run:(signal:AbortSignal)=>Promise<T>,timeoutMs=15_000,attempts=2):Promise<T> {
+  for(let attempt=1;;attempt++){
+    try{return await run(AbortSignal.timeout(timeoutMs));}
+    catch(error){if(attempt>=attempts)throw error;}
+  }
+}
 export async function createVertexEmbedder(): Promise<EmbeddingProvider> {
   const apiKey=process.env.GEMINI_API_KEY;
   const project=process.env.GCP_PROJECT_ID;
@@ -30,7 +38,7 @@ export async function createVertexEmbedder(): Promise<EmbeddingProvider> {
     const config = apiKey
       ? { taskType: task, outputDimensionality: EMBEDDING_DIMENSION }
       : { taskType: task, outputDimensionality: EMBEDDING_DIMENSION, autoTruncate: false };
-    const result=await genai.models.embedContent({model:modelId,contents:text,config});
+    const result=await withEmbeddingTimeout<{embeddings?:Array<{values?:number[]}>}>(signal=>genai.models.embedContent({model:modelId,contents:text,config:{...config,abortSignal:signal}}));
     return validateEmbedding(result.embeddings?.[0]?.values);
   }};
 }
