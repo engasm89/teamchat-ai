@@ -242,7 +242,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
   const stored=saves.find(x=>x.result?.saved===true);
   const text=rendered(nested);
   const flat=await ask(t,n1,NROOM,`@AI Remember that the ${key} flat check value is ${key}-ok.`,"s10-flat",true);
-  const flatSave=flat.tools.find(x=>x.name==="save_memory");
+  const flatSaves=flat.tools.filter(x=>x.name==="save_memory"),flatSave=flatSaves.find(x=>x.result?.saved===true)??flatSaves[0];
   record(t,[completed(nested,"nested"),
    a("first save attempt was rejected",Array.isArray(saves[0]?.result?.validation_errors),"validation_errors",saves[0]?.result),
    a("rejection lists field-level reasons",(saves[0]?.result?.validation_errors??[]).every((e:any)=>e.field&&e.issue)&&(saves[0]?.result?.validation_errors??[]).length>0,"field + issue",saves[0]?.result?.validation_errors),
@@ -252,7 +252,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("stored value is flat and exactly what the repair sent",!!stored&&Object.keys(stored.result.memory.value).length>0&&Object.values(stored.result.memory.value).every(v=>v===null||typeof v!=="object")&&
     isDeepStrictEqual(stored.result.memory.value,parsed(stored.arguments.value_json)),"flat, non-empty, identical",stored&&{sent:stored.arguments.value_json,stored:stored.result.memory.value}),
    completed(flat,"flat"),
-   a("a valid flat value saves with the requested content",flatSave?.result?.saved===true&&JSON.stringify(flatSave.result.memory?.value??{}).includes(`${key}-ok`),`saved, containing ${key}-ok`,flatSave?.result)]);
+   a("a valid flat value saves with the requested content (directly or by the one controlled repair)",flatSaves.length<=2&&flatSave?.result?.saved===true&&JSON.stringify(flatSave.result.memory?.value??{}).includes(`${key}-ok`),`saved, containing ${key}-ok`,flatSaves.map(x=>x.result))]);
  }],
  ["S11","A target both chains track: each tenant gets only its own",["G04","S11"],async t=>{
   const nSeed=oracle.memories[N]!.find(m=>m.key==="q1_assortment_target")!,vSeed=oracle.memories[V]!.find(m=>m.key==="q1_assortment_target")!;

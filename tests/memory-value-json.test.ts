@@ -51,6 +51,14 @@ test("the controlled repair re-encodes nested fields as JSON text and drops noth
  assert.equal(controlledMemoryRepair({leads}),null);
 });
 
+test("the controlled repair also turns spaced or punctuated field names into valid ones, values untouched",()=>{
+ assert.equal(controlledMemoryRepair('{"flat check value":"roster-x-ok"}'),'{"flat_check_value":"roster-x-ok"}');
+ assert.deepEqual(JSON.parse(controlledMemoryRepair('{" due date ":"2026-11-20","owner":{"name":"Ben"}}')!),{due_date:"2026-11-20",owner:'{"name":"Ben"}'});
+ assert.equal(controlledMemoryRepair('{"a b":"1","a_b":"2"}'),null,"two names would collide: nothing is merged");
+ assert.equal(controlledMemoryRepair('{"2026 target":"92"}'),null,"a name that cannot be made valid is left to the field-level reason");
+ assert.equal(parseMemoryValueJson(controlledMemoryRepair('{"flat check value":"x"}')).ok,true);
+});
+
 test("the requester's own JSON object is found in their message, exactly and only when there is one",()=>{
  const roster={leads:[{name:"Ana",shifts:[{day:"Mon",stores:["ST-4001","ST-4002"]}]}]};
  assert.equal(requesterMemoryValue(`@AI Remember this complex nested roster as r-1: ${JSON.stringify(roster,null,2)} thanks`),JSON.stringify(roster));
