@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {collectGeminiFunctionCalls,trustedPlannerInstructions} from "../src/worker/gemini.ts";
+import {allowsDirectConversation,collectGeminiFunctionCalls,trustedPlannerInstructions} from "../src/worker/gemini.ts";
 import {normalizeRoomTitle} from "../src/server/http-socket.ts";
 import {renderVerifiedBlock} from "../apps/web/src/verified.ts";
 
@@ -14,6 +14,8 @@ test("natural assistant text survives streaming without a forced tool call",asyn
  assert.deepEqual(response.functionCalls,[]);
  assert.equal((response.candidates?.[0]?.content?.parts?.[0] as any).text,"Hi — how can I help?");
  assert.match(trustedPlannerInstructions({roomId:"general",memoryConsent:false}),/Respond naturally/);
+ assert.equal(allowsDirectConversation("Thanks, that helps"),true);
+ assert.equal(allowsDirectConversation("Which store has this product in inventory?"),false);
 });
 
 test("assistant conversation block renders only with its explicit source",()=>{
