@@ -11,9 +11,15 @@ test("browser uses Firebase only for authentication and does not poll or use man
 });
 test("Gemini owns tool selection and the server never broadcasts raw candidate text",()=>{
  assert.match(worker,/functionDeclarations:TOOL_DECLARATIONS/);
- assert.match(worker,/functionCallingConfig:\{mode:firstRound\?"ANY":"AUTO"\}/);
+ // AUTO on every round: forcing ANY made Gemini call a tool for "hi" and
+ // threw away its reply (reviewer session, 14 Oct 2026).
+ assert.match(worker,/functionCallingConfig:\{mode:"AUTO"\}/);
+ assert.doesNotMatch(worker,/"ANY"/);
  assert.doesNotMatch(worker,/persistAnswer\([^;]*response\.text/);
+ assert.doesNotMatch(worker,/persistSegment\([^;]*response\.text/);
  assert.match(worker,/verifiedToolBlock\(/);
+ assert.match(worker,/checkSay\(/);
+ assert.match(worker,/checkSegment\(/);
 });
 test("the repeatable live history bootstrap uses a real Gemini call and verifies persisted fetch",()=>{
  const script=readFileSync("scripts/bootstrap-live-demo-history.ts","utf8");

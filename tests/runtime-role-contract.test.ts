@@ -20,8 +20,10 @@ function sourceFiles(dir:string):string[]{
  * role provisioning script. This is NOT a substitute for a real RLS test. */
 export function missingRuntimePermissions(source:string,grants:string):string[]{
  const granted=new Map<string,Set<string>>();
- for(const statement of grants.matchAll(/\bGRANT\s+(SELECT|INSERT|UPDATE|DELETE)(?:\s*,\s*(?:SELECT|INSERT|UPDATE|DELETE))*\s+ON\s+([\s\S]*?)\s+TO\s+teamchat_api\s*;/gi)){
-  const permissions=statement[0]!.slice(5,statement[0]!.search(/\sON\s/i)).split(",").map(x=>x.trim().toUpperCase());
+ // A column-level grant such as UPDATE (next_sequence) counts as the
+ // permission here; the rooms test below checks which columns are written.
+ for(const statement of grants.matchAll(/\bGRANT\s+(SELECT|INSERT|UPDATE|DELETE)(?:\s*\([a-z_,\s]+\))?(?:\s*,\s*(?:SELECT|INSERT|UPDATE|DELETE)(?:\s*\([a-z_,\s]+\))?)*\s+ON\s+([\s\S]*?)\s+TO\s+teamchat_api\s*;/gi)){
+  const permissions=statement[0]!.slice(5,statement[0]!.search(/\sON\s/i)).replace(/\([^)]*\)/g,"").split(",").map(x=>x.trim().toUpperCase());
   for(const name of statement[2]!.split(",")){
    const table=name.trim().replace(/^teamchat\./,"");
    if(!granted.has(table))granted.set(table,new Set());
@@ -46,4 +48,15 @@ test("runtime SQL operations are granted explicitly to nonowner teamchat_api",()
   "GRANT DELETE ON teamchat.answer_blocks,teamchat.presence_leases TO teamchat_api;",
   "GRANT DELETE ON teamchat.presence_leases TO teamchat_api;");
  assert.deepEqual(missingRuntimePermissions(source,withoutReclaimGrant),["DELETE teamchat.answer_blocks"]);
+});
+test("the runtime role may only advance a room's sequence and insert memberships, never rewrite them",()=>{
+ const source=sourceFiles("src").map(file=>readFileSync(file,"utf8")).join("\n");
+ const grants=readFileSync("db/provision_runtime_role.sql","utf8");
+ assert.match(grants,/REVOKE UPDATE ON teamchat\.rooms FROM teamchat_api;/);
+ assert.match(grants,/GRANT UPDATE \(next_sequence\) ON teamchat\.rooms TO teamchat_api;/);
+ assert.doesNotMatch(grants,/GRANT[^;]*\b(?:UPDATE|DELETE)\b[^;(]*ON[^;]*teamchat\.room_memberships[^;]*TO teamchat_api/);
+ const roomUpdates=[...source.matchAll(/UPDATE teamchat\.rooms SET ([^"]*?) WHERE/g)].map(m=>m[1]);
+ assert.ok(roomUpdates.length>0);
+ for(const set of roomUpdates)assert.equal(set,"next_sequence=next_sequence+1");
+ assert.doesNotMatch(source,/UPDATE teamchat\.room_memberships|DELETE FROM teamchat\.room_memberships/);
 });

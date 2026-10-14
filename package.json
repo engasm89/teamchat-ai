@@ -18,9 +18,12 @@
     "embed:backfill": "node --experimental-strip-types scripts/backfill-memory-embeddings.ts",
     "test:postgres:required": "REQUIRE_POSTGRES=1 node --experimental-strip-types --test scripts/integration/live-postgres.test.ts",
     "verify:packaging": "node --experimental-strip-types scripts/verify-package-locks.ts",
-    "verify:release": "npm run verify:packaging && npm run check && npm test && npm run verify:fixtures && npm run test:postgres:required && npm --prefix apps/web run build",
+    "verify:release": "npm run verify:packaging && npm run check && npm test && npm run verify:fixtures && npm run test:postgres:required && npm run test:tenant-chats && npm --prefix apps/web run build",
     "demo:bootstrap:live": "node --experimental-strip-types scripts/bootstrap-live-demo-history.ts",
-    "verify:prelive": "npm run check && npm test && npm run verify:fixtures && npm run seed:sql"
+    "verify:prelive": "npm run check && npm test && npm run verify:fixtures && npm run seed:sql",
+    "test:tenant-chats": "node --experimental-strip-types --test scripts/integration/tenant-chats.test.ts",
+    "db:migrate": "node --experimental-strip-types scripts/db/migrate.ts",
+    "db:provision-runtime": "node --experimental-strip-types scripts/db/provision-runtime-role.ts"
   },
   "description": "Controlease TeamChat AI pre-live audited source; cloud integration and deployment are required release gates",
   "devDependencies": {

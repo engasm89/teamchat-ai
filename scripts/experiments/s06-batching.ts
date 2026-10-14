@@ -8,7 +8,7 @@
 import fs from "node:fs";
 import {GoogleGenAI} from "@google/genai";
 import {TOOL_DECLARATIONS} from "../../src/tools.ts";
-import {trustedPlannerInstructions,buildPlannerUserMessage} from "../../src/worker/gemini.ts";
+import {trustedPlannerInstructions,buildConversationContents} from "../../src/worker/gemini.ts";
 import {openDb,authoritativeEvents} from "../acceptance/common.ts";
 import * as oracle from "../acceptance/oracle.ts";
 
@@ -26,9 +26,9 @@ try{
  const events=await authoritativeEvents(pool,turn.tenant,uid,turn.room,0) as Ev[];
  earlier=events.filter(e=>e.sequence<turn.messageSequence&&(e.type==="message"||e.type==="ai_answer_block")).slice(-15);
 }finally{await pool.end();}
-const userText=buildPlannerUserMessage([...earlier,{type:"message",payload:{author_uid:uid,body:turn.prompt},sequence:turn.messageSequence}],uid,turn.messageSequence);
+const conversation=buildConversationContents([...earlier,{type:"message",payload:{author_uid:uid,body:turn.prompt},sequence:turn.messageSequence}],new Map(),{uid,cutoff:turn.messageSequence});
 const contents=[
- {role:"user",parts:[{text:userText}]},
+ ...conversation.contents,
  {role:"model",parts:[{functionCall:{name:"get_store_assortment",args:lookup.arguments}}]},
  {role:"user",parts:[{functionResponse:{name:"get_store_assortment",response:{data:lookup.result}}}]},
 ];

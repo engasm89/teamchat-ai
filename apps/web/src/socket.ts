@@ -17,12 +17,15 @@ export class TeamSocket {
   private expectedTenantId:string|null=null;
   private readonly onPresence?: (roomId:string,users:Array<{firebase_uid:string;expires_at:string}>)=>void;
   private readonly onTyping?: (roomId:string,users:Array<{firebase_uid:string;expires_at:string}>)=>void;
+  private readonly onRoomsChanged?: ()=>void;
+  private everAuthenticated=false;
   constructor(url:string,onEvent:(event:LiveEvent)=>void,onStatus:(status:SocketStatus)=>void,
     onError:(message:string)=>void,accountUid="",
     onPresence?:(roomId:string,users:Array<{firebase_uid:string;expires_at:string}>)=>void,
-    onTyping?:(roomId:string,users:Array<{firebase_uid:string;expires_at:string}>)=>void){
+    onTyping?:(roomId:string,users:Array<{firebase_uid:string;expires_at:string}>)=>void,
+    onRoomsChanged?:()=>void){
       this.url=url;this.onEvent=onEvent;this.onStatus=onStatus;this.onError=onError;
-      this.accountUid=accountUid;this.onPresence=onPresence;this.onTyping=onTyping;
+      this.accountUid=accountUid;this.onPresence=onPresence;this.onTyping=onTyping;this.onRoomsChanged=onRoomsChanged;
       this.restoreState();
     }
   /** Bind events to the authenticated API's server-resolved tenant. Do not
@@ -95,6 +98,11 @@ export class TeamSocket {
         this.retries=0;this.onStatus("online");
         for(const roomId of this.rooms)sock.send(JSON.stringify({v:1,type:"subscribe",roomId,after:this.cursor.get(roomId)??0}));
         for(const send of this.outbound.values())sock.send(JSON.stringify({v:1,type:"send_message",...send}));
+        // Chats created while this tab was disconnected were announced to nobody.
+        if(this.everAuthenticated)this.onRoomsChanged?.();
+        this.everAuthenticated=true;
+      } else if(frame.type==="rooms_changed"){
+        this.onRoomsChanged?.();
       } else if(frame.type==="message_ack"){
         if(typeof frame.clientMessageId==="string"){this.outbound.delete(frame.clientMessageId);this.persistState();}
       } else if(frame.type==="message_rejected"){
