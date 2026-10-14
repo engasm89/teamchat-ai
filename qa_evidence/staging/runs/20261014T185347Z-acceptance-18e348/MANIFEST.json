@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T19:00:27.707Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7166,
+   "sha256": "bc41a07597157b80c126180383c031bf2a37298ae8ac7ef0402fa36304ee3ece"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1356,
+   "sha256": "ffc62f702ba6b238fe2ced094dbb68407ad118977ca8ada00eb7408445bca2e8"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13180,
+   "sha256": "3da98fd984aeb5dcf34829a4e6b2ae9e0f31e4273197a3e5cf2e924305ad9c4c"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 653,
+   "sha256": "79cd55048c877c98366f31ad3783dc37555eae097f1291ba2c92ca7a7bbbac6e"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3698,
+   "sha256": "d2a7bc4f241886f3f9c5781b1c363d64ac414d556b559bd4795fa4d64bc74973"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 6903,
+   "sha256": "be959d8c640824d27695c6d0178df771dee4687001eac7627e6463adf6ca2dd6"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3070,
+   "sha256": "27de6448259bbdd9982d596e40b31505cfda742696d1438a63c9f5abff02144b"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2280,
+   "sha256": "dea692f7a6f8423615a4948d0ec8cbe64fb158ed5b615055c9b0606b2162171c"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 680,
+   "sha256": "f1fd416c454af019e7d88789ffcd3fa8b0cb122b39173ffacf094a83917b1837"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 629,
+   "sha256": "c328df4db5b5473819cd5b047fb22448d785fe2e459e0d3e36b7cf0faa9d9c6b"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 5722,
+   "sha256": "e165b746edfece633e6ef5c4c7a2c0bf1c54e7ea4e666f2590e33e72f76b6f6f"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 2231,
+   "sha256": "a7aa8abb3801e7cf82e7adb0be5139f157015dbd2dc7fd04031812ae949fc89a"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2891,
+   "sha256": "f7fac7bd029d93570778a30ba1699d0da7e453ed0ddd35d50cddf1925ab34b9a"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1689,
+   "sha256": "3dc5a5dcf841a836e9101f6daf8bbd32e7dd204202a4222ad80f7575ff4d746a"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3098,
+   "sha256": "72d008a57feab61864accb2ae520a0bba95127a14044f013459c0db6fc920ac7"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 4010,
+   "sha256": "3bdbff437ed390565d0aa965330e5e335f1e3039a60df518adcc13b8dcde656a"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "722e1fdc3169146a3644996e73f7b8536f94e61fdaf7544159a49f63e2648942"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 856,
+   "sha256": "bc27ae29ebf3b475085355b26a0238331d95df06af3b063f1d6c1f31b18c9f8e"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 719,
+   "sha256": "d61b9da8c62c7978ad24add5f8b93c285575be442ccdd52dcbbada4be3f594f4"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 865,
+   "sha256": "7b3d632d466c76f7846f2ab17b30c51288f1244b4053bbfc370daabba6ce6000"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 816,
+   "sha256": "a2b0421d2a6890bbc02b31b59754b7c6f5e56983bde356637ca91c1beeac9e3c"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 510,
+   "sha256": "2bd5a17bf3c8ffd772aec62267401e5cf74532ed422dc478fef16f998dae0fe4"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13259,
+   "sha256": "38cbbebc2b3b3c09937a5bcaf483e13f0e62dae3dd620b445b34b9c7db0d735d"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 722,
+   "sha256": "78d6959e3cdcc7fea79f62c84f1658e7671644378d6af5ea2e7b1846bbb8e3ef"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "c54dc66b6ea1432a8639cb3f987e16ba3bc92415e16c8f06c5d797bd438b3171"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 714,
+   "sha256": "e0458e38bc7227b53de7b2139379a89851a1dd8556c7cd3981f607d349ed6758"
+  },
+  {
+   "path": "results.json",
+   "bytes": 49870,
+   "sha256": "2b7e7dbc9333fff36a2605a06054d3a09224b4245f12b395a9a18c0ebd2e8f40"
+  }
+ ]
+}
