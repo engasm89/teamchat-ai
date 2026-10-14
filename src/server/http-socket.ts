@@ -14,6 +14,24 @@ const send=(socket:Socket,frame:Record<string,unknown>)=>{
  socket.send(JSON.stringify({v:1,...frame}));
 };
 const id=(v:unknown)=>typeof v==="string"&&/^[-a-z0-9_]{1,128}$/i.test(v);
+export function normalizeRoomTitle(value:unknown):string|null{
+ if(typeof value!=="string")return null;
+ const title=value.trim().replace(/\s+/g," ");
+ return title.length>=2&&title.length<=80?title:null;
+}
+function roomIdForTitle(title:string):string{
+ const slug=title.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,48)||"chat";
+ return `${slug}-${randomUUID().slice(0,8)}`;
+}
+async function readJsonBody(req:IncomingMessage):Promise<unknown>{
+ let body="";
+ for await(const chunk of req){
+  body+=String(chunk);
+  if(body.length>4096)throw Error("Request too large");
+ }
+ if(!body)return {};
+ return JSON.parse(body);
+}
 /** Do not discard a queued message after transient database or transport
  * failures. Only authorization/validation and conflicting-id rejections are
  * permanent; retries of these can never succeed without a changed command. */
@@ -230,9 +248,12 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
   if(req.url==="/health"||req.url==="/healthz"){res.writeHead(healthy?200:503,{"content-type":"application/json"});res.end(JSON.stringify({up:healthy}));return;}
   if(req.method==="OPTIONS"&&["/api/me","/api/rooms"].includes(req.url??"")){
    if(!req.headers.origin||!origins.includes(req.headers.origin)){res.writeHead(403);res.end();return;}
-   res.writeHead(204,{"Access-Control-Allow-Origin":req.headers.origin,"Access-Control-Allow-Headers":"Authorization,Content-Type","Access-Control-Allow-Methods":"GET,OPTIONS","Vary":"Origin"});res.end();return;
+   res.writeHead(204,{"Access-Control-Allow-Origin":req.headers.origin,"Access-Control-Allow-Headers":"Authorization,Content-Type","Access-Control-Allow-Methods":"GET,POST,OPTIONS","Vary":"Origin"});res.end();return;
   }
-  if(!["/api/me","/api/rooms"].includes(req.url??"")||req.method!=="GET"){res.writeHead(404);res.end();return;}
+  const isMe=req.url==="/api/me"&&req.method==="GET";
+  const isRoomList=req.url==="/api/rooms"&&req.method==="GET";
+  const isRoomCreate=req.url==="/api/rooms"&&req.method==="POST";
+  if(!isMe&&!isRoomList&&!isRoomCreate){res.writeHead(404);res.end();return;}
   if(req.headers.origin&&!origins.includes(req.headers.origin)){res.writeHead(403);res.end();return;}
   res.setHeader("Cache-Control","no-store");res.setHeader("Vary","Origin");
   if(req.headers.origin)res.setHeader("Access-Control-Allow-Origin",req.headers.origin);
@@ -240,14 +261,32 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
    const raw=/^Bearer (\S+)$/.exec(req.headers.authorization??"");
    if(!raw)throw Error("Unauthorized");
    const uid=await verifier.verify(raw[1]!);const ctx=await resolveVerifiedIdentity(pool,uid);
-   const data=req.url==="/api/me"?{uid,tenantId:ctx.tenantId}:
+   if(isRoomCreate){
+    const input=await readJsonBody(req) as {title?:unknown};
+    const title=normalizeRoomTitle(input.title);
+    if(!title){res.writeHead(400,{"content-type":"application/json"});res.end(JSON.stringify({error:"Chat name must be 2–80 characters"}));return;}
+    const roomId=roomIdForTitle(title);
+    const room=await inTenantTransaction(pool,ctx,async c=>{
+     const created=await c.query<{room_id:string;title:string}>(
+      "SELECT room_id,title FROM teamchat.create_room_for_current_user($1,$2,$3,$4)",
+      [ctx.tenantId,uid,roomId,title]);
+     return created.rows[0];
+    });
+    if(!room)throw Error("Room creation failed");
+    res.writeHead(201,{"content-type":"application/json"});res.end(JSON.stringify({tenantId:ctx.tenantId,room}));return;
+   }
+   const data=isMe?{uid,tenantId:ctx.tenantId}:
     await inTenantTransaction(pool,ctx,async c=>{
-     // Recheck active membership in the same query: the identity may have
-     // been revoked between token resolution and the room-list transaction.
+     // Recheck active membership in the same transaction. Return display names
+     // only for active members of the authenticated tenant.
      const rows=await c.query(`SELECT r.room_id,r.title FROM teamchat.rooms r
        JOIN teamchat.room_memberships rm ON rm.tenant_id=r.tenant_id AND rm.room_id=r.room_id
        JOIN teamchat.user_memberships m ON m.tenant_id=rm.tenant_id AND m.firebase_uid=rm.firebase_uid
-       WHERE rm.tenant_id=$1 AND rm.firebase_uid=$2 AND m.active=true ORDER BY r.room_id`,[ctx.tenantId,uid]);return {tenantId:ctx.tenantId,rooms:rows.rows};
+       WHERE rm.tenant_id=$1 AND rm.firebase_uid=$2 AND m.active=true ORDER BY r.room_id`,[ctx.tenantId,uid]);
+     const members=await c.query<{firebase_uid:string;display_name:string}>(
+      "SELECT firebase_uid,display_name FROM teamchat.user_memberships WHERE tenant_id=$1 AND active=true ORDER BY display_name",
+      [ctx.tenantId]);
+     return {tenantId:ctx.tenantId,rooms:rows.rows,members:members.rows};
     });
    res.writeHead(200,{"content-type":"application/json"});res.end(JSON.stringify(data));
   }catch{res.writeHead(401);res.end(JSON.stringify({error:"Unauthorized"}));}
