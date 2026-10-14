@@ -15,6 +15,10 @@ test('a multi-part request is answered in full: calculations come from the calcu
  const text=trustedPlannerInstructions({roomId:'supply-planning',memoryConsent:false});
  assert.match(text,/Answer every part of the request/);
  assert.match(text,/call calculate_uplift or compare_assortment_options with the codes you fetched before you reply/);
+ assert.match(text,/Never say that you will call a tool or calculate something next: make the call in this response/);
+});
+test('reports of what someone said name the person and quote them',()=>{
+ assert.match(trustedPlannerInstructions({roomId:'supply-planning',memoryConsent:false}),/name that person and quote their words/);
 });
 test('calculate_uplift tells the model to price a set of additions in one call',async()=>{
  const {TOOL_DECLARATIONS}=await import('../src/tools.ts');
