@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T20:47:05.029Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "08d9df2c1880b2f239d0d4f94393d196cfa10cb35923a1948b789be58ee10bf5"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1340,
+   "sha256": "77322096d9c5df0eb72339ebe43119e4030e74eeca1ca9fd668744b146cc8f5e"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13662,
+   "sha256": "b40f9cc818ab7b41823e488b01ef26901a7ee314af6dbfbe9ea4ba904df75360"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 706,
+   "sha256": "713e94a4e0ca8a8815030dc49a7c15b42e6263477b532a8f10be171f8ced12b2"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3794,
+   "sha256": "d19719d27ccb3301ad2f4282a6f06ed0e00f4e6d45169a66e0d0bf08ade6a68a"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10410,
+   "sha256": "a3cad4f2e386cc0a336ed7d2f54c87872c7724f62d010088322c23c352e974ac"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "29cdbcaa8f28c1c0ebd0c235964d0423dffb3c1e8f13aca32d2189d88be255bf"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 3261,
+   "sha256": "11e0578fa2449ee9a9af3cacd25bf1f8639acd412748a1b1d3bbc6989d98d3fb"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 681,
+   "sha256": "d9738b1ec1f17c58f60e1bb76eb89587af4ac85751c79984163976dc543901fd"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 646,
+   "sha256": "ec50c8e6ca93cc8536b2eb3e04fadfbca58d93ef9aced49f87ab4230c04bf9ee"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 6066,
+   "sha256": "5afbd3c05ef4a044840a50affdb1a0e3282887c47ee79da6d61036d952964ff2"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1890,
+   "sha256": "f5fc5f3d9713cb828910bfb98b11f8ca661a6157fd5caedc207f11e56ddbe62c"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 3977,
+   "sha256": "7765ee021ae6f07eb3295b256eab2f41f80cae1982a4dbf50f00d03de435daad"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1719,
+   "sha256": "3f02cbacf13131d9033b26fee93547d4bb97804994d1a6571b6033e6f999f722"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "fc0f590e0873588aaa8522df443cd558906a004d6e318eb04f99d14220fa617e"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3977,
+   "sha256": "3af62367dd40c2dbd90bb4245414eca0d4d89d35080e1ee107a527f38b71b4d6"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "25cb6abc2107d1bf46f775551c0a418a7aac15fb23ebdd0ff0c42c67fdb7c12f"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "9de14ca68059d5baeed70896b10b77aef71047575a6717e07e6fd5b648c4cb73"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 720,
+   "sha256": "ee4823b7398b28cee4b10cddef894fade69c77de458d82a70011a08da1b5e13b"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 771,
+   "sha256": "b84b65b86c02b3ccfeee4b8b99a2c134cfb42037f24bc1e9bb1d2ecf8cc2113e"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 775,
+   "sha256": "7e25dc8b4b7f8a772f08cebd1dfda0cd3fa75ca2c26c48b9f063cb92b9f35ab6"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "69bc3803e5781045ade0db20f40bf26bfe1ed61e69c6134d7035fef82bd70ca6"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13627,
+   "sha256": "b8a3b93a0e86d7f17b5fbb27d60c35c223d6daeba011f570a4546d549a8eb3a0"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "37ba021ef8238f2a319f80e19972ee66ee94253e0c55d41987c3549fabc4e2c7"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "27140430ddc58e1b439b58680d188b462f9895d2868144b47b077fc4fd33a056"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "f014f21a366cec6f49dd671aa0b2567fd6b70d5408e9ad25608487233f19f9a7"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50198,
+   "sha256": "9571ffc5271729d413f5b0a1e640657e5636766032b2be5d926e7046d423980e"
+  }
+ ]
+}

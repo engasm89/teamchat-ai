@@ -1,0 +1,24 @@
+{
+ "label": "c02",
+ "user": "Northside Buyer One",
+ "room": "chat-60d01766-909d",
+ "prompt": "@AI what did my colleague just say they'd do?",
+ "turnId": "15eb6164-920d-4413-8c15-76a7a29f22d2",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 1.412,
+  "terminalS": 1.447
+ },
+ "tools": [],
+ "segments": [
+  {
+   "kind": "say",
+   "rendered": "Your colleague said they'd draft the supplier email for the hiking range."
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}
