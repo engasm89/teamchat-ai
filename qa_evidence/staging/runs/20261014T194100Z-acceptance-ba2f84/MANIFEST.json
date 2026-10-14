@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T19:46:16.205Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 917,
+   "sha256": "33c45458b3bc98e1e5c523f8be3a5491e77fbf25b5ca81ba3303772a88929840"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "04c2c3c924490c9f965846058c29f14abafc89d41d87d74d6194baae47eeb2f8"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1366,
+   "sha256": "5ac64c0892a66b9a0fc47e278729c28e7537d1df8b19c3cb98a04b2f4ee794ea"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13177,
+   "sha256": "ab692995eaa34ee9e9778ca8d45d9aa22d8931be83528bea8be7109a185deba5"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 650,
+   "sha256": "350a9b41bace6dc861f90092d55aae192576f8ce082758db045753a7147685ed"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3699,
+   "sha256": "4fcf97e4a5d6b73113c7dd12b2bbcfc082ca88944ba9ecf647165487741ad974"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10410,
+   "sha256": "7dee53279831b63be61da2a83ca95aae2146ebbf1695c3af000ac43cfc20f8fd"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "42c6715cefb18d3e95e312b84681d4668892db67fb0c176e1ee8cd158286d6fd"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2281,
+   "sha256": "3a8a9ca26a8943eeca365273017861e2a56299fb36f19c2267284607a18d0309"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 680,
+   "sha256": "540831eb58c2b8890fb3a54187396f82b4112c3e11476fc0a52515972af306ec"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 639,
+   "sha256": "c4a942966b936431a7b0be8fb71b2d499302503a1f99a0eec5f80448e6f16138"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 5923,
+   "sha256": "e14fb8fa5c2eef692cdbe78f655ac5774d24c805a878998e96847aa96dfd2bc3"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1960,
+   "sha256": "bf79676797a93448640e94a659f5e5e3b0ee36417d306c26457735cfd53485c4"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2837,
+   "sha256": "be7d699328f0759da36f207bacb8ef7649e6c60d87b5655a0efa24a92e24701c"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1717,
+   "sha256": "3f9cd38e9700819c9c7beaa555f40b4ee22ea100b4fed070705235946c157595"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3158,
+   "sha256": "7df27dd8395fa22e84d40ad309196de2080776531dfa4736bc75e2ff5c656be4"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 4639,
+   "sha256": "96d12c5983f237b4e537bb9cb704ecd44db95d2fa83ee624cf3a3af2ed8e2a63"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "12b34522d549a7ecc2bac86d6a1712d411d654df61bc6bc1884acbb7c9e90fd8"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "b1b0b12b6438137b2f82bd35f3c3bdea9605701081c0bcb289990ac201922c93"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 815,
+   "sha256": "48b3212a59405e364586eaf3c37735280bd3dec66cae015963a137337f40aeca"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 866,
+   "sha256": "e2c4586e02408adbe1006b6a36833a73a297bb519bdba2acb99f6174d8719f16"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 722,
+   "sha256": "6cab3867568a8d978f5bac5e64a57b6e777ba20b178d7b8339a98cdd34d4301b"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "a6387aee3bc7dcc2b0e1080697952484d294264e8d5a1577c0acdb9c080e2ff8"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13261,
+   "sha256": "c189f190b6a622a4d2fc7b3c1d10ecb9f7474ed79c2da5bb516e5a136373d5ec"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "295a32645c79126dda62ffd9ccb1ba395f7a90838ed9f413e31e38f60a3001dd"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "7ac28d0a16154279e7bebbdec7204f12e47625beb6e59f9ba43febc19b369405"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "876c0306fa15952c491f3d63cb1a0d70aed01cc2479f0f2d9fae5c8163a58347"
+  },
+  {
+   "path": "results.json",
+   "bytes": 49351,
+   "sha256": "e2753375984dd342013f68b93c24e2ac4cf94e23a42766f13be87ae244532a30"
+  }
+ ]
+}

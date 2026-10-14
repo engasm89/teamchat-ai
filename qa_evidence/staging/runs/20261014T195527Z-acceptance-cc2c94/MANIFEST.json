@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T20:02:13.102Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "27132e453fe5cb37399a9b89e286d496f3dc60bcc658bc0846aebfa89c06851b"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1339,
+   "sha256": "3c3bd8671977505092ec10c6cd47081f0aead47e8c2751ed2d99308d796a373b"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13181,
+   "sha256": "8b91385b96e5e030956b8ceb350a02bd6ffc690f6c11c5079e62a9b256012d0a"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 705,
+   "sha256": "6c9e5b1596869389e80d6263dbeb4a541380172828607efccdfb397a4d437111"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 8843,
+   "sha256": "6f04859de9960dd262503f56bfe460e124f2299e88471f4ef49524054cb96846"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10410,
+   "sha256": "64ae0bd10d607047d963f470c78ecddce0964869fd4ee49712cd212ef24a0569"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "0707c1e91366fc930a89ed0456ad660025e9a9bc56ed0c04a3a3718783306de3"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2271,
+   "sha256": "f4b52b6a5fb9af58dfdcb4341f5dcaf9d24d952ba3eb12ce07290ea70a93adcd"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 705,
+   "sha256": "15a2e484a6713841c610bf8c94d8b707fe0bb86cbb25c18a46bfab20ca5f35f2"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 639,
+   "sha256": "86ccacd250ccb37f2b6bb64c4a18223ae6e361ecc97e5a1309feba9e400799d5"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 5955,
+   "sha256": "4f3c456fe1acae59f65783a4109898b2fd49436fe163e95c00293aa94834f99a"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1861,
+   "sha256": "dbdf0faa6b7fbe6a7127b945c85afdd78a5484526b9cded81f4cd7f9ba311bf0"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2902,
+   "sha256": "8259af07a80216fea3358aecf8da15fc8dad973e90ca9535758576d60c80f6b5"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1690,
+   "sha256": "1d7cb3d7be7456a8177af1d60f35ab3dadcd2e9ced2dfa137699312e04f827ef"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "3d27f2a03f7f1b1038d81a238a83428dc7b716fa2fd6d92c5385a107d11755a8"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 4639,
+   "sha256": "f10e4cc9ce534ef0dc1eaf69f525999ef1292e8f2ca77b5ca0873e4bad5a53ad"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "b36ec85da497fe45ec2b169f41140a81bd0ff883095134b2acbd2ca3a24df6df"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "4ce1e4acbb341fbaa235892aa0a492ad60c4162b633b829c51c7874d9fe5ddda"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 815,
+   "sha256": "1ae5d823912b3d04dc67d900022c32bafe2e91742a49766c7425563cc7be9a52"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 866,
+   "sha256": "40b068941be8890d0258bc544bf956c82416e8bc17c50f2678669ddb532db774"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 817,
+   "sha256": "3cdb47d65ae04b39d11435a989ab1aca43811989014ab728aff938a52d52597a"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "a665da78f3fca6c68e888ddee86be8931d993e57309b0ff3808f08e85b9b832d"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13627,
+   "sha256": "6c9875174c1040180e8343fceb09f196d851fc0697ed40dde00358abebb90767"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "b959d52b0252813231f1b23c125def5a7f7c6307c24634c569431de95b244127"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "f54bac577b187779d1df332e6619930ec769f9852cdc9c0ce5be7e8f2ea2ea58"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "e1d1657f918d86b15a4a609ca14422702e78bf6821f28eb26d7b2f6a43fbfbb4"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50032,
+   "sha256": "cb30d8c7f8551afebec27f735e1c87f4267db9c4bfabf4b76bd825bcbd2d74bc"
+  }
+ ]
+}

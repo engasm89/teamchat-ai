@@ -1,0 +1,43 @@
+{
+ "label": "s08-paraphrase",
+ "user": "northside.buyer2.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI What did Sarah's team decide about fans and energy accessories?",
+ "consent": false,
+ "turnId": "b1bef4fd-d006-4dda-9b48-18bf30d0edbc",
+ "messageSequence": 1725,
+ "at": "2026-10-14T19:56:50.995Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "Sarah's team decision fans energy accessories"
+   },
+   "result": [
+    {
+     "ref": "b1bef4fd-d006-4dda-9b48-18bf30d0edbc:northside-outfitters:memory:mem-n-001",
+     "memory": {
+      "key": "cooling_accessory_bundling_policy",
+      "value": {
+       "review": "annually before season set",
+       "decision": "cooling units are ranged with energy accessories as a single planogram block",
+       "agreed_by": "Sarah Keane and the merchandising director",
+       "rationale": "attachment rate rose from 11% to 29% in the 2025 pilot",
+       "applies_from": "2026-03-14"
+      },
+      "distance": 0.46918081441908344,
+      "memory_id": "mem-n-001",
+      "created_at": "2026-03-14 10:22:00+00",
+      "created_by": "Sarah Keane",
+      "author_name": "Sarah Keane",
+      "source_room_id": "category-strategy"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "Recorded decision “cooling_accessory_bundling_policy”: review: annually before season set; decision: cooling units are ranged with energy accessories as a single planogram block; agreed by: Sarah Keane and the merchandising director; rationale: attachment rate rose from 11% to 29% in the 2025 pilot; applies from: 2026-03-14. Recorded by Sarah Keane on 2026-03-14 in #category-strategy.\n\nRecorded decision: cooling_accessory_bundling_policy\n{\"review\":\"annually before season set\",\"decision\":\"cooling units are ranged with energy accessories as a single planogram block\",\"agreed_by\":\"Sarah Keane and the merchandising director\",\"rationale\":\"attachment rate rose from 11% to 29% in the 2025 pilot\",\"applies_from\":\"2026-03-14\"}\nRecorded by: Sarah Keane on 2026-03-14 10:22:00+00 in #category-strategy\nSource: b1bef4fd-d006-4dda-9b48-18bf30d0edbc:northside-outfitters:memory:mem-n-001"
+}
