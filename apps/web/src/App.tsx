@@ -148,7 +148,7 @@ export function App(){
    const sources=Array.isArray(e.payload.sources)?e.payload.sources.map(String):[];
    content=<p className={`segment ${String(e.payload.kind)}`}>{String(e.payload.rendered??"")}{sources.map(s=><span className="chip" key={s}>{s}</span>)}</p>;
   }else if(e.type==="ai_answer_block"){
-   const text=renderVerifiedBlock(e.payload.verified);
+   const text=renderVerifiedBlock(e.payload.verified,members);
    const template=String((e.payload.verified as Record<string,unknown>|undefined)?.template??"result").replace(/_/g," ");
    content=turn&&turn.segments.length?<details className="source"><summary>Source: {template}</summary><pre className="structured">{text}</pre></details>:<pre className="structured">{text}</pre>;
   }else if(e.type==="ai_failed")content=<p className="failed" role="alert">I couldn't finish this answer: {String(e.payload.reason??"Processing failed")}. You can ask again.</p>;

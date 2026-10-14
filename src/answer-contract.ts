@@ -216,7 +216,7 @@ export function fallbackSegments(sources:TurnSources,shown:ReadonlySet<string>,a
   for(const kind of ["product","store","memory","record"] as const)if(sources.missed(kind)){
    out.push({kind:"fallback",predicate:"no_match",rendered:renderFact("no_match",undefined,{code:null,kind},empty)!,refs:[],sources:[]});
   }
-  if(!out.length)out.push({kind:"fallback",rendered:"I couldn't find a confirmed record of that in this workspace.",refs:[],sources:[]});
+  if(!out.length)out.push({kind:"fallback",rendered:"I couldn't answer that with information I could verify in this workspace.",refs:[],sources:[]});
  }
  return out;
 }
@@ -233,12 +233,16 @@ const APP_NOUN=/\b(catalog|catalogue|code|product|store|record|memory|decision|g
 
 export interface VocabularySource {
  catalogText:string[];phrases:string[];requesterName?:string;tenantId:string;
+ /** The requester's own message: echoing its words is not a workspace claim. */
+ echoText?:string;
 }
 /** Words and phrases that would make a `say` segment a workspace claim. */
 export class WorkspaceVocabulary {
  private readonly words=new Set<string>();
  private readonly phrases:string[]=[];
+ private readonly echo=new Set<string>();
  constructor(src:VocabularySource){
+  for(const w of (src.echoText??"").toLowerCase().match(/[a-z][a-z'-]{3,}/g)??[])this.echo.add(w.replace(/'s$/,""));
   for(const text of src.catalogText)for(const w of text.toLowerCase().match(/[a-z][a-z'-]{3,}/g)??[])
    if(!STOP.has(w)&&!APP_TERMS.has(w))this.words.add(w.replace(/'s$/,""));
   const requester=src.requesterName?.trim().toLowerCase();
@@ -261,7 +265,7 @@ export class WorkspaceVocabulary {
   }
   for(const w of lower.match(/[a-z][a-z'-]{3,}/g)??[]){
    const base=w.replace(/'s$/,"");
-   if(STOP.has(base)||APP_TERMS.has(base))continue;
+   if(STOP.has(base)||APP_TERMS.has(base)||this.echo.has(base))continue;
    const forms=[base,base.replace(/ies$/,"y"),base.replace(/es$/,""),base.replace(/s$/,"")];
    if(forms.some(f=>this.words.has(f)||this.words.has(`${f}s`)))return {ok:false,reason:"catalog vocabulary in say"};
   }
