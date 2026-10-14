@@ -1,0 +1,33 @@
+{
+ "label": "s10-flat",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that the roster-mv8nf5r7-hxpo flat check value is roster-mv8nf5r7-hxpo-ok.",
+ "consent": true,
+ "turnId": "e9f3c8cd-fb73-486d-8090-a50df2c3c249",
+ "messageSequence": 3531,
+ "at": "2026-10-14T21:55:41.614Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "roster-mv8nf5r7-hxpo flat check value",
+    "room": "supply-planning",
+    "value_json": "{\"flat check value\": \"roster-mv8nf5r7-hxpo-ok\"}"
+   },
+   "result": {
+    "saved": false,
+    "validation_errors": [
+     {
+      "field": "flat check value",
+      "issue": "Invalid field name"
+     }
+    ]
+   }
+  }
+ ],
+ "renderedAnswer": "I couldn't save that.\n\nNot saved — the value must be a flat set of named text, number or yes/no fields: flat check value (Invalid field name).\n\nNot saved — the value does not fit the shared-memory shape (a flat set of named text, number or yes/no fields):\n• flat check value: Invalid field name"
+}

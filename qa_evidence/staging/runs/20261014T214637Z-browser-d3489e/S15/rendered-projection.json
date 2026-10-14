@@ -1,0 +1,122 @@
+[
+ {
+  "id": "0f3ec161-787f-4d4d-b054-46710bb4f964",
+  "seq": 3329,
+  "turn": null,
+  "type": "message"
+ },
+ {
+  "id": "cad13357-9e42-4d79-b3b8-871f28daba6b",
+  "seq": 3330,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_turn_started"
+ },
+ {
+  "id": "460a24c7-dfea-4b17-9d55-1346622b0e1e",
+  "seq": 3331,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_tool_start"
+ },
+ {
+  "id": "57d4daff-23be-40a4-b1ce-1592cea15e2e",
+  "seq": 3332,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_tool"
+ },
+ {
+  "id": "829153c6-633c-4b35-8610-18f4948b5e35",
+  "seq": 3333,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_block"
+ },
+ {
+  "id": "c77d2914-dcd7-464b-a5c6-0d4f3d4add2a",
+  "seq": 3334,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_tool_start"
+ },
+ {
+  "id": "3316a6aa-6efa-4820-bcb8-7d253b2654ff",
+  "seq": 3335,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_tool"
+ },
+ {
+  "id": "93c0b078-3ca8-4c94-81ca-7f0df3ee7674",
+  "seq": 3336,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_block"
+ },
+ {
+  "id": "6b387736-139e-4879-984c-df683f0f6abf",
+  "seq": 3337,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "ee9ec27f-3c92-40e5-ab1c-36150ccd0e02",
+  "seq": 3338,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "3ca1f32b-7240-4807-8ad0-7b1068e3a784",
+  "seq": 3339,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "6143fb73-a6c7-47c8-9496-994862762bde",
+  "seq": 3340,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "c80853cb-bdd9-4906-b052-083f2d54a5f5",
+  "seq": 3341,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "8a732a3a-eb80-4da4-9456-8bc8f7c54148",
+  "seq": 3342,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "d2587bf3-9c04-4c23-9e2e-89a9137404cd",
+  "seq": 3343,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "cd2fa7dd-efb0-40fe-bb57-59040385cdc1",
+  "seq": 3344,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "a6cb9cde-a066-4ef8-a9fa-05de422b87fb",
+  "seq": 3345,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "10704090-e549-4d94-bcdd-0230405d034f",
+  "seq": 3346,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "0c848b5e-78c0-4572-a41b-5a12cb84940d",
+  "seq": 3347,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "98abfcf4-e8bc-4a29-ab66-24596f3b95aa",
+  "seq": 3348,
+  "turn": "6a593ca5-55e1-48bf-a695-b249b90d8fff",
+  "type": "ai_complete"
+ }
+]

@@ -1,0 +1,38 @@
+{
+ "label": "s19-save",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that the cold-start check code for rehearsal mv8nb4bp-x5sl is cold-mv8nb4bp-deax.",
+ "consent": true,
+ "turnId": "da66641b-6494-44d1-a801-7c35548a0f93",
+ "messageSequence": 3383,
+ "at": "2026-10-14T21:52:28.929Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "cold-start check code for rehearsal mv8nb4bp-x5sl",
+    "room": "supply-planning",
+    "value_json": "{\"code\": \"cold-mv8nb4bp-deax\"}"
+   },
+   "result": {
+    "ref": "da66641b-6494-44d1-a801-7c35548a0f93:northside-outfitters:memory:4d147e95-ae22-4fa5-9af4-94a23250c67a",
+    "saved": true,
+    "memory": {
+     "key": "cold-start check code for rehearsal mv8nb4bp-x5sl",
+     "value": {
+      "code": "cold-mv8nb4bp-deax"
+     },
+     "memory_id": "4d147e95-ae22-4fa5-9af4-94a23250c67a",
+     "created_at": "2026-10-14 21:52:26.58977+00",
+     "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "OK. I'll remember that.\n\nRecorded decision “cold-start check code for rehearsal mv8nb4bp-x5sl”: code: cold-mv8nb4bp-deax. Recorded by Northside Buyer One on 2026-10-14 in #supply-planning.\n\nSaved to shared memory: cold-start check code for rehearsal mv8nb4bp-x5sl\n{\"code\":\"cold-mv8nb4bp-deax\"}\nRecorded by: xg9AHjCrMcZeReDTV5dJRl42H3g1 on 2026-10-14 21:52:26.58977+00 in #supply-planning\nSource: da66641b-6494-44d1-a801-7c35548a0f93:northside-outfitters:memory:4d147e95-ae22-4fa5-9af4-94a23250c67a"
+}
