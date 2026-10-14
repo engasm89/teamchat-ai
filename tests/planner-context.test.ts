@@ -9,6 +9,12 @@ test('consented memory saving is informed by the persisted trusted job state',()
  assert.match(text,/Current authorized room: category-strategy/);
  assert.match(text,/compare_assortment_options/);
  assert.match(text,/value_json to the text of a JSON object/);
+ assert.match(text,/never refuse or silently reshape a save yourself/);
+});
+test('a multi-part request is answered in full: calculations come from the calculation tools',()=>{
+ const text=trustedPlannerInstructions({roomId:'supply-planning',memoryConsent:false});
+ assert.match(text,/Answer every part of the request/);
+ assert.match(text,/call calculate_uplift or compare_assortment_options with the codes you fetched before you reply/);
 });
 test('calculate_uplift tells the model to price a set of additions in one call',async()=>{
  const {TOOL_DECLARATIONS}=await import('../src/tools.ts');

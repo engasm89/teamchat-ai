@@ -1,8 +1,8 @@
 /** Experiment: after get_store_assortment, does Gemini price "closing the gaps" with one
  * calculate_uplift call holding every gap code, or one code per call (which exhausts the worker's
  * six-round budget and fails the turn)? Replays round 2 of a recorded live S06 turn: the same
- * room transcript, the recorded tool result, production config (streaming, temperature 0, mode
- * AUTO, maxOutputTokens 1024). Only the calculate_uplift declaration (and optionally one
+ * room transcript, the recorded tool result, the worker's planner config (streaming, temperature 0.2,
+ * thinkingBudget 512, mode AUTO, maxOutputTokens 2048). Only the calculate_uplift declaration (and optionally one
  * EXTRA_INSTRUCTION sentence) varies; TRIALS sets trials per variant. Read-only.
  *   node --experimental-strip-types scripts/experiments/s06-batching.ts <s06 evidence json> <requester uid> [description] [add_codes description] */
 import fs from "node:fs";
@@ -41,7 +41,7 @@ const results:Array<Record<string,unknown>>=[];
 for(const [variant,decl] of Object.entries(variants))for(let trial=1;trial<=TRIALS;trial++){
  const tools=[{functionDeclarations:TOOL_DECLARATIONS.map(t=>t.name==="calculate_uplift"?decl:t) as any}];
  try{
-  const stream=await client.models.generateContentStream({model,contents:contents as any,config:{temperature:0,tools,maxOutputTokens:1024,
+  const stream=await client.models.generateContentStream({model,contents:contents as any,config:{temperature:0.2,tools,maxOutputTokens:2048,thinkingConfig:{thinkingBudget:512},
    systemInstruction:trustedPlannerInstructions({roomId:turn.room,memoryConsent:false})+(variant==="clarified"&&EXTRA?` ${EXTRA}`:""),toolConfig:{functionCallingConfig:{mode:"AUTO" as any}}}});
   const calls:Array<{name?:string;args?:Record<string,unknown>}>=[];
   for await(const chunk of stream)calls.push(...(chunk.functionCalls??[]));
@@ -50,7 +50,8 @@ for(const [variant,decl] of Object.entries(variants))for(let trial=1;trial<=TRIA
   results.push({variant,trial,allGapsInOneCall:allInOne,calls:calls.map(c=>({name:c.name,args:c.args}))});
  }catch(error){results.push({variant,trial,error:String(error).slice(0,300)});}
 }
-const summary=Object.fromEntries(Object.keys(variants).map(v=>{const r=results.filter(x=>x.variant===v);return [v,`${r.filter(x=>x.allGapsInOneCall).length}/${r.length} priced every gap in one call`];}));
+const summary=Object.fromEntries(Object.keys(variants).map(v=>{const r=results.filter(x=>x.variant===v);
+ return [v,`${r.filter(x=>x.allGapsInOneCall).length}/${r.length} priced every gap in one call; ${r.filter(x=>(x.calls as Array<{name?:string}>|undefined)?.some(c=>c.name==="calculate_uplift")).length}/${r.length} called calculate_uplift`];}));
 console.log(JSON.stringify({ranAt:new Date().toISOString(),model,location,replayedTurn:turn.turnId,gaps,
- config:"round 2 replay; streaming, temperature 0, mode AUTO, maxOutputTokens 1024, consent DENIED; earlier transcript = 15 live room events",
+ config:"round 2 replay; streaming, temperature 0.2, thinkingBudget 512, mode AUTO, maxOutputTokens 2048 (the worker's planner config), consent DENIED; earlier transcript = 15 live room events",
  clarified:variants.clarified?{description,addCodesDescription,extraInstruction:EXTRA}:null,summary,results},null,1));
