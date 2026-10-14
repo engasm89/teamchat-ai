@@ -138,12 +138,21 @@ export class RunRecorder {
   return result;
  }
  save(){fs.writeFileSync(path.join(this.dir,"results.json"),JSON.stringify(this.results,null,1)+"\n");}
+ /** Sets the process exit code from the verdicts, so shells and CI see a failed run. */
  finish(){
   this.results.finishedAt=utcNow();this.save();writeManifest(this.dir);
   const counts=this.results.tests.reduce<Record<string,number>>((a,t)=>{a[t.status]=(a[t.status]??0)+1;return a;},{});
   console.log(`\nRun ${this.results.runId}: ${JSON.stringify(counts)}\nEvidence: ${this.dir}`);
+  const code=runExitCode(this.results.tests);
+  if(code)process.exitCode=Math.max(Number(process.exitCode??0),code);
   return this.results;
  }
+}
+
+/** 0 only when at least one test ran and every test passed; 1 for any FAIL; 2 when nothing failed but something was blocked, unverified or nothing ran. */
+export function runExitCode(tests:ReadonlyArray<Pick<TestResult,"status">>):0|1|2{
+ if(tests.some(t=>t.status==="FAIL"))return 1;
+ return tests.length>0&&tests.every(t=>t.status==="PASS")?0:2;
 }
 
 export function loadRuns(runsDir=RUNS_DIR):Array<{dir:string;results:RunResults}>{

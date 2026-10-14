@@ -13,11 +13,12 @@ import {spawn,execFileSync} from "node:child_process";
 import {RunRecorder,type Assertion,type TestRecorder} from "../evidence/lib.ts";
 import {API_URL,APP_URL,QA_ROOM,TARGET,runsDir,bindDeployment,openDb,proxiedDatabaseUrl,authoritativeEvents,firebaseSignIn,sleep,tag,type AccountKey} from "./common.ts";
 import {assertRestartableTarget} from "./target.ts";
+import {freePort,waitForOwnHealth,sampleProcess} from "./local-instance.ts";
 import {LiveClient,type Turn} from "./live-client.ts";
 import * as oracle from "./oracle.ts";
 import {renderVerifiedBlock} from "../../apps/web/src/verified.ts";
 
-const HARNESS=["scripts/acceptance/run-employer-acceptance.ts","scripts/acceptance/live-client.ts","scripts/acceptance/oracle.ts",
+const HARNESS=["scripts/acceptance/run-employer-acceptance.ts","scripts/acceptance/live-client.ts","scripts/acceptance/oracle.ts","scripts/acceptance/local-instance.ts",
  "scripts/acceptance/common.ts","scripts/acceptance/target.ts","scripts/evidence/lib.ts"];
 const args=process.argv.slice(2);
 const RESTART=args.includes("--restart");
@@ -361,22 +362,23 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("worker rejects a forged token",[401,403].includes(forged.status),"401/403",forged.status)]);
  }],
  ["A12","Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded",["A12"],async t=>{
-  const port=18080;
+  const port=await freePort();
   const env={...process.env,DATABASE_URL:proxiedDatabaseUrl(),DB_RUNTIME_ROLE:TARGET.dbRole,
    FIREBASE_PROJECT_ID:TARGET.project,GOOGLE_CLOUD_PROJECT:TARGET.project,ALLOWED_ORIGINS:APP_URL,PORT:String(port),LOCAL_TASK_WORKER:"1",PG_POOL_MAX:"3"};
   const logFile=path.join(t.dir,"local-instance.log");const out=fs.openSync(logFile,"w");
   const proc=spawn(process.execPath,["--experimental-strip-types","src/server/start.ts"],{env,stdio:["ignore",out,out]});
+  t.detail("localInstance",{port,pid:proc.pid});
+  const onSignal=(signal:NodeJS.Signals)=>{proc.kill("SIGKILL");process.kill(process.pid,signal);};
+  process.once("SIGINT",onSignal).once("SIGTERM",onSignal);
   try{
-   const up=await (async()=>{for(let i=0;i<40;i++){try{const r=await fetch(`http://127.0.0.1:${port}/health`);if(r.ok)return true;}catch{}await sleep(500);}return false;})();
-   if(!up)throw Error("Local API instance did not become healthy; see local-instance.log");
+   await waitForOwnHealth(proc,port);
    const cloud=await client("n1",NROOM),local=await client("n2",NROOM,`ws://127.0.0.1:${port}/ws`);
    const toCloud=`${tag("a12")} local→cloud`,toLocal=`${tag("a12")} cloud→local`;
    await local.post(NROOM,toCloud);await cloud.post(NROOM,toLocal);
    const seen=(c:LiveClient,text:string)=>(c.events.get(NROOM)??[]).some(e=>e.type==="message"&&String(e.payload.body)===text);
    await cloud.until(()=>seen(cloud,toCloud),15000,"cross-instance delivery to Cloud Run").catch(()=>{});
    await local.until(()=>seen(local,toLocal),15000,"cross-instance delivery to local").catch(()=>{});
-   const sample=()=>{const rss=Number(execFileSync("ps",["-o","rss=","-p",String(proc.pid)],{encoding:"utf8"}).trim());
-    const fds=execFileSync("lsof",["-p",String(proc.pid)],{encoding:"utf8"}).split("\n").filter(l=>/TCP/.test(l)).length;return {rssKb:rss,tcp:fds};};
+   const sample=()=>sampleProcess(proc.pid!);
    const before=sample();
    const identity=await firebaseSignIn("n3");
    for(let i=0;i<100;i++){const c=await new LiveClient("n3",`ws://127.0.0.1:${port}/ws`).connect(identity);c.send({type:"subscribe",roomId:NROOM,after:0});await sleep(50);c.close();}
@@ -386,7 +388,11 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
     a("message sent to Cloud Run reached the local-instance client",seen(local,toLocal),true,seen(local,toLocal)),
     a("TCP sockets return to baseline after 100 cycles (±3)",after.tcp<=before.tcp+3,`≤${before.tcp+3}`,after.tcp),
     a("resident memory growth under 64 MB after 100 cycles",after.rssKb-before.rssKb<65536,"<65536 KB",after.rssKb-before.rssKb)]);
-  }finally{proc.kill("SIGTERM");await sleep(1500);fs.closeSync(out);t.artifact("local-instance.log","Second API instance stdout/stderr");}
+  }finally{
+   process.off("SIGINT",onSignal).off("SIGTERM",onSignal);
+   proc.kill("SIGTERM");await sleep(1500);if(proc.exitCode===null&&proc.signalCode===null)proc.kill("SIGKILL");
+   fs.closeSync(out);t.artifact("local-instance.log","Second API instance stdout/stderr");
+  }
  }],
 ];
 
