@@ -1,0 +1,98 @@
+[
+ {
+  "id": "2931b0dd-586d-4e10-83b6-d3740bab2dfd",
+  "seq": 2721,
+  "turn": null,
+  "type": "message"
+ },
+ {
+  "id": "5883789d-75c3-4ec0-9a55-e5b20254a315",
+  "seq": 2722,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_turn_started"
+ },
+ {
+  "id": "444e0730-e6d5-4655-bbfe-4411d9e27d02",
+  "seq": 2723,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_tool_start"
+ },
+ {
+  "id": "c559b63d-4be9-4976-88cd-74d5e5dd7d7d",
+  "seq": 2724,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_tool"
+ },
+ {
+  "id": "17a00211-0346-4ec9-8cd8-dd34c4bf6c8f",
+  "seq": 2725,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_block"
+ },
+ {
+  "id": "89898e54-eb4e-4c9e-97eb-3c4146cfa208",
+  "seq": 2726,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "e5e8fc3c-4320-435b-a6e6-9720e6dc400b",
+  "seq": 2727,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "862ebcd8-0f16-4fb9-a992-721b59632976",
+  "seq": 2728,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "cfa06348-cda7-420a-8b60-3edad333167e",
+  "seq": 2729,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "c41fd9cc-3ed0-4579-b44a-28b7547c8661",
+  "seq": 2730,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "f1952545-7d9c-4103-a7d9-6d63400cd75f",
+  "seq": 2731,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "3c00d884-c5aa-4f68-ae69-b97189d75996",
+  "seq": 2732,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "328c5312-84d8-405b-a4af-ad8cad48d4db",
+  "seq": 2733,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "0078a989-fd0d-41e5-bc95-45ba1f4a8079",
+  "seq": 2734,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "6b32ac82-9e4e-46a8-bcf2-342c18efec03",
+  "seq": 2735,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_answer_segment"
+ },
+ {
+  "id": "3ed54b85-957a-42e9-aee0-0a77ec79a9b0",
+  "seq": 2736,
+  "turn": "29a6983f-9f8e-4745-a937-57cd0a168951",
+  "type": "ai_complete"
+ }
+]

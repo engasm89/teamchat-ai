@@ -12,7 +12,7 @@ import {startLocalCluster,PG_BIN,type LocalCluster} from "./local-pg.ts";
 import {createPgPool,assertRuntimeDbRole} from "../../src/server/database.ts";
 import {inTenantTransaction,sendDurableMessage,replayRoom,createTenantChat,listRoomDirectory,RoomCreationError,type SqlPool,type SqlClient,type PersistedEvent} from "../../src/persistence/postgres.ts";
 import {resolvedContext,NO_MATCH} from "../../src/tenant.ts";
-import {executeAiJob,GeminiUnavailableError,ESCALATION_NOTE,CONTINUATION_NOTE,type GeminiProvider,type RoundResult} from "../../src/worker/gemini.ts";
+import {executeAiJob,GeminiUnavailableError,ESCALATION_NOTE,type GeminiProvider,type RoundResult} from "../../src/worker/gemini.ts";
 import {loadFixtures} from "../../src/fixtures.ts";
 
 const pgModule="pg";
@@ -268,16 +268,15 @@ test("small talk is answered directly by Gemini's own words, in one call, withou
 test("an ungrounded workspace claim is never shown: the model is sent back to its tools, and forged facts are dropped",async()=>{
  const t=await turn("what does the outlet need?");
  const {provider,seen}=scripted({
-  rounds:[reply("That store sells 500 tents a week and is missing hiking boots."),call("get_store_assortment",{store_id:northStore.store_id}),reply("Here is what I found."),reply("DONE")],
+  rounds:[reply("That store sells 500 tents a week and is missing hiking boots."),call("get_store_assortment",{store_id:northStore.store_id}),reply("Here is what I found.")],
   compose:async function*(){
    yield `[{"kind":"say","text":"Here is what I found:"},{"kind":"fact","predicate":"store_summary","ref":"S1"},`;
    yield `{"kind":"fact","predicate":"score_change","ref":"S1","text":"up 40%"},{"kind":"say","text":"It sells 500 units a week."},{"kind":"fact","predicate":"product_info","ref":"S7"}]`;
   }});
  const r=await executeAiJob(api,provider,t.turnId,embeddings);
  assert.equal(r.status,"completed");
- assert.equal(seen.rounds.length,4);
+ assert.equal(seen.rounds.length,3,"the reply after the tool round ends the turn; nothing asks the model to continue");
  assert.ok(JSON.stringify(seen.rounds[1]).includes(ESCALATION_NOTE));
- assert.ok(JSON.stringify(seen.rounds[3]).includes(CONTINUATION_NOTE));
  const ev=await t.events();const shown=shownText(ev);
  assert.equal(shown[0],"Here is what I found:");
  assert.match(shown[1]!,new RegExp(`^${northStore.store_id} \\(`));
@@ -289,7 +288,7 @@ test("an ungrounded workspace claim is never shown: the model is sent back to it
 
 test("a bad tool argument goes back to Gemini as a tool error; the turn is neither retried nor failed",async()=>{
  const t=await turn("which are your tools?");
- const {provider}=scripted({rounds:[call("search_catalog",{query:""}),reply("I can help with products, stores and decisions."),reply("DONE")],
+ const {provider}=scripted({rounds:[call("search_catalog",{query:""}),reply("I can help with products, stores and decisions.")],
   compose:async function*(){yield `[{"kind":"fact","predicate":"assistant_capabilities"}]`;}});
  const r=await executeAiJob(api,provider,t.turnId,embeddings);
  assert.equal(r.status,"completed");
@@ -302,41 +301,9 @@ test("a bad tool argument goes back to Gemini as a tool error; the turn is neith
  assert.deepEqual(job.rows[0],{attempts:1,state:"completed"});
 });
 
-test("a tool turn that announces a calculation and stops gets one continuation, and the call made there runs",async()=>{
- const t=await turn("which gaps does the store have, and what is the score change from closing them?");
- const codes=northStore.suspected_gaps.map(g=>g.catalog_code);
- const {provider,seen}=scripted({
-  rounds:[call("get_store_assortment",{store_id:northStore.store_id}),reply("Here are the gaps. I will now calculate the score change."),
-   call("calculate_uplift",{store_id:northStore.store_id,add_codes:codes}),reply("Here are the gaps and the score change.")],
-  compose:async function*(){yield `[{"kind":"say","text":"Here it is:"}]`;}});
- assert.equal((await executeAiJob(api,provider,t.turnId,embeddings)).status,"completed");
- assert.equal(seen.rounds.length,4,"one continuation only: the reply after the second tool round ends the turn");
- assert.ok(JSON.stringify(seen.rounds[2]).includes(CONTINUATION_NOTE));
- assert.equal(JSON.stringify(seen.rounds[3]).split(CONTINUATION_NOTE).length-1,1);
- const tools=(await t.events()).filter(e=>e.type==="ai_tool").map(e=>e.payload.name);
- assert.deepEqual(tools,["get_store_assortment","calculate_uplift"]);
-});
-
-test("DONE after the continuation keeps the earlier draft; a turn without tools is never continued",async()=>{
- const t=await turn("tell me about the store");
- const {provider,seen}=scripted({rounds:[call("get_store_assortment",{store_id:northStore.store_id}),reply("The outlet draft."),reply("**DONE**")],
-  compose:async function*(){yield `[{"kind":"say","text":"Here it is:"}]`;}});
- let composeInput="";const compose=provider.compose;
- provider.compose=(contents,options)=>{composeInput=JSON.stringify(contents);return compose(contents,options);};
- assert.equal((await executeAiJob(api,provider,t.turnId,embeddings)).status,"completed");
- assert.equal(seen.rounds.length,3);
- assert.equal(seen.composed,1);
- assert.ok(composeInput.includes("The outlet draft."));
- assert.equal(composeInput.includes("**DONE**"),false);
- const small=await turn("hi");
- const direct=scripted({rounds:[reply("Hi Maya!")]});
- assert.equal((await executeAiJob(api,direct.provider,small.turnId,embeddings)).status,"completed");
- assert.equal(direct.seen.rounds.length,1);
-});
-
 test("a reply stream cut off mid-element shows only complete, valid segments, then the server's own rendering",async()=>{
  const t=await turn("tell me about the store");
- const {provider}=scripted({rounds:[call("get_store_assortment",{store_id:northStore.store_id}),reply("Sure."),reply("DONE")],
+ const {provider}=scripted({rounds:[call("get_store_assortment",{store_id:northStore.store_id}),reply("Sure.")],
   compose:async function*(){yield `[{"kind":"say","text":"Sure, here it is:"},{"kind":"fact","predicate":"store_su`;throw Error("socket hang up");}});
  assert.equal((await executeAiJob(api,provider,t.turnId,embeddings)).status,"completed");
  const shown=shownText(await t.events());

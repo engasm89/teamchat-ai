@@ -1,0 +1,24 @@
+{
+ "label": "c01",
+ "user": "Northside Buyer One",
+ "room": "chat-03ef8459-663c",
+ "prompt": "hi! how are you doing today?",
+ "turnId": "f3da0348-f5d1-43c6-b1f4-613c458651de",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 1.792,
+  "terminalS": 1.826
+ },
+ "tools": [],
+ "segments": [
+  {
+   "kind": "say",
+   "rendered": "Hi there! I'm doing well, thanks for asking. How can I help you today?"
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}
