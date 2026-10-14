@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T18:48:35.048Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7166,
+   "sha256": "376d9feb550ccd4d113027bf80e1eeaf1c05f9f839e850a41f61e078bb73decb"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1258,
+   "sha256": "dde00b9642d2eea6c3c30b1a72f0b4c2a1ce48410dd71ef114e14602df90bbf7"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13180,
+   "sha256": "1b046c648481aeae2612c84e36d56a23ec5921be16539c4b5aa20e789179e29e"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 650,
+   "sha256": "98fdfe5e46b85ad80feabce920fbd6aa0d99255807fb93a862f77a1d3a5fd840"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3826,
+   "sha256": "8d24874791450438d45a7680bfccd4edd3d1a1f6bfe3fcd799f15c08a8a029b1"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10409,
+   "sha256": "d677614d0ab8fb53b713b95fb6789f0fd7de4396af2b2dbade29e954080988db"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3070,
+   "sha256": "a07338e3083250b6b3eb5f3802ee995d42adf4e03338d397f93dddfaa678e757"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2280,
+   "sha256": "9bcbd7ddfd079d116595a33d2222f2851b480a3b6805f034061cf45979efaaff"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 609,
+   "sha256": "94ce1d339395ce5eea0dc9f70626cd251e86f02e4ed9335c582d2631901a397c"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 633,
+   "sha256": "413942a697a25947b7c585b7ebbb26896e2b5d01b65ca9b726f8ae0907219287"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 3906,
+   "sha256": "ff2d15b6e07f3003b6c1a8dc892a7b16ced6ae5cfff191da65a36f0a931a6f68"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1872,
+   "sha256": "77673d18ea5ee7180dc660d56e20e63825d7816fb1c34acf55875cfd7a895eaf"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2890,
+   "sha256": "31b85035dbaeb9fa9bcafa78175949883595232bef4e10bad5ca9d8e7bbb07e5"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1078,
+   "sha256": "c2dbf239afc587ba0386bc25de0557630a9694ccd00c50eaa3ed2019c6a4bc01"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 671,
+   "sha256": "d3ab9e5ddedad441d2110c90c433f0d53d9d3049dde2dda3ff2891bc4a8c26ed"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3976,
+   "sha256": "4ebc6e32b647eb9b1a4ca70c20f61ccd51230633f287584d5847103349f0fac5"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4356,
+   "sha256": "94ffec1c81d6b040aee28445432fec386f49ae5d727525f7c799eadd9df3ddb0"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 856,
+   "sha256": "96c269926978a0f5e5dfc1cfd0284aa66b0c8c04da0d6c3d0d52c20efcf1fba8"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 814,
+   "sha256": "6fca431980942fbb1d4ca64a5405fbe48d95c827bf5c2b37d38fe5fcbdf22086"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 770,
+   "sha256": "fe6842d2e2b3f15a3e3cf713751a12ea33534b4007d04c7fe24ec839800588b7"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 721,
+   "sha256": "3f66c41b10965b2e8bcae7453e090ec774ca13adce071316fa607c106f59def0"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 510,
+   "sha256": "7df80e89d21b10c0ebee3d1dd3583b208214b8b61a310655b1004a86b3f34813"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13259,
+   "sha256": "c2348fc4b4d14f6b351050db4dddc5fcdbe629eecded206fadc6b1a4ba1da3cf"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 721,
+   "sha256": "7ca1ef9a8f692f29f638046f021a5bb967b8a3d8e830e8103e568d6ec3cad057"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4356,
+   "sha256": "98f5f87ad0cf0a17932c18db9625680858bc03df787361685a3827a397879b54"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 713,
+   "sha256": "ec60cbb851e03fba13ae221f3f5ca987e10524c69e5d119cd843737d86efd27f"
+  },
+  {
+   "path": "results.json",
+   "bytes": 48153,
+   "sha256": "13c9cac9bbb90b626ff480b6ca4283d585b6cf32c3d178e3f580334f641a3375"
+  }
+ ]
+}
