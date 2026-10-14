@@ -233,7 +233,8 @@ const APP_NOUN=/\b(catalog|catalogue|code|product|store|record|memory|decision|g
 
 export interface VocabularySource {
  catalogText:string[];phrases:string[];requesterName?:string;tenantId:string;
- /** The requester's own message: echoing its words is not a workspace claim. */
+ /** Human messages the model was shown, including the request: echoing a word people in the
+  * room wrote is not a workspace claim. Earlier AI answers must never be included. */
  echoText?:string;
 }
 /** Words and phrases that would make a `say` segment a workspace claim. */

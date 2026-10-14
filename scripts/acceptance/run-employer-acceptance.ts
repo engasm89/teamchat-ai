@@ -215,20 +215,22 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
  }],
  ["S09","A new contact and deadline saved with consent reach another user in another room, not Valley",["S09"],async t=>{
   // Memory keys are unique per tenant, so each run needs a topic no earlier run has saved.
-  const name=`Dana ${tag("qa").slice(3)}`,deadline="2026-11-20",dispute=`case ${tag("qa").slice(3)}`;
+  // The tag looks like an ID, so the model may store "Dana" and the tag as separate fields; every token must survive verbatim.
+  const id=tag("qa").slice(3),name=`Dana ${id}`,deadline="2026-11-20",dispute=`case ${tag("qa").slice(3)}`;
+  const holds=(value:unknown)=>["Dana",id,deadline].every(x=>JSON.stringify(value??{}).includes(x));
   const n1=await client("n1",NROOM),n2=await client("n2","category-strategy"),v1=await client("v1",VROOM);
   const save=await ask(t,n1,NROOM,`@AI Remember that our escalation contact for the ${dispute} supplier dispute is ${name} and the deadline is ${deadline}.`,"s09-save",true);
   const saved=save.tools.find(x=>x.name==="save_memory");
   const recall=await ask(t,n2,"category-strategy",`@AI Who is our escalation contact for the ${dispute} supplier dispute, and when is the deadline?`,"s09-recall");
   const valley=await ask(t,v1,VROOM,`@AI Who is our escalation contact for the ${dispute} supplier dispute, and when is the deadline?`,"s09-valley");
   const hits=recall.tools.filter(x=>x.name==="search_memory").flatMap(x=>Array.isArray(x.result)?x.result.map((r:any)=>r.memory):[]);
-  const mine=hits.find(m=>JSON.stringify(m.value).includes(name));
+  const mine=hits.find(m=>holds(m.value));
   record(t,[completed(save,"save"),completed(recall,"recall"),completed(valley,"valley"),
    a("memory saved with consent",saved?.result?.saved===true,true,saved?.result),
-   a("saved value contains the contact and the deadline",JSON.stringify(saved?.result?.memory?.value??{}).includes(name)&&JSON.stringify(saved?.result?.memory?.value??{}).includes(deadline),{name,deadline},saved?.result?.memory?.value),
+   a("saved value contains the contact and the deadline",holds(saved?.result?.memory?.value),{name,deadline},saved?.result?.memory?.value),
    a("another user in another room retrieves it",!!mine,name,hits.map(m=>m.key)),
    a("retrieved memory names the saving user and room",mine?.created_by===n1.uid&&mine?.source_room_id===NROOM,{created_by:n1.uid,room:NROOM},mine&&{created_by:mine.created_by,room:mine.source_room_id}),
-   a("Valley cannot retrieve it",!JSON.stringify(valley.tools).includes(name)&&!rendered(valley).includes(name),"absent","")]);
+   a("Valley cannot retrieve it",!JSON.stringify(valley.tools).includes(id)&&!rendered(valley).includes(id),"absent","")]);
  }],
  ["S10","Nested value rejected with field-level reasons and exactly one repair; a flat value saves",["S10"],async t=>{
   const n1=await client("n1",NROOM);const key=tag("roster");

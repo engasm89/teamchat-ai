@@ -181,6 +181,7 @@ async function replay(t:TestRecorder,fixture:string){
  t.assert("no answer shows a Firebase UID",results.every(r=>!r.uidShown),false,results.map(r=>r.uidShown));
  t.assert("no canned 'no record' reply",results.every(r=>!r.cannedNoRecord),false,results.map(r=>r.cannedNoRecord));
  t.assert("no turn retried",results.every(r=>!r.retried),false,results.map(r=>r.retried));
+ t.assert("every prompt got a real reply, not only the generic fallback",results.every(r=>r.kinds.some(k=>k!=="fallback")),"say or fact segments",results.map(r=>r.kinds));
 }
 
 try{

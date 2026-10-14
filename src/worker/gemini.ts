@@ -361,7 +361,7 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
   const conversation=buildConversationContents(history,names,{uid:ctx.uid,cutoff:claim.job.transcript_cutoff});
   const triggerBody=history.at(-1)?.payload.body;
   const sources=new TurnSources(turnId,ctx.tenantId,names);
-  const vocabulary=await loadVocabulary(pool,ctx,conversation.requesterName,typeof triggerBody==="string"?triggerBody:"");
+  const vocabulary=await loadVocabulary(pool,ctx,conversation.requesterName,conversation.messages.map(m=>m.body).join("\n"));
   const emit=async(segment:VerifiedSegment)=>{
    guard();await persistSegment(pool,ctx,room,turnId,fence,segmentIndex++,{...segment});mark("first_segment");
   };

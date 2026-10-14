@@ -20,6 +20,13 @@ test("every OBJECT tool parameter declares its properties (Gemini emits {} for o
  assert.equal((save.properties as any).value_json.type,"STRING");
 });
 
+test("save_memory's description leaves validation to the server (under AUTO, 'nested structures are rejected' made Gemini refuse instead of calling)",()=>{
+ const save=TOOL_DECLARATIONS.find(t=>t.name==="save_memory")!;
+ assert.doesNotMatch(save.description,/\brejected\b/i);
+ assert.match(save.description,/Always call this with the human's details as given/);
+ assert.match(save.description,/server checks the shape/);
+});
+
 test("memory value JSON: flat values parse; nested, empty and malformed values get field-level reasons",()=>{
  assert.deepEqual(parseMemoryValueJson('{"contact":"Dana","deadline":"2026-11-20","priority":2,"confirmed":true,"note":null}'),
   {ok:true,value:{contact:"Dana",deadline:"2026-11-20",priority:2,confirmed:true,note:null}});
