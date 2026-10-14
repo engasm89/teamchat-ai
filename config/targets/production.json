@@ -13,11 +13,12 @@
  "keychainService": "teamchat-ai-reviewer",
  "provenance": "qa_evidence/provenance.json",
  "accounts": {
-  "n1": {"email": "northside.buyer1@teamchat.internal", "tenant": "northside-outfitters"},
+  "n1": {"email": "northside.analyst3@teamchat.internal", "tenant": "northside-outfitters"},
   "n2": {"email": "northside.buyer2@teamchat.internal", "tenant": "northside-outfitters"},
   "n3": {"email": "northside.analyst3@teamchat.internal", "tenant": "northside-outfitters"},
   "v1": {"email": "valley.buyer1@teamchat.internal", "tenant": "valley-home-goods"},
   "v2": {"email": "valley.buyer2@teamchat.internal", "tenant": "valley-home-goods"},
   "v3": {"email": "valley.analyst3@teamchat.internal", "tenant": "valley-home-goods"}
- }
+ },
+ "protectedAccounts": ["northside.buyer1@teamchat.internal"]
 }

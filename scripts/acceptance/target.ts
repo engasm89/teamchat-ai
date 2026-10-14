@@ -15,6 +15,8 @@ export interface Target {
  /** Firebase Hosting channel serving appUrl ("live" when omitted). */
  hostingChannel?:string;
  accounts:Record<AccountKey,{email:string;tenant:TenantId}>;
+ /** Real people's accounts on this target (the reviewer's): runners never sign in as them. */
+ protectedAccounts?:string[];
 }
 
 const TARGETS_DIR="config/targets";
@@ -28,6 +30,10 @@ export function parseTarget(raw:unknown,source:string):Target{
   const a=t.accounts?.[k];
   if(!a||typeof a.email!=="string"||!(TENANTS as readonly string[]).includes(a.tenant))throw Error(`${source}: account ${k} needs an email and a known tenant`);
  }
+ const protectedAccounts=t.protectedAccounts??[];
+ if(!Array.isArray(protectedAccounts)||protectedAccounts.some(e=>typeof e!=="string"||!e))throw Error(`${source}: protectedAccounts must be a list of emails`);
+ const misused=ACCOUNT_KEYS.filter(k=>protectedAccounts.includes(t.accounts![k].email));
+ if(misused.length)throw Error(`${source}: account ${misused.join(", ")} is a protected account`);
  return t as Target;
 }
 
@@ -59,7 +65,7 @@ export function productionCollisions(target:Target,production:Target):string[]{
  if(target.databaseSecret===production.databaseSecret)reasons.push(`secret ${target.databaseSecret} holds the production database URL`);
  if(target.dbRole===production.dbRole)reasons.push(`role ${target.dbRole} is the production runtime role`);
  if(target.keychainService===production.keychainService)reasons.push(`Keychain service ${target.keychainService} holds production passwords`);
- const prodEmails=new Set(ACCOUNT_KEYS.map(k=>production.accounts[k].email));
+ const prodEmails=new Set([...ACCOUNT_KEYS.map(k=>production.accounts[k].email),...production.protectedAccounts??[]]);
  if(ACCOUNT_KEYS.some(k=>prodEmails.has(target.accounts[k].email)))reasons.push("target signs in with production accounts");
  return reasons;
 }

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import {loadTarget,readTarget,productionCollisions,assertRestartableTarget,type Target} from "../scripts/acceptance/target.ts";
+import {loadTarget,readTarget,parseTarget,productionCollisions,assertRestartableTarget,type Target} from "../scripts/acceptance/target.ts";
 
 const production=readTarget("config/targets/production.json");
 const staging=readTarget("config/targets/staging.json");
@@ -26,6 +26,15 @@ test("acceptance scripts carry no production endpoints or service names",()=>{
   const src=fs.readFileSync(`scripts/acceptance/${f}`,"utf8");
   for(const n of needles)assert.ok(!src.includes(n),`${f} hardcodes ${n}`);
  }
+});
+
+test("runners never sign in as a protected account",()=>{
+ assert.deepEqual(production.protectedAccounts,["northside.buyer1@teamchat.internal"]);
+ for(const account of Object.values(production.accounts))assert.ok(!production.protectedAccounts!.includes(account.email),account.email);
+ const misuse={...production,accounts:{...production.accounts,n2:{email:"northside.buyer1@teamchat.internal",tenant:"northside-outfitters" as const}}};
+ assert.throws(()=>parseTarget(misuse,"t"),/n2 is a protected account/);
+ assert.throws(()=>parseTarget({...production,protectedAccounts:"northside.buyer1@teamchat.internal"},"t"),/list of emails/);
+ assert.ok(productionCollisions({...staging,accounts:{...staging.accounts,n1:{email:"northside.buyer1@teamchat.internal",tenant:"northside-outfitters"}}},production).length>0);
 });
 
 test("the staging target shares no production identifier",()=>{
