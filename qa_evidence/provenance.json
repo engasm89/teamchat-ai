@@ -1,61 +1,63 @@
 {
- "capturedAt": "2026-10-11T19:16:21.494Z",
+ "capturedAt": "2026-10-14T22:40:52.961Z",
  "source": {
-  "sha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
-  "applicationPathsTreeHash": "74536f414adc01f816636fb3776c526699fdab9bf9051da555afec4796fe8b7d",
+  "sha": "edbdfb2b21b2c246000a2c42c8908eef2972bf9f",
+  "applicationPathsTreeHash": "8297ed8d1e48440c4647a5fccf08c143882def1d83bd0b5b8b72977354e83294",
   "repository": "https://github.com/engasm89/teamchat-ai",
-  "cleanClone": "git clone from GitHub, checked out at the SHA, no tracked modifications"
+  "cleanClone": "git clone checked out at the SHA, no tracked modifications"
  },
  "api": {
   "service": "teamchat-api",
-  "revision": "teamchat-api-00014-72f",
-  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api@sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
-  "digest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "revision": "teamchat-api-00017-7gz",
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api@sha256:bb47e840488d280355210a9a50d0f9e83253a62aef2be77ffee6becf131475f2",
+  "digest": "sha256:bb47e840488d280355210a9a50d0f9e83253a62aef2be77ffee6becf131475f2",
   "labels": {
-   "org.opencontainers.image.revision": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
+   "org.opencontainers.image.revision": "edbdfb2b21b2c246000a2c42c8908eef2972bf9f",
    "org.opencontainers.image.source": "https://github.com/engasm89/teamchat-ai",
    "org.opencontainers.image.title": "teamchat-api"
   },
   "cmd": "node --experimental-strip-types src/server/start.ts",
-  "buildId": "56f5254f-873b-48cf-a00f-e681951cc3fc"
+  "buildId": "1b6bcd57-cf89-460d-b7ec-b70d00ed7b41"
  },
  "worker": {
   "service": "teamchat-worker",
-  "revision": "teamchat-worker-00014-4v8",
-  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker@sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
-  "digest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "revision": "teamchat-worker-00017-2rb",
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker@sha256:b622a9a2388ee9fdcdf972cb9583351e47e8c7ce91d1603e2cce88f729692880",
+  "digest": "sha256:b622a9a2388ee9fdcdf972cb9583351e47e8c7ce91d1603e2cce88f729692880",
   "labels": {
-   "org.opencontainers.image.revision": "d66da3d8a9f4908e20b99c3527a3396b479bacd2",
+   "org.opencontainers.image.revision": "edbdfb2b21b2c246000a2c42c8908eef2972bf9f",
    "org.opencontainers.image.source": "https://github.com/engasm89/teamchat-ai",
    "org.opencontainers.image.title": "teamchat-worker"
   },
   "cmd": "node --experimental-strip-types src/worker/start.ts",
-  "buildId": "56f5254f-873b-48cf-a00f-e681951cc3fc"
+  "buildId": "1b6bcd57-cf89-460d-b7ec-b70d00ed7b41"
  },
  "build": {
-  "id": "56f5254f-873b-48cf-a00f-e681951cc3fc",
-  "createTime": "2026-10-11T19:14:30.322708421Z",
-  "source": "gs://focus-clean-4b9f4_cloudbuild/source/1791746066.16005-9f1fef0f0eac4cfe875c3944c2103704.tgz",
+  "id": "1b6bcd57-cf89-460d-b7ec-b70d00ed7b41",
+  "createTime": "2026-10-14T22:01:51.342696782Z",
+  "source": "gs://focus-clean-4b9f4_cloudbuild/source/1792015290.905824-68ef282a27f44eedb98eaea1b46274a4.tgz",
   "substitutions": {
-   "_GIT_SHA": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+   "_GIT_SHA": "edbdfb2b21b2c246000a2c42c8908eef2972bf9f"
   }
  },
  "hosting": {
   "site": "focus-clean-4b9f4",
-  "releaseVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c",
-  "releaseTime": "2026-10-11T17:17:20.274Z",
+  "channel": "live",
+  "url": "https://focus-clean-4b9f4.web.app",
+  "releaseVersion": "sites/focus-clean-4b9f4/versions/33bae4d9769be62c",
+  "releaseTime": "2026-10-14T22:40:26.427Z",
   "servedAssets": {
-   "/index.html": "13e8a69a1fcd6015c607aebd4b547d271d04b8d411147de81e85067ba9eeacf0",
-   "/assets/index-DloCzopf.js": "283994f11a25f3ff282953f41cf55707782743561f4d542fdfdc5cc42e29cbec",
-   "/assets/index-BTnPilvg.css": "701c1fbbcc6ef9656fa293bd559e514b8920f0d2b27277aea7fe149cbe2fc59a"
+   "/index.html": "ce54136ebf80e5b2735e556cbba3c8831f2b5ca60ace5c85f4cfe2492758b411",
+   "/assets/index-BEJPLAzG.js": "b35bd87eb6ba1f2c9895438b006c5c62629ea5b98540e37c249d8d5ce9f34f2f",
+   "/assets/index-rqV0oTD5.css": "7b05058a9e3fb6a6cea3150f6753d2a6723579f398cc2546afbd9c82b11e7a0e"
   },
   "localBuildAssets": {
-   "/assets/index-BTnPilvg.css": "701c1fbbcc6ef9656fa293bd559e514b8920f0d2b27277aea7fe149cbe2fc59a",
-   "/assets/index-DloCzopf.js": "283994f11a25f3ff282953f41cf55707782743561f4d542fdfdc5cc42e29cbec",
-   "/index.html": "13e8a69a1fcd6015c607aebd4b547d271d04b8d411147de81e85067ba9eeacf0"
+   "/assets/index-BEJPLAzG.js": "b35bd87eb6ba1f2c9895438b006c5c62629ea5b98540e37c249d8d5ce9f34f2f",
+   "/assets/index-rqV0oTD5.css": "7b05058a9e3fb6a6cea3150f6753d2a6723579f398cc2546afbd9c82b11e7a0e",
+   "/index.html": "ce54136ebf80e5b2735e556cbba3c8831f2b5ca60ace5c85f4cfe2492758b411"
   },
   "assetsMatchLocalBuild": true,
-  "message": "git 116a629a892fd6930f4bb5b3f59c433fd92ba3b7 (clean clone)",
+  "message": "edbdfb2 Gonzalo remediation",
   "untrackedBuildInput": {
    "file": "apps/web/.env.production",
    "sha256": "403fa0479a790d73a558dcaeb6e7745e7efe26cfa945fc7bee12f729312ecd4f",
@@ -70,6 +72,7 @@
   "instance": "focus-clean-4b9f4:us-central1:teamchat-pg-instance",
   "version": "POSTGRES_17",
   "tier": "db-f1-micro",
+  "database": "teamchat",
   "applicationRole": "teamchat_api",
   "databaseUrlSecret": {
    "name": "teamchat-database-url",
@@ -102,7 +105,7 @@
      "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
      "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
     },
-    "memories": 25,
+    "memories": 39,
     "memoriesWithout768Embedding": 0
    },
    "valley-home-goods": {
@@ -121,5 +124,6 @@
   "memoriesWithout768Embedding": 0,
   "readAs": "teamchat_api through cloud-sql-proxy, one transaction per tenant with app.tenant_id set (RLS enforced)"
  },
+ "target": "production",
  "priorDeployment": "qa_evidence/provenance/prior-deployment-dc70fc8.json"
 }

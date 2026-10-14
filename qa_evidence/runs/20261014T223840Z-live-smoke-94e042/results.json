@@ -1,0 +1,99 @@
+{
+ "schemaVersion": 1,
+ "suite": "live-smoke",
+ "runId": "20261014T223840Z-live-smoke-94e042",
+ "environment": "production: https://focus-clean-4b9f4.web.app + https://teamchat-api-1068908463902.us-central1.run.app (release 00016 (d66da3d) after migration 008)",
+ "startedAt": "2026-10-14T22:38:40.691Z",
+ "finishedAt": "2026-10-14T22:39:00.514Z",
+ "harness": {
+  "gitHead": "2caa3ee298b10ca37029fba159310a1fa32ab5bf",
+  "dirty": false,
+  "fingerprint": "0fdbb4cfbd7134d5734184489b0dfc9d243d282dc463b7e7309a92333c88578f",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/acceptance/live-client.ts",
+   "scripts/compat/live-smoke.ts"
+  ]
+ },
+ "source": {
+  "sha": "d66da3d8a9f4908e20b99c3527a3396b479bacd2"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-00016-ct7",
+  "apiDigest": "sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374",
+  "workerRevision": "teamchat-worker-00016-24v",
+  "workerDigest": "sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/acca7910fdbc736c"
+ },
+ "tests": [
+  {
+   "id": "SMOKE",
+   "title": "Health, room list, delivery, an @AI answer with a fetch, and replay equal to the database, in the QA room",
+   "requirementIds": [
+    "D02"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-14T22:38:40.746Z",
+   "finishedAt": "2026-10-14T22:39:00.510Z",
+   "details": {
+    "accounts": [
+     "northside.analyst3@teamchat.internal",
+     "northside.buyer2@teamchat.internal"
+    ],
+    "turnEvents": [
+     "ai_tool_start",
+     "ai_tool",
+     "ai_answer_block",
+     "ai_complete"
+    ],
+    "tools": [
+     "search_catalog"
+    ],
+    "replayed": 6,
+    "databaseEvents": 6
+   },
+   "assertions": [
+    {
+     "name": "API health is 200",
+     "pass": true,
+     "expected": 200,
+     "actual": 200
+    },
+    {
+     "name": "the room list includes the QA room",
+     "pass": true,
+     "expected": "supply-planning",
+     "actual": [
+      "assortment-review",
+      "category-strategy",
+      "supply-planning"
+     ]
+    },
+    {
+     "name": "plain message acknowledged and delivered to the second user",
+     "pass": true,
+     "expected": ">0",
+     "actual": 1264
+    },
+    {
+     "name": "@AI message starts a turn that completes with a catalog fetch",
+     "pass": true,
+     "expected": "ai_complete + search_catalog",
+     "actual": {
+      "terminal": "ai_complete",
+      "tools": [
+       "search_catalog"
+      ]
+     }
+    },
+    {
+     "name": "replay after reconnect equals the database",
+     "pass": true,
+     "expected": 6,
+     "actual": 6
+    }
+   ],
+   "artifacts": []
+  }
+ ]
+}
