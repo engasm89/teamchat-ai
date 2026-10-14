@@ -362,6 +362,24 @@ test("Gemini outages retry the turn later; other errors fail it once, visibly, w
  assert.equal(failed?.payload.reason,"AI processing failed");
 });
 
+test("memory search puts a decision naming the asked-for identifier ahead of closer look-alikes",async()=>{
+ const {SqlToolExecutor}=await import("../../src/server/sql-tools.ts");
+ const {SourceLedger}=await import("../../src/grounding.ts");
+ const vector=(second:number)=>`[${Array.from({length:768},(_,i)=>i===0?1:i===1?second:0).join(",")}]`;
+ await asOwner(N,async c=>{
+  for(let i=0;i<6;i++)await c.query("INSERT INTO teamchat.memories(tenant_id,memory_id,key,value,created_by,created_at,source_room_id,embedding,embedding_model) VALUES($1,$2,$3,$4::jsonb,'u-maya',now(),'assortment-review',$5::vector,'test-embedding')",
+   [N,`look-alike-${i}`,`escalation_contact_case-a${i}q7`,JSON.stringify({case:`case-a${i}q7`,contact:"Dana"}),vector(0)]);
+  await c.query("INSERT INTO teamchat.memories(tenant_id,memory_id,key,value,created_by,created_at,source_room_id,embedding,embedding_model) VALUES($1,'asked-for','escalation_contact_case-x9k2',$2::jsonb,'u-maya',now(),'assortment-review',$3::vector,'test-embedding')",
+   [N,JSON.stringify({case:"case-x9k2",contact:"Dana Ruiz"}),vector(0.3)]);
+ });
+ const ctx=resolvedContext("u-sam",N),search=(query:string)=>new SqlToolExecutor(api,embeddings).execute(ctx,"assortment-review","search_memory",{query},new SourceLedger(ctx,randomUUID())) as Promise<Array<{memory:{memory_id:string}}>>;
+ const exact=await search("Who is the escalation contact for the CASE-X9K2 supplier dispute?");
+ assert.equal(exact[0]?.memory.memory_id,"asked-for");
+ assert.ok(exact.length<=5);
+ const vague=await search("Who is the escalation contact for the supplier dispute?");
+ assert.ok(!vague.some(m=>m.memory.memory_id==="asked-for"),"without an identifier, plain semantic distance still decides");
+});
+
 test("a stale worker cannot write after its turn was reclaimed",async()=>{
  const {persistSegment,claimJob}=await import("../../src/server/ai-jobs.ts");
  const t=await turn("anyone there?");

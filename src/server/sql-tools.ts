@@ -14,6 +14,9 @@ function argsOf(value:unknown,allowed:string[]):Rec{
  return value as Rec;
 }
 function str(value:unknown,key:string){if(typeof value!=="string"||!value.trim()||value.length>256)throw Error(`Invalid ${key}`);return value;}
+/** Identifier-like words of a memory query (they contain a digit: case IDs, store and catalog codes, dates). */
+export const identifierTerms=(query:string)=>
+ [...new Set(query.toLowerCase().match(/[\p{L}\p{N}][\p{L}\p{N}_.-]*[\p{L}\p{N}]/gu)??[])].filter(t=>t.length>=4&&/\d/.test(t)).slice(0,10);
 async function requireMembership(c:SqlClient,ctx:TenantContext,room:string){
  const x=await c.query("SELECT 1 FROM teamchat.room_memberships r JOIN teamchat.user_memberships m USING(tenant_id,firebase_uid) WHERE r.tenant_id=$1 AND r.room_id=$2 AND r.firebase_uid=$3 AND m.active=true",[ctx.tenantId,room,ctx.uid]);
  if(x.rows.length!==1)throw Error("Unauthorized");
@@ -121,20 +124,23 @@ export class SqlToolExecutor{
     }
     case "search_memory":{
      const a=argsOf(raw,["query"]);const query=str(a.query,"query");
-     // Exact tenant RLS scope first, then semantic cosine distance. Weak matches
-     // return no record rather than a confidently phrased invented memory.
-     const r=await c.query<{memory_id:string;key:string;value:Rec;created_by:string;author_name:string;created_at:string;source_room_id:string;distance:number}>(
+     // Exact tenant RLS scope first, then memories naming an identifier from the
+     // query, then semantic cosine distance (embeddings barely separate look-alike
+     // decisions that differ only by a case ID). Weak matches return no record
+     // rather than a confidently phrased invented memory.
+     const r=await c.query<{memory_id:string;key:string;value:Rec;created_by:string;author_name:string;created_at:string;source_room_id:string;distance:number;exact_terms:number}>(
       `SELECT mem.memory_id,mem.key,mem.value,mem.created_by,
        COALESCE(actor.display_name,mem.created_by) AS author_name,
        mem.created_at::text,mem.source_room_id,
-       (mem.embedding <=> $2::vector)::float8 AS distance
+       (mem.embedding <=> $2::vector)::float8 AS distance,
+       (SELECT count(*) FROM unnest($4::text[]) AS term WHERE strpos(lower(mem.key||' '||mem.value::text),term)>0)::int AS exact_terms
        FROM teamchat.memories mem
        LEFT JOIN teamchat.user_memberships actor
          ON actor.tenant_id=mem.tenant_id AND actor.firebase_uid=mem.created_by
        WHERE mem.tenant_id=$1 AND mem.embedding IS NOT NULL
-       AND mem.embedding_model=$3 ORDER BY mem.embedding <=> $2::vector LIMIT 5`,
-      [ctx.tenantId,queryVector!,this.embeddings!.modelId]);
-     return r.rows.filter(m=>m.distance<=0.55).map(m=>({ref:ledger.add("memory",String(m.memory_id),m),memory:m}));
+       AND mem.embedding_model=$3 ORDER BY exact_terms DESC,mem.embedding <=> $2::vector LIMIT 5`,
+      [ctx.tenantId,queryVector!,this.embeddings!.modelId,identifierTerms(query)]);
+     return r.rows.filter(m=>m.distance<=0.55).map(({exact_terms:_,...m})=>({ref:ledger.add("memory",String(m.memory_id),m),memory:m}));
     }
     case "save_memory":{
      const a=argsOf(raw,["key","value_json","room"]);if(!consent)throw Error("Shared-memory save not consented");

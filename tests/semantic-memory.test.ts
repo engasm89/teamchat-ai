@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {validateEmbedding,vectorSql,memoryEmbeddingText,withEmbeddingTimeout,type EmbeddingProvider} from "../src/worker/embeddings.ts";
-import {SqlToolExecutor} from "../src/server/sql-tools.ts";
+import {SqlToolExecutor,identifierTerms} from "../src/server/sql-tools.ts";
 import {SourceLedger} from "../src/grounding.ts";
 import {resolvedContext} from "../src/tenant.ts";
 import type {SqlPool,SqlClient,QueryResult} from "../src/persistence/postgres.ts";
@@ -37,6 +37,10 @@ test("semantic search is tenant-scoped, uses model-specific vectors, and suppres
  assert.equal(vectorCall.args[2],"mock-768");
  assert.ok(vectorCall.sql.includes("WHERE mem.tenant_id=$1"));
  assert.ok(calls.some(x=>x.sql.includes("set_config('app.tenant_id'")));
+});
+test("identifier terms are the query words that contain a digit",()=>{
+ assert.deepEqual(identifierTerms("Who is the escalation contact for case MV8LH9ZK-jaw8, due 2026-11-20? ST-4007 and A1"),["mv8lh9zk-jaw8","2026-11-20","st-4007"]);
+ assert.deepEqual(identifierTerms("what did we decide about suppliers?"),[]);
 });
 test("memory saves require consent before embedding/model invocation",async()=>{
  let called=0;const never:EmbeddingProvider={...embedder,embed:async()=>{called++;return good;}};
