@@ -1,0 +1,30 @@
+{
+ "recordedAt": "2026-10-14T20:50:59+00:00",
+ "purpose": "Gate 4 rollback points, recorded before any production change",
+ "api": {
+  "service": "teamchat-api",
+  "revision": "teamchat-api-00016-ct7",
+  "traffic": 100,
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api@sha256:395ba7cf07c5e9a2359e6e6023e536ac5e78a955c31d45b2b065e7f5328a8374"
+ },
+ "worker": {
+  "service": "teamchat-worker",
+  "revision": "teamchat-worker-00016-24v",
+  "traffic": 100,
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker@sha256:143dd72530d5fb9980fce223ef7da85fa31c53977b381a2916a23701ea159c69"
+ },
+ "hosting": {
+  "site": "focus-clean-4b9f4",
+  "channel": "live",
+  "version": "acca7910fdbc736c",
+  "releasedAt": "2026-10-11T17:17:20.274Z"
+ },
+ "source": "d66da3d",
+ "schema": "migrations 001-007 applied by hand; no schema_migrations table",
+ "rollback": [
+  "gcloud run services update-traffic teamchat-worker --to-revisions teamchat-worker-00016-24v=100 --region us-central1 --project focus-clean-4b9f4",
+  "gcloud run services update-traffic teamchat-api --to-revisions teamchat-api-00016-ct7=100 --region us-central1 --project focus-clean-4b9f4",
+  "npx firebase hosting:clone focus-clean-4b9f4@acca7910fdbc736c focus-clean-4b9f4:live --project focus-clean-4b9f4",
+  "Migration 008 is additive and stays; 00016 compatibility is checked right after migrating (see gate4.json)"
+ ]
+}

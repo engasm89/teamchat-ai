@@ -1,0 +1,180 @@
+{
+ "summary": {
+  "target": "staging",
+  "turns": 24,
+  "measured": 24,
+  "p50TerminalMs": 4609,
+  "p95TerminalMs": 12530,
+  "maxTerminalMs": 12765
+ },
+ "turns": [
+  {
+   "label": "s01",
+   "turnId": "fada4a36-f2cc-4021-a816-60e155e176ca",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 7292,
+   "toTerminalMs": 9458
+  },
+  {
+   "label": "s02",
+   "turnId": "31f058ac-02a2-41a4-8d4d-5f06b03cdef3",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4163,
+   "toTerminalMs": 4288
+  },
+  {
+   "label": "s03",
+   "turnId": "c3331155-f1a7-4685-a812-d175bc6b640c",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 7687,
+   "toTerminalMs": 12765
+  },
+  {
+   "label": "s04",
+   "turnId": "5ec13e46-b4d6-4f81-9c36-d73eb6ec9c1c",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4435,
+   "toTerminalMs": 4567
+  },
+  {
+   "label": "s05",
+   "turnId": "1791dfc9-4cc8-4c99-814a-9c2e9f99f872",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 5386,
+   "toTerminalMs": 5498
+  },
+  {
+   "label": "s06",
+   "turnId": "4fbd2cb2-d1d6-4d0a-a40c-62cc84c8e52b",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 10835,
+   "toTerminalMs": 12530
+  },
+  {
+   "label": "s07",
+   "turnId": "85751d04-703a-4afa-a712-cd9f1cdf94e6",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 7593,
+   "toTerminalMs": 7746
+  },
+  {
+   "label": "s08-paraphrase",
+   "turnId": "a7e3c77d-2abd-49dd-abd9-7646fd322062",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 7316,
+   "toTerminalMs": 7400
+  },
+  {
+   "label": "s08-unrelated",
+   "turnId": "95b95cdf-f2c0-449b-a0f1-401996ae4793",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 3454,
+   "toTerminalMs": 3567
+  },
+  {
+   "label": "s08-valley",
+   "turnId": "4aa9e0b3-3603-4183-a3d1-bcd1b80d2d79",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4045,
+   "toTerminalMs": 4093
+  },
+  {
+   "label": "s09-recall",
+   "turnId": "d3c7ed45-bc1f-402e-b6ff-d1029894c57e",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4064,
+   "toTerminalMs": 4138
+  },
+  {
+   "label": "s09-save",
+   "turnId": "974378aa-c925-4bfc-bad2-a06212df4d4e",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4088,
+   "toTerminalMs": 4295
+  },
+  {
+   "label": "s09-valley",
+   "turnId": "1a9fbba7-015f-492a-b7f0-7cda8b3c1f2c",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4070,
+   "toTerminalMs": 4231
+  },
+  {
+   "label": "s10-flat",
+   "turnId": "bdfdced2-41d3-4a02-aef1-6f2f6677d6fa",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 5451,
+   "toTerminalMs": 5617
+  },
+  {
+   "label": "s10-nested",
+   "turnId": "f28dae15-76d5-4e61-8b38-12d7445e2d0f",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 5757,
+   "toTerminalMs": 5789
+  },
+  {
+   "label": "s11-northside",
+   "turnId": "d9d3cbb2-7882-46fd-9342-7af868bea388",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4877,
+   "toTerminalMs": 4920
+  },
+  {
+   "label": "s11-valley",
+   "turnId": "8bd10183-dba8-45aa-a182-ff27b74fb180",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4376,
+   "toTerminalMs": 4456
+  },
+  {
+   "label": "s12-first",
+   "turnId": "04b4dc1b-4555-45e6-9a59-fa628194bfd9",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4658,
+   "toTerminalMs": 4697
+  },
+  {
+   "label": "s12-forged",
+   "turnId": "eb0a632c-4487-4aed-be98-ee3a2bbea954",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 5672,
+   "toTerminalMs": 5727
+  },
+  {
+   "label": "s12-unknown",
+   "turnId": "a2e91ab1-6349-40de-bfc1-e12defbc3c99",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4510,
+   "toTerminalMs": 4609
+  },
+  {
+   "label": "s13",
+   "turnId": "c41e836d-4981-48a6-ac3d-5bd4366873db",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4077,
+   "toTerminalMs": 4121
+  },
+  {
+   "label": "s18-northside-store",
+   "turnId": "e091b325-70bf-4c6e-97d9-16d1f6c5afd6",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 5143,
+   "toTerminalMs": 5250
+  },
+  {
+   "label": "s18-target",
+   "turnId": "c292b70e-fd36-40a6-96c8-275e3fc20c55",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 3514,
+   "toTerminalMs": 3553
+  },
+  {
+   "label": "s18-unknown",
+   "turnId": "7e63f770-1077-4805-833d-8a4999cb8625",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 3459,
+   "toTerminalMs": 3561
+  }
+ ]
+}
