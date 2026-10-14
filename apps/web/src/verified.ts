@@ -8,6 +8,11 @@ export function renderVerifiedBlock(raw:unknown):string{
   if(values&&typeof values==="object"&&typeof (values as Record<string,unknown>).message==="string")
    return (values as Record<string,string>).message;
  }
+ if(verified.template==="assistant_text"){
+  const values=verified.values;
+  if(verified.source==="model_conversation"&&values&&typeof values==="object"&&typeof (values as Record<string,unknown>).message==="string")
+   return (values as Record<string,string>).message;
+ }
  const result=verified.result;
  if(verified.template==="search_catalog"&&Array.isArray(result)){
   return result.map(p=>{
