@@ -26,3 +26,4 @@ GRANT EXECUTE ON FUNCTION teamchat.resolve_tenant_for_uid(text) TO teamchat_api;
 REVOKE ALL ON teamchat.ai_job_directory FROM teamchat_api;
 GRANT EXECUTE ON FUNCTION teamchat.resolve_tenant_for_turn(uuid) TO teamchat_api;
 GRANT SELECT,INSERT,UPDATE,DELETE ON teamchat.typing_leases TO teamchat_api;
+GRANT EXECUTE ON FUNCTION teamchat.create_room_for_current_user(text,text,text,text) TO teamchat_api;
