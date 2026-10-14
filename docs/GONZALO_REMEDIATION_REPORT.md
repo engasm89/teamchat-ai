@@ -190,6 +190,6 @@ Earlier failures are kept on purpose. Each one led to a fix, described below.
 
 1. **Production migration owner.** Either provide the `postgres` password privately (for example in Keychain service `teamchat-ai-prod-owner`), or authorize a reset with `gcloud sql users set-password postgres`. Then decide whether to roll out before the 1:30 PM Cairo cut line on 15 October.
 2. **Production chat creation test.** Authorize it, or accept "STAGING PASS / PRODUCTION NOT VERIFIED". New chats appear in every Northside user's list, including the reviewer's.
-3. **Merging.** Review the branch and merge it to `main`. `main` is protected, and merging needs your approval.
+3. **Pull request and merge.** No pull request has been opened, because a new PR could notify repository watchers outside the team. Open one from `fix/gonzalo-conversational-review` when you want to, review it, and merge it to `main`. `main` is protected, and merging needs your approval.
 4. **PR #2.** Close it as superseded.
 5. **Reply to Gonzalo.** Review and send it yourself. A suggested note is in `audit/gonzalo-2026-10-14/SUGGESTED_GMAIL_REPLY_PRIVATE.md`. Nothing has been sent to anyone at Controlease.
