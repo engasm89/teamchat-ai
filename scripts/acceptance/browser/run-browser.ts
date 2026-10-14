@@ -276,6 +276,47 @@ try{
   }finally{await closeAll();}
  });
 
+ await test("UX-BROWSER","Names instead of user IDs, auto-follow with Jump to latest, and a new chat that a teammate sees live",["GONZALO"],async t=>{
+  try{
+   const s=await openSession("n1"),peer=await openSession("n2");
+   const peerName=(await peer.page.locator(".sidebarfooter small").innerText()).trim();
+   const gap=(p:Page)=>p.locator("section.messages").evaluate(el=>el.scrollHeight-el.scrollTop-el.clientHeight);
+   const first=`UX check one ${tag("ux")}`;await post(peer,first);
+   const seen=await until(async()=>(await s.page.locator("article.message",{hasText:first}).count())>0,30000);
+   await sleep(800);
+   const author=seen?(await s.page.locator("article.message",{hasText:first}).locator("strong").first().innerText()).trim():"";
+   t.assert("a teammate's message shows their display name",!!peerName&&author===peerName,peerName,author);
+   t.assert("no Firebase UID is shown in the transcript",!(await s.page.locator("section.messages").innerText()).includes(peer.uid),"absent","");
+   t.assert("the view follows a new message when the reader is at the bottom",(await gap(s.page))<80,"< 80 px from the bottom",await gap(s.page));
+   await s.page.locator("section.messages").evaluate(el=>{el.scrollTop=0;el.dispatchEvent(new Event("scroll"));});await sleep(500);
+   const second=`UX check two ${tag("ux")}`;await post(peer,second);
+   await until(async()=>(await s.page.locator("article.message",{hasText:second}).count())>0,30000);await sleep(800);
+   const jump=s.page.locator("button.jump");
+   t.assert("a reader scrolled up is not pulled down",(await s.page.locator("section.messages").evaluate(el=>el.scrollTop))<200,"stays near the top",
+    await s.page.locator("section.messages").evaluate(el=>el.scrollTop));
+   t.assert("'Jump to latest' appears for unseen messages",await jump.isVisible(),true,await jump.isVisible());
+   if(await jump.isVisible())await jump.click();
+   await until(async()=>(await gap(s.page))<80,4000,200);
+   t.assert("'Jump to latest' returns to the newest message (smooth scroll, within 4 s)",(await gap(s.page))<80,"< 80 px from the bottom",await gap(s.page));
+   t.assert("'Jump to latest' disappears once the reader is at the bottom",!(await jump.isVisible()),false,await jump.isVisible());
+   await shot(t,s,"names-and-scroll.png","Reader's view after Jump to latest");
+   if(TARGET.name==="production"){t.detail("newChat","not run: chats created in production would appear in every tenant member's list");return;}
+   const title=`UX chat ${tag("c")}`;
+   await s.page.click("button.newchat-open");await s.page.fill("form.newchat input[maxlength]",title);
+   await s.page.click('form.newchat button:has-text("Create")');
+   const listed=await until(async()=>(await peer.page.locator("button.channel",{hasText:title}).count())>0,20000,250);
+   t.assert("the new chat appears in a teammate's list without a reload",!!listed,true,!!listed);
+   const pageOverflow=await peer.page.evaluate(()=>document.documentElement.scrollHeight-window.innerHeight);
+   t.assert("a long chat list scrolls inside the sidebar; the page itself never scrolls",pageOverflow<=1,"<= 1 px",pageOverflow);
+   await s.page.locator("button.channel",{hasText:title}).click();await sleep(1000);
+   await post(s,"hi! what can you help me with?");
+   if(listed)await peer.page.locator("button.channel",{hasText:title}).click();
+   const answered=await until(async()=>(await peer.page.locator('article.message[data-event-type="ai_answer_segment"]').count())>0,90000);
+   t.assert("in the AI chat the assistant answers without @AI, and the teammate sees it",!!answered,true,!!answered);
+   await shot(t,peer,"new-chat-peer.png","Teammate's view of the new AI chat");
+  }finally{await closeAll();}
+ });
+
  const s15=async(t:TestRecorder,suppress:boolean)=>{
   let target="",reloaded=false;
   const s=await openSession("n1",suppress?{fault:{dropEvent:e=>reloaded&&e?.turnId===target}}:{});
