@@ -1,0 +1,125 @@
+{
+ "generatedAt": "2026-10-14T22:44:46.139Z",
+ "files": [
+  {
+   "path": "S01/s01.json",
+   "bytes": 7186,
+   "sha256": "ca6d65027dc2e444012a3529d7466c7488b5a31a690786c9c170953b4853849b"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1357,
+   "sha256": "9374407339e99e35f3c306440e722dac9c89ec0502117d8d28c32f81bb659ee9"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13146,
+   "sha256": "e8f07c343b558b7f1e52dc1dd4557e50cfdd8d40baf59884734b3bc001bd3944"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 697,
+   "sha256": "4960da066f480ca31286433cb2355465b0cc28042aa9ae89d0d84fa7918af47f"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3823,
+   "sha256": "1f8ee320e82bc83f4f8c4c1f5101eb28e03f42b463f42e3680443d942fcfe2a9"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10470,
+   "sha256": "743852ec3c71ab05b162dd4dc4404b7ca8cf03052974f120186c30aaed6f5bf1"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3065,
+   "sha256": "d1df448d95733d7f5e649a9991928b10a6daf656d68d7a2bfe2d0c47b1403277"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2273,
+   "sha256": "cb9efdb522cc0a3d42ca5f50d3991fd3269067736498e22a1408e91c155c37e5"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 602,
+   "sha256": "66257da9872c1749248d2e4d9a845fa3d93059833351039f754d4453edfdfec6"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 631,
+   "sha256": "f754e5c461729915dc278a82ed357beaf613c17228049131f70fb5cc574db809"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1644,
+   "sha256": "2707781757555ef16d9c195d3ff2d4c8fc19a74c0c5cae5200e4b8c08b1b9c78"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3192,
+   "sha256": "fdfd1ad12d80bb225f12b76790317df92e9b941007ecab90a1b2f963bb383ee6"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3971,
+   "sha256": "4cf20fd818fe8689cf484a5c63da8363588cf9b9adae8c657eb809440fb5e843"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 5021,
+   "sha256": "559d39c32a18d806db67ed975c193330aa4c331d3bc51c9cd6fb30258b7b3497"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "ec13f2da03fe3a217dcfcda5b7a889060607207fb995935696f2ea220a010503"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 714,
+   "sha256": "2e510d2d4c303e2a3e762c1eda0c0cb1d59edae081a7c0c695745b2b65ed291a"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 860,
+   "sha256": "6caf855ec627233dde92aa4b0c6d1341767cd9a51182e4da0d9711005643d484"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 716,
+   "sha256": "1e62b877f9f4fde99250914a5af233fa9af26bfb1722e8638842d8b9f455c577"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 505,
+   "sha256": "bfc387eb50c434c9f0f639cfef43239b674d8c16b065bf580594b638b0ec4fd8"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13261,
+   "sha256": "9bd90c2f6048fa8cbcc456f517892becd06e058874e8d3b326af281836a3d159"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 767,
+   "sha256": "b92717a1c5ff48ce484514cfadbb49028c33ba3c231d622e182e2edbeb08553a"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 5021,
+   "sha256": "180a4cd670dae04a98994ffa2fda241251422e5fa359f49632852f0b5405d0de"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 759,
+   "sha256": "a921bc646cb129038b39b59e9b2c0fd368e59eeee0eb3f907d1e622ae06ebccc"
+  },
+  {
+   "path": "results.json",
+   "bytes": 42918,
+   "sha256": "baf0ac3934fd60274bbc7ee8fd63f439e30f7e2ae44c0a6c20a8330f3ec750cc"
+  }
+ ]
+}
