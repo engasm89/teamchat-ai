@@ -11,7 +11,7 @@ import path from "node:path";
 import {isDeepStrictEqual} from "node:util";
 import {spawn,execFileSync} from "node:child_process";
 import {RunRecorder,type Assertion,type TestRecorder} from "../evidence/lib.ts";
-import {API_URL,APP_URL,QA_ROOM,TARGET,bindDeployment,openDb,proxiedDatabaseUrl,authoritativeEvents,firebaseSignIn,sleep,tag,type AccountKey} from "./common.ts";
+import {API_URL,APP_URL,QA_ROOM,TARGET,runsDir,bindDeployment,openDb,proxiedDatabaseUrl,authoritativeEvents,firebaseSignIn,sleep,tag,type AccountKey} from "./common.ts";
 import {assertRestartableTarget} from "./target.ts";
 import {LiveClient,type Turn} from "./live-client.ts";
 import * as oracle from "./oracle.ts";
@@ -29,7 +29,7 @@ if(RESTART)assertRestartableTarget(TARGET);
 const {sourceSha,deployment}=bindDeployment();
 const pool=await openDb();
 const run=new RunRecorder({suite:RESTART?"acceptance-restart":"acceptance",environment:`${TARGET.name}: ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
- ...(args.includes("--scratch")?{runsDir:"qa_evidence/scratch/runs"}:{})});
+ runsDir:runsDir(args.includes("--scratch"))});
 const clients:LiveClient[]=[];
 async function client(account:AccountKey,room?:string,url?:string){
  const c=await new LiveClient(account,url).connect();clients.push(c);if(room)await c.subscribe(room);return c;

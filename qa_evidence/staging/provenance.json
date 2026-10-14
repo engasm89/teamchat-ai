@@ -1,0 +1,127 @@
+{
+ "capturedAt": "2026-10-14T18:22:36.493Z",
+ "source": {
+  "sha": "95ab4dfb88e868a6ffaf0109f2155235301ada4c",
+  "applicationPathsTreeHash": "bcd6212e7ebadf521adc615df9c16ff690ee599a356156463cd54cea0e35b277",
+  "repository": "https://github.com/engasm89/teamchat-ai",
+  "cleanClone": "git clone checked out at the SHA, no tracked modifications"
+ },
+ "api": {
+  "service": "teamchat-api-staging",
+  "revision": "teamchat-api-staging-00001-mz5",
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api@sha256:75befcbbd122520f1457dcdde70950ae9ffe11625d18d8a2ae40c3cb33c1716f",
+  "digest": "sha256:75befcbbd122520f1457dcdde70950ae9ffe11625d18d8a2ae40c3cb33c1716f",
+  "labels": {
+   "org.opencontainers.image.revision": "95ab4dfb88e868a6ffaf0109f2155235301ada4c",
+   "org.opencontainers.image.source": "https://github.com/engasm89/teamchat-ai",
+   "org.opencontainers.image.title": "teamchat-api"
+  },
+  "cmd": "node --experimental-strip-types src/server/start.ts",
+  "buildId": "d52e8231-783b-40bd-81aa-f08ac66fad1f"
+ },
+ "worker": {
+  "service": "teamchat-worker-staging",
+  "revision": "teamchat-worker-staging-00001-g99",
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker@sha256:7739a8fe3006bac47a38aae13ea34986ad211158439686571a715b81abd00021",
+  "digest": "sha256:7739a8fe3006bac47a38aae13ea34986ad211158439686571a715b81abd00021",
+  "labels": {
+   "org.opencontainers.image.revision": "95ab4dfb88e868a6ffaf0109f2155235301ada4c",
+   "org.opencontainers.image.source": "https://github.com/engasm89/teamchat-ai",
+   "org.opencontainers.image.title": "teamchat-worker"
+  },
+  "cmd": "node --experimental-strip-types src/worker/start.ts",
+  "buildId": "d52e8231-783b-40bd-81aa-f08ac66fad1f"
+ },
+ "build": {
+  "id": "d52e8231-783b-40bd-81aa-f08ac66fad1f",
+  "createTime": "2026-10-14T18:18:10.891949898Z",
+  "source": "gs://focus-clean-4b9f4_cloudbuild/source/1792001883.693296-f4c460630ea14edd8d2b5cdad10de079.tgz",
+  "substitutions": {
+   "_GIT_SHA": "95ab4dfb88e868a6ffaf0109f2155235301ada4c"
+  }
+ },
+ "hosting": {
+  "site": "focus-clean-4b9f4",
+  "channel": "staging",
+  "url": "https://focus-clean-4b9f4--staging-yxk0bcnc.web.app",
+  "releaseVersion": "sites/focus-clean-4b9f4/versions/cdf42d03113a6b6b",
+  "releaseTime": "2026-10-14T18:19:30.948Z",
+  "servedAssets": {
+   "/index.html": "23b8867119891278d6eec6d1a653fe676411e889d5134f9c57d260b5b1df5193",
+   "/assets/index-Cf276HSy.js": "09bf9218393d588c731126036cd865cc38a831c15d946dda0a186b7307617439",
+   "/assets/index-B36GB7uv.css": "ac4f42d59aec5d5662a02b803c24a2dcf6e2aaa4fc7adb9d608d989b979d7bdf"
+  },
+  "localBuildAssets": {
+   "/assets/index-B36GB7uv.css": "ac4f42d59aec5d5662a02b803c24a2dcf6e2aaa4fc7adb9d608d989b979d7bdf",
+   "/assets/index-Cf276HSy.js": "09bf9218393d588c731126036cd865cc38a831c15d946dda0a186b7307617439",
+   "/index.html": "23b8867119891278d6eec6d1a653fe676411e889d5134f9c57d260b5b1df5193"
+  },
+  "assetsMatchLocalBuild": true,
+  "untrackedBuildInput": {
+   "file": "apps/web/.env.production",
+   "sha256": "403fa0479a790d73a558dcaeb6e7745e7efe26cfa945fc7bee12f729312ecd4f",
+   "note": "Firebase web config and public API URLs; gitignored by the repository, copied into the clean clone for the build. Its values are visible in the served JavaScript."
+  }
+ },
+ "vertex": {
+  "VERTEX_MODEL_ID": "gemini-2.5-flash",
+  "VERTEX_EMBEDDING_MODEL_ID": "text-embedding-004"
+ },
+ "database": {
+  "instance": "focus-clean-4b9f4:us-central1:teamchat-pg-instance",
+  "version": "POSTGRES_17",
+  "tier": "db-f1-micro",
+  "database": "teamchat_staging",
+  "applicationRole": "teamchat_api_staging",
+  "databaseUrlSecret": {
+   "name": "teamchat-staging-database-url",
+   "versions": [
+    {
+     "version": "2",
+     "state": "ENABLED",
+     "createTime": "2026-10-14T18:17:44.135716Z"
+    },
+    {
+     "version": "1",
+     "state": "DESTROYED",
+     "createTime": "2026-10-14T18:17:36.730381Z"
+    }
+   ]
+  },
+  "fixtureHashes": {
+   "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+   "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+   "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+   "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+   "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+  },
+  "tenants": {
+   "northside-outfitters": {
+    "datasetVersions": {
+     "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+     "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+     "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+     "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+     "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+    },
+    "memories": 4,
+    "memoriesWithout768Embedding": 0
+   },
+   "valley-home-goods": {
+    "datasetVersions": {
+     "product_codes.csv": "6ab497294b56e5952806369cd71c0d8fcf5be917053a7d15f529a2c2d8173d45",
+     "promo_coefficients.csv": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb",
+     "segment_coefficients.csv": "85e5b36b9852c0f83693dc73b097dadb28cefe17afe3e5261992859b97063469",
+     "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
+     "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
+    },
+    "memories": 4,
+    "memoriesWithout768Embedding": 0
+   }
+  },
+  "datasetHashesMatchFixtures": true,
+  "memoriesWithout768Embedding": 0,
+  "readAs": "teamchat_api_staging through cloud-sql-proxy, one transaction per tenant with app.tenant_id set (RLS enforced)"
+ },
+ "target": "staging"
+}

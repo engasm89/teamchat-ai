@@ -12,6 +12,8 @@ export interface Target {
  apiService:string;workerService:string;
  database:string;databaseSecret:string;dbRole:string;
  keychainService:string;provenance:string;
+ /** Firebase Hosting channel serving appUrl ("live" when omitted). */
+ hostingChannel?:string;
  accounts:Record<AccountKey,{email:string;tenant:TenantId}>;
 }
 

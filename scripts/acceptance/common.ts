@@ -15,6 +15,8 @@ export const API_URL=TARGET.apiUrl;
 export const WS_URL=`${TARGET.apiUrl.replace(/^https:/,"wss:")}/ws`;
 export const ACCOUNTS=TARGET.accounts;
 export const accountPassword=(email:string)=>keychainPassword(email,TARGET.keychainService);
+/** Production evidence lives in qa_evidence/runs; every other target keeps its own, so the two never mix. */
+export const runsDir=(scratch:boolean)=>scratch?"qa_evidence/scratch/runs":TARGET.name==="production"?"qa_evidence/runs":`qa_evidence/${TARGET.name}/runs`;
 /** QA traffic stays out of the rooms reviewers are asked to use. */
 /** Rooms n1 and v1 are members of. Valley's tenant-specific rooms each have exactly one member
  * (pricing: v2, range-planning: v1, strategy: v3). */

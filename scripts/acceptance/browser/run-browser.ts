@@ -10,7 +10,7 @@ import {execFileSync} from "node:child_process";
 import {parse} from "csv-parse/sync";
 import {chromium,type BrowserContext,type Page,type CDPSession} from "playwright";
 import {RunRecorder,type Assertion,type TestRecorder} from "../../evidence/lib.ts";
-import {ACCOUNTS,API_URL,APP_URL,QA_ROOM,TARGET,accountPassword,bindDeployment,openDb,authoritativeEvents,lastSequence,expectedProjection,compareProjection,
+import {ACCOUNTS,API_URL,APP_URL,QA_ROOM,TARGET,runsDir,accountPassword,bindDeployment,openDb,authoritativeEvents,lastSequence,expectedProjection,compareProjection,
  sleep,tag,type AccountKey,type ProjectionItem} from "../common.ts";
 import {CutProxy} from "./cut-proxy.ts";
 import type {PersistedEvent} from "../../../src/persistence/postgres.ts";
@@ -212,7 +212,7 @@ const pool=await openDb();
 const args=process.argv.slice(2);
 const ONLY=args.includes("--only")?new Set(args[args.indexOf("--only")+1]!.split(",")):null;
 const run=new RunRecorder({suite:"browser",environment:`${TARGET.name}: ${APP_URL} + ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
- ...(args.includes("--scratch")?{runsDir:"qa_evidence/scratch/runs"}:{})});
+ runsDir:runsDir(args.includes("--scratch"))});
 const test=(id:string,title:string,requirementIds:string[],body:(t:TestRecorder)=>Promise<void>)=>ONLY&&!ONLY.has(id)?Promise.resolve():run.run(id,title,requirementIds,body);
 const monitoringWindows:Record<string,{start:number;end:number}>={};
 
