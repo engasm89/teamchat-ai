@@ -1,0 +1,724 @@
+{
+ "purpose": "S06 on edbdfb2 failed live in the acceptance run after the S19 restart (turn aca2795f: get_store_assortment, then a text reply, no calculate_uplift; worker logs show one tool, path compose). Replayed through the worker loop with the same history query, names, planner config and real staging tool results.",
+ "summary": {
+  "non-streaming replay": "12/12 called calculate_uplift",
+  "worker's own streaming provider (createGeminiProvider)": "12/12 called calculate_uplift",
+  "live S06 since the continuation was withdrawn": "a9817cc: run 1 PASS, run 2 FAIL; edbdfb2: run 1 PASS, run 2 FAIL",
+  "conclusion": "Not reproduced offline (0/24 failures on this turn, 0/12 on the 5a82e6e turn). Same model, region, config and history query as the worker; the live/replay difference is unexplained. S06 remains a known intermittent partial answer: the gaps are shown, the score change is missing; no unchecked fact is shown."
+ },
+ "runs": {
+  "non-streaming": {
+   "ranAt": "2026-10-14T22:31:00.333Z",
+   "turnId": "aca2795f-aa62-4604-931d-97cd099b0b0c",
+   "requester": "Northside Buyer One",
+   "note": "unused",
+   "results": [
+    {
+     "trial": 1,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: Okay."
+    },
+    {
+     "trial": 2,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: Okay, I received \"unused\". Is there something specific you'd like me to do or clarify?"
+    },
+    {
+     "trial": 3,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: Okay."
+    },
+    {
+     "trial": 4,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: "
+    },
+    {
+     "trial": 5,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: Okay."
+    },
+    {
+     "trial": 6,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: Okay, got it."
+    },
+    {
+     "trial": 7,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: I'm sorry, I don't understand what you mean by \"unused\". Can you please clarify your request?"
+    },
+    {
+     "trial": 8,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: Okay."
+    },
+    {
+     "trial": 9,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: "
+    },
+    {
+     "trial": 10,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: I can help with that. What would you like to know?"
+    },
+    {
+     "trial": 11,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: I'm not sure how to interpret \"unused\". Is there something specific you'd like me to do or look up?"
+    },
+    {
+     "trial": 12,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "text: Okay."
+    }
+   ]
+  },
+  "worker-streaming": {
+   "ranAt": "2026-10-14T22:35:49.138Z",
+   "turnId": "aca2795f-aa62-4604-931d-97cd099b0b0c",
+   "requester": "Northside Buyer One",
+   "provider": "worker streaming",
+   "note": "withdrawn 9b4f9f7 note",
+   "results": [
+    {
+     "trial": 1,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 2,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 3,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 4,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 5,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 6,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 7,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 8,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 9,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 10,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 11,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "store_id": "ST-4007",
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ]
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    },
+    {
+     "trial": 12,
+     "before": [
+      {
+       "name": "get_store_assortment",
+       "args": {
+        "store_id": "ST-4007"
+       }
+      },
+      {
+       "name": "calculate_uplift",
+       "args": {
+        "add_codes": [
+         "APP-100.11",
+         "APP-100.12",
+         "APP-100.13",
+         "APP-169.16",
+         "APP-192.17",
+         "HOM-123.16",
+         "SEA-307.12",
+         "SPT-261.12"
+        ],
+        "store_id": "ST-4007"
+       }
+      }
+     ],
+     "after": [],
+     "ending": "DONE"
+    }
+   ]
+  }
+ }
+}

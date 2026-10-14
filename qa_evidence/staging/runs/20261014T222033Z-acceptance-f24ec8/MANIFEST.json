@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T22:27:14.261Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "e912d5774a8d54393050c4e3bf3c3258a68478ff34dae88f0eb4bf84d28c51a8"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1346,
+   "sha256": "7f74373148bd672e14da11183523039eb8d2154705f4dd0c30e38c09928532ba"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13181,
+   "sha256": "de0633348c041cc1d9cfde730091b2eca8d1a1d3211a1d21e349d90938223f6b"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 706,
+   "sha256": "4935a3d551326c1b36774ddc826916615a35e204470895507a129e0733d68920"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3794,
+   "sha256": "13614e5bbd736e6667e12aa054d4e746f7c6bba3e84b26976fe8e1b42a0fde64"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 6885,
+   "sha256": "73bceb7af0ba34b333e429ed50ebad42461e21701102716f3067de50978b9517"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "275645e58437b2509767dd590ca9028d2d054b4c43c7bf876032a19700609aac"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2281,
+   "sha256": "867e6bd40450baada6c60234b448ce7d8755e1f5f986498ffc64e247ace21330"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 705,
+   "sha256": "f4d00423c85072609c07fbd28d36fe08b842f70200083f97e3dede4e3263e804"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 630,
+   "sha256": "20657ce57cd8522e96e35f1c01d381a208dfa1e8997c15eb5344c10f84b97b44"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 6208,
+   "sha256": "bd23cd294873459b102cea024097c908685991d368e366bf8e6d202525929b3b"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 2052,
+   "sha256": "7317ea1717bf91a21337ecbe7c36efb89e700a8393e22e5c2b9e0ce1c92c599c"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2891,
+   "sha256": "428b208e86f874ded8715c21bebcbadfcb52f95ef3da4441c29b39aeb304b1fb"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1717,
+   "sha256": "bbebd303523d66b25728534f4109c346721808de50961a54aaf49e060580d9ef"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "a58ad17314127859b52e75540e4cebb26d6ba7c5d98680006ba0930a24a09562"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3977,
+   "sha256": "78c8b8456a49ee4c410d48e7d38b9becbcc6538499660e40fa327c5f969a92cb"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "214a0bb886666e47ce3353775fb96cb65244f355040200e7ecbc11ddf931211d"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "cd91ed607b395859df244d3e2145c8dc60939a0dd0df6243d3516921bf4f737e"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 815,
+   "sha256": "47496438d55ea802c7f9bc1cef1ce5c17dd9cbeea7e916809a9ba0231bc34971"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 866,
+   "sha256": "adacb21b572319a4253189e8baf1267948f8b8f38a8ba34eb65c22b9e31172ea"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 722,
+   "sha256": "53d8f554e5a1baaf2b6141ca4e74e1530baccf99a37ab36ed98f9a87ed129ac9"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "19415841dfb2ce0022d7644cbae3216015b81252b35133c4fc525ac3e4dd9844"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13261,
+   "sha256": "6c483334094d2c0a953fc744db22ad533bc3b37cad10d83edad3b4bc494df10d"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "c3475d479982af17b33835cf1ef4bf41a2d2d107910f13a10eca36facf062bca"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "b87053bc038437402cfbf6aef27276720df0e9936a8f6a385821f04a0250206d"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "428a9203da7d7232a7290aeb9a85fc5fbe7500654a1f861b8900e0e7b4592e3d"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50078,
+   "sha256": "a8ccf9dee900f11a75ae4e2d6cd05ab8894dd34f9643fcd31e916a4dfce24444"
+  }
+ ]
+}

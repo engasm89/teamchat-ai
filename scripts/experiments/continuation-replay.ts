@@ -4,11 +4,12 @@
  * Gemini take up a colleague's simultaneous question?) and S06 (does it still reach calculate_uplift?).
  * The note shipped in 9b4f9f7 and was withdrawn after this replay: in S14 it made Gemini answer the
  * colleague's question in 11 of 12 trials, while S06 already reached the calculation without it.
- * Env: TEAMCHAT_TARGET, TRIALS, NOTE (replaces the withdrawn note). Read-only: save_memory is refused.
+ * Env: TEAMCHAT_TARGET, TRIALS, NOTE (replaces the withdrawn note), PROVIDER=worker (plan with the worker's own
+ * streaming provider instead of a non-streaming call). Read-only: save_memory is refused.
  *   node --experimental-strip-types scripts/experiments/continuation-replay.ts <turn id> <requester uid> */
 import {GoogleGenAI} from "@google/genai";
 import {TOOL_DECLARATIONS} from "../../src/tools.ts";
-import {trustedPlannerInstructions,buildConversationContents} from "../../src/worker/gemini.ts";
+import {trustedPlannerInstructions,buildConversationContents,createGeminiProvider} from "../../src/worker/gemini.ts";
 import {SqlToolExecutor} from "../../src/server/sql-tools.ts";
 import {SourceLedger} from "../../src/grounding.ts";
 import {resolveVerifiedIdentity} from "../../src/server/database.ts";
@@ -33,6 +34,12 @@ const client=new GoogleGenAI({vertexai:true,project:"focus-clean-4b9f4",location
 const config={temperature:0.2,tools:[{functionDeclarations:TOOL_DECLARATIONS as any}],maxOutputTokens:2048,thinkingConfig:{thinkingBudget:512},
  systemInstruction:trustedPlannerInstructions({roomId:loaded.job.room_id,memoryConsent:false}),toolConfig:{functionCallingConfig:{mode:"AUTO" as any}}};
 const executor=new SqlToolExecutor(pool as any);
+const worker=process.env.PROVIDER==="worker"?await createGeminiProvider():null;
+const plan=async(contents:any[])=>{
+ if(worker){const r=await worker.round(contents,{trusted:{roomId:loaded.job.room_id,memoryConsent:false}});return {content:r.content as any,calls:r.functionCalls as any[],text:r.text};}
+ const response=await client.models.generateContent({model:"gemini-2.5-flash",contents,config});
+ return {content:response.candidates?.[0]?.content??{role:"model",parts:[]},calls:response.functionCalls??[],text:response.text??""};
+};
 
 const results:unknown[]=[];
 for(let trial=1;trial<=TRIALS;trial++){
@@ -40,11 +47,8 @@ for(let trial=1;trial<=TRIALS;trial++){
  let continued=false,toolsRun=0,ending="";
  try{
   for(let round=0;round<6;round++){
-   const response=await client.models.generateContent({model:"gemini-2.5-flash",contents,config});
-   const content=response.candidates?.[0]?.content??{role:"model",parts:[]};
-   const calls=response.functionCalls??[];
+   const {content,calls,text}=await plan(contents);
    if(!calls.length){
-    const text=response.text??"";
     if(continued){ending=isDoneReply(text)?"DONE":`text: ${text.slice(0,300)}`;break;}
     if(toolsRun>0){continued=true;if(content.parts?.length)contents.push(content);contents.push({role:"user",parts:[{text:NOTE}]});continue;}
     ending=`no tools: ${text.slice(0,300)}`;break;
@@ -65,4 +69,4 @@ for(let trial=1;trial<=TRIALS;trial++){
 }
 await pool.end();
 console.log(JSON.stringify({ranAt:new Date().toISOString(),turnId,requester:conversation.requesterName,
- note:NOTE===WITHDRAWN_NOTE?"withdrawn 9b4f9f7 note":NOTE,results},null,1));
+ provider:worker?"worker streaming":"non-streaming",note:NOTE===WITHDRAWN_NOTE?"withdrawn 9b4f9f7 note":NOTE,results},null,1));

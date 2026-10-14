@@ -1,0 +1,40 @@
+{
+ "label": "s09-save",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that our escalation contact for the case mv8odabt-307x supplier dispute is Dana mv8odabt-55d4 and the deadline is 2026-11-20.",
+ "consent": true,
+ "turnId": "1cc1c70b-8051-44ca-a65e-7ce9163a5d86",
+ "messageSequence": 4123,
+ "at": "2026-10-14T22:22:17.243Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "escalation contact for supplier dispute mv8odabt-307x",
+    "room": "supply-planning",
+    "value_json": "{\"case_id\": \"mv8odabt-307x\", \"escalation_contact\": \"Dana mv8odabt-55d4\", \"deadline\": \"2026-11-20\"}"
+   },
+   "result": {
+    "ref": "1cc1c70b-8051-44ca-a65e-7ce9163a5d86:northside-outfitters:memory:d0e0c7d3-5efb-4210-ac35-6b92ad7bb8cc",
+    "saved": true,
+    "memory": {
+     "key": "escalation contact for supplier dispute mv8odabt-307x",
+     "value": {
+      "case_id": "mv8odabt-307x",
+      "deadline": "2026-11-20",
+      "escalation_contact": "Dana mv8odabt-55d4"
+     },
+     "memory_id": "d0e0c7d3-5efb-4210-ac35-6b92ad7bb8cc",
+     "created_at": "2026-10-14 22:22:11.957533+00",
+     "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "OK. I'll remember that.\n\nRecorded decision “escalation contact for supplier dispute mv8odabt-307x”: case id: mv8odabt-307x; deadline: 2026-11-20; escalation contact: Dana mv8odabt-55d4. Recorded by Northside Buyer One on 2026-10-14 in #supply-planning.\n\nSaved to shared memory: escalation contact for supplier dispute mv8odabt-307x\n{\"case_id\":\"mv8odabt-307x\",\"deadline\":\"2026-11-20\",\"escalation_contact\":\"Dana mv8odabt-55d4\"}\nRecorded by: xg9AHjCrMcZeReDTV5dJRl42H3g1 on 2026-10-14 22:22:11.957533+00 in #supply-planning\nSource: 1cc1c70b-8051-44ca-a65e-7ce9163a5d86:northside-outfitters:memory:d0e0c7d3-5efb-4210-ac35-6b92ad7bb8cc"
+}

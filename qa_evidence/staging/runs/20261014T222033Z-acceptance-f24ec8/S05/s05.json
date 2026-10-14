@@ -1,0 +1,139 @@
+{
+ "label": "s05",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI For ST-4003, what coefficient score changes if we add APP-100.12? Show class supersession.",
+ "consent": false,
+ "turnId": "2d8ad024-7518-41e7-8d5e-f42c89649e76",
+ "messageSequence": 4076,
+ "at": "2026-10-14T22:21:19.700Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "calculate_uplift",
+   "arguments": {
+    "store_id": "ST-4003",
+    "add_codes": [
+     "APP-100.12"
+    ]
+   },
+   "result": {
+    "ref": "2d8ad024-7518-41e7-8d5e-f42c89649e76:northside-outfitters:calculation:ST-4003",
+    "after": {
+     "codes": [
+      "APP-100.11",
+      "APP-100.99",
+      "APP-146.13",
+      "APR-123.18",
+      "ELC-123.14",
+      "ELC-169.13",
+      "HBA-215.16",
+      "HBA-238.18",
+      "HBA-238.19",
+      "HOM-100.17",
+      "HOM-192.16",
+      "OUT-123.13",
+      "OUT-169.19",
+      "OUT-192.12",
+      "SEA-169.11",
+      "SEA-169.13",
+      "SPT-146.16",
+      "SPT-215.14",
+      "SPT-238.15",
+      "APP-100.12"
+     ],
+     "score": "1.047585",
+     "removed": [
+      "1003",
+      "506"
+     ],
+     "segment": "loyalty",
+     "retained": [
+      "1001",
+      "1101",
+      "318",
+      "320",
+      "411",
+      "413",
+      "505",
+      "509",
+      "601",
+      "605",
+      "706",
+      "707",
+      "801"
+     ],
+     "unmapped": [
+      "APP-100.99"
+     ],
+     "multiplier": "0.231000",
+     "provenance": {
+      "dataset": "assessment fixtures",
+      "version": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb"
+     }
+    },
+    "before": {
+     "codes": [
+      "APP-100.11",
+      "APP-100.99",
+      "APP-146.13",
+      "APR-123.18",
+      "ELC-123.14",
+      "ELC-169.13",
+      "HBA-215.16",
+      "HBA-238.18",
+      "HBA-238.19",
+      "HOM-100.17",
+      "HOM-192.16",
+      "OUT-123.13",
+      "OUT-169.19",
+      "OUT-192.12",
+      "SEA-169.11",
+      "SEA-169.13",
+      "SPT-146.16",
+      "SPT-215.14",
+      "SPT-238.15"
+     ],
+     "score": "1.047585",
+     "removed": [
+      "1003",
+      "506"
+     ],
+     "segment": "loyalty",
+     "retained": [
+      "1001",
+      "1101",
+      "318",
+      "320",
+      "411",
+      "413",
+      "505",
+      "509",
+      "601",
+      "605",
+      "706",
+      "707",
+      "801"
+     ],
+     "unmapped": [
+      "APP-100.99"
+     ],
+     "multiplier": "0.231000",
+     "provenance": {
+      "dataset": "assessment fixtures",
+      "version": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb"
+     }
+    },
+    "result": {
+     "delta": "0.000000",
+     "caveat": "Dimensionless assortment coefficient score only; not sales, a percentage, or a forecast. Monetary baseline and linear scenario are user assumptions.",
+     "baseline": "1.047585",
+     "proposed": "1.047585"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "For ST-4003, adding APP-100.12 changes the assortment coefficient score from 1.047585 to 1.047585 (difference 0.000000). Retained classes: 1001, 1101, 318, 320, 411, 413, 505, 509, 601, 605, 706, 707, 801; superseded classes: 1003, 506. The score is a dimensionless coefficient, not a sales forecast.\n\nI left out part of my reply because I couldn't confirm it against this workspace's records.\n\nAssortment coefficient score: 1.047585 → 1.047585\nDifference: 0.000000\nRetained classes: [\"1001\",\"1101\",\"318\",\"320\",\"411\",\"413\",\"505\",\"509\",\"601\",\"605\",\"706\",\"707\",\"801\"]\nSuperseded classes: [\"1003\",\"506\"]\nAssumption: each distinct mapped class counts once; segment-specific coefficients, then channel/format factor. This is not a sales forecast.\nSource: 2d8ad024-7518-41e7-8d5e-f42c89649e76:northside-outfitters:calculation:ST-4003"
+}

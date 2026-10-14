@@ -1,0 +1,39 @@
+{
+ "label": "c03-follow-up",
+ "user": "Northside Buyer Two",
+ "room": "chat-2f6a1f9f-34c1",
+ "prompt": "@AI which one of those is the low-noise model?",
+ "turnId": "b78086d1-39ba-4a42-8524-200b647566cd",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 5.665,
+  "terminalS": 5.734
+ },
+ "tools": [
+  {
+   "name": "search_catalog",
+   "arguments": {
+    "query": "low-noise portable air conditioners"
+   }
+  }
+ ],
+ "segments": [
+  {
+   "kind": "say",
+   "rendered": "Here is the low-noise model:"
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.19 is “Portable air conditioners, low-noise” (Portable air conditioners, Appliances). It is in margin class 318."
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_tool_start",
+  "ai_tool",
+  "ai_answer_block",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}
