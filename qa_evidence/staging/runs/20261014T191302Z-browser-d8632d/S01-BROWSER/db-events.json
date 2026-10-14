@@ -1,0 +1,685 @@
+[
+ {
+  "room_id": "supply-planning",
+  "sequence": 958,
+  "event_id": "b4c894f1-0aa0-4a84-9427-7ab72f9eb5c9",
+  "type": "message",
+  "turn_id": null,
+  "payload": {
+   "body": "@AI what's the right catalog code for portable air conditioning units, and does it carry a margin class? [s01-mv8holr0-69z1]",
+   "ai_turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "author_uid": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+   "message_id": "dad1fe0c-4978-4062-a22d-2ac19abb40b2",
+   "client_message_id": "8687617a-fdba-4a4e-97e0-0138776c23b6"
+  },
+  "created_at": "2026-10-14 19:14:53.601023+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 959,
+  "event_id": "ae0ec1b3-3367-4879-bc5d-c98d0dfe5386",
+  "type": "ai_turn_started",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "attempt": 1
+  },
+  "created_at": "2026-10-14 19:14:53.950599+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 960,
+  "event_id": "9e783923-3e6c-4893-a4be-50faa32d0140",
+  "type": "ai_tool_start",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "name": "search_catalog",
+   "arguments": {
+    "query": "portable air conditioning units"
+   },
+   "operationId": "r0-c0"
+  },
+  "created_at": "2026-10-14 19:14:55.7211+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 961,
+  "event_id": "e1151549-26fc-4ca1-bb38-88804f6605b0",
+  "type": "ai_tool",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "name": "search_catalog",
+   "result": [
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.11",
+     "department": "Appliances",
+     "description": "Portable air conditioners, 5,000 to 7,000 BTU",
+     "catalog_code": "APP-100.11",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.12",
+     "department": "Appliances",
+     "description": "Portable air conditioners, 8,000 to 10,000 BTU",
+     "catalog_code": "APP-100.12",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.13",
+     "department": "Appliances",
+     "description": "Portable air conditioners, 11,000 to 13,000 BTU",
+     "catalog_code": "APP-100.13",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.14",
+     "department": "Appliances",
+     "description": "Portable air conditioners, 14,000 BTU and above",
+     "catalog_code": "APP-100.14",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.15",
+     "department": "Appliances",
+     "description": "Portable air conditioners, dual-hose",
+     "catalog_code": "APP-100.15",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.16",
+     "department": "Appliances",
+     "description": "Portable air conditioners, single-hose",
+     "catalog_code": "APP-100.16",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.17",
+     "department": "Appliances",
+     "description": "Portable air conditioners, with heat pump",
+     "catalog_code": "APP-100.17",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.18",
+     "department": "Appliances",
+     "description": "Portable air conditioners, smart/app controlled",
+     "catalog_code": "APP-100.18",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.19",
+     "department": "Appliances",
+     "description": "Portable air conditioners, low-noise",
+     "catalog_code": "APP-100.19",
+     "margin_class": "318",
+     "product_family": "Portable air conditioners"
+    },
+    {
+     "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.99",
+     "department": "Appliances",
+     "description": "Portable air conditioners, unspecified",
+     "catalog_code": "APP-100.99",
+     "margin_class": null,
+     "product_family": "Portable air conditioners"
+    }
+   ],
+   "arguments": {
+    "query": "portable air conditioning units"
+   },
+   "operationId": "r0-c0"
+  },
+  "created_at": "2026-10-14 19:14:55.792378+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 962,
+  "event_id": "f78659ac-d831-4ffc-a5dc-6435419b836b",
+  "type": "ai_answer_block",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "verified": {
+    "result": [
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.11",
+      "department": "Appliances",
+      "description": "Portable air conditioners, 5,000 to 7,000 BTU",
+      "catalog_code": "APP-100.11",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.12",
+      "department": "Appliances",
+      "description": "Portable air conditioners, 8,000 to 10,000 BTU",
+      "catalog_code": "APP-100.12",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.13",
+      "department": "Appliances",
+      "description": "Portable air conditioners, 11,000 to 13,000 BTU",
+      "catalog_code": "APP-100.13",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.14",
+      "department": "Appliances",
+      "description": "Portable air conditioners, 14,000 BTU and above",
+      "catalog_code": "APP-100.14",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.15",
+      "department": "Appliances",
+      "description": "Portable air conditioners, dual-hose",
+      "catalog_code": "APP-100.15",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.16",
+      "department": "Appliances",
+      "description": "Portable air conditioners, single-hose",
+      "catalog_code": "APP-100.16",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.17",
+      "department": "Appliances",
+      "description": "Portable air conditioners, with heat pump",
+      "catalog_code": "APP-100.17",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.18",
+      "department": "Appliances",
+      "description": "Portable air conditioners, smart/app controlled",
+      "catalog_code": "APP-100.18",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.19",
+      "department": "Appliances",
+      "description": "Portable air conditioners, low-noise",
+      "catalog_code": "APP-100.19",
+      "margin_class": "318",
+      "product_family": "Portable air conditioners"
+     },
+     {
+      "ref": "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.99",
+      "department": "Appliances",
+      "description": "Portable air conditioners, unspecified",
+      "catalog_code": "APP-100.99",
+      "margin_class": null,
+      "product_family": "Portable air conditioners"
+     }
+    ],
+    "source": "verified_database_tool",
+    "template": "search_catalog"
+   },
+   "blockIndex": 0
+  },
+  "created_at": "2026-10-14 19:14:55.825203+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 963,
+  "event_id": "87970b45-c90e-4ef8-894e-427a5a0ed4fe",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "say",
+   "refs": [],
+   "index": 0,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [],
+   "rendered": "Here are the catalog codes for portable air conditioning units:"
+  },
+  "created_at": "2026-10-14 19:15:00.043563+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 964,
+  "event_id": "2a93cb50-87f0-42d4-b07c-1311cb03e1fb",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.11"
+   ],
+   "index": 1,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.11"
+   ],
+   "rendered": "APP-100.11 is “Portable air conditioners, 5,000 to 7,000 BTU” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:00.080759+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 965,
+  "event_id": "f3762091-6f4b-498d-9662-ec5bc41240c8",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.11"
+   ],
+   "index": 2,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.11"
+   ],
+   "rendered": "APP-100.11 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:00.113975+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 966,
+  "event_id": "4b089e0f-6dcb-4fa9-8a57-c5b35f4ebc61",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.12"
+   ],
+   "index": 3,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.12"
+   ],
+   "rendered": "APP-100.12 is “Portable air conditioners, 8,000 to 10,000 BTU” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:00.250951+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 967,
+  "event_id": "22a652dd-ec96-4b95-96cd-ccdeff5b213a",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.12"
+   ],
+   "index": 4,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.12"
+   ],
+   "rendered": "APP-100.12 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:00.409642+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 968,
+  "event_id": "1d57ae7e-9e28-40f1-be1b-b8a614cbadcb",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.13"
+   ],
+   "index": 5,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.13"
+   ],
+   "rendered": "APP-100.13 is “Portable air conditioners, 11,000 to 13,000 BTU” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:00.70291+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 969,
+  "event_id": "0d2dfc0d-7009-480e-bfc4-e14386ac6ad5",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.13"
+   ],
+   "index": 6,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.13"
+   ],
+   "rendered": "APP-100.13 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:00.736697+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 970,
+  "event_id": "3c5524e6-7ba3-4e13-9067-98039c55a552",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.14"
+   ],
+   "index": 7,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.14"
+   ],
+   "rendered": "APP-100.14 is “Portable air conditioners, 14,000 BTU and above” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:00.952421+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 971,
+  "event_id": "7acaee91-01ae-4f7b-8ddc-709264677b0c",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.14"
+   ],
+   "index": 8,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.14"
+   ],
+   "rendered": "APP-100.14 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:00.984231+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 972,
+  "event_id": "9e89ab9d-f22d-4c75-a0ad-2a9da91ccfbc",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.15"
+   ],
+   "index": 9,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.15"
+   ],
+   "rendered": "APP-100.15 is “Portable air conditioners, dual-hose” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:01.181196+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 973,
+  "event_id": "8c074233-4b46-42ae-807d-d3e36e6ea1d6",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.15"
+   ],
+   "index": 10,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.15"
+   ],
+   "rendered": "APP-100.15 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:01.210896+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 974,
+  "event_id": "629faece-7f5a-449a-ab2b-546a390c8c99",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.16"
+   ],
+   "index": 11,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.16"
+   ],
+   "rendered": "APP-100.16 is “Portable air conditioners, single-hose” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:01.757414+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 975,
+  "event_id": "5e266f68-465a-457f-bf72-f67e307bb39d",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.16"
+   ],
+   "index": 12,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.16"
+   ],
+   "rendered": "APP-100.16 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:01.795378+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 976,
+  "event_id": "3e061093-46c6-45f7-a9de-1761bea11094",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.17"
+   ],
+   "index": 13,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.17"
+   ],
+   "rendered": "APP-100.17 is “Portable air conditioners, with heat pump” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:01.832188+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 977,
+  "event_id": "f786776e-f5e7-4a5f-81ef-b5f323eeeabb",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.17"
+   ],
+   "index": 14,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.17"
+   ],
+   "rendered": "APP-100.17 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:01.86778+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 978,
+  "event_id": "557ad381-20a5-47aa-9f7e-e8f2dedb213d",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.18"
+   ],
+   "index": 15,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.18"
+   ],
+   "rendered": "APP-100.18 is “Portable air conditioners, smart/app controlled” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:01.97141+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 979,
+  "event_id": "bd364ecb-4c68-4628-8433-4a96770e5814",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.18"
+   ],
+   "index": 16,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.18"
+   ],
+   "rendered": "APP-100.18 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:02.000373+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 980,
+  "event_id": "d14311bc-d291-4e9d-85fa-55a40755e484",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.19"
+   ],
+   "index": 17,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.19"
+   ],
+   "rendered": "APP-100.19 is “Portable air conditioners, low-noise” (Portable air conditioners, Appliances). It is in margin class 318.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:02.207447+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 981,
+  "event_id": "858c3497-aef0-4cd9-9e81-67502c2df119",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.19"
+   ],
+   "index": 18,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.19"
+   ],
+   "rendered": "APP-100.19 has margin class 318.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:02.236076+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 982,
+  "event_id": "8f22af46-21cd-4af9-8c05-c4d5c783ba5b",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.99"
+   ],
+   "index": 19,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.99"
+   ],
+   "rendered": "APP-100.99 is “Portable air conditioners, unspecified” (Portable air conditioners, Appliances). It has no margin class mapped.",
+   "predicate": "product_info"
+  },
+  "created_at": "2026-10-14 19:15:02.42288+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 983,
+  "event_id": "d7a9c0f8-6b95-4569-9040-ae52e76c52dc",
+  "type": "ai_answer_segment",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "kind": "fact",
+   "refs": [
+    "19476e43-d681-43c2-b909-1f4b8acf65a5:northside-outfitters:catalog:APP-100.99"
+   ],
+   "index": 20,
+   "turnId": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+   "sources": [
+    "Catalog APP-100.99"
+   ],
+   "rendered": "APP-100.99 has no margin class mapped.",
+   "predicate": "product_margin_class"
+  },
+  "created_at": "2026-10-14 19:15:02.463566+00"
+ },
+ {
+  "room_id": "supply-planning",
+  "sequence": 984,
+  "event_id": "19ad2e2a-08ae-4bde-bd48-f6d24d4dc818",
+  "type": "ai_complete",
+  "turn_id": "19476e43-d681-43c2-b909-1f4b8acf65a5",
+  "payload": {
+   "status": "completed"
+  },
+  "created_at": "2026-10-14 19:15:02.522998+00"
+ }
+]
