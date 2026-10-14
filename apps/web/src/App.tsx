@@ -1,4 +1,4 @@
-import {useEffect,useMemo,useRef,useState} from "react";
+import {useEffect,useLayoutEffect,useMemo,useRef,useState} from "react";
 import {initializeApp} from "firebase/app";
 import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut,type User} from "firebase/auth";
 import {TeamSocket,type SocketStatus,type LiveEvent} from "./socket";
@@ -13,7 +13,8 @@ export function App(){
  const [room,setRoom]=useState(""),[events,setEvents]=useState<Record<string,LiveEvent[]>>({});
  const [dataOwnerUid,setDataOwnerUid]=useState<string|null>(null);
  const [allowMemory,setAllowMemory]=useState(false),[channels,setChannels]=useState<string[]>(["assortment-review","category-strategy"]);
- const socketRef=useRef<TeamSocket|null>(null);
+ const [displayNames,setDisplayNames]=useState<Record<string,string>>({}),[creatingRoom,setCreatingRoom]=useState(false);
+ const socketRef=useRef<TeamSocket|null>(null),messagesRef=useRef<HTMLElement|null>(null),autoScrollRef=useRef(true);
  const [presence,setPresence]=useState<Record<string,Array<{firebase_uid:string;expires_at:string}>>>({});
  const [typing,setTyping]=useState<Record<string,Array<{firebase_uid:string;expires_at:string}>>>({});
  const [now,setNow]=useState(Date.now());
@@ -30,7 +31,7 @@ export function App(){
  // transcript, presence, typing state, selection or shared-memory consent.
  useEffect(()=>{
   setDataOwnerUid(user?.uid??null);setEvents({});setPresence({});setTyping({});setRoom("");
-  setAllowMemory(false);setBody("");setChannels([]);setError("");
+  setAllowMemory(false);setBody("");setChannels([]);setDisplayNames({});setError("");
  },[user?.uid]);
  useEffect(()=>{
   if(!user)return;
@@ -48,7 +49,10 @@ export function App(){
     // This comes from the authenticated room-list API, never from a chat frame.
     socket.setExpectedTenant(data.tenantId);
     const allowed=data.rooms.map((r:{room_id:string})=>r.room_id).filter((r:string)=>/^[-a-z0-9_]{1,128}$/i.test(r));
-    setChannels(allowed);setRoom(current=>allowed.includes(current)?current:(allowed[0]??""));
+    const names=Array.isArray(data.members)?Object.fromEntries(data.members
+     .filter((m:{firebase_uid?:unknown;display_name?:unknown})=>typeof m.firebase_uid==="string"&&typeof m.display_name==="string")
+     .map((m:{firebase_uid:string;display_name:string})=>[m.firebase_uid,m.display_name])):{};
+    setDisplayNames(names);setChannels(allowed);setRoom(current=>allowed.includes(current)?current:(allowed[0]??""));
    }})
    .catch(()=>{if(active)setError("Cannot load workspace rooms");});
   return ()=>{active=false;controller.abort();socket.close();if(socketRef.current===socket)socketRef.current=null;};
@@ -65,13 +69,35 @@ export function App(){
  const online=(safeOwner?presence[room]??[]:[]);
  const activeTyping=(safeOwner?typing[room]??[]:[]).filter(x=>x.firebase_uid!==user?.uid&&new Date(x.expires_at).getTime()>now);
  const transcript=useMemo(()=>safeOwner?visibleTranscript(events[room]??[]):[],[safeOwner,events,room]);
+ useLayoutEffect(()=>{
+  const node=messagesRef.current;
+  if(node&&autoScrollRef.current)node.scrollTo({top:node.scrollHeight,behavior:"smooth"});
+ },[room,transcript.length]);
+ async function createChat(){
+  if(!user||creatingRoom)return;
+  const title=window.prompt("Name this chat");
+  if(!title?.trim())return;
+  setCreatingRoom(true);setError("");
+  try{
+   const token=await user.getIdToken();
+   const response=await fetch(`${import.meta.env.VITE_API_URL}/api/rooms`,{
+    method:"POST",headers:{Authorization:`Bearer ${token}`,"Content-Type":"application/json"},
+    body:JSON.stringify({title:title.trim()})
+   });
+   if(!response.ok){const problem=await response.json().catch(()=>({}));throw Error(problem.error||"Unable to create chat");}
+   const data=await response.json();const roomId=data?.room?.room_id;
+   if(typeof roomId!=="string"||!/^[-a-z0-9_]{1,128}$/i.test(roomId))throw Error("Invalid room response");
+   setChannels(current=>current.includes(roomId)?current:[...current,roomId]);setRoom(roomId);autoScrollRef.current=true;
+  }catch(reason){setError(reason instanceof Error?reason.message:"Unable to create chat");}
+  finally{setCreatingRoom(false);}
+ }
  async function login(e:React.FormEvent){e.preventDefault();setError("");try{await signInWithEmailAndPassword(auth,email,password);}catch{setError("Sign-in failed");}}
  function send(e:React.FormEvent){e.preventDefault();if(!canSendInRoom(channels,room,status)||!body.trim())return;
   try{socketRef.current?.sendMessage(room,body.trim(),allowMemory);setError("");setBody("");setAllowMemory(false);}
   catch(reason){setError(reason instanceof Error?reason.message:"Unable to queue message");}
  }
  if(!user)return <main className="auth"><section className="authcard"><div className="brand">◈ TeamChat AI</div><h1>Welcome back</h1><p>Sign in with an assessment account to continue.</p><form onSubmit={login}><label>Email<input autoComplete="username" type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></label><label>Password<input autoComplete="current-password" type="password" value={password} onChange={e=>setPassword(e.target.value)} required/></label><button>Sign in</button></form>{error&&<p role="alert">{error}</p>}</section></main>;
- return <div className="shell"><aside className="sidebar"><div className="brand">◈ TeamChat AI</div><div className="navlabel">CHANNELS</div>{(safeOwner?channels:[]).map(r=><button key={r} className={`channel ${room===r?"active":""}`} onClick={()=>setRoom(r)}># {r}</button>)}<div className="sidebarfooter"><small>{user.email}</small><button className="signout" onClick={()=>{socketRef.current?.close(true);void signOut(auth);}}>Sign out</button></div></aside><main className="chat"><header><div><strong># {room}</strong><p>Team workspace · {online.length} online {activeTyping.length?`· ${activeTyping.length} typing`:""}</p></div><span className={`status ${status}`}>{status}</span></header><section className="messages" aria-live="polite">{transcript.length===0&&<div className="empty">No messages in this channel yet.</div>}{transcript.map(e=><article className="message" key={e.eventId} data-event-id={e.eventId} data-seq={e.sequence} data-turn-id={e.turnId} data-event-type={e.type}><span className="avatar">{String(e.payload.author_uid??"A").slice(0,1).toUpperCase()}</span><div><strong>{String(e.payload.author_uid??"AI Assistant")}</strong><small> #{e.sequence}</small>{e.type==="message"?<p>{String(e.payload.body??"")}</p>:
+ return <div className="shell"><aside className="sidebar"><div className="brand">◈ TeamChat AI</div><div className="navlabel">CHANNELS</div>{(safeOwner?channels:[]).map(r=><button key={r} className={`channel ${room===r?"active":""}`} onClick={()=>{autoScrollRef.current=true;setRoom(r);}}># {r}</button>)}<button className="newchat" onClick={()=>void createChat()} disabled={creatingRoom}>{creatingRoom?"Creating…":"+ New chat"}</button><div className="sidebarfooter"><small>{user.email}</small><button className="signout" onClick={()=>{socketRef.current?.close(true);void signOut(auth);}}>Sign out</button></div></aside><main className="chat"><header><div><strong># {room}</strong><p>Team workspace · {online.length} online {activeTyping.length?`· ${activeTyping.length} typing`:""}</p></div><span className={`status ${status}`}>{status}</span></header><section className="messages" aria-live="polite" ref={messagesRef} onScroll={e=>{const node=e.currentTarget;autoScrollRef.current=node.scrollHeight-node.scrollTop-node.clientHeight<80;}}>{transcript.length===0&&<div className="empty">No messages in this channel yet.</div>}{transcript.map(e=><article className="message" key={e.eventId} data-event-id={e.eventId} data-seq={e.sequence} data-turn-id={e.turnId} data-event-type={e.type}><span className="avatar">{String(displayNames[String(e.payload.author_uid??"")]??e.payload.author_uid??"AI").slice(0,1).toUpperCase()}</span><div><strong>{String(displayNames[String(e.payload.author_uid??"")]??e.payload.author_uid??"AI Assistant")}</strong><small> #{e.sequence}</small>{e.type==="message"?<p>{String(e.payload.body??"")}</p>:
  <pre className="structured">{e.type==="ai_tool"?`Tool: ${String(e.payload.name)}\n${JSON.stringify(e.payload.arguments,null,2)}\n${JSON.stringify(e.payload.result,null,2)}`:
  e.type==="ai_tool_start"?`Fetching verified data: ${String(e.payload.name)}`:
  e.type==="ai_answer_reset"?"AI answer restarted after an interruption; prior partial blocks were superseded.":
