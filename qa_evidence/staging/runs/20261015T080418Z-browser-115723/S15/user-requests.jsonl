@@ -1,0 +1,11 @@
+{"t":1792051602755,"url":"https://focus-clean-4b9f4--staging-yxk0bcnc.web.app/","method":"GET","type":"document"}
+{"t":1792051602955,"url":"https://focus-clean-4b9f4--staging-yxk0bcnc.web.app/assets/index-C7FP-Kn1.js","method":"GET","type":"script"}
+{"t":1792051602955,"url":"https://focus-clean-4b9f4--staging-yxk0bcnc.web.app/assets/index-rqV0oTD5.css","method":"GET","type":"stylesheet"}
+{"t":1792051603713,"url":"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword","method":"POST","type":"fetch"}
+{"t":1792051604281,"url":"https://identitytoolkit.googleapis.com/v1/accounts:lookup","method":"POST","type":"fetch"}
+{"t":1792051604774,"url":"https://teamchat-api-staging-1068908463902.us-central1.run.app/api/rooms","method":"GET","type":"fetch"}
+{"t":1792051610471,"url":"https://focus-clean-4b9f4--staging-yxk0bcnc.web.app/","method":"GET","type":"document"}
+{"t":1792051610579,"url":"https://focus-clean-4b9f4--staging-yxk0bcnc.web.app/assets/index-C7FP-Kn1.js","method":"GET","type":"script"}
+{"t":1792051610580,"url":"https://focus-clean-4b9f4--staging-yxk0bcnc.web.app/assets/index-rqV0oTD5.css","method":"GET","type":"stylesheet"}
+{"t":1792051610587,"url":"https://identitytoolkit.googleapis.com/v1/accounts:lookup","method":"POST","type":"fetch"}
+{"t":1792051610851,"url":"https://teamchat-api-staging-1068908463902.us-central1.run.app/api/rooms","method":"GET","type":"fetch"}
