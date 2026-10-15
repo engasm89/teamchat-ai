@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {TurnSources,WorkspaceVocabulary,checkSegment,fallbackSegments,type HistoryMessage} from "../src/answer-contract.ts";
+import {readFileSync} from "node:fs";
+import {TurnSources,WorkspaceVocabulary,JsonArrayStream,checkSegment,fallbackSegments,type HistoryMessage} from "../src/answer-contract.ts";
 
 const TURN="9a610fd3-691c-4a22-aa10-f24cbd207e90",OTHER_TURN="bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
 const T="northside-outfitters";
@@ -74,6 +75,30 @@ test("a record from another turn or tenant cannot be used to make a say consiste
  s.ingest("calculate_uplift",{ref:ref("calculation","ST-4003",TURN,"valley-home-goods"),result:{delta:"0"},before:{score:"1",codes:[]},after:{score:"1",codes:[],retained:[],removed:[]}});
  assert.equal(s.list().length,0);
  assert.deepEqual(checkSegment({kind:"fact",predicate:"score_change",ref:"S1"},{sources:s,messages,vocabulary}),{ok:false,reason:"unknown source ref"});
+});
+
+test("replaying the recorded S05 composition through the streamed pipeline: the denial is never emitted",()=>{
+ const s=s05Sources();
+ const composed=`[{"kind":"fact","predicate":"score_change","ref":"S1"},{"kind":"say","text":"There is no class supersession."}]`;
+ const stream=new JsonArrayStream();const emitted:string[]=[];const shown=new Set<string>();let rejected=0;
+ for(let i=0;i<composed.length;i+=5)for(const element of stream.push(composed.slice(i,i+5))){
+  const check=checkSegment(JSON.parse(element),{sources:s,messages,vocabulary});
+  if(!check.ok){rejected++;continue;}
+  const r=JSON.parse(element).ref;if(typeof r==="string"&&r)shown.add(r);
+  emitted.push(check.segment.rendered);
+ }
+ assert.equal(rejected,1);
+ const replacement=fallbackSegments(s,shown,emitted.length>0);
+ assert.deepEqual(replacement,[],"the fact was already shown, so nothing is re-rendered");
+ assert.equal(emitted.length,1);
+ assert.match(emitted[0]!,/superseded classes: 1003, 506/);
+ assert.ok(emitted.every(t=>!/no class supersession/i.test(t)));
+});
+
+test("the worker emits only checked segments and skips rejected ones (source contract)",()=>{
+ const worker=readFileSync(new URL("../src/worker/gemini.ts",import.meta.url),"utf8");
+ assert.match(worker,/const check=checkSegment\(parsed,\{sources,messages:conversation\.messages,vocabulary\}\);\s*if\(!check\.ok\)\{rejected\+\+;[^\n]*continue;\}/);
+ assert.match(worker,/await emit\(check\.segment\)/);
 });
 
 test("the fallback never contradicts a verified fact already shown, and never repeats rejected text",()=>{
