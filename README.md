@@ -7,7 +7,7 @@ A multi-tenant team chat where an AI participant answers retail questions by cal
 - Technical brief as submitted on 8 October 2026: [`reference/TeamChat_AI_Technical_Brief_SUBMITTED_2026-10-08.pdf`](reference/TeamChat_AI_Technical_Brief_SUBMITTED_2026-10-08.pdf)
 - Requirement status, derived from evidence rather than written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md` and `docs/REQUIREMENTS_FINAL_MATRIX.md`
 - Release decision: `docs/FINAL_GO_NO_GO_REPORT.md`
-- Changes after the 14 October review (conversational AI, names and auto-scroll, tenant-wide new chats), their test evidence and deployment status: `docs/GONZALO_REMEDIATION_REPORT.md`. **These changes run on an isolated staging stack; the live app above still runs the earlier release until the production rollout described there is done.**
+- Changes after the 14 October review (conversational AI, names and auto-scroll, tenant-wide new chats), their test evidence and deployment status: `docs/GONZALO_REMEDIATION_REPORT.md`. **The live app above runs `edbdfb2` (Cloud Run revision 00017, tag `prod-00017-edbdfb2`), deployed on 14 October. `main` is ahead of production: it also contains two staging-only changes (`e1fdb8a`, S06 completeness review; `b110e54`, C03 follow-up re-fetch note) that are not deployed.**
 
 ## How to run
 
@@ -134,8 +134,9 @@ At the boundary the model is treated as untrusted:
 
 ## What does not work
 
-- **In the live app (earlier release) only:** sender names are raw Firebase user IDs, the transcript does not auto-scroll, there is no way to start a chat, and the AI is forced to call a tool on every turn. All four are fixed in the remediation branch and verified on staging; see `docs/GONZALO_REMEDIATION_REPORT.md`.
-- **Gemini still varies run to run.** With tool choice `AUTO`, a multi-part request occasionally gets a partial answer (for example the gaps without the score change). Every shown fact is still checked; what can be missing is a part of the answer, not its correctness.
+- **New chats are verified on staging only.** The feature is deployed in production (`edbdfb2`), but no chat has been created there; status STAGING PASS / PRODUCTION NOT VERIFIED. The earlier issues (raw user IDs, no auto-scroll, no new chat, forced tool calls) are fixed in `edbdfb2`; see `docs/GONZALO_REMEDIATION_REPORT.md`.
+- **One unverified sentence reached production once.** In the 14 October Gate 5 S05 answer, free text said "There is no class supersession." next to a verified calculation listing superseded classes 1003 and 506. The wording check missed the noun "supersession". The Gate 5 S05 assertion still passed, because it checks the tool call and the numbers, not every sentence. Not fixed in production; a fix is in QA.
+- **Gemini still varies run to run.** With tool choice `AUTO`, a multi-part request occasionally gets a partial answer (for example the gaps without the score change). Facts rendered from tool results are checked; free-text wording around them is checked by a heuristic that is not complete (see the S05 item above).
 - **Only the newest 500 events of a room are rendered.** There is no "load older" control.
 - **No monetary uplift**, as described above.
 - **Gemini is nondeterministic.** Acceptance asserts tool calls and server-computed values, not wording. S01–S18 each needed two passing runs against the deployment; S19, which forces new revisions, needed one.
