@@ -1,6 +1,7 @@
 /** Writes the target's provenance file (TEAMCHAT_TARGET; config/targets) from live systems only: Cloud Build results,
  * registry image configs, Cloud Run serving revisions and the Hosting release.
- * Usage: node --experimental-strip-types scripts/evidence/record-provenance.ts --build <id> --clean-clone <dir> */
+ * Usage: node --experimental-strip-types scripts/evidence/record-provenance.ts --build <id> --clean-clone <dir>
+ * If the web build used VITE_* overrides (staging), export the same values when running this. */
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
@@ -64,6 +65,8 @@ const assetsMatchLocalBuild=Object.keys(localBuildAssets).length===Object.keys(s
  Object.entries(localBuildAssets).every(([k,v])=>servedAssets[k]===v);
 if(!assetsMatchLocalBuild)throw Error("Served Hosting assets differ from the clean-clone build");
 const envFile=path.join(cleanClone,"apps/web/.env.production");
+// Vite lets the build environment override .env.production (staging points the bundle at its own API).
+const webEnvOverrides=Object.fromEntries(Object.entries(process.env).filter(([k])=>k.startsWith("VITE_")).sort());
 
 const FIXTURE_DIR="teamchat-ai-assessment/teamchat-ai-seed-data";
 const fixtureHashes=Object.fromEntries(fs.readdirSync(FIXTURE_DIR).sort().map(f=>[f,sha256(fs.readFileSync(path.join(FIXTURE_DIR,f)))]));
@@ -96,7 +99,9 @@ const provenance:Provenance={
  build:{id:buildId,createTime:build.createTime,source:`gs://${build.source.storageSource.bucket}/${build.source.storageSource.object}`,substitutions:build.substitutions},
  hosting:{site:SITE,channel:CHANNEL,url:APP_URL,releaseVersion:release.version.name,releaseTime:release.releaseTime,servedAssets,localBuildAssets,assetsMatchLocalBuild,
   message:release.message,untrackedBuildInput:{file:"apps/web/.env.production",sha256:sha256(fs.readFileSync(envFile)),
-   note:"Firebase web config and public API URLs; gitignored by the repository, copied into the clean clone for the build. Its values are visible in the served JavaScript."}},
+   note:"Firebase web config and public API URLs; gitignored by the repository, copied into the clean clone for the build. Its values are visible in the served JavaScript.",
+   ...(Object.keys(webEnvOverrides).length?{environmentOverrides:webEnvOverrides,
+    overridesNote:"VITE_* variables set for the clean-clone web build (run this recorder with the same values); they take precedence over the file and are public in the served JavaScript."}:{})}},
  vertex:Object.fromEntries(workerEnv.filter(e=>/^VERTEX_/.test(e.name)).map(e=>[e.name,e.value??""])),
  database:{instance:sql.connectionName,version:sql.databaseVersion,tier:sql.settings.tier,database:TARGET.database,applicationRole:TARGET.dbRole,
   databaseUrlSecret:{name:TARGET.databaseSecret,versions:secret.map(v=>({version:v.name.split("/").pop(),state:v.state,createTime:v.createTime}))},
