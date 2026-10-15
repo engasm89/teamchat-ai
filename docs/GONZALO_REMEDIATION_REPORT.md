@@ -326,6 +326,9 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
 - **The review's false positives.** In chain 1, the review asked for one more round in about 1 in 15 reviewed turns (S05, S09's Valley check, and S06 after the calculation). In the 10 S06-only runs it did so in 5 of 10. Those extra rounds changed no answer, but each cost about 4–6 s. The next step is to log what the review reports missing, then tighten the review or skip it when the last round already called the tools that cover the request.
 - **Other Gemini nondeterminism seen once.** C03 (a follow-up fell back, `5a82e6e`) and A02 (4 typing frames arrived more than 1 s after leaving a room, `fec3b9e`, right after an S19 restart). A02's control saw only 1 frame in 4 s, so this looks like delayed delivery rather than a leak, but the test cannot tell the two apart. Neither recurred in the next two chains.
 - **The `say` check is a heuristic.** It is conservative. When it rejects text, the user sees a neutral fallback or "I left out part of my reply…". It may still let through harmless paraphrase, or block a legitimate phrase.
+  - **One unverified sentence did get through, in production.** In Gate 5's S05 answer, a `say` segment read "There is no class supersession." The verified fact beside it listed superseded classes 1003 and 506 (`qa_evidence/runs/20261014T224119Z-acceptance-f823b5/S05/s05.json`).
+  - The cause: `CLAIM_WORDS` matches `supersed(e|es|ed|ing)` but not "supersession".
+  - Not fixed yet. The fix (add the noun form, plus a unit test that fails on the old pattern) needs the same staging bar as any other change. The demo note flags it, and the 15 October dry run of that prompt did not repeat it.
 - **Wording polish.** The C04 fallback is generic. Catalog lists often repeat the margin class on a second line for each code. Redundant, not wrong.
 - **QA memories in production.** A read-only listing (`teamchat_api`, READ ONLY, `app.tenant_id` set; details in the git-ignored `audit/gonzalo-2026-10-14/QA_MEMORIES_PRIVATE.md`) found 37 memories in Northside beyond the 4 seeded.
   - All 37 came from QA prompts, none from a person using the product.
@@ -337,6 +340,14 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
 - **Shared instance.** Staging shares the production Cloud SQL instance (documented above).
 - **Production hardening, unchanged.** `CONNECT` on `teamchat` is still granted to `PUBLIC`. Cloud SQL has automated backups disabled, a public IP and unencrypted connections allowed.
 - **A new standing credential.** The `postgres` owner password now lives in Keychain `teamchat-ai-prod-postgres-owner` on this Mac. It is needed for future migrations. Rotate or remove it if this machine is not where it should live.
+
+**Production dry run of the demo script (15 October, about 13:20 Cairo).**
+- On production `edbdfb2` (00017), as `northside.analyst3` in the existing `#supply-planning` QA room: 11 prompts, plus a who-said-what prompt after a line posted by `northside.buyer2`.
+- No chats created, no memories saved, never the reviewer's account.
+- **Result: 12/12 met their checks.** Each turn completed, and every code shown was fetched in that turn. No retries.
+- Latency from question to final event: median 4.8 s, range 3.3–10.0 s.
+- "I left out part of my reply…" appeared on 3 of the 12: the gaps-only question and both isolation questions.
+- The prompts and raw results stay in the git-ignored demo note.
 
 ## Human-only actions
 
