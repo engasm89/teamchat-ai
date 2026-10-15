@@ -165,13 +165,15 @@ function s16Checks(i:{cursorBefore:number;db:PersistedEvent[];domA:ProjectionIte
 }
 const IDLE_ALLOWED_REQUESTS=[/^https:\/\/securetoken\.googleapis\.com\/v1\/token$/];
 function s17Checks(i:{samples:number[];requests:Array<{url:string;method:string}>;framesIn:Record<string,number>;framesOut:Record<string,number>;
- seconds:number;metrics0:Record<string,number>;metrics1:Record<string,number>;postIdleDelivered:boolean}):Assertion[]{
+ seconds:number;metrics0:Record<string,number>;metrics1:Record<string,number>;postIdleDelivered:boolean;
+ history:{settled:boolean;settledMs:number;historyEvents:number}}):Assertion[]{
  const disallowed=i.requests.filter(r=>!IDLE_ALLOWED_REQUESTS.some(rx=>rx.test(r.url)));
  const liveness=(i.framesIn.presence??0)+(i.framesIn.typing??0);
  const other=Object.entries(i.framesIn).filter(([k])=>!["presence","typing"].includes(k));
  const cpu=(i.metrics1.TaskDuration!-i.metrics0.TaskDuration!)/i.seconds;
  const heap=i.metrics1.JSHeapUsedSize!-i.metrics0.JSHeapUsedSize!;
  return [
+  a("room history finished arriving before the idle window (5 s without events, within 120 s)",i.history.settled,true,i.history),
   a("exactly one app WebSocket open at every sample",i.samples.length>0&&i.samples.every(n=>n===1),"all 1",[Math.min(...i.samples),Math.max(...i.samples)]),
   a("no HTTP requests while idle (allowlist: token refresh only)",disallowed.length===0,[],disallowed.slice(0,20)),
   a("client sends no frames while idle",Object.values(i.framesOut).reduce((x,y)=>x+y,0)===0,{},i.framesOut),
@@ -196,7 +198,7 @@ async function historySettled(s:Session,quietMs=5000,maxMs=120000){
  const events=()=>s.log.frames.filter(f=>f.dir==="in"&&f.frame?.type==="event");
  const lastEventAt=()=>events().reduce((t,f)=>Math.max(t,f.t),started);
  while(Date.now()-started<maxMs&&Date.now()-lastEventAt()<quietMs)await sleep(250);
- return {settledMs:Date.now()-started,historyEvents:events().length};
+ return {settled:Date.now()-lastEventAt()>=quietMs,settledMs:Date.now()-started,historyEvents:events().length};
 }
 async function idleWindow(s:Session,peer:Session|null,seconds:number){
  const cdp=await s.context.newCDPSession(s.page);await cdp.send("Performance.enable");
