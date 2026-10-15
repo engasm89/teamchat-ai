@@ -168,7 +168,10 @@ export function checkSegment(raw:unknown,ctx:{sources:TurnSources;messages:reado
   if(typeof s.text!=="string")return {ok:false,reason:"say without text"};
   if(s.predicate!=null&&s.predicate!==""||s.ref!=null&&s.ref!=="")return {ok:false,reason:"say with fact fields"};
   const check=ctx.vocabulary.checkSay(s.text);
-  return check.ok?{ok:true,segment:{kind:"say",rendered:s.text.trim(),refs:[],sources:[]}}:check;
+  if(!check.ok)return check;
+  if(ctx.vocabulary.attributes(s.text)&&!/:\s*$/.test(s.text))return {ok:false,reason:"unquoted attribution in say"};
+  const consistent=checkSayAgainstSources(s.text,ctx.sources);
+  return consistent.ok?{ok:true,segment:{kind:"say",rendered:s.text.trim(),refs:[],sources:[]}}:consistent;
  }
  if(s.kind!=="fact")return {ok:false,reason:"unknown kind"};
  if(typeof s.text==="string"&&s.text.trim())return {ok:false,reason:"fact with model text"};
@@ -199,8 +202,14 @@ export function checkSegment(raw:unknown,ctx:{sources:TurnSources;messages:reado
  return text?{ok:true,segment:{kind:"fact",predicate,rendered:text,refs:source.ref?[source.ref]:[],sources:[source.label]}}:{ok:false,reason:"unrenderable"};
 }
 
-/** Deterministic, server-written replacement for whatever has not been shown. */
-export function fallbackSegments(sources:TurnSources,shown:ReadonlySet<string>,anyShown:boolean):VerifiedSegment[]{
+export const PARTIAL_REPLY_NOTICE="Part of my answer couldn't be verified against this workspace's records, so I've left it out.";
+export const PARTIAL_REPLY_NOTICE_AFTER_FACTS=`${PARTIAL_REPLY_NOTICE} The details above are verified.`;
+
+/** Deterministic, server-written replacement for whatever has not been shown.
+ * When segments were rejected and nothing is left to re-render, the reply ends
+ * with a disclosure; it vouches for figures only when a record-backed fact
+ * (the only segments that carry a ref) was actually shown. */
+export function fallbackSegments(sources:TurnSources,shown:ReadonlySet<string>,anyShown:boolean,rejected=false):VerifiedSegment[]{
  const out:VerifiedSegment[]=[];
  const pending=sources.list().filter(s=>!shown.has(s.alias)).slice(0,8);
  const predicateFor:Record<SourceType,Predicate>={catalog:"product_info",store:"store_summary",memory:"memory_recorded",
@@ -218,6 +227,7 @@ export function fallbackSegments(sources:TurnSources,shown:ReadonlySet<string>,a
   }
   if(!out.length)out.push({kind:"fallback",rendered:"I couldn't answer that with information I could verify in this workspace.",refs:[],sources:[]});
  }
+ if(!out.length&&rejected)out.push({kind:"fallback",rendered:shown.size?PARTIAL_REPLY_NOTICE_AFTER_FACTS:PARTIAL_REPLY_NOTICE,refs:[],sources:[]});
  return out;
 }
 
@@ -227,26 +237,44 @@ const STOP=new Set(("a about above after again against all also am an and any ar
  "short long first last free general light heavy cold warm hot small large big little morning afternoon evening night easy simple quick basic full half open clear main single double old fresh nice"
 ).split(/\s+/));
 const APP_TERMS=new Set("catalog catalogue code codes product products store stores assortment assortments gap gaps score scores coefficient coefficients margin class classes memory memories decision decisions tool tools search searching calculation calculations compare comparison workspace category categories family families department departments season seasonal".split(" "));
-const CLAIM_WORDS=/\b(carr(?:y|ies|ied|ying)|stock(?:s|ed|ing)?|in stock|out of stock|availab(?:le|ility)|unavailable|lack(?:s|ed|ing)?|missing|because|due to|caus(?:e|es|ed|ing)|own(?:s|ed|er|ership)|saved by|recorded by|decid(?:e|ed|es)|agreed|approv(?:e|ed|al)|target(?:s|ed)?|deadline|polic(?:y|ies)|supersed(?:e|es|ed|ing)|uplift|increase[sd]?|decrease[sd]?|higher|lower|profit\w*|revenue|sales|sell(?:s|ing)?|price[sd]?|pricing|cost(?:s)?|margin class \w+|best|worst|top|confirmed|finali[sz]ed|settled|signed off|scheduled|launch(?:ed|es)?|discontinued|sold out|popular|trending|demand)\b/i;
+const CLAIM_WORDS=/\b(carr(?:y|ies|ied|ying)|stock(?:s|ed|ing)?|in stock|out of stock|availab(?:le|ility)|unavailable|lack(?:s|ed|ing)?|missing|because|due to|caus(?:e|es|ed|ing)|own(?:s|ed|er|ership)|saved by|recorded by|decid(?:e|ed|es)|agreed|approv(?:e|ed|al)|target(?:s|ed)?|deadline|polic(?:y|ies)|supers[ae]d\w*|supers[ae]ssion\w*|superc[ae]d\w*|superc[ae]ssion\w*|overrid\w*|overrode|replac\w*|displac\w*|uplift|increase[sd]?|decrease[sd]?|higher|lower|profit\w*|revenue|sales|sell(?:s|ing)?|sold|price[sd]?|pricing|cost(?:s)?|margin class \w+|best|worst|top|confirmed|finali[sz]ed|settled|signed off|scheduled|launch(?:ed|es)?|discontinued|sold out|popular|trending|demand|forecast\w*|projection\w*|turnover|earnings|budget\w*|dollars?|euros?|pounds?|usd|eur|gbp|responsible for|in charge of|as a result of|result(?:s|ed) in|led to|owing to|thanks to|drop(?:s|ped)?|fell|rose|grew|growth|declin\w*|boost\w*)\b/i;
 const NEGATION=/\b(no|not|never|none|nothing|isn't|aren't|doesn't|don't|didn't|wasn't|weren't|cannot|can't|without)\b/i;
-const APP_NOUN=/\b(catalog|catalogue|code|product|store|record|memory|decision|gap|item|match|result)s?\b/i;
+const APP_NOUN=/\b(catalog|catalogue|code|product|store|record|memory|decision|gap|item|match|result|class|classes|range|assortment|change)s?\b/i;
+
+/** A say that sits beside verified records may only frame them. Absence, completeness or
+ * negation wording there would restate, or contradict, what the records say, so it fails
+ * closed even when no claim word matched. Vocabulary checks are a backstop: business
+ * relations are carried only by typed facts. */
+const ABSENCE=/\b(no|not|never|none|nothing|nobody|without|couldn't|could not|didn't|did not|isn't|aren't|doesn't|don't|wasn't|weren't|cannot|can't|everything|all set|all good|checks out|turned up|came up empty)\b/i;
+export function checkSayAgainstSources(text:string,sources:TurnSources):{ok:true}|{ok:false;reason:string}{
+ if(!sources.list().length)return {ok:true};
+ if(ABSENCE.test(text))return {ok:false,reason:"say contradicts or restates this turn's records"};
+ return {ok:true};
+}
 
 export interface VocabularySource {
  catalogText:string[];phrases:string[];requesterName?:string;tenantId:string;
  /** Human messages the model was shown, including the request: echoing a word people in the
   * room wrote is not a workspace claim. Earlier AI answers must never be included. */
  echoText?:string;
+ /** Display names of the workspace's members. */
+ members?:string[];
 }
+/** Reported speech: what someone said, asked for, or will do. */
+const REPORTED_SPEECH=new RegExp(String.raw`\b(?:(?:you|he|she|they|we|someone|somebody|everyone|who|colleagues?|teammates?)\s+(?:just\s+|also\s+|already\s+)?(?:said|says|mentioned|mentions|wrote|writes|told|tells|stated|promised|posted|volunteered|offered|asked (?:for|to|if|whether))`+
+ String.raw`|(?:he|she|they|someone|somebody|colleagues?|teammates?)(?:\s+(?:will|would|is going to|are going to|plans? to)|['’](?:ll|d|re going to)))\b`,"i");
 /** Words and phrases that would make a `say` segment a workspace claim. */
 export class WorkspaceVocabulary {
  private readonly words=new Set<string>();
  private readonly phrases:string[]=[];
+ private readonly members:string[]=[];
  private readonly echo=new Set<string>();
  constructor(src:VocabularySource){
   for(const w of (src.echoText??"").toLowerCase().match(/[a-z][a-z'-]{3,}/g)??[])this.echo.add(w.replace(/'s$/,""));
   for(const text of src.catalogText)for(const w of text.toLowerCase().match(/[a-z][a-z'-]{3,}/g)??[])
    if(!STOP.has(w)&&!APP_TERMS.has(w))this.words.add(w.replace(/'s$/,""));
   const requester=src.requesterName?.trim().toLowerCase();
+  for(const raw of src.members??[]){const p=raw.trim().toLowerCase();if(p.length>=3&&p!==requester)this.members.push(p);}
   for(const raw of src.phrases){const p=raw.trim().toLowerCase();if(p.length>=3&&p!==requester)this.phrases.push(p);}
   for(const other of TENANTS.filter(t=>t!==src.tenantId)){this.phrases.push(other.replace(/-/g," "));this.phrases.push(other.split("-")[0]!);}
  }
@@ -271,6 +299,13 @@ export class WorkspaceVocabulary {
    if(forms.some(f=>this.words.has(f)||this.words.has(`${f}s`)))return {ok:false,reason:"catalog vocabulary in say"};
   }
   return {ok:true};
+ }
+ /** Whether text reports what someone in the room said or will do, or names a member other
+  * than the requester. Such a report is shown only as a server-quoted message. */
+ attributes(text:string):boolean{
+  if(REPORTED_SPEECH.test(text))return true;
+  const lower=text.toLowerCase();
+  return this.members.some(p=>{const at=lower.indexOf(p);return at>=0&&!/[a-z0-9]/.test(lower[at-1]??" ")&&!/[a-z0-9]/.test(lower[at+p.length]??" ");});
  }
 }
 

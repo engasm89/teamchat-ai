@@ -1,6 +1,7 @@
 /** Conversation, names and tenant-wide chats on a deployed stack.
  *   TEAMCHAT_TARGET=staging node --experimental-strip-types scripts/acceptance/run-conversational.ts
  *   ... --replay audit/gonzalo-2026-10-14/REPLAY_FIXTURES_PRIVATE.json   (private prompts; output stays under audit/)
+ *   ... --only C02 --repeat 2   (C02 and its variants C02.2-C02.5, twice; each run creates one chat per scenario)
  * Creates chats, so it refuses the production target unless --allow-production-chats is given. */
 import fs from "node:fs";
 import path from "node:path";
@@ -12,6 +13,9 @@ import * as oracle from "./oracle.ts";
 
 const args=process.argv.slice(2);
 const REPLAY=args.includes("--replay")?args[args.indexOf("--replay")+1]!:null;
+const ONLY=args.includes("--only")?args[args.indexOf("--only")+1]!.split(","):null;
+const REPEAT=args.includes("--repeat")?Number(args[args.indexOf("--repeat")+1]):1;
+if(!Number.isInteger(REPEAT)||REPEAT<1||REPEAT>20)throw Error("--repeat takes a whole number from 1 to 20");
 if(TARGET.name==="production"&&!args.includes("--allow-production-chats"))throw Error("This suite creates chats; it does not run against production without --allow-production-chats");
 const N="northside-outfitters",V="valley-home-goods";
 const NAMES:Record<AccountKey,string>={n1:"Northside Buyer One",n2:"Northside Buyer Two",n3:"Northside Analyst Three",v1:"Valley Buyer One",v2:"Valley Buyer Two",v3:"Valley Analyst Three"};
@@ -62,6 +66,28 @@ async function ask(t:TestRecorder,c:LiveClient,room:string,prompt:string,label:s
  return {turn,timing,sent};
 }
 const noUid=async(turn:Turn)=>{const text=shown(turn);const ids=await uids();return ids.filter(u=>text.includes(u));};
+/** Who a line is shown as said by: message_quote renders "Name (#sequence): “words”". */
+const quotedAs=(turn:Turn,line:string)=>segments(turn).filter(s=>s.includes(line)).map(s=>s.match(/^(.+?) \(#\d+\): “/)?.[1]??"(not a server quote)");
+/** Room messages for a who-said-what turn: each [speaker, line] is posted in order, then `asker` asks. */
+async function attributionTurn(t:TestRecorder,label:string,creator:AccountKey,lines:Array<[AccountKey,string]>,asker:AccountKey,prompt:string){
+ const chat=await newChat(creator,`Who said what ${tag(label)}`,false);if(chat.status!==201)throw Error(`create ${chat.status}`);
+ const room=chat.json.room.room_id;
+ const people=new Map<AccountKey,LiveClient>();
+ for(const k of new Set<AccountKey>([...lines.map(([k])=>k),asker]))people.set(k,await client(k,room));
+ for(const [k,line] of lines){await people.get(k)!.post(room,line);await sleep(300);}
+ await sleep(800);
+ const {turn,timing}=await ask(t,people.get(asker)!,room,prompt,label);
+ t.detail("timing",timing);
+ t.assert("turn completed",turn.terminal?.type==="ai_complete","ai_complete",turn.terminal?.type);
+ t.assert("no Firebase UID shown",(await noUid(turn)).length===0,[],(await noUid(turn)).length);
+ for(const [k,line] of lines){
+  const as=quotedAs(turn,line);
+  t.assert(`if shown, "${line.slice(0,40)}…" is quoted as said by ${NAMES[k]}`,as.every(n=>n===NAMES[k]),NAMES[k],as);
+ }
+ return turn;
+}
+const expectQuoted=(t:TestRecorder,turn:Turn,speaker:AccountKey,line:string)=>
+ t.assert(`answer quotes ${NAMES[speaker]}'s words under their display name`,quotedAs(turn,line).includes(NAMES[speaker]),NAMES[speaker],shown(turn));
 const digitsGrounded=(turn:Turn)=>{
  const fetched=JSON.stringify(turn.tools.map(x=>x.result));
  const numbers=(shown(turn).replace(/\b[A-Z]{2,4}-[\d.]+\b/g,"").match(/\d[\d,.]*/g)??[]).map(n=>n.replace(/[.,]$/,""));
@@ -84,14 +110,35 @@ const scenarios:Scenario[]=[
   const chat=await newChat("n1",`Who said what ${tag("c02")}`,false);if(chat.status!==201)throw Error(`create ${chat.status}`);
   const room=chat.json.room.room_id;const a=await client("n1",room),b=await client("n2",room);
   const line=`I'll draft the supplier email for the hiking range ${tag("x")}`;
-  await a.post(room,"Morning! Can someone own the supplier follow-up?");await b.post(room,line);await sleep(800);
+  const plain=[await a.post(room,"Morning! Can someone own the supplier follow-up?"),await b.post(room,line)];await sleep(800);
   const {turn,timing}=await ask(t,a,room,"@AI what did my colleague just say they'd do?","c02");
   const leaked=await noUid(turn);
   t.detail("timing",timing);
+  t.assert("plain messages in a team chat start no AI turn (only @AI does)",plain.every(p=>!p.turnId),"no turn",plain.map(p=>p.turnId??null));
   t.assert("turn completed",turn.terminal?.type==="ai_complete","ai_complete",turn.terminal?.type);
   t.assert("answer attributes the message to Northside Buyer Two by name",shown(turn).includes(NAMES.n2),NAMES.n2,shown(turn));
   t.assert("answer quotes the colleague's words",shown(turn).includes(line),line,shown(turn));
   t.assert("no Firebase UID shown",leaked.length===0,[],leaked.length);
+ }],
+ ["C02.2","Three speakers: 'what did Northside Buyer Two say?' quotes Buyer Two, not the others",async t=>{
+  const two=`I'll check the backroom count for the tent restock ${tag("x")}`,three=`I can review the planogram after lunch ${tag("x")}`;
+  const turn=await attributionTurn(t,"c02-named","n3",[["n1",`Morning! Who's covering the tent restock? ${tag("x")}`],["n2",two],["n3",three]],"n3","@AI what did Northside Buyer Two say?");
+  expectQuoted(t,turn,"n2",two);
+ }],
+ ["C02.3","'Who said they would contact the supplier?' names the right colleague",async t=>{
+  const contact=`I'll contact the supplier about the tent delivery ${tag("x")}`;
+  const turn=await attributionTurn(t,"c02-who","n2",[["n1",`I'll update the shelf labels this afternoon ${tag("x")}`],["n3",contact],["n2","Great, thanks both"]],"n2","@AI who said they would contact the supplier?");
+  expectQuoted(t,turn,"n3",contact);
+ }],
+ ["C02.4","Interleaved messages: 'what did my colleague just say?' quotes the colleague's latest message",async t=>{
+  const latest=`Booked the van for Thursday's delivery ${tag("x")}`;
+  const turn=await attributionTurn(t,"c02-latest","n1",[["n2",`I'll look into the van booking ${tag("x")}`],["n1","Noted, thanks"],["n2",latest]],"n1","@AI what did my colleague just say?");
+  expectQuoted(t,turn,"n2",latest);
+ }],
+ ["C02.5","The asker and a colleague are told apart: 'what did I say, and what did my colleague say?'",async t=>{
+  const mine=`I'll call the warehouse about returns ${tag("x")}`,theirs=`I'll pull the store list tomorrow ${tag("x")}`;
+  const turn=await attributionTurn(t,"c02-asker","n2",[["n1",theirs],["n2",mine]],"n2","@AI what did I say I'd do, and what did my colleague say they'd do?");
+  expectQuoted(t,turn,"n2",mine);expectQuoted(t,turn,"n1",theirs);
  }],
  ["C03","A follow-up question is understood from the conversation, and every code shown was fetched",async t=>{
   const room=await teamChat("n2","Follow-up");const c=await client("n2",room);
@@ -186,8 +233,8 @@ async function replay(t:TestRecorder,fixture:string){
 
 try{
  if(REPLAY)await run.run("REPLAY","Reviewer-account prompts replayed in an AI chat",["GONZALO"],async t=>{try{await replay(t,REPLAY);}finally{closeClients();}});
- else for(const [id,title,body] of scenarios){
-  if(args.includes("--only")&&!args[args.indexOf("--only")+1]!.split(",").includes(id))continue;
-  await run.run(id,title,["GONZALO"],async t=>{try{await body(t);}finally{closeClients();}});
+ else for(let rep=1;rep<=REPEAT;rep++)for(const [id,title,body] of scenarios){
+  if(ONLY&&!ONLY.some(x=>id===x||id.startsWith(`${x}.`)))continue;
+  await run.run(REPEAT>1?`${id}-r${rep}`:id,title,["GONZALO"],async t=>{try{await body(t);}finally{closeClients();}});
  }
 }finally{closeClients();await pool.end();run.finish();}

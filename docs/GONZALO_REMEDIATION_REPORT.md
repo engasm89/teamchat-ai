@@ -1,6 +1,6 @@
 # Remediation after the 14 October review
 
-Status on 15 October 2026, 13:10 Cairo. Branch `fix/gonzalo-conversational-review`. **Production is on hold on `edbdfb2`** (revision 00017, unchanged since the 14 October rollout) by Ashraf's decision at 12:10 Cairo. **Staging runs `b110e54`**: the S06 completeness review plus the C03 fix, neither promoted. See "15 October" sections below.
+Status on 15 October 2026, after PR #3 was squash-merged into `main` (`8b318da`). The working branch `fix/gonzalo-conversational-review` was deleted; the production source is tagged `prod-00017-edbdfb2`. `main` is **ahead of production**: it also contains the staging-only `e1fdb8a` and `b110e54`. **Production is on hold on `edbdfb2`** (revision 00017, unchanged since the 14 October rollout) by Ashraf's decision at 12:10 Cairo. **Staging runs `b110e54`**: the S06 completeness review plus the C03 fix, neither promoted. See "15 October" sections below.
 
 **In one paragraph.** All three requested changes are built and **deployed to production**:
 
@@ -10,7 +10,9 @@ Status on 15 October 2026, 13:10 Cairo. Branch `fix/gonzalo-conversational-revie
 
 Production runs `edbdfb2` (API `teamchat-api-00017-7gz`, worker `teamchat-worker-00017-2rb`, Hosting `33bae4d9769be62c`), the same image digests that were tested on staging. Gate 4 passed: a SUCCESSFUL on-demand backup (`1792017407307`), migration 008 applied as the schema owner, and the previous release still working on the migrated schema. Gate 5 passed in production: S01–S08, S10–S14 and S18 14/14, the browser recovery and UX suite 10/10, 0 leak-scan hits, and a median of 5.0 s per answer. No rollback was needed.
 
-Three things keep this short of "fully verified":
+Four things keep this short of "fully verified":
+
+- **One unverified sentence reached production.** In Gate 5's S05 answer, free text said "There is no class supersession." beside a verified fact listing superseded classes 1003 and 506 (`qa_evidence/runs/20261014T224119Z-acceptance-f823b5/S05/s05.json`). The wording check missed the noun. Not fixed in production.
 
 - **New chats were not exercised in production.** No production chats were created, by instruction. They remain **STAGING PASS / PRODUCTION NOT VERIFIED**.
 - **S06 is intermittent on staging.** Sometimes Gemini lists a store's gaps but leaves out the score change. It failed in the second acceptance run of the last two staging chains. It passed in production Gate 5 and in every offline replay.
@@ -96,7 +98,7 @@ Local, on `edbdfb2` (exit codes recorded):
 | Command | Exit | Result |
 | --- | --- | --- |
 | `npm run check` | 0 | pass |
-| `npm test` | 0 | 189/189 pass, 0 cancelled |
+| `npm test` | 0 | 189/189 pass, 0 cancelled (on `edbdfb2`; 194/194 on merged `main` `8b318da`) |
 | `npm run test:tenant-chats` (local PostgreSQL, runtime role) | 0 | 18/18 pass |
 | `npm run test:postgres` | 0 | 0 pass, 1 **skipped** (no database configured), so it counts as not run. The required variant last ran 1/1 against staging on `ac07134` (`qa_evidence/staging/postgres-required-staging.log`); it was not rerun |
 | New and changed tests on the old code (`main` @ `5da04b0`) | n/a | 11 of 17 fail as expected (`qa_evidence/remediation/old-code-new-tests.tap`); recorded on `ac07134`, not rerun |
@@ -320,6 +322,8 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
   - Not rehearsed: rolling production itself, and restoring a Cloud SQL backup.
 
 ## Remaining issues
+
+- **GitGuardian did not scan PR #3.** Its check returned NEUTRAL, "Pull request too large to scan". The internal leak scan (0 hits) is not an independent scan; see `docs/GONZALO_PRE_EMAIL_QA.md` for the independent scan result.
 
 - **S06 in production.** Production (`edbdfb2`) does not have the completeness review, so it can still stop after the gaps. The fix is on staging (`e1fdb8a`). Why live runs stop early when replays never do is still unexplained.
 - **C03 in production.** On `edbdfb2`, a follow-up can be answered from an earlier AI message without a fetch, and then falls back. It failed live in 2 of 9 staging chains and offline in about 1 in 4. The fix (`b110e54`) is on staging only: C03 passed 13 of 13 there, and the note rescued all 3 follow-ups where it fired. The full-suite count is limited by the chat-creation rate limit (see "15 October: production hold").
