@@ -168,7 +168,9 @@ export function checkSegment(raw:unknown,ctx:{sources:TurnSources;messages:reado
   if(typeof s.text!=="string")return {ok:false,reason:"say without text"};
   if(s.predicate!=null&&s.predicate!==""||s.ref!=null&&s.ref!=="")return {ok:false,reason:"say with fact fields"};
   const check=ctx.vocabulary.checkSay(s.text);
-  return check.ok?{ok:true,segment:{kind:"say",rendered:s.text.trim(),refs:[],sources:[]}}:check;
+  if(!check.ok)return check;
+  const consistent=checkSayAgainstSources(s.text,ctx.sources);
+  return consistent.ok?{ok:true,segment:{kind:"say",rendered:s.text.trim(),refs:[],sources:[]}}:consistent;
  }
  if(s.kind!=="fact")return {ok:false,reason:"unknown kind"};
  if(typeof s.text==="string"&&s.text.trim())return {ok:false,reason:"fact with model text"};
@@ -227,9 +229,20 @@ const STOP=new Set(("a about above after again against all also am an and any ar
  "short long first last free general light heavy cold warm hot small large big little morning afternoon evening night easy simple quick basic full half open clear main single double old fresh nice"
 ).split(/\s+/));
 const APP_TERMS=new Set("catalog catalogue code codes product products store stores assortment assortments gap gaps score scores coefficient coefficients margin class classes memory memories decision decisions tool tools search searching calculation calculations compare comparison workspace category categories family families department departments season seasonal".split(" "));
-const CLAIM_WORDS=/\b(carr(?:y|ies|ied|ying)|stock(?:s|ed|ing)?|in stock|out of stock|availab(?:le|ility)|unavailable|lack(?:s|ed|ing)?|missing|because|due to|caus(?:e|es|ed|ing)|own(?:s|ed|er|ership)|saved by|recorded by|decid(?:e|ed|es)|agreed|approv(?:e|ed|al)|target(?:s|ed)?|deadline|polic(?:y|ies)|supersed(?:e|es|ed|ing)|uplift|increase[sd]?|decrease[sd]?|higher|lower|profit\w*|revenue|sales|sell(?:s|ing)?|price[sd]?|pricing|cost(?:s)?|margin class \w+|best|worst|top|confirmed|finali[sz]ed|settled|signed off|scheduled|launch(?:ed|es)?|discontinued|sold out|popular|trending|demand)\b/i;
+const CLAIM_WORDS=/\b(carr(?:y|ies|ied|ying)|stock(?:s|ed|ing)?|in stock|out of stock|availab(?:le|ility)|unavailable|lack(?:s|ed|ing)?|missing|because|due to|caus(?:e|es|ed|ing)|own(?:s|ed|er|ership)|saved by|recorded by|decid(?:e|ed|es)|agreed|approv(?:e|ed|al)|target(?:s|ed)?|deadline|polic(?:y|ies)|supers[ae]d\w*|supers[ae]ssion\w*|superc[ae]d\w*|superc[ae]ssion\w*|overrid\w*|overrode|replac\w*|displac\w*|uplift|increase[sd]?|decrease[sd]?|higher|lower|profit\w*|revenue|sales|sell(?:s|ing)?|sold|price[sd]?|pricing|cost(?:s)?|margin class \w+|best|worst|top|confirmed|finali[sz]ed|settled|signed off|scheduled|launch(?:ed|es)?|discontinued|sold out|popular|trending|demand|forecast\w*|projection\w*|turnover|earnings|budget\w*|dollars?|euros?|pounds?|usd|eur|gbp|responsible for|in charge of|as a result of|result(?:s|ed) in|led to|owing to|thanks to|drop(?:s|ped)?|fell|rose|grew|growth|declin\w*|boost\w*)\b/i;
 const NEGATION=/\b(no|not|never|none|nothing|isn't|aren't|doesn't|don't|didn't|wasn't|weren't|cannot|can't|without)\b/i;
-const APP_NOUN=/\b(catalog|catalogue|code|product|store|record|memory|decision|gap|item|match|result)s?\b/i;
+const APP_NOUN=/\b(catalog|catalogue|code|product|store|record|memory|decision|gap|item|match|result|class|classes|range|assortment|change)s?\b/i;
+
+/** A say that sits beside verified records may only frame them. Absence, completeness or
+ * negation wording there would restate, or contradict, what the records say, so it fails
+ * closed even when no claim word matched. Vocabulary checks are a backstop: business
+ * relations are carried only by typed facts. */
+const ABSENCE=/\b(no|not|never|none|nothing|nobody|without|couldn't|could not|didn't|did not|isn't|aren't|doesn't|don't|wasn't|weren't|cannot|can't|everything|all set|all good|checks out|turned up|came up empty)\b/i;
+export function checkSayAgainstSources(text:string,sources:TurnSources):{ok:true}|{ok:false;reason:string}{
+ if(!sources.list().length)return {ok:true};
+ if(ABSENCE.test(text))return {ok:false,reason:"say contradicts or restates this turn's records"};
+ return {ok:true};
+}
 
 export interface VocabularySource {
  catalogText:string[];phrases:string[];requesterName?:string;tenantId:string;
