@@ -115,7 +115,7 @@ test("a rejected segment is disclosed; the notice vouches for figures only when 
  const s=s05Sources();
  const afterFact=fallbackSegments(s,new Set(["S1"]),true,true);
  assert.deepEqual(afterFact.map(x=>[x.kind,x.rendered,x.refs.length]),
-  [["fallback","Part of my answer couldn't be verified against this workspace's records, so I've left it out. The figures above are verified.",0]]);
+  [["fallback","Part of my answer couldn't be verified against this workspace's records, so I've left it out. The details above are verified.",0]]);
  const afterSayOnly=fallbackSegments(new TurnSources(TURN,T),new Set(),true,true);
  assert.deepEqual(afterSayOnly.map(x=>x.rendered),["Part of my answer couldn't be verified against this workspace's records, so I've left it out."]);
  for(const x of [...afterFact,...afterSayOnly])assert.ok(!/complete|everything|all of/i.test(x.rendered),x.rendered);

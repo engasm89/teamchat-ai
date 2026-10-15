@@ -202,7 +202,7 @@ export function checkSegment(raw:unknown,ctx:{sources:TurnSources;messages:reado
 }
 
 export const PARTIAL_REPLY_NOTICE="Part of my answer couldn't be verified against this workspace's records, so I've left it out.";
-export const PARTIAL_REPLY_NOTICE_AFTER_FACTS=`${PARTIAL_REPLY_NOTICE} The figures above are verified.`;
+export const PARTIAL_REPLY_NOTICE_AFTER_FACTS=`${PARTIAL_REPLY_NOTICE} The details above are verified.`;
 
 /** Deterministic, server-written replacement for whatever has not been shown.
  * When segments were rejected and nothing is left to re-render, the reply ends

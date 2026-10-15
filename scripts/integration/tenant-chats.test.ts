@@ -282,7 +282,7 @@ test("an ungrounded workspace claim is never shown: the model is sent back to it
  const ev=await t.events();const shown=shownText(ev);
  assert.equal(shown[0],"Here is what I found:");
  assert.match(shown[1]!,new RegExp(`^${northStore.store_id} \\(`));
- assert.equal(shown.at(-1),"Part of my answer couldn't be verified against this workspace's records, so I've left it out. The figures above are verified.");
+ assert.equal(shown.at(-1),"Part of my answer couldn't be verified against this workspace's records, so I've left it out. The details above are verified.");
  const all=shown.join("\n");
  for(const forged of ["500","40%","missing hiking boots"])assert.equal(all.includes(forged),false,forged);
  assert.equal(ev.filter(e=>e.type==="ai_answer_block").length,1,"the tool result is kept as a source block");
