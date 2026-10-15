@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {trustedPlannerInstructions,completenessReviewContents,parseReview,continuationNote,collectGeminiResponse} from '../src/worker/gemini.ts';
+import {trustedPlannerInstructions,completenessReviewContents,parseReview,continuationNote,collectGeminiResponse,escalationNote,ESCALATION_NOTE} from '../src/worker/gemini.ts';
 
 test('consented memory saving is informed by the persisted trusted job state',()=>{
  const text=trustedPlannerInstructions({roomId:'category-strategy',memoryConsent:true});
@@ -126,4 +126,13 @@ test('each planner round reports why Gemini stopped',async()=>{
  const r=await collectGeminiResponse(stream());
  assert.equal(r.finishReason,'STOP');
  assert.equal(r.functionCalls.length,0);
+});
+
+test('the escalation note names the codes a tool-less draft used without fetching them',()=>{
+ const note=escalationNote('APP-100.19 is the low-noise model. APP-100.19 and ST-4007-B.');
+ assert.match(note,/your draft names APP-100\.19, ST-4007-B, which no tool fetched in this turn/);
+ assert.match(note,/Earlier answers in the room are not evidence/);
+ assert.match(note,/Fetch them with a tool now/);
+ assert.equal(escalationNote('That store sells 500 tents a week.'),ESCALATION_NOTE);
+ assert.equal(escalationNote('The AC-units are popular.'),ESCALATION_NOTE);
 });

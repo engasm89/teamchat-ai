@@ -288,6 +288,22 @@ test("an ungrounded workspace claim is never shown: the model is sent back to it
  assert.equal(ev.filter(e=>e.type==="ai_answer_block").length,1,"the tool result is kept as a source block");
 });
 
+test("a follow-up drafted from an earlier answer's code is sent back to fetch that code, and only fetched codes are shown",async()=>{
+ const t=await turn("@AI which one of those is the low-noise model?");
+ const {provider,seen}=scripted({
+  rounds:[reply("APP-100.19 is the low-noise model."),call("get_catalog_code",{catalog_code:"APP-100.19"}),reply("APP-100.19 is the low-noise model.")],
+  reviews:['{"missing":""}'],
+  compose:async function*(){yield `[{"kind":"say","text":"Here's the one you asked about:"},{"kind":"fact","predicate":"product_info","ref":"S1"}]`;}});
+ assert.equal((await executeAiJob(api,provider,t.turnId,embeddings)).status,"completed");
+ assert.equal(seen.rounds.length,3);
+ const second=JSON.stringify(seen.rounds[1]);
+ assert.match(second,/your draft names APP-100\.19, which no tool fetched in this turn/);
+ assert.equal(second.includes(ESCALATION_NOTE),false);
+ const ev=await t.events();
+ assert.deepEqual(ev.filter(e=>e.type==="ai_tool").map(e=>e.payload.name),["get_catalog_code"]);
+ assert.match(shownText(ev).join("\n"),/^APP-100\.19 /m);
+});
+
 test("a turn that stops after its first tool round is reviewed against the requester's own message and completed",async()=>{
  const gaps=northStore.suspected_gaps.map(g=>g.catalog_code);
  const t=await turn("@AI which gaps does the store have, and what is the score change from adding them?",{uid:"u-sam",body:"@AI which SSD codes do we stock?"});
