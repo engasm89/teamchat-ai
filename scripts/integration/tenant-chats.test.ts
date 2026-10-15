@@ -228,21 +228,23 @@ test("an AI chat creates exactly one AI job per message, with or without @AI",as
 });
 
 // ---------- AI worker with a scripted model ----------
-interface Script {rounds:Array<RoundResult|Error>;compose?:()=>AsyncIterable<string>}
+interface Script {rounds:Array<RoundResult|Error>;compose?:()=>AsyncIterable<string>;reviews?:string[]}
 function scripted(s:Script){
- const seen:{rounds:Array<Array<Record<string,unknown>>>;composed:number}={rounds:[],composed:0};
+ const seen:{rounds:Array<Array<Record<string,unknown>>>;composed:number;reviews:Array<Array<Record<string,unknown>>>}={rounds:[],composed:0,reviews:[]};
  const provider:GeminiProvider={
   async round(contents){seen.rounds.push(structuredClone(contents));const next=s.rounds.shift();if(!next)throw Error("unexpected round");if(next instanceof Error)throw next;return next;},
   compose(){seen.composed++;if(!s.compose)throw Error("unexpected compose");return s.compose();},
+  ...(s.reviews?{async review(contents:Array<Record<string,unknown>>){seen.reviews.push(structuredClone(contents));const next=s.reviews!.shift();if(next===undefined)throw Error("unexpected review");return next;}}:{}),
  };
  return {provider,seen};
 }
 const reply=(text:string):RoundResult=>({text,functionCalls:[],content:{role:"model",parts:[{text}]}});
 const call=(name:string,args:Record<string,unknown>):RoundResult=>({text:"",functionCalls:[{id:`c-${name}`,name,args}],content:{role:"model",parts:[{functionCall:{id:`c-${name}`,name,args}}]}});
 const embeddings={modelId:"test-embedding",embed:async()=>Array.from({length:768},(_,i)=>i===0?1:0)};
-async function turn(body:string){
+async function turn(body:string,earlier?:{uid:string;body:string}){
  const room=roomOf(await chat("u-maya",`AI ${randomUUID().slice(0,6)}`,true)).room.room_id;
  const ctx=resolvedContext("u-maya",N);
+ if(earlier)await sendDurableMessage(api,resolvedContext(earlier.uid,N),{roomId:room,clientMessageId:randomUUID(),body:earlier.body});
  const sent=await sendDurableMessage(api,ctx,{roomId:room,clientMessageId:randomUUID(),body});
  if("found" in sent||!sent.aiTurnId)throw Error("no AI turn");
  const events=async()=>((await replayRoom(api,ctx,room,0,500)) as PersistedEvent[]).filter(e=>e.turn_id===sent.aiTurnId);
@@ -284,6 +286,37 @@ test("an ungrounded workspace claim is never shown: the model is sent back to it
  const all=shown.join("\n");
  for(const forged of ["500","40%","missing hiking boots"])assert.equal(all.includes(forged),false,forged);
  assert.equal(ev.filter(e=>e.type==="ai_answer_block").length,1,"the tool result is kept as a source block");
+});
+
+test("a turn that stops after its first tool round is reviewed against the requester's own message and completed",async()=>{
+ const gaps=northStore.suspected_gaps.map(g=>g.catalog_code);
+ const t=await turn("@AI which gaps does the store have, and what is the score change from adding them?",{uid:"u-sam",body:"@AI which SSD codes do we stock?"});
+ const {provider,seen}=scripted({
+  rounds:[call("get_store_assortment",{store_id:northStore.store_id}),reply("Here are the gaps. I will now calculate the score change."),
+   call("calculate_uplift",{store_id:northStore.store_id,add_codes:gaps}),reply("Here are the gaps and the score change.")],
+  reviews:['{"missing":"the score change from adding the gap codes"}'],
+  compose:async function*(){yield `[{"kind":"fact","predicate":"store_gap","ref":"S1"},{"kind":"fact","predicate":"score_change","ref":"S2"}]`;}});
+ assert.equal((await executeAiJob(api,provider,t.turnId,embeddings)).status,"completed");
+ assert.equal(seen.reviews.length,1,"one review, after the first no-call reply");
+ const reviewed=JSON.stringify(seen.reviews[0]);
+ assert.match(reviewed,/score change from adding them/);
+ assert.match(reviewed,/get_store_assortment/);
+ assert.equal(reviewed.includes("SSD"),false,"the review never sees a colleague's message");
+ assert.equal(seen.rounds.length,4);
+ assert.match(JSON.stringify(seen.rounds[2]),/Missing part of that request: \\"the score change from adding the gap codes\\"/);
+ const tools=(await t.events()).filter(e=>e.type==="ai_tool").map(e=>e.payload.name);
+ assert.deepEqual(tools,["get_store_assortment","calculate_uplift"]);
+ assert.match(shownText(await t.events()).join("\n"),/score/i);
+});
+
+test("a complete turn passes the review and ends as before: no note, no extra round",async()=>{
+ const t=await turn("@AI tell me about the store");
+ const {provider,seen}=scripted({rounds:[call("get_store_assortment",{store_id:northStore.store_id}),reply("Here it is.")],
+  reviews:['{"missing":""}'],
+  compose:async function*(){yield `[{"kind":"fact","predicate":"store_summary","ref":"S1"}]`;}});
+ assert.equal((await executeAiJob(api,provider,t.turnId,embeddings)).status,"completed");
+ assert.equal(seen.reviews.length,1);assert.equal(seen.rounds.length,2);
+ assert.equal(JSON.stringify(seen.rounds).includes("Server note (trusted): Maya"),false);
 });
 
 test("a bad tool argument goes back to Gemini as a tool error; the turn is neither retried nor failed",async()=>{

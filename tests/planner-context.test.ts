@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {trustedPlannerInstructions} from '../src/worker/gemini.ts';
+import {trustedPlannerInstructions,completenessReviewContents,parseReview,continuationNote,collectGeminiResponse} from '../src/worker/gemini.ts';
 
 test('consented memory saving is informed by the persisted trusted job state',()=>{
  const text=trustedPlannerInstructions({roomId:'category-strategy',memoryConsent:true});
@@ -90,4 +90,40 @@ test('Gemini chooses tools itself: AUTO mode on every round, never forced ANY',a
  const source=fs.readFileSync(new URL('../src/worker/gemini.ts',import.meta.url),'utf8');
  assert.match(source,/functionCallingConfig:\{mode:"AUTO"\}/);
  assert.equal(/mode:\s*[^,}]*"ANY"/.test(source),false);
+});
+
+test('the completeness review sees only the requester\'s message and the calls made, never the room',()=>{
+ const contents=completenessReviewContents({requesterName:'Maya Chen',text:'@AI For ST-4007, which gaps exist and what is the score change from adding them?'},
+  [{name:'get_store_assortment',args:{store_id:'ST-4007'}}]);
+ const text=JSON.stringify(contents);
+ assert.equal(contents.length,1);
+ assert.match(text,/Request from Maya Chen/);
+ assert.match(text,/score change from adding them/);
+ assert.match(text,/get_store_assortment\(\{\\"store_id\\":\\"ST-4007\\"\}\)/);
+ assert.match(text,/calculate_uplift:/,'available tools are listed');
+});
+
+test('a review reply is read as data: malformed or empty means nothing is missing',()=>{
+ assert.equal(parseReview('{"missing":"the score change"}'),'the score change');
+ assert.equal(parseReview('{"missing":""}'),'');
+ assert.equal(parseReview('not json'),'');
+ assert.equal(parseReview('{"missing":42}'),'');
+ assert.equal(parseReview(JSON.stringify({missing:'x\n'.repeat(400)})).length<=300,true);
+});
+
+test('the continuation note names the requester and the missing part, and rules out other people\'s questions',()=>{
+ const note=continuationNote('Maya Chen','the score change');
+ assert.match(note,/Maya Chen's request/);
+ assert.match(note,/"the score change"/);
+ assert.match(note,/Do not take up other people's questions/);
+});
+
+test('each planner round reports why Gemini stopped',async()=>{
+ async function* stream(){
+  yield {candidates:[{content:{parts:[{text:'Here are the gaps.'}]}}]};
+  yield {candidates:[{content:{parts:[]},finishReason:'STOP'}]};
+ }
+ const r=await collectGeminiResponse(stream());
+ assert.equal(r.finishReason,'STOP');
+ assert.equal(r.functionCalls.length,0);
 });
