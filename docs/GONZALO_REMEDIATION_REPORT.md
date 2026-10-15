@@ -339,7 +339,7 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
 - **A retried turn can diverge from its persisted plan.** Tool records are fenced and replayed by operation ID, but a second Gemini call may choose different tools.
 - **Shared instance.** Staging shares the production Cloud SQL instance (documented above).
 - **Production hardening, unchanged.** `CONNECT` on `teamchat` is still granted to `PUBLIC`. Cloud SQL has automated backups disabled, a public IP and unencrypted connections allowed.
-- **A new standing credential.** The `postgres` owner password now lives in Keychain `teamchat-ai-prod-postgres-owner` on this Mac. It is needed for future migrations. Rotate or remove it if this machine is not where it should live.
+- **A new standing credential.** The `postgres` owner password now lives in Keychain `teamchat-ai-prod-postgres-owner` on this Mac. It is needed for future migrations. **Decision (Ashraf, 15 October ~13:20 Cairo): keep it there.** It exists only in that Keychain item and was never written to argv, logs, evidence or Git. Follow-up: move migrations to Cloud SQL IAM database authentication so no long-lived owner password is needed.
 
 **Production dry run of the demo script (15 October, about 13:20 Cairo).**
 - On production `edbdfb2` (00017), as `northside.analyst3` in the existing `#supply-planning` QA room: 11 prompts, plus a who-said-what prompt after a line posted by `northside.buyer2`.
@@ -351,14 +351,14 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
 
 ## Human-only actions
 
-None of these has been done.
+Items 3, 4, 6 and 7 are decided (15 October). The rest are still open.
 
 1. **Decide whether this is ready to show Gonzalo.** Production is green on Gate 5. New chats are STAGING PASS / PRODUCTION NOT VERIFIED, and S06 is intermittent. Claiming "fully fixed" would overstate it.
 2. **Production chat creation.** Authorize a test of it in production, or keep the label above. Any chat created in production appears in every Northside user's list, including the reviewer's.
-3. **Pull request and merge.** No PR has been opened. Open one from `fix/gonzalo-conversational-review`, review it, and merge it to `main` (protected; merging needs your approval). Production already runs `edbdfb2` from this branch, so `main` is now behind production.
-4. **PR #2.** Close it as superseded.
+3. **Pull request and merge: approved by Ashraf on 15 October.** The branch is squash-merged into `main` (which has no branch protection). The production source is tagged `prod-00017-edbdfb2`. After the merge, `main` is *ahead* of production: it also contains the staging-only S06 (`e1fdb8a`) and C03 (`b110e54`) changes.
+4. **PR #2: closed as superseded** by the merged PR.
 5. **Reply to Gonzalo.** Review and send it yourself. The suggested note in `audit/gonzalo-2026-10-14/SUGGESTED_GMAIL_REPLY_PRIVATE.md` was updated on 15 October to the actual state. It covers production on `edbdfb2`, new chats verified on staging only, the S06 and C03 limitations, and the test memories. Nothing has been sent to anyone at Controlease.
-6. **The owner credential.** Keep, rotate or delete Keychain `teamchat-ai-prod-postgres-owner` (see "Remaining issues").
+6. **The owner credential: decided, keep it** in Keychain `teamchat-ai-prod-postgres-owner` (see "Remaining issues"). Follow-up: Cloud SQL IAM database authentication for migrations.
 7. **QA memories in production: decided, leave them** (15 October, 12:35 Cairo). No action. Revisit only if they get in the way. Deleting them would be an owner-run SQL change, since the app has no delete path.
 8. **Next rollout.** Production is on hold on `edbdfb2` by your 12:10 decision. Staging runs `b110e54` (S06 review and C03 note). Before any promotion: three consecutive full chains on one commit with every exit 0, spaced to stay under the 20-chats-per-user-per-hour limit, then Gate 4/5.
 9. **Demo.** Read `audit/gonzalo-2026-10-14/DEMO_READINESS_PRIVATE.md` (git-ignored) before any live demo on 00017. It covers what works reliably, the S06 and C03 behaviours, phrasings that avoid them, and live recovery.
