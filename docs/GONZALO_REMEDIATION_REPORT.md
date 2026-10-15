@@ -310,7 +310,7 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
 
 ### Rollback runbook
 
-- **Cloud Run.** Run `gcloud run services update-traffic teamchat-api --to-revisions teamchat-api-00016-ct7=100`, and the same for `teamchat-worker` with `teamchat-worker-00016-24v`.
+- **Cloud Run.** Run `gcloud run services update-traffic teamchat-worker --to-revisions teamchat-worker-00016-24v=100 --region us-central1 --project focus-clean-4b9f4`, then the same for `teamchat-api` with `teamchat-api-00016-ct7`. Pass `--region` and `--project` explicitly; the earlier version of this line omitted them and relied on local gcloud defaults.
 - **Hosting.** Run `firebase hosting:clone focus-clean-4b9f4@acca7910fdbc736c focus-clean-4b9f4:live --project focus-clean-4b9f4`. The source form is `<site>@<version>`; the rehearsal caught that `<site>:@<version>` is rejected.
 - **Schema.** The schema stays at 008. It is additive, and the old release was proven to work against it (compat run above). Chats created after the rollout stay readable by the old code, which ignores `ai_chat`.
 - **Backup.** `1792017407307` is for disaster recovery only, never a routine rollback.
@@ -331,7 +331,8 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
   - All 37 came from QA prompts, none from a person using the product.
   - 35 are attributed to `northside.buyer1`, the reviewer's account, because production acceptance on 11 October signed in as it. All 35 were created on 11 October, none during the reviewer's 14 October session. The other 2 are by `northside.analyst3` (Gate 5).
   - Memory search is tenant-wide. None of the reviewer's 7 recorded prompts brings one into the top 5, but generic recall questions do. "Who is our escalation contact?" returns 4, and "What did we decide about the supplier dispute?" returns 5, shown as "Recorded by Northside Buyer One".
-  - Nothing was deleted. Staging also accumulates chats and memories every run, and there is no archive or delete for either.
+  - **Decision (Ashraf, 15 October 12:35 Cairo): leave them in place.** Nothing was deleted or changed. If one appears in a demo, the demo note gives a one-line explanation, and the suggested reply to Gonzalo mentions them.
+  - Staging also accumulates chats and memories every run, and there is no archive or delete for either.
 - **A retried turn can diverge from its persisted plan.** Tool records are fenced and replayed by operation ID, but a second Gemini call may choose different tools.
 - **Shared instance.** Staging shares the production Cloud SQL instance (documented above).
 - **Production hardening, unchanged.** `CONNECT` on `teamchat` is still granted to `PUBLIC`. Cloud SQL has automated backups disabled, a public IP and unencrypted connections allowed.
@@ -345,8 +346,8 @@ None of these has been done.
 2. **Production chat creation.** Authorize a test of it in production, or keep the label above. Any chat created in production appears in every Northside user's list, including the reviewer's.
 3. **Pull request and merge.** No PR has been opened. Open one from `fix/gonzalo-conversational-review`, review it, and merge it to `main` (protected; merging needs your approval). Production already runs `edbdfb2` from this branch, so `main` is now behind production.
 4. **PR #2.** Close it as superseded.
-5. **Reply to Gonzalo.** Review and send it yourself. A suggested note is in `audit/gonzalo-2026-10-14/SUGGESTED_GMAIL_REPLY_PRIVATE.md`; it predates the production rollout, so update it first. Nothing has been sent to anyone at Controlease.
+5. **Reply to Gonzalo.** Review and send it yourself. The suggested note in `audit/gonzalo-2026-10-14/SUGGESTED_GMAIL_REPLY_PRIVATE.md` was updated on 15 October to the actual state. It covers production on `edbdfb2`, new chats verified on staging only, the S06 and C03 limitations, and the test memories. Nothing has been sent to anyone at Controlease.
 6. **The owner credential.** Keep, rotate or delete Keychain `teamchat-ai-prod-postgres-owner` (see "Remaining issues").
-7. **QA memories in production.** Decide whether to delete the 37 QA memories, 35 of them attributed to the reviewer's account. The list is in `audit/gonzalo-2026-10-14/QA_MEMORIES_PRIVATE.md`. There is no delete path in the app, so this would be an owner-run SQL change; it has not been done.
+7. **QA memories in production: decided, leave them** (15 October, 12:35 Cairo). No action. Revisit only if they get in the way. Deleting them would be an owner-run SQL change, since the app has no delete path.
 8. **Next rollout.** Production is on hold on `edbdfb2` by your 12:10 decision. Staging runs `b110e54` (S06 review and C03 note). Before any promotion: three consecutive full chains on one commit with every exit 0, spaced to stay under the 20-chats-per-user-per-hour limit, then Gate 4/5.
 9. **Demo.** Read `audit/gonzalo-2026-10-14/DEMO_READINESS_PRIVATE.md` (git-ignored) before any live demo on 00017. It covers what works reliably, the S06 and C03 behaviours, phrasings that avoid them, and live recovery.
