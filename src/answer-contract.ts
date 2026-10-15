@@ -169,6 +169,7 @@ export function checkSegment(raw:unknown,ctx:{sources:TurnSources;messages:reado
   if(s.predicate!=null&&s.predicate!==""||s.ref!=null&&s.ref!=="")return {ok:false,reason:"say with fact fields"};
   const check=ctx.vocabulary.checkSay(s.text);
   if(!check.ok)return check;
+  if(ctx.vocabulary.attributes(s.text)&&!/:\s*$/.test(s.text))return {ok:false,reason:"unquoted attribution in say"};
   const consistent=checkSayAgainstSources(s.text,ctx.sources);
   return consistent.ok?{ok:true,segment:{kind:"say",rendered:s.text.trim(),refs:[],sources:[]}}:consistent;
  }
@@ -256,17 +257,24 @@ export interface VocabularySource {
  /** Human messages the model was shown, including the request: echoing a word people in the
   * room wrote is not a workspace claim. Earlier AI answers must never be included. */
  echoText?:string;
+ /** Display names of the workspace's members. */
+ members?:string[];
 }
+/** Reported speech: what someone said, asked for, or will do. */
+const REPORTED_SPEECH=new RegExp(String.raw`\b(?:(?:you|he|she|they|we|someone|somebody|everyone|who|colleagues?|teammates?)\s+(?:just\s+|also\s+|already\s+)?(?:said|says|mentioned|mentions|wrote|writes|told|tells|stated|promised|posted|volunteered|offered|asked (?:for|to|if|whether))`+
+ String.raw`|(?:he|she|they|someone|somebody|colleagues?|teammates?)(?:\s+(?:will|would|is going to|are going to|plans? to)|['’](?:ll|d|re going to)))\b`,"i");
 /** Words and phrases that would make a `say` segment a workspace claim. */
 export class WorkspaceVocabulary {
  private readonly words=new Set<string>();
  private readonly phrases:string[]=[];
+ private readonly members:string[]=[];
  private readonly echo=new Set<string>();
  constructor(src:VocabularySource){
   for(const w of (src.echoText??"").toLowerCase().match(/[a-z][a-z'-]{3,}/g)??[])this.echo.add(w.replace(/'s$/,""));
   for(const text of src.catalogText)for(const w of text.toLowerCase().match(/[a-z][a-z'-]{3,}/g)??[])
    if(!STOP.has(w)&&!APP_TERMS.has(w))this.words.add(w.replace(/'s$/,""));
   const requester=src.requesterName?.trim().toLowerCase();
+  for(const raw of src.members??[]){const p=raw.trim().toLowerCase();if(p.length>=3&&p!==requester)this.members.push(p);}
   for(const raw of src.phrases){const p=raw.trim().toLowerCase();if(p.length>=3&&p!==requester)this.phrases.push(p);}
   for(const other of TENANTS.filter(t=>t!==src.tenantId)){this.phrases.push(other.replace(/-/g," "));this.phrases.push(other.split("-")[0]!);}
  }
@@ -291,6 +299,13 @@ export class WorkspaceVocabulary {
    if(forms.some(f=>this.words.has(f)||this.words.has(`${f}s`)))return {ok:false,reason:"catalog vocabulary in say"};
   }
   return {ok:true};
+ }
+ /** Whether text reports what someone in the room said or will do, or names a member other
+  * than the requester. Such a report is shown only as a server-quoted message. */
+ attributes(text:string):boolean{
+  if(REPORTED_SPEECH.test(text))return true;
+  const lower=text.toLowerCase();
+  return this.members.some(p=>{const at=lower.indexOf(p);return at>=0&&!/[a-z0-9]/.test(lower[at-1]??" ")&&!/[a-z0-9]/.test(lower[at+p.length]??" ");});
  }
 }
 
