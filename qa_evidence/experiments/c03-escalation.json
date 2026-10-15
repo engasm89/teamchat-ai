@@ -1,0 +1,652 @@
+{
+ "purpose": "C03 failed in staging chain 3 on e1fdb8a (run 20261015T085151Z-conversational-118f78): the follow-up 'which one of those is the low-noise model?' got a text-only round 0 repeating a code from an earlier AI answer, the say check rejected it, the generic escalation note produced text again, and the user saw the fallback. The completeness review (e1fdb8a) only runs after tool rounds, so it was not involved.",
+ "turnId": "7b2bf86c-d470-442c-9e4b-8c531bd6ff90",
+ "script": "scripts/experiments/round-finish.ts, scripts/experiments/c03-escalation.ts",
+ "plannerReplay": {
+  "trials": 20,
+  "paths": {
+   "search_catalog > text": 16,
+   "text": 4
+  }
+ },
+ "genericEscalationNote": {
+  "summary": {
+   "trials": 40,
+   "errors": 0,
+   "round0Text": 15,
+   "escalationRecovered": 1,
+   "stillTextAfterEscalation": 14,
+   "reviewFlagged": 14,
+   "recoveredByReviewNote": 3
+  },
+  "results": [
+   {
+    "trial": 1,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 2,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 3,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 4,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 5,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 6,
+    "round0": "text",
+    "draft": "APP-100.19 is \u201cPortable air conditioners, low-noise\u201d.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 7,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 8,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 9,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 10,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 11,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 12,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 13,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 14,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 15,
+    "round0": "text",
+    "draft": "APP-100.19 is the \"Portable air conditioners, low-noise\" model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 16,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 17,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 18,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 19,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 20,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 21,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 22,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 23,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 24,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 25,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 26,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "the low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 27,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 28,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 29,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 30,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 31,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 32,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 33,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 34,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 35,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 36,
+    "round0": "text",
+    "draft": "APP-100.19 is the \u201cPortable air conditioners, low-noise\u201d model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "text",
+    "calls": []
+   },
+   {
+    "trial": 37,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "tool",
+    "calls": [
+     "get_catalog_code"
+    ]
+   },
+   {
+    "trial": 38,
+    "round0": "text",
+    "draft": "APP-100.19 is the \u201cPortable air conditioners, low-noise\u201d model.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "tool",
+    "calls": [
+     "get_catalog_code"
+    ]
+   },
+   {
+    "trial": 39,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 40,
+    "round0": "text",
+    "draft": "APP-100.19 is \u201cPortable air conditioners, low-noise\u201d.",
+    "escalation": "text",
+    "review": "low-noise model",
+    "afterNote": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   }
+  ]
+ },
+ "specificEscalationNote_notShipped": {
+  "note": "Server note (trusted): your draft names <codes>, which no tool fetched in this turn. Earlier answers in the room are not evidence. Fetch it with a tool now, then answer.",
+  "summary": {
+   "trials": 40,
+   "errors": 0,
+   "round0Text": 8,
+   "escalationRecovered": 8,
+   "stillTextAfterEscalation": 0,
+   "reviewFlagged": 0,
+   "recoveredByReviewNote": 0
+  },
+  "results": [
+   {
+    "trial": 1,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 2,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 3,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "get_catalog_code"
+    ]
+   },
+   {
+    "trial": 4,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 5,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 6,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 7,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 8,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 9,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 10,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 11,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 12,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 13,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "get_catalog_code"
+    ]
+   },
+   {
+    "trial": 14,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 15,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 16,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 17,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 18,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "get_catalog_code"
+    ]
+   },
+   {
+    "trial": 19,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 20,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 21,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 22,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 23,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 24,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 25,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 26,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 27,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 28,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 29,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 30,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 31,
+    "round0": "text",
+    "draft": "APP-100.19 is the low-noise model.",
+    "escalation": "tool",
+    "calls": [
+     "get_catalog_code"
+    ]
+   },
+   {
+    "trial": 32,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 33,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 34,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 35,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 36,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 37,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 38,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 39,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   },
+   {
+    "trial": 40,
+    "round0": "tool",
+    "calls": [
+     "search_catalog"
+    ]
+   }
+  ]
+ },
+ "conclusion": "Reproduced offline (round 0 text-only in 4/20, 15/40 and 8/40 trials). The generic escalation note recovered 1/15; the completeness review plus continuation note 3/14; a note naming the unverified codes recovered 8/8. Not shipped: it needs its own three green staging chains."
+}
