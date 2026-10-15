@@ -1,0 +1,385 @@
+{
+ "schemaVersion": 1,
+ "suite": "conversational",
+ "runId": "20261015T094604Z-conversational-a4f3e3",
+ "environment": "staging: https://focus-clean-4b9f4--staging-yxk0bcnc.web.app + https://teamchat-api-staging-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-15T09:46:04.750Z",
+ "finishedAt": "2026-10-15T09:47:28.009Z",
+ "harness": {
+  "gitHead": "b110e54c2c4be295aa41f9a609373b4f5d8489b7",
+  "dirty": true,
+  "fingerprint": "fdce17f0866137d06de1f0d8f9fca7cc19b20d478d1b7b99ace42b58b6a1b4be",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/acceptance/live-client.ts",
+   "scripts/acceptance/run-conversational.ts",
+   "scripts/acceptance/target.ts",
+   "scripts/evidence/lib.ts"
+  ]
+ },
+ "source": {
+  "sha": "b110e54c2c4be295aa41f9a609373b4f5d8489b7"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-staging-00022-k44",
+  "apiDigest": "sha256:2e9b526498e7ae37e44cf03176dad0c75b4c2caf12ba2533bb77b5d1a01ac5cd",
+  "workerRevision": "teamchat-worker-staging-00022-49h",
+  "workerDigest": "sha256:91c34fef2835d36526a5d4544d524ef7f60079c4c203e53b9a7b3c234bc5185a",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+ },
+ "tests": [
+  {
+   "id": "C01",
+   "title": "Small talk in an AI chat is answered in Gemini's own words, without tools, quickly",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:46:04.830Z",
+   "finishedAt": "2026-10-15T09:46:12.414Z",
+   "details": {
+    "timing": {
+     "firstSegmentS": 1.139,
+     "terminalS": 1.178
+    }
+   },
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "no tool was called",
+     "pass": true,
+     "expected": 0,
+     "actual": []
+    },
+    {
+     "name": "at least one conversational segment shown",
+     "pass": true,
+     "expected": "say segments",
+     "actual": [
+      "say"
+     ]
+    },
+    {
+     "name": "no canned no-record reply",
+     "pass": true,
+     "expected": "absent",
+     "actual": "Hi there! I'm doing well, thanks for asking. How can I help you today?"
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T094604Z-conversational-a4f3e3/C01/c01.json",
+     "sha256": "ff49f7328c6ea3996b11a0c129b616e188b272af14d1b8791bd440550f4c6468",
+     "description": "c01: prompt, tools, shown segments, latency"
+    }
+   ]
+  },
+  {
+   "id": "C02",
+   "title": "The assistant knows who said what in the room, by display name",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:46:12.415Z",
+   "finishedAt": "2026-10-15T09:46:31.908Z",
+   "details": {
+    "timing": {
+     "firstSegmentS": 8.388,
+     "terminalS": 8.585
+    }
+   },
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "answer attributes the message to Northside Buyer Two by name",
+     "pass": true,
+     "expected": "Northside Buyer Two",
+     "actual": "Here's what your colleague said:\nNorthside Buyer Two (#2): “I'll draft the supplier email for the hiking range x-mv9ct9o3-g46e”"
+    },
+    {
+     "name": "answer quotes the colleague's words",
+     "pass": true,
+     "expected": "I'll draft the supplier email for the hiking range x-mv9ct9o3-g46e",
+     "actual": "Here's what your colleague said:\nNorthside Buyer Two (#2): “I'll draft the supplier email for the hiking range x-mv9ct9o3-g46e”"
+    },
+    {
+     "name": "no Firebase UID shown",
+     "pass": true,
+     "expected": [],
+     "actual": 0
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T094604Z-conversational-a4f3e3/C02/c02.json",
+     "sha256": "9e41c07d3dcb38336894da8038b47d1947f004420de9529c303ac08877b2981f",
+     "description": "c02: prompt, tools, shown segments, latency"
+    }
+   ]
+  },
+  {
+   "id": "C03",
+   "title": "A follow-up question is understood from the conversation, and every code shown was fetched",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:46:31.908Z",
+   "finishedAt": "2026-10-15T09:46:51.041Z",
+   "details": {
+    "timing": {
+     "first": {
+      "firstSegmentS": 5.194,
+      "terminalS": 6.422
+     },
+     "followUp": {
+      "firstSegmentS": 4.674,
+      "terminalS": 4.716
+     }
+    }
+   },
+   "assertions": [
+    {
+     "name": "both turns completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": [
+      "ai_complete",
+      "ai_complete"
+     ]
+    },
+    {
+     "name": "the follow-up answer names the low-noise code APP-100.19",
+     "pass": true,
+     "expected": "APP-100.19",
+     "actual": "APP-100.19 is “Portable air conditioners, low-noise” (Portable air conditioners, Appliances). It is in margin class 318."
+    },
+    {
+     "name": "every code shown was fetched by a tool in this conversation",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T094604Z-conversational-a4f3e3/C03/c03-first.json",
+     "sha256": "c3c49f614e8eb9217e44ffa0a0d9f8acd67fe0b22b8052ba5cfb73ac4ff13d27",
+     "description": "c03-first: prompt, tools, shown segments, latency"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T094604Z-conversational-a4f3e3/C03/c03-follow-up.json",
+     "sha256": "ec94c8c7e08c8dcd26e1b71621078f4a58359eebbe18f89e9e44b8c2d1697842",
+     "description": "c03-follow-up: prompt, tools, shown segments, latency"
+    }
+   ]
+  },
+  {
+   "id": "C04",
+   "title": "A question the data cannot answer gets no invented figures",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:46:51.041Z",
+   "finishedAt": "2026-10-15T09:47:04.781Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "every number shown appears in this turn's tool results",
+     "pass": true,
+     "expected": [],
+     "actual": []
+    },
+    {
+     "name": "no sales figure claimed",
+     "pass": true,
+     "expected": "no sales claim",
+     "actual": "ST-4007 (Harbour Point) is a flagship omni store in the standard segment. It carries 18 catalog codes and has 8 suspected assortment gaps (suspected, not confirmed demand).\nSuspected gaps at ST-4007 (not confirmed demand): APP-100.11 (Portable air conditioners, 5,000 to 7,000 BTU; last carried 2024; evidence: footfall up 16% on weekends with no adjacency to this category); APP-100.12 (Portable air conditioners, 8,000 to 10,000 BTU; last carried 2024; evidence: 13% of basket-level demand met by click-and-collect from a sister store); APP-100.13 (Portable air conditioners, 11,000 to 13,000 BTU; last carried 2024; evidence: category search volume up 12% year on year with no local fulfilment); APP-169.16 (Fans and air circulators, ceiling, flush mount; last carried 2025; evidence: footfall up 33% on weekends with no adjacency to this category); APP-192.17 (Refrigerators and freezers, upright freezer; last carried 2024; evidence: 33% of basket-level demand met by click-and-collect from a sister store); HOM-123.16 (Tables and desks, standing desks; last carried never; evidence: 20% of basket-level demand met by click-and-collect from a sister store); SEA-307.12 (Decking, fencing and surfaces, decking fixings; last carried never; evidence: category search volume up 22% year on year with no local fulfilment); SPT-261.12 (Winter sports, snowboards; last carried 2024; evidence: category search volume up 32% year on year with no local fulfilment)."
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T094604Z-conversational-a4f3e3/C04/c04.json",
+     "sha256": "70ea7fcc541df6a2c02ca95932de408b85da44e3f737cf9e37c1186c7822154f",
+     "description": "c04: prompt, tools, shown segments, latency"
+    }
+   ]
+  },
+  {
+   "id": "C05",
+   "title": "Asking what the assistant can do lists its capabilities and never fails",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "FAIL",
+   "startedAt": "2026-10-15T09:47:04.781Z",
+   "finishedAt": "2026-10-15T09:47:05.908Z",
+   "details": {},
+   "assertions": [],
+   "artifacts": [],
+   "error": "Error: create 429"
+  },
+  {
+   "id": "N01",
+   "title": "A new chat appears live for every active teammate, never for another tenant; AI chats answer without @AI",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:47:05.909Z",
+   "finishedAt": "2026-10-15T09:47:24.070Z",
+   "details": {
+    "room": {
+     "room_id": "chat-333b57b6-b78b",
+     "title": "Team chat n01-mv9cucho-v6gn",
+     "ai_chat": true,
+     "visibility": "tenant"
+    },
+    "membersListedForN2": [
+     "Northside Analyst Three",
+     "Northside Buyer One",
+     "Northside Buyer Two"
+    ]
+   },
+   "assertions": [
+    {
+     "name": "POST /api/rooms creates the chat (201)",
+     "pass": true,
+     "expected": 201,
+     "actual": 201
+    },
+    {
+     "name": "repeating the request returns the same chat (200)",
+     "pass": true,
+     "expected": {
+      "status": 200,
+      "room": "chat-333b57b6-b78b"
+     },
+     "actual": {
+      "status": 200,
+      "room": "chat-333b57b6-b78b"
+     }
+    },
+    {
+     "name": "teammate's socket got rooms_changed within 10 s",
+     "pass": true,
+     "expected": true,
+     "actual": true
+    },
+    {
+     "name": "teammate's room list includes the chat, marked as an AI chat",
+     "pass": true,
+     "expected": true,
+     "actual": {
+      "room_id": "chat-333b57b6-b78b",
+      "title": "Team chat n01-mv9cucho-v6gn",
+      "ai_chat": true,
+      "visibility": "tenant"
+     }
+    },
+    {
+     "name": "teammate sees the creator's message live",
+     "pass": true,
+     "expected": true,
+     "actual": true
+    },
+    {
+     "name": "a plain message in an AI chat gets an answer",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "Valley's room list does not include it",
+     "pass": true,
+     "expected": "absent",
+     "actual": 200
+    },
+    {
+     "name": "Valley's socket got no rooms_changed",
+     "pass": true,
+     "expected": false,
+     "actual": false
+    },
+    {
+     "name": "Valley cannot subscribe to it: no events and no frame carrying its content",
+     "pass": true,
+     "expected": 0,
+     "actual": {
+      "events": 0,
+      "frames": []
+     }
+    }
+   ],
+   "artifacts": []
+  },
+  {
+   "id": "N02",
+   "title": "Chat creation rejects bad input, missing origin and missing auth",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:47:24.072Z",
+   "finishedAt": "2026-10-15T09:47:28.008Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "empty title rejected (400)",
+     "pass": true,
+     "expected": 400,
+     "actual": 400
+    },
+    {
+     "name": "81-character title rejected (400)",
+     "pass": true,
+     "expected": 400,
+     "actual": 400
+    },
+    {
+     "name": "unknown field (tenantId) rejected (400)",
+     "pass": true,
+     "expected": 400,
+     "actual": 400
+    },
+    {
+     "name": "POST without Origin rejected",
+     "pass": true,
+     "expected": 403,
+     "actual": 403
+    },
+    {
+     "name": "POST from a foreign Origin rejected",
+     "pass": true,
+     "expected": 403,
+     "actual": 403
+    },
+    {
+     "name": "POST without a token rejected (401)",
+     "pass": true,
+     "expected": 401,
+     "actual": 401
+    }
+   ],
+   "artifacts": []
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+ "label": "s08-unrelated",
+ "user": "northside.buyer2.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI What did we decide about bicycle helmet sizing?",
+ "consent": false,
+ "turnId": "b6b9b0d7-3da8-437e-bd59-c7e8911c5233",
+ "messageSequence": 3505,
+ "at": "2026-10-14T21:54:57.657Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "bicycle helmet sizing"
+   },
+   "result": []
+  }
+ ],
+ "renderedAnswer": "I couldn't find any record of a decision about bicycle helmet sizing.\n\nI have no record of that.\n\nI have no record of that."
+}

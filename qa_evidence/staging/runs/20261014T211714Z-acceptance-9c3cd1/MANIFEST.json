@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T21:26:34.716Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "f762d67f36481ebc7c98dc49553a3104b1000cb881946dd08bc89ec1fa6842c2"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1404,
+   "sha256": "0d50453574c14967b76ca535b4e010be07acfd12eeaeb434b049206c52beeaa1"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13181,
+   "sha256": "48f6c668f0fa5a587c8303506ce2ce70949f997a752dce59bc26cf8e20143fcc"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 709,
+   "sha256": "16b68041da6b2577ae3f44744f8063dffb4ce98c9a0ec9ff7a146083eb15c9da"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3699,
+   "sha256": "37805b9fd0884b8987e149e0d1e9d1a64a2d98f2dd9214a81b28881609b34385"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10315,
+   "sha256": "0c8bc885e354f3943f5c109ee4f67962b14f431c22dbb6ca6494a3c0a58b1ab0"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "99d377c4889fcd4f79c63fb87e56bace8409e6b3be64f7b857e9fac21fe60bdd"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2281,
+   "sha256": "f0063b86f3dc6bc2ab33c7e284141c128fedfc000e70930781d9c6af3fb4c804"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 683,
+   "sha256": "f8e0a9fff2392bdaf119439be71fb6b3b8f018fed3d013d56015fa09c4275028"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 630,
+   "sha256": "b2ac77708044c824a07ffac1713e0ce0041dff5aca1845be603fe5b2c69363b4"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 6180,
+   "sha256": "057ab3b4f01a3913b472897011492bb7cdc4df8cc82c498b094d706f14f175cf"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 2013,
+   "sha256": "872c51acf5812248cb097ec0a9b385b1f41d3d15153ef8ba69bee4984c4c7ba0"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2891,
+   "sha256": "97f2b51e2e11dcf0fb28ddf88997f71ab833d60395f929ad8951b14878d9c323"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1690,
+   "sha256": "cc3132778a824ae741a5482ccb90411cbd0bbd5f9d07d9af968c9cf37da9b9e1"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "1bc8be1dc03a599b0ee2711713b9e42bb9c1f10138e427636277dfb684b5489b"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3977,
+   "sha256": "b7a782e261cc0cd774b0eac4b9bcb65a1c56349cdf9c9f465fe88fa328b94378"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "4ca1ff8e08d4b02eaafd229914101df691c338dcb104866ab4ead0e3c6862ab8"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "a7befee74596006c7b353ae0fa00d454bfb5605caec07d354fe019ac045d1775"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 815,
+   "sha256": "2ac129eec7a899d5b7fe4ade58ba33f442a34f0c284650a489d1a825ae44aa10"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 843,
+   "sha256": "5d33a91d13496e23174fec063f2f14680e2603ac946dfac2eb866a10e21d8ffc"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 835,
+   "sha256": "73c369c8066b32686addec96fb1524e94f083ec0a6bd15699fc4ae6aa31eb61b"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "172151dfee7bb7b44b5f2468ed87af91dc238fa1d3e2ecbacb8f1f7d47d0f136"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 18821,
+   "sha256": "0285db7a105c3078620783b1de76c004b2a7fce82f887c2dca11f842efef4c0f"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "d38afd304bb53eaf733b65e2688f85a8b4a008f71548635447f77a236e7de8d8"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "440386f2390bf123d49c8017573e70686f0179875759e415fd7129759b1fa0ef"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "a4b8b7c0ddee111ba7bccc85e54f1898cc6982d1be67888e7bbb33176c414f26"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50507,
+   "sha256": "a34fb5ab9553b2deb42aeec9dffbd3a20fe7d4ef63264dea73358fa913804793"
+  }
+ ]
+}

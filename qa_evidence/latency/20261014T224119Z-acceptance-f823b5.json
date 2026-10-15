@@ -1,0 +1,159 @@
+{
+ "summary": {
+  "target": "production",
+  "turns": 21,
+  "measured": 21,
+  "p50TerminalMs": 5030,
+  "p95TerminalMs": 11378,
+  "maxTerminalMs": 12131
+ },
+ "turns": [
+  {
+   "label": "s01",
+   "turnId": "29919b07-fc51-47f6-8836-b237c310b5df",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 8068,
+   "toTerminalMs": 10406
+  },
+  {
+   "label": "s02",
+   "turnId": "cbdb9977-332b-4528-a28c-89f00c2071f6",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4245,
+   "toTerminalMs": 4561
+  },
+  {
+   "label": "s03",
+   "turnId": "22d8734d-f1ef-46d4-9e46-8d93159a8946",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 5914,
+   "toTerminalMs": 8480
+  },
+  {
+   "label": "s04",
+   "turnId": "d9260fa4-2547-448a-868f-599705ba1a46",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4153,
+   "toTerminalMs": 4275
+  },
+  {
+   "label": "s05",
+   "turnId": "9a610fd3-691c-4a22-aa10-f24cbd207e90",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 5469,
+   "toTerminalMs": 5598
+  },
+  {
+   "label": "s06",
+   "turnId": "c812b985-43fc-4249-bcd6-3c78bb0fb209",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 10426,
+   "toTerminalMs": 12131
+  },
+  {
+   "label": "s07",
+   "turnId": "4beb07f8-2d4f-443f-912b-a9d522882c29",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 8981,
+   "toTerminalMs": 9237
+  },
+  {
+   "label": "s08-paraphrase",
+   "turnId": "eb7de310-9c2a-4911-8a41-f1e451dc9b0d",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4338,
+   "toTerminalMs": 4424
+  },
+  {
+   "label": "s08-unrelated",
+   "turnId": "90705396-47ca-4e65-bfed-f452861be2f8",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 3962,
+   "toTerminalMs": 4001
+  },
+  {
+   "label": "s08-valley",
+   "turnId": "059084a9-7d31-46dd-9998-b72d7962ddbc",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 8527,
+   "toTerminalMs": 8584
+  },
+  {
+   "label": "s10-flat",
+   "turnId": "e4a60f4b-6d1a-4d33-a7a1-be6cc6cba35e",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4751,
+   "toTerminalMs": 4813
+  },
+  {
+   "label": "s10-nested",
+   "turnId": "7fd5dcb2-94b7-495e-b751-60b214c4e205",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 6158,
+   "toTerminalMs": 6228
+  },
+  {
+   "label": "s11-northside",
+   "turnId": "6a85bb5e-ce8a-4d73-a3fb-f8e14fb188c9",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4859,
+   "toTerminalMs": 4928
+  },
+  {
+   "label": "s11-valley",
+   "turnId": "6592f4cc-abe5-4add-9580-c6a84ef22877",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4477,
+   "toTerminalMs": 4692
+  },
+  {
+   "label": "s12-first",
+   "turnId": "fc95b1a4-815c-45aa-8641-327ab8a42b59",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 3493,
+   "toTerminalMs": 3531
+  },
+  {
+   "label": "s12-forged",
+   "turnId": "8b77d0db-8edf-4462-b45c-ce9054c429cc",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 8501,
+   "toTerminalMs": 8639
+  },
+  {
+   "label": "s12-unknown",
+   "turnId": "6bf19949-e9bc-4fb7-9abe-c5a26142b3d7",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 4945,
+   "toTerminalMs": 5030
+  },
+  {
+   "label": "s13",
+   "turnId": "964762c3-8d79-41e9-a913-2a2040e0ca86",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 6100,
+   "toTerminalMs": 6137
+  },
+  {
+   "label": "s18-northside-store",
+   "turnId": "ad6801a4-b623-4863-87f0-89043c3c487f",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 3396,
+   "toTerminalMs": 3528
+  },
+  {
+   "label": "s18-target",
+   "turnId": "d82c50d3-55aa-4679-b5a8-d5ea255e1ba6",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 3797,
+   "toTerminalMs": 3994
+  },
+  {
+   "label": "s18-unknown",
+   "turnId": "d3cc8980-5adf-4fcc-b63b-0ac82b21fe41",
+   "terminal": "ai_complete",
+   "toFirstSegmentMs": 11204,
+   "toTerminalMs": 11378
+  }
+ ]
+}

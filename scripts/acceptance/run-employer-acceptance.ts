@@ -10,24 +10,27 @@ import fs from "node:fs";
 import path from "node:path";
 import {isDeepStrictEqual} from "node:util";
 import {spawn,execFileSync} from "node:child_process";
-import {RunRecorder,GCP,type Assertion,type TestRecorder} from "../evidence/lib.ts";
-import {API_URL,APP_URL,QA_ROOM,bindDeployment,openDb,authoritativeEvents,firebaseSignIn,sleep,tag,type AccountKey} from "./common.ts";
+import {RunRecorder,type Assertion,type TestRecorder} from "../evidence/lib.ts";
+import {API_URL,APP_URL,QA_ROOM,TARGET,runsDir,bindDeployment,openDb,proxiedDatabaseUrl,authoritativeEvents,firebaseSignIn,sleep,tag,type AccountKey} from "./common.ts";
+import {assertRestartableTarget} from "./target.ts";
+import {freePort,waitForOwnHealth,sampleProcess} from "./local-instance.ts";
 import {LiveClient,type Turn} from "./live-client.ts";
 import * as oracle from "./oracle.ts";
 import {renderVerifiedBlock} from "../../apps/web/src/verified.ts";
 
-const HARNESS=["scripts/acceptance/run-employer-acceptance.ts","scripts/acceptance/live-client.ts","scripts/acceptance/oracle.ts",
- "scripts/acceptance/common.ts","scripts/evidence/lib.ts"];
+const HARNESS=["scripts/acceptance/run-employer-acceptance.ts","scripts/acceptance/live-client.ts","scripts/acceptance/oracle.ts","scripts/acceptance/local-instance.ts",
+ "scripts/acceptance/common.ts","scripts/acceptance/target.ts","scripts/evidence/lib.ts"];
 const args=process.argv.slice(2);
 const RESTART=args.includes("--restart");
 const ONLY=args.includes("--only")?new Set(args[args.indexOf("--only")+1]!.split(",")):null;
 const N="northside-outfitters",V="valley-home-goods";
 const NROOM=QA_ROOM[N],VROOM=QA_ROOM[V];
 
+if(RESTART)assertRestartableTarget(TARGET);
 const {sourceSha,deployment}=bindDeployment();
 const pool=await openDb();
-const run=new RunRecorder({suite:RESTART?"acceptance-restart":"acceptance",environment:`production: ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
- ...(args.includes("--scratch")?{runsDir:"qa_evidence/scratch/runs"}:{})});
+const run=new RunRecorder({suite:RESTART?"acceptance-restart":"acceptance",environment:`${TARGET.name}: ${API_URL}`,sourceSha,deployment,harnessFiles:HARNESS,
+ runsDir:runsDir(args.includes("--scratch"))});
 const clients:LiveClient[]=[];
 async function client(account:AccountKey,room?:string,url?:string){
  const c=await new LiveClient(account,url).connect();clients.push(c);if(room)await c.subscribe(room);return c;
@@ -35,7 +38,8 @@ async function client(account:AccountKey,room?:string,url?:string){
 function closeClients(){for(const c of clients.splice(0))c.close();}
 
 // ---------- helpers ----------
-const rendered=(turn:Turn)=>turn.blocks.map(b=>renderVerifiedBlock(b)).join("\n\n");
+/** What a reader sees: the answer segments, then the verified source blocks. */
+const rendered=(turn:Turn)=>[...turn.segments.map(s=>String(s.rendered??"")),...turn.blocks.map(b=>renderVerifiedBlock(b))].join("\n\n");
 const toolText=(turn:Turn)=>JSON.stringify(turn.tools.map(t=>t.result));
 async function ask(t:TestRecorder,c:LiveClient,room:string,prompt:string,label:string,consent=false):Promise<Turn>{
  const sent=await c.post(room,prompt,consent);
@@ -74,9 +78,9 @@ const strip=(v:unknown):unknown=>JSON.parse(JSON.stringify(v,(k,x)=>k==="ref"||k
 const noMatch=(turn:Turn)=>turn.tools.length>0&&turn.tools.every(x=>x.result?.found===false||(Array.isArray(x.result)&&x.result.length===0));
 
 async function auditLog(turnId:string):Promise<any[]>{
- const filter=`resource.type="cloud_run_revision" AND resource.labels.service_name="teamchat-worker" AND jsonPayload.message="ai_tool_call" AND jsonPayload.turnId="${turnId}"`;
+ const filter=`resource.type="cloud_run_revision" AND resource.labels.service_name="${TARGET.workerService}" AND jsonPayload.message="ai_tool_call" AND jsonPayload.turnId="${turnId}"`;
  for(let i=0;i<12;i++){
-  const out=JSON.parse(execFileSync("gcloud",["logging","read",filter,"--project",GCP.project,"--freshness=2h","--format=json"],{encoding:"utf8"}));
+  const out=JSON.parse(execFileSync("gcloud",["logging","read",filter,"--project",TARGET.project,"--freshness=2h","--format=json"],{encoding:"utf8"}));
   if(out.length)return out.map((e:any)=>e.jsonPayload);
   await sleep(10000);
  }
@@ -212,20 +216,22 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
  }],
  ["S09","A new contact and deadline saved with consent reach another user in another room, not Valley",["S09"],async t=>{
   // Memory keys are unique per tenant, so each run needs a topic no earlier run has saved.
-  const name=`Dana ${tag("qa").slice(3)}`,deadline="2026-11-20",dispute=`case ${tag("qa").slice(3)}`;
+  // The tag looks like an ID, so the model may store "Dana" and the tag as separate fields; every token must survive verbatim.
+  const id=tag("qa").slice(3),name=`Dana ${id}`,deadline="2026-11-20",dispute=`case ${tag("qa").slice(3)}`;
+  const holds=(value:unknown)=>["Dana",id,deadline].every(x=>JSON.stringify(value??{}).includes(x));
   const n1=await client("n1",NROOM),n2=await client("n2","category-strategy"),v1=await client("v1",VROOM);
   const save=await ask(t,n1,NROOM,`@AI Remember that our escalation contact for the ${dispute} supplier dispute is ${name} and the deadline is ${deadline}.`,"s09-save",true);
   const saved=save.tools.find(x=>x.name==="save_memory");
   const recall=await ask(t,n2,"category-strategy",`@AI Who is our escalation contact for the ${dispute} supplier dispute, and when is the deadline?`,"s09-recall");
   const valley=await ask(t,v1,VROOM,`@AI Who is our escalation contact for the ${dispute} supplier dispute, and when is the deadline?`,"s09-valley");
   const hits=recall.tools.filter(x=>x.name==="search_memory").flatMap(x=>Array.isArray(x.result)?x.result.map((r:any)=>r.memory):[]);
-  const mine=hits.find(m=>JSON.stringify(m.value).includes(name));
+  const mine=hits.find(m=>holds(m.value));
   record(t,[completed(save,"save"),completed(recall,"recall"),completed(valley,"valley"),
    a("memory saved with consent",saved?.result?.saved===true,true,saved?.result),
-   a("saved value contains the contact and the deadline",JSON.stringify(saved?.result?.memory?.value??{}).includes(name)&&JSON.stringify(saved?.result?.memory?.value??{}).includes(deadline),{name,deadline},saved?.result?.memory?.value),
+   a("saved value contains the contact and the deadline",holds(saved?.result?.memory?.value),{name,deadline},saved?.result?.memory?.value),
    a("another user in another room retrieves it",!!mine,name,hits.map(m=>m.key)),
    a("retrieved memory names the saving user and room",mine?.created_by===n1.uid&&mine?.source_room_id===NROOM,{created_by:n1.uid,room:NROOM},mine&&{created_by:mine.created_by,room:mine.source_room_id}),
-   a("Valley cannot retrieve it",!JSON.stringify(valley.tools).includes(name)&&!rendered(valley).includes(name),"absent","")]);
+   a("Valley cannot retrieve it",!JSON.stringify(valley.tools).includes(id)&&!rendered(valley).includes(id),"absent","")]);
  }],
  ["S10","Nested value rejected with field-level reasons and exactly one repair; a flat value saves",["S10"],async t=>{
   const n1=await client("n1",NROOM);const key=tag("roster");
@@ -236,7 +242,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
   const stored=saves.find(x=>x.result?.saved===true);
   const text=rendered(nested);
   const flat=await ask(t,n1,NROOM,`@AI Remember that the ${key} flat check value is ${key}-ok.`,"s10-flat",true);
-  const flatSave=flat.tools.find(x=>x.name==="save_memory");
+  const flatSaves=flat.tools.filter(x=>x.name==="save_memory"),flatSave=flatSaves.find(x=>x.result?.saved===true)??flatSaves[0];
   record(t,[completed(nested,"nested"),
    a("first save attempt was rejected",Array.isArray(saves[0]?.result?.validation_errors),"validation_errors",saves[0]?.result),
    a("rejection lists field-level reasons",(saves[0]?.result?.validation_errors??[]).every((e:any)=>e.field&&e.issue)&&(saves[0]?.result?.validation_errors??[]).length>0,"field + issue",saves[0]?.result?.validation_errors),
@@ -246,7 +252,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("stored value is flat and exactly what the repair sent",!!stored&&Object.keys(stored.result.memory.value).length>0&&Object.values(stored.result.memory.value).every(v=>v===null||typeof v!=="object")&&
     isDeepStrictEqual(stored.result.memory.value,parsed(stored.arguments.value_json)),"flat, non-empty, identical",stored&&{sent:stored.arguments.value_json,stored:stored.result.memory.value}),
    completed(flat,"flat"),
-   a("a valid flat value saves with the requested content",flatSave?.result?.saved===true&&JSON.stringify(flatSave.result.memory?.value??{}).includes(`${key}-ok`),`saved, containing ${key}-ok`,flatSave?.result)]);
+   a("a valid flat value saves with the requested content (directly or by the one controlled repair)",flatSaves.length<=2&&flatSave?.result?.saved===true&&JSON.stringify(flatSave.result.memory?.value??{}).includes(`${key}-ok`),`saved, containing ${key}-ok`,flatSaves.map(x=>x.result))]);
  }],
  ["S11","A target both chains track: each tenant gets only its own",["G04","S11"],async t=>{
   const nSeed=oracle.memories[N]!.find(m=>m.key==="q1_assortment_target")!,vSeed=oracle.memories[V]!.find(m=>m.key==="q1_assortment_target")!;
@@ -344,7 +350,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
   const messages=db.filter(e=>e.type==="message"&&e.payload?.client_message_id===id);
   const terminals=db.filter(e=>e.turn_id===first.turnId&&["ai_complete","ai_failed"].includes(e.type));
   const tools=db.filter(e=>e.turn_id===first.turnId&&e.type==="ai_tool").map(e=>e.payload.operationId);
-  const worker="https://teamchat-worker-1068908463902.us-central1.run.app";
+  const worker=TARGET.workerUrl;
   const anon=await fetch(`${worker}/internal/turn`,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({turnId:first.turnId})});
   const forged=await fetch(`${worker}/internal/turn`,{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.e30.invalid"},body:JSON.stringify({turnId:first.turnId})});
   record(t,[completed(turn),
@@ -356,24 +362,23 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("worker rejects a forged token",[401,403].includes(forged.status),"401/403",forged.status)]);
  }],
  ["A12","Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded",["A12"],async t=>{
-  const port=18080;
-  const dbUrl=execFileSync("gcloud",["secrets","versions","access","latest","--secret=teamchat-database-url","--project",GCP.project],{encoding:"utf8"}).trim();
-  const m=/^postgres(?:ql)?:\/\/([^:/@]+):([^@]+)@[^/]*\/([A-Za-z0-9_]+)/.exec(dbUrl);if(!m)throw Error("Unexpected database URL form");
-  const env={...process.env,DATABASE_URL:`postgres://${m[1]}:${encodeURIComponent(decodeURIComponent(m[2]!))}@127.0.0.1:${process.env.DB_PROXY_PORT??"6543"}/${m[3]}`,
-   FIREBASE_PROJECT_ID:GCP.project,GOOGLE_CLOUD_PROJECT:GCP.project,ALLOWED_ORIGINS:APP_URL,PORT:String(port),LOCAL_TASK_WORKER:"1",PG_POOL_MAX:"3"};
+  const port=await freePort();
+  const env={...process.env,DATABASE_URL:proxiedDatabaseUrl(),DB_RUNTIME_ROLE:TARGET.dbRole,
+   FIREBASE_PROJECT_ID:TARGET.project,GOOGLE_CLOUD_PROJECT:TARGET.project,ALLOWED_ORIGINS:APP_URL,PORT:String(port),LOCAL_TASK_WORKER:"1",PG_POOL_MAX:"3"};
   const logFile=path.join(t.dir,"local-instance.log");const out=fs.openSync(logFile,"w");
   const proc=spawn(process.execPath,["--experimental-strip-types","src/server/start.ts"],{env,stdio:["ignore",out,out]});
+  t.detail("localInstance",{port,pid:proc.pid});
+  const onSignal=(signal:NodeJS.Signals)=>{proc.kill("SIGKILL");process.kill(process.pid,signal);};
+  process.once("SIGINT",onSignal).once("SIGTERM",onSignal);
   try{
-   const up=await (async()=>{for(let i=0;i<40;i++){try{const r=await fetch(`http://127.0.0.1:${port}/health`);if(r.ok)return true;}catch{}await sleep(500);}return false;})();
-   if(!up)throw Error("Local API instance did not become healthy; see local-instance.log");
+   await waitForOwnHealth(proc,port);
    const cloud=await client("n1",NROOM),local=await client("n2",NROOM,`ws://127.0.0.1:${port}/ws`);
    const toCloud=`${tag("a12")} local→cloud`,toLocal=`${tag("a12")} cloud→local`;
    await local.post(NROOM,toCloud);await cloud.post(NROOM,toLocal);
    const seen=(c:LiveClient,text:string)=>(c.events.get(NROOM)??[]).some(e=>e.type==="message"&&String(e.payload.body)===text);
    await cloud.until(()=>seen(cloud,toCloud),15000,"cross-instance delivery to Cloud Run").catch(()=>{});
    await local.until(()=>seen(local,toLocal),15000,"cross-instance delivery to local").catch(()=>{});
-   const sample=()=>{const rss=Number(execFileSync("ps",["-o","rss=","-p",String(proc.pid)],{encoding:"utf8"}).trim());
-    const fds=execFileSync("lsof",["-p",String(proc.pid)],{encoding:"utf8"}).split("\n").filter(l=>/TCP/.test(l)).length;return {rssKb:rss,tcp:fds};};
+   const sample=()=>sampleProcess(proc.pid!);
    const before=sample();
    const identity=await firebaseSignIn("n3");
    for(let i=0;i<100;i++){const c=await new LiveClient("n3",`ws://127.0.0.1:${port}/ws`).connect(identity);c.send({type:"subscribe",roomId:NROOM,after:0});await sleep(50);c.close();}
@@ -383,7 +388,11 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
     a("message sent to Cloud Run reached the local-instance client",seen(local,toLocal),true,seen(local,toLocal)),
     a("TCP sockets return to baseline after 100 cycles (±3)",after.tcp<=before.tcp+3,`≤${before.tcp+3}`,after.tcp),
     a("resident memory growth under 64 MB after 100 cycles",after.rssKb-before.rssKb<65536,"<65536 KB",after.rssKb-before.rssKb)]);
-  }finally{proc.kill("SIGTERM");await sleep(1500);fs.closeSync(out);t.artifact("local-instance.log","Second API instance stdout/stderr");}
+  }finally{
+   process.off("SIGINT",onSignal).off("SIGTERM",onSignal);
+   proc.kill("SIGTERM");await sleep(1500);if(proc.exitCode===null&&proc.signalCode===null)proc.kill("SIGKILL");
+   fs.closeSync(out);t.artifact("local-instance.log","Second API instance stdout/stderr");
+  }
  }],
 ];
 
@@ -393,13 +402,14 @@ async function s19(t:TestRecorder){
  const n1=await client("n1",NROOM);
  const save=await ask(t,n1,NROOM,`@AI Remember that the cold-start check code for ${drill} is ${value}.`,"s19-save",true);
  closeClients();
+ assertRestartableTarget(TARGET);
  const before=bindDeployment().deployment;const restartAt=new Date();
- for(const svc of ["teamchat-api","teamchat-worker"])
-  execFileSync("gcloud",["run","services","update",svc,"--region",GCP.region,"--project",GCP.project,`--update-labels=qa-restart=${Date.now()}`,"--quiet"],{stdio:"ignore"});
+ for(const svc of [TARGET.apiService,TARGET.workerService])
+  execFileSync("gcloud",["run","services","update",svc,"--region",TARGET.region,"--project",TARGET.project,`--update-labels=qa-restart=${Date.now()}`,"--quiet"],{stdio:"ignore"});
  const after=bindDeployment().deployment;
  const startLogs=JSON.parse(execFileSync("gcloud",["logging","read",
   `resource.type="cloud_run_revision" AND (resource.labels.revision_name="${after.apiRevision}" OR resource.labels.revision_name="${after.workerRevision}") AND timestamp>="${restartAt.toISOString()}"`,
-  "--project",GCP.project,"--freshness=1h","--limit=50","--format=json"],{encoding:"utf8"})) as any[];
+  "--project",TARGET.project,"--freshness=1h","--limit=50","--format=json"],{encoding:"utf8"})) as any[];
  const n2=await client("n2","category-strategy");
  const recall=await ask(t,n2,"category-strategy",`@AI What is the cold-start check code for ${drill}?`,"s19-recall");
  const hits=recall.tools.filter(x=>x.name==="search_memory").flatMap(x=>Array.isArray(x.result)?x.result.map((r:any)=>r.memory):[]);

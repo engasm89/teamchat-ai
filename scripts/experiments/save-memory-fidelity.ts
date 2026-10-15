@@ -7,7 +7,7 @@
  *   node --experimental-strip-types scripts/experiments/save-memory-fidelity.ts "<sentence>" > qa_evidence/experiments/save-memory-fidelity.json */
 import {GoogleGenAI} from "@google/genai";
 import {TOOL_DECLARATIONS} from "../../src/tools.ts";
-import {trustedPlannerInstructions,buildPlannerUserMessage} from "../../src/worker/gemini.ts";
+import {trustedPlannerInstructions,buildConversationContents} from "../../src/worker/gemini.ts";
 import {openDb,authoritativeEvents} from "../acceptance/common.ts";
 
 const project="focus-clean-4b9f4",location="us-central1",model="gemini-2.5-flash",TRIALS=5;
@@ -30,12 +30,12 @@ if(process.env.TRANSCRIPT){
   earlier=events.filter(e=>e.sequence<cutoff&&(e.type==="message"||e.type==="ai_answer_block")).slice(-15);
  }finally{await pool.end();}
 }
-const userMessage=(text:string)=>buildPlannerUserMessage([...earlier,{type:"message",payload:{author_uid:uid,body:text},sequence:cutoff}],uid,cutoff);
+const conversation=(text:string)=>buildConversationContents([...earlier,{type:"message",payload:{author_uid:uid,body:text},sequence:cutoff}],new Map(),{uid,cutoff}).contents;
 const parse=(s:unknown)=>{try{return JSON.parse(String(s));}catch{return undefined;}};
 const nestedKept=(v:unknown)=>!!v&&typeof v==="object"&&Object.values(v).some(x=>x!==null&&typeof x==="object");
 const out:Array<Record<string,unknown>>=[];
 for(const [variant,systemInstruction] of Object.entries(instructions))for(const [kind,text] of Object.entries(prompts))for(let trial=1;trial<=TRIALS;trial++){
- const contents=[{role:"user",parts:[{text:userMessage(text)}]}];
+ const contents=conversation(text) as any;
  try{
   const r=await client.models.generateContent({model,contents,config:{temperature:0,maxOutputTokens:1024,systemInstruction,
    tools:[{functionDeclarations:TOOL_DECLARATIONS as any}],toolConfig:{functionCallingConfig:{mode:"ANY" as any}}}});

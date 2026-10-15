@@ -1,0 +1,84 @@
+{
+ "label": "c03-first",
+ "user": "Northside Buyer Two",
+ "room": "chat-bf86058d-56dd",
+ "prompt": "@AI what's the catalog code for portable air conditioners?",
+ "turnId": "1d96f518-3b18-4386-bd05-3fb8723ca811",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 8.249,
+  "terminalS": 9.573
+ },
+ "tools": [
+  {
+   "name": "search_catalog",
+   "arguments": {
+    "query": "portable air conditioners"
+   }
+  }
+ ],
+ "segments": [
+  {
+   "kind": "say",
+   "rendered": "Here are the catalog codes for portable air conditioners:"
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.11 is “Portable air conditioners, 5,000 to 7,000 BTU” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.12 is “Portable air conditioners, 8,000 to 10,000 BTU” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.13 is “Portable air conditioners, 11,000 to 13,000 BTU” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.14 is “Portable air conditioners, 14,000 BTU and above” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.15 is “Portable air conditioners, dual-hose” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.16 is “Portable air conditioners, single-hose” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.17 is “Portable air conditioners, with heat pump” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.18 is “Portable air conditioners, smart/app controlled” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.19 is “Portable air conditioners, low-noise” (Portable air conditioners, Appliances). It is in margin class 318."
+  },
+  {
+   "kind": "fact",
+   "rendered": "APP-100.99 is “Portable air conditioners, unspecified” (Portable air conditioners, Appliances). It has no margin class mapped."
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_tool_start",
+  "ai_tool",
+  "ai_answer_block",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}

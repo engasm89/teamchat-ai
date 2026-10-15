@@ -2,23 +2,21 @@
  * decides a verdict; it binds a run to the deployment and reads ground truth. */
 import fs from "node:fs";
 import {execFileSync} from "node:child_process";
-import {GCP,keychainPassword,liveDeployment,loadProvenance,type DeploymentRef} from "../evidence/lib.ts";
+import {keychainPassword,liveDeployment,loadProvenance,type DeploymentRef} from "../evidence/lib.ts";
 import {createPgPool} from "../../src/server/database.ts";
 import {replayRoom,inTenantTransaction,type PersistedEvent,type SqlPool} from "../../src/persistence/postgres.ts";
 import {resolvedContext} from "../../src/tenant.ts";
+import {loadTarget,type AccountKey} from "./target.ts";
 
-export const APP_URL="https://focus-clean-4b9f4.web.app";
-export const API_URL="https://teamchat-api-1068908463902.us-central1.run.app";
-export const WS_URL="wss://teamchat-api-1068908463902.us-central1.run.app/ws";
-export const ACCOUNTS={
- n1:{email:"northside.buyer1@teamchat.internal",tenant:"northside-outfitters"},
- n2:{email:"northside.buyer2@teamchat.internal",tenant:"northside-outfitters"},
- n3:{email:"northside.analyst3@teamchat.internal",tenant:"northside-outfitters"},
- v1:{email:"valley.buyer1@teamchat.internal",tenant:"valley-home-goods"},
- v2:{email:"valley.buyer2@teamchat.internal",tenant:"valley-home-goods"},
- v3:{email:"valley.analyst3@teamchat.internal",tenant:"valley-home-goods"},
-} as const;
-export type AccountKey=keyof typeof ACCOUNTS;
+export type {AccountKey};
+export const TARGET=loadTarget();
+export const APP_URL=TARGET.appUrl;
+export const API_URL=TARGET.apiUrl;
+export const WS_URL=`${TARGET.apiUrl.replace(/^https:/,"wss:")}/ws`;
+export const ACCOUNTS=TARGET.accounts;
+export const accountPassword=(email:string)=>keychainPassword(email,TARGET.keychainService);
+/** Production evidence lives in qa_evidence/runs; every other target keeps its own, so the two never mix. */
+export const runsDir=(scratch:boolean)=>scratch?"qa_evidence/scratch/runs":TARGET.name==="production"?"qa_evidence/runs":`qa_evidence/${TARGET.name}/runs`;
 /** QA traffic stays out of the rooms reviewers are asked to use. */
 /** Rooms n1 and v1 are members of. Valley's tenant-specific rooms each have exactly one member
  * (pricing: v2, range-planning: v1, strategy: v3). */
@@ -29,9 +27,11 @@ export const tag=(prefix:string)=>`${prefix}-${Date.now().toString(36)}-${Math.r
 
 /** Refuse to produce evidence unless the live services run the provenance images. */
 export function bindDeployment():{sourceSha:string;deployment:DeploymentRef}{
- const provenance=loadProvenance();
- if(!provenance)throw Error("qa_evidence/provenance.json missing; deploy and record provenance first");
- const live=liveDeployment(provenance.api.service,provenance.worker.service);
+ const provenance=loadProvenance(TARGET.provenance);
+ if(!provenance)throw Error(`${TARGET.provenance} missing; deploy and record provenance first`);
+ if(provenance.api.service!==TARGET.apiService||provenance.worker.service!==TARGET.workerService)
+  throw Error(`${TARGET.provenance} describes ${provenance.api.service}/${provenance.worker.service}, not target ${TARGET.name}`);
+ const live=liveDeployment(TARGET.apiService,TARGET.workerService);
  if(live.apiDigest!==provenance.api.digest||live.workerDigest!==provenance.worker.digest)
   throw Error(`Live images ${live.apiDigest}/${live.workerDigest} differ from provenance ${provenance.api.digest}/${provenance.worker.digest}`);
  return {sourceSha:provenance.source.sha,deployment:{...live,hostingVersion:provenance.hosting.releaseVersion}};
@@ -48,24 +48,29 @@ export async function firebaseSignIn(account:AccountKey):Promise<{uid:string;idT
  const {email,tenant}=ACCOUNTS[account];
  const res=await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseApiKey()}`,{
   method:"POST",headers:{"content-type":"application/json"},
-  body:JSON.stringify({email,password:keychainPassword(email),returnSecureToken:true})});
+  body:JSON.stringify({email,password:accountPassword(email),returnSecureToken:true})});
  if(!res.ok)throw Error(`Firebase sign-in failed for ${email}: HTTP ${res.status}`);
  const body=await res.json() as {localId:string;idToken:string};
  return {uid:body.localId,idToken:body.idToken,email,tenant};
 }
 
-/** Read-only access through cloud-sql-proxy as the restricted runtime role. */
-export async function openDb():Promise<SqlPool&{end():Promise<void>}>{
- const url=execFileSync("gcloud",["secrets","versions","access","latest","--secret=teamchat-database-url","--project",GCP.project],{encoding:"utf8"}).trim();
+/** The target's runtime-role URL, rewritten to reach Cloud SQL through the local cloud-sql-proxy. */
+export function proxiedDatabaseUrl():string{
+ const url=execFileSync("gcloud",["secrets","versions","access","latest",`--secret=${TARGET.databaseSecret}`,"--project",TARGET.project],{encoding:"utf8"}).trim();
  // Never let a parse error echo the URL: it contains the password.
  const m=/^postgres(?:ql)?:\/\/([^:/@]+):([^@]+)@[^/]*\/([A-Za-z0-9_]+)/.exec(url);
- if(!m)throw Error("teamchat-database-url secret is not in the expected postgres://user:password@host/db form");
+ if(!m)throw Error(`${TARGET.databaseSecret} secret is not in the expected postgres://user:password@host/db form`);
+ if(m[1]!==TARGET.dbRole||m[3]!==TARGET.database)throw Error(`${TARGET.databaseSecret} does not point at ${TARGET.database} as ${TARGET.dbRole}`);
  const port=process.env.DB_PROXY_PORT??"6543";
- const local=`postgres://${encodeURIComponent(m[1]!)}:${encodeURIComponent(decodeURIComponent(m[2]!))}@127.0.0.1:${port}/${m[3]}`;
+ return `postgres://${encodeURIComponent(m[1]!)}:${encodeURIComponent(decodeURIComponent(m[2]!))}@127.0.0.1:${port}/${m[3]}`;
+}
+
+/** Read-only access through cloud-sql-proxy as the restricted runtime role. */
+export async function openDb():Promise<SqlPool&{end():Promise<void>}>{
  process.env.PG_POOL_MAX??="3";
- const pool=await createPgPool(local);
+ const pool=await createPgPool(proxiedDatabaseUrl());
  const c=await pool.connect();
- try{const who=await c.query<{u:string}>("SELECT current_user AS u");if(who.rows[0]?.u!=="teamchat_api")throw Error("Unexpected DB role");}
+ try{const who=await c.query<{u:string}>("SELECT current_user AS u");if(who.rows[0]?.u!==TARGET.dbRole)throw Error("Unexpected DB role");}
  finally{c.release();}
  return pool;
 }
@@ -88,12 +93,13 @@ export async function lastSequence(pool:SqlPool,tenant:string,uid:string,room:st
 }
 
 /** The visible projection the brief requires: every persisted event in order,
- * except answer blocks that a later reset for the same turn superseded. */
+ * except answer blocks and segments that a later reset for the same turn superseded. */
 export function expectedProjection(events:readonly PersistedEvent[]):PersistedEvent[]{
  const ordered=[...events].sort((a,b)=>Number(a.sequence)-Number(b.sequence));
  const reset=new Map<string,number>();
  for(const e of ordered)if(e.type==="ai_answer_reset"&&e.turn_id)reset.set(e.turn_id,Number(e.sequence));
- return ordered.filter(e=>e.type!=="ai_answer_block"||!e.turn_id||Number(e.sequence)>=(reset.get(e.turn_id)??0));
+ const resettable=new Set(["ai_answer_block","ai_answer_segment"]);
+ return ordered.filter(e=>!resettable.has(e.type)||!e.turn_id||Number(e.sequence)>=(reset.get(e.turn_id)??0));
 }
 
 export interface ProjectionItem {id:string;seq:number;turn:string|null;type:string}

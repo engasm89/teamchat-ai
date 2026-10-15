@@ -1,0 +1,41 @@
+{
+ "label": "s09-save",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that our escalation contact for the case mv9b9bkb-nmc8 supplier dispute is Dana mv9b9bkb-rn40 and the deadline is 2026-11-20.",
+ "consent": true,
+ "turnId": "5dd38253-bbeb-40d7-9dda-a72cad2de9ed",
+ "messageSequence": 5899,
+ "at": "2026-10-15T09:03:03.191Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "escalation_contact_mv9b9bkb-nmc8",
+    "room": "supply-planning",
+    "value_json": "{\"case_id\": \"mv9b9bkb-nmc8\", \"escalation_contact_name\": \"Dana\", \"escalation_contact_id\": \"mv9b9bkb-rn40\", \"deadline\": \"2026-11-20\"}"
+   },
+   "result": {
+    "ref": "5dd38253-bbeb-40d7-9dda-a72cad2de9ed:northside-outfitters:memory:ca8f0a38-c316-4f42-b47d-1c5be1ae44b4",
+    "saved": true,
+    "memory": {
+     "key": "escalation_contact_mv9b9bkb-nmc8",
+     "value": {
+      "case_id": "mv9b9bkb-nmc8",
+      "deadline": "2026-11-20",
+      "escalation_contact_id": "mv9b9bkb-rn40",
+      "escalation_contact_name": "Dana"
+     },
+     "memory_id": "ca8f0a38-c316-4f42-b47d-1c5be1ae44b4",
+     "created_at": "2026-10-15 09:02:58.420445+00",
+     "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "OK. I'll remember that.\n\nRecorded decision “escalation_contact_mv9b9bkb-nmc8”: case id: mv9b9bkb-nmc8; deadline: 2026-11-20; escalation contact id: mv9b9bkb-rn40; escalation contact name: Dana. Recorded by Northside Buyer One on 2026-10-15 in #supply-planning.\n\nSaved to shared memory: escalation_contact_mv9b9bkb-nmc8\n{\"case_id\":\"mv9b9bkb-nmc8\",\"deadline\":\"2026-11-20\",\"escalation_contact_id\":\"mv9b9bkb-rn40\",\"escalation_contact_name\":\"Dana\"}\nRecorded by: xg9AHjCrMcZeReDTV5dJRl42H3g1 on 2026-10-15 09:02:58.420445+00 in #supply-planning\nSource: 5dd38253-bbeb-40d7-9dda-a72cad2de9ed:northside-outfitters:memory:ca8f0a38-c316-4f42-b47d-1c5be1ae44b4"
+}

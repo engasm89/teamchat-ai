@@ -21,3 +21,5 @@ apps/web/dist/
 !qa_evidence/runs/**/*.log
 !qa_evidence/runs/**/*.zip
 qa_evidence/scratch/
+# Private reviewer-session forensics: never commit, publish or deploy
+audit/

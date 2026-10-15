@@ -1,3 +1,4 @@
+import {randomUUID} from "node:crypto";
 import {assertContext, NO_MATCH, type TenantContext} from "../tenant.ts";
 /** Driver-independent interface implemented by pg Pool and pg PoolClient when dependencies are available. */
 export interface QueryResult<T=Record<string,unknown>>{rows:T[];rowCount:number|null;}
@@ -51,8 +52,9 @@ export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{r
    return {roomId,messageId:old.message_id,sequence:Number(old.event_sequence),authorUid:ctx.uid,body,duplicate:true,
     ...(old.turn_id?{aiTurnId:old.turn_id}:{})};
   }
-  const room=await client.query<{next_sequence:string}>("SELECT next_sequence::text FROM teamchat.rooms WHERE tenant_id=$1 AND room_id=$2 FOR UPDATE",[ctx.tenantId,roomId]);
+  const room=await client.query<{next_sequence:string;ai_chat:boolean}>("SELECT next_sequence::text,ai_chat FROM teamchat.rooms WHERE tenant_id=$1 AND room_id=$2 FOR UPDATE",[ctx.tenantId,roomId]);
   if(!room.rows.length)return NO_MATCH;
+  const aiChat=room.rows[0]!.ai_chat===true;
   const seq=Number(room.rows[0]!.next_sequence);
   if(!Number.isSafeInteger(seq)||seq<1)throw new Error("Invalid room sequence");
   await client.query("UPDATE teamchat.rooms SET next_sequence=next_sequence+1 WHERE tenant_id=$1 AND room_id=$2",[ctx.tenantId,roomId]);
@@ -60,21 +62,83 @@ export async function sendDurableMessage(pool:SqlPool,ctx:TenantContext,input:{r
     "INSERT INTO teamchat.messages(tenant_id,room_id,author_uid,client_message_id,body,event_sequence) VALUES ($1,$2,$3,$4,$5,$6) RETURNING message_id::text",
     [ctx.tenantId,roomId,ctx.uid,clientMessageId,body,seq]);
   const messageId=msg.rows[0]?.message_id;if(!messageId)throw new Error("Message insert returned no ID");
+  // Native tool selection is independent from wakeup: an explicit @AI in any
+  // room, or any message in an AI chat. One insert, so never two jobs. The
+  // message event names its turn so every client can show the pending reply.
+  const wakeTurn=aiChat||hasAiMention(body)?randomUUID():null;
   await client.query(
-   "INSERT INTO teamchat.room_events(tenant_id,room_id,sequence,type,payload) VALUES ($1,$2,$3,'message',jsonb_build_object('message_id',$4::text,'author_uid',$5::text,'body',$6::text,'client_message_id',$7::text))",
-   [ctx.tenantId,roomId,seq,messageId,ctx.uid,body,clientMessageId]);
-  // Native tool selection is independent from explicit @AI wakeup detection.
+   "INSERT INTO teamchat.room_events(tenant_id,room_id,sequence,type,payload) VALUES ($1,$2,$3,'message',jsonb_strip_nulls(jsonb_build_object('message_id',$4::text,'author_uid',$5::text,'body',$6::text,'client_message_id',$7::text,'ai_turn_id',$8::text)))",
+   [ctx.tenantId,roomId,seq,messageId,ctx.uid,body,clientMessageId,wakeTurn]);
   let aiTurnId:string|undefined;
-  if(hasAiMention(body)){
+  if(wakeTurn){
     const job=await client.query<{turn_id:string}>(
-      "INSERT INTO teamchat.ai_jobs(tenant_id,room_id,turn_id,user_uid,state,transcript_cutoff,memory_consent) VALUES ($1,$2,gen_random_uuid(),$3,'queued',$4,$5) RETURNING turn_id::text",
-      [ctx.tenantId,roomId,ctx.uid,seq,input.allowSharedMemorySave===true]);
+      "INSERT INTO teamchat.ai_jobs(tenant_id,room_id,turn_id,user_uid,state,transcript_cutoff,memory_consent) VALUES ($1,$2,$3::uuid,$4,'queued',$5,$6) RETURNING turn_id::text",
+      [ctx.tenantId,roomId,wakeTurn,ctx.uid,seq,input.allowSharedMemorySave===true]);
     aiTurnId=job.rows[0]?.turn_id;
     if(!aiTurnId)throw new Error("AI job insert failed");
     await client.query("INSERT INTO teamchat.task_outbox(tenant_id,turn_id) VALUES($1,$2)",[ctx.tenantId,aiTurnId]);
   }
   // Trigger NOTIFY fires on commit; listener fetches event from authoritative event table.
   return {roomId,messageId,sequence:seq,authorUid:ctx.uid,body,duplicate:false,...(aiTurnId?{aiTurnId}:{})};
+ });
+}
+export interface RoomSummary {room_id:string;title:string;ai_chat:boolean;visibility:string}
+export interface RoomDirectory {tenantId:string;rooms:RoomSummary[];members:Array<{firebase_uid:string;display_name:string}>;me:{display_name:string}}
+/** Rooms the caller can open, and the active members of the caller's own
+ * tenant (for display names). Rechecks active membership in the same transaction. */
+export async function listRoomDirectory(pool:SqlPool,ctx:TenantContext):Promise<RoomDirectory|typeof NO_MATCH>{
+ return inTenantTransaction(pool,ctx,async c=>{
+  const me=await c.query<{display_name:string}>("SELECT display_name FROM teamchat.user_memberships WHERE tenant_id=$1 AND firebase_uid=$2 AND active=true",[ctx.tenantId,ctx.uid]);
+  if(me.rows.length!==1)return NO_MATCH;
+  const rooms=await c.query<RoomSummary>(`SELECT r.room_id,r.title,r.ai_chat,r.visibility FROM teamchat.rooms r
+    JOIN teamchat.room_memberships rm ON rm.tenant_id=r.tenant_id AND rm.room_id=r.room_id
+    WHERE rm.tenant_id=$1 AND rm.firebase_uid=$2 ORDER BY r.visibility='tenant',r.created_at NULLS FIRST,r.room_id`,[ctx.tenantId,ctx.uid]);
+  const members=await c.query<{firebase_uid:string;display_name:string}>("SELECT firebase_uid,display_name FROM teamchat.user_memberships WHERE tenant_id=$1 AND active=true ORDER BY display_name",[ctx.tenantId]);
+  return {tenantId:ctx.tenantId,rooms:rooms.rows,members:members.rows,me:me.rows[0]!};
+ });
+}
+export class RoomCreationError extends Error{readonly status:400|409|429;constructor(message:string,status:400|409|429){super(message);this.status=status;}}
+const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export function validateRoomRequest(input:unknown):{title:string;aiChat:boolean;clientRequestId:string}{
+ if(!input||typeof input!=="object"||Array.isArray(input))throw new RoomCreationError("Invalid request",400);
+ const x=input as Record<string,unknown>;
+ if(Object.keys(x).some(k=>!["title","aiChat","clientRequestId"].includes(k)))throw new RoomCreationError("Invalid request",400);
+ const title=typeof x.title==="string"?x.title.replace(/\s+/g," ").trim():"";
+ if(!title||title.length>80||/[\u0000-\u001f\u007f]/.test(title))throw new RoomCreationError("Chat name must be 1–80 characters",400);
+ if(typeof x.aiChat!=="boolean")throw new RoomCreationError("Invalid request",400);
+ if(typeof x.clientRequestId!=="string"||!UUID.test(x.clientRequestId))throw new RoomCreationError("Invalid request",400);
+ return {title,aiChat:x.aiChat,clientRequestId:x.clientRequestId.toLowerCase()};
+}
+/** A tenant-wide chat: every active member of the caller's tenant joins it now,
+ * and members added or reactivated later join through the 008 trigger. The
+ * room ID is server-generated; a repeated clientRequestId returns the same room.
+ * RLS (tenant_guard plus 008's restrictive insert policies) enforces the same
+ * rules in PostgreSQL for the runtime role. */
+export async function createTenantChat(pool:SqlPool,ctx:TenantContext,input:unknown,newRoomId:()=>string):Promise<{room:RoomSummary;created:boolean}|typeof NO_MATCH>{
+ const req=validateRoomRequest(input);
+ return inTenantTransaction(pool,ctx,async c=>{
+  await c.query("SELECT set_config('app.uid',$1,true)",[ctx.uid]);
+  const me=await c.query("SELECT 1 FROM teamchat.user_memberships WHERE tenant_id=$1 AND firebase_uid=$2 AND active=true",[ctx.tenantId,ctx.uid]);
+  if(me.rows.length!==1)return NO_MATCH;
+  const existing=async()=>{
+   const r=await c.query<RoomSummary>("SELECT room_id,title,ai_chat,visibility FROM teamchat.rooms WHERE tenant_id=$1 AND created_by=$2 AND client_request_id=$3::uuid",[ctx.tenantId,ctx.uid,req.clientRequestId]);
+   const room=r.rows[0];
+   if(room&&(room.title!==req.title||room.ai_chat!==req.aiChat))throw new RoomCreationError("Conflicting duplicate request",409);
+   return room;
+  };
+  const prior=await existing();if(prior)return {room:prior,created:false};
+  const recent=await c.query<{n:string}>("SELECT count(*)::text AS n FROM teamchat.rooms WHERE tenant_id=$1 AND created_by=$2 AND created_at>now()-interval '1 hour'",[ctx.tenantId,ctx.uid]);
+  if(Number(recent.rows[0]?.n??0)>=20)throw new RoomCreationError("Too many new chats; try again later",429);
+  await c.query("SELECT pg_advisory_xact_lock(teamchat.tenant_rooms_lock_key($1))",[ctx.tenantId]);
+  const roomId=newRoomId();
+  if(!/^[-a-z0-9_]{1,128}$/.test(roomId))throw Error("Invalid generated room ID");
+  const inserted=await c.query<RoomSummary>(`INSERT INTO teamchat.rooms(tenant_id,room_id,title,ai_chat,visibility,created_by,client_request_id,created_at)
+    VALUES($1,$2,$3,$4,'tenant',$5,$6::uuid,now()) ON CONFLICT (tenant_id,created_by,client_request_id) DO NOTHING
+    RETURNING room_id,title,ai_chat,visibility`,[ctx.tenantId,roomId,req.title,req.aiChat,ctx.uid,req.clientRequestId]);
+  if(!inserted.rows.length){const again=await existing();if(again)return {room:again,created:false};throw Error("Room creation conflict");}
+  await c.query(`INSERT INTO teamchat.room_memberships(tenant_id,room_id,firebase_uid)
+    SELECT tenant_id,$2,firebase_uid FROM teamchat.user_memberships WHERE tenant_id=$1 AND active=true`,[ctx.tenantId,roomId]);
+  return {room:inserted.rows[0]!,created:true};
  });
 }
 /** Same access check on initial history, reconnect replay and manual history requests. */

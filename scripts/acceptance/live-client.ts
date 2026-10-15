@@ -6,7 +6,7 @@ import {APP_URL,WS_URL,firebaseSignIn,sleep,type AccountKey} from "./common.ts";
 
 export interface LiveEvent {eventId:string;tenantId:string;roomId:string;sequence:number;type:string;turnId?:string;payload:Record<string,any>}
 export interface Turn {turnId:string;events:LiveEvent[];tools:Array<{operationId:string;name:string;arguments:any;result:any;sequence:number}>;
- blocks:any[];terminal:LiveEvent|undefined}
+ blocks:any[];segments:any[];terminal:LiveEvent|undefined}
 
 export class LiveClient {
  readonly frames:Array<{t:number;dir:"in"|"out";frame:any}>=[];
@@ -62,9 +62,12 @@ export class LiveClient {
  }
  turn(room:string,turnId:string):Turn{
   const events=(this.events.get(room)??[]).filter(e=>e.turnId===turnId).sort((a,b)=>a.sequence-b.sequence);
+  const reset=Math.max(0,...events.filter(e=>e.type==="ai_answer_reset").map(e=>e.sequence));
+  const current=(type:string)=>events.filter(e=>e.type===type&&e.sequence>=reset);
   return {turnId,events,
    tools:events.filter(e=>e.type==="ai_tool").map(e=>({operationId:e.payload.operationId,name:e.payload.name,arguments:e.payload.arguments,result:e.payload.result,sequence:e.sequence})),
-   blocks:events.filter(e=>e.type==="ai_answer_block").map(e=>e.payload.verified),
+   blocks:current("ai_answer_block").map(e=>e.payload.verified),
+   segments:current("ai_answer_segment").map(e=>e.payload),
    terminal:events.find(e=>e.type==="ai_complete"||e.type==="ai_failed")};
  }
  async waitTurn(room:string,turnId:string,ms=240000):Promise<Turn>{

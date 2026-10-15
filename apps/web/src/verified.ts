@@ -1,6 +1,7 @@
 /** Render only server-verified structured results. Never render Gemini's
  * unchecked candidate prose as a business claim. */
-export function renderVerifiedBlock(raw:unknown):string{
+export function renderVerifiedBlock(raw:unknown,names?:ReadonlyMap<string,string>):string{
+ const person=(value:unknown)=>{const v=String(value??"");return names?.get(v)??(names&&/^[A-Za-z0-9]{20,128}$/.test(v)?"Unknown member":v);};
  if(!raw||typeof raw!=="object")return "Unable to display verified result";
  const verified=raw as Record<string,unknown>;
  if(verified.template==="missing"){
@@ -37,7 +38,7 @@ export function renderVerifiedBlock(raw:unknown):string{
   return result.map(entry=>{
    const row=entry as Record<string,unknown>,m=row.memory as Record<string,unknown>|undefined;
    if(!m)return "";
-   return `Recorded decision: ${String(m.key??"")}\n${JSON.stringify(m.value)}\nRecorded by: ${String(m.author_name??m.created_by??"")} on ${String(m.created_at??"")} in #${String(m.source_room_id??"")}\nSource: ${String(row.ref??"")}`;
+   return `Recorded decision: ${String(m.key??"")}\n${JSON.stringify(m.value)}\nRecorded by: ${m.author_name?String(m.author_name):person(m.created_by)} on ${String(m.created_at??"")} in #${String(m.source_room_id??"")}\nSource: ${String(row.ref??"")}`;
   }).filter(Boolean).join("\n\n");
  }
  if(verified.template==="calculate_uplift"&&result&&typeof result==="object"){
@@ -55,7 +56,7 @@ export function renderVerifiedBlock(raw:unknown):string{
   if(Array.isArray(x.validation_errors))return `Not saved — the value does not fit the shared-memory shape (a flat set of named text, number or yes/no fields):\n${x.validation_errors.map(e=>{
    const err=e as Record<string,unknown>;return `• ${String(err.field??"value")}: ${String(err.issue??"invalid")}`;}).join("\n")}`;
   if(x.saved===false)return `Not saved — ${String(x.error??"the memory could not be stored")}`;
-  if(x.saved===true&&m)return `Saved to shared memory: ${String(m.key??"")}\n${JSON.stringify(m.value)}\nRecorded by: ${String(m.created_by??"")} on ${String(m.created_at??"")} in #${String(m.source_room_id??"")}\nSource: ${String(x.ref??"")}`;
+  if(x.saved===true&&m)return `Saved to shared memory: ${String(m.key??"")}\n${JSON.stringify(m.value)}\nRecorded by: ${person(m.created_by)} on ${String(m.created_at??"")} in #${String(m.source_room_id??"")}\nSource: ${String(x.ref??"")}`;
  }
  // Other records are server-fetched and remain structured with source IDs.
  return JSON.stringify(verified,null,2);

@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-15T08:02:06.566Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "4c1e98bfb5a282e7a3fcb692d91d08d1a2567de13c0d00aba92dd3dfb4dba3ae"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1330,
+   "sha256": "1d4fad9fd59f6dac4f7d77695dcc4d8ad2eef5528f1c5f2a4150f46e030764b1"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13181,
+   "sha256": "08d11b41c8c1d1364c3335dfbe6ef86d650cd0e9edcfe641f6a497f1e9ca914c"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 709,
+   "sha256": "03f1692eb339b07e43c5618910034460e65d2d094b6b6f2a028002bb928946b8"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3794,
+   "sha256": "f2cd5600eb8af33f19391130114e88e023f91bf9ea5d0c7866c1da44300a1167"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10315,
+   "sha256": "b02c793dce5b02b720d93de4de089fc28600d028e7c7d8bc11556cab57f13e9a"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "db188c5c72b941ee3a09c7a488f6cadc07c657666f57c27adf786ce525ae8c26"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2281,
+   "sha256": "eb07cc4ca243227e2b728b9e2cae42f6d25c2c3325a96368a6387d40d1ccfd19"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 680,
+   "sha256": "351e7d1b1d0aeed17c5f79ca52ff81ea99eb6b2f7133186969ef4afdfa60f2be"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 630,
+   "sha256": "9b3f558c36773e421fd08bbc80ebb4b13cdc65efdcb88560630d9a28c6cc310e"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 6267,
+   "sha256": "8e01037bb393176e198ee328623407d2ecdfe386d86e58f042d31b9c83f677ca"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 2112,
+   "sha256": "0325272aaa7547f8b5312add6438444de13e517830fde94144017eff1bdfeacd"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2892,
+   "sha256": "6fcbf3c3b7fbe7c2aa77596ba18395645043ab59206b1b3b16780d50c6f8758a"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1690,
+   "sha256": "691dd276d8fddc5e960ceec53da0daf428f9d8e2a0fcad893a7c2d43221c98f6"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "042bbd4cb8037c6dfac36dc5191e8d553fb9b3de5d5f587954267a312bc290dc"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3977,
+   "sha256": "d52520172e940db21f05fff474039b50393d2e2ce2e116081c6f4e2633cc50c9"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "f3808429127f99385ea34ec14d844778da0bff2e47a781d6d6a3d700f4d71115"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "7fc19cbd61d6121ad5d1833f9b771e77e6abacf91984e904665a61911cc076c6"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 720,
+   "sha256": "466f70e1710688628453828bd03e229a136b7157cc5ae9c1dfa0cb7a9b99513f"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 771,
+   "sha256": "a8bf4aaa2cb4b96ad1560c395e3d0de2ac430e3739f7fc4de77b5c48cdb023ba"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 722,
+   "sha256": "c7ad4fd531803150c1b42a1657befb9cf51b6cca58d2470c85d21637e08e5fe6"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "7c2336846e6c5efcd972866719cccdc5bdbcf1ed86bb8fb082ed0899c0067fd9"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13261,
+   "sha256": "5033826a84eb4ac1fbc05a00adf1cb1c531856e07147843b6ce5821d6f0a061b"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "89831f7883de7b0f5e29554d33bd76c175bb09939471c4eba22c9edb0032ad28"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "daf08855d27d6de66c23667ed682a15ae066a928e861b96c8fbca46629b35dd0"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "b9bd0fbe64ea8bbda1c6c2f50ecd5303fe80bfe13235e46f3a7bb06b08d36e06"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50259,
+   "sha256": "eb70406200596871d80268b0fa11cb705639f7040132fb6815d86b07e86363a1"
+  }
+ ]
+}

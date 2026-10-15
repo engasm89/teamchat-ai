@@ -1,0 +1,29 @@
+{
+ "label": "c05",
+ "user": "Northside Buyer Two",
+ "room": "chat-0f33c898-8392",
+ "prompt": "@AI which are your tools?",
+ "turnId": "42ebfcbf-a891-4618-b063-310fe973085d",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 4.959,
+  "terminalS": 5.11
+ },
+ "tools": [],
+ "segments": [
+  {
+   "kind": "say",
+   "rendered": "Here are my capabilities:"
+  },
+  {
+   "kind": "fact",
+   "rendered": "I can: search the product catalog; look up what a catalog code means; show a store's carried codes and suspected gaps with their evidence; calculate the assortment coefficient score change from adding codes to a store; compare two proposed sets of codes for the same store; find decisions your team recorded, with who recorded them and when; save a decision to shared memory when you tick the consent box. I can also answer questions about this room's conversation."
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}

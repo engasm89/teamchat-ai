@@ -1,0 +1,268 @@
+{
+ "ranAt": "2026-10-14T18:50:05.784Z",
+ "model": "gemini-2.5-flash",
+ "config": "temperature 0.2, thinkingBudget 512, mode AUTO (round 0), consent GRANTED",
+ "proposedDescription": null,
+ "summary": [
+  {
+   "variant": "description as checked out",
+   "prompt": "nested",
+   "trials": 5,
+   "calledSaveMemory": 5
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "flat",
+   "trials": 5,
+   "calledSaveMemory": 5
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "contact",
+   "trials": 5,
+   "calledSaveMemory": 5
+  }
+ ],
+ "results": [
+  {
+   "variant": "description as checked out",
+   "prompt": "nested",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x1",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "nested",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x1",
+      "room": "supply-planning",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "nested",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-x1"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "nested",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-x1"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "nested",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "roster-x1",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "flat",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x2 flat check value",
+      "value_json": "{\"roster-x2 flat check value\": \"roster-x2-ok\"}",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "flat",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"roster-x2 flat check value\": \"roster-x2-ok\"}",
+      "key": "roster-x2 flat check value",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "flat",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x2 flat check value",
+      "room": "supply-planning",
+      "value_json": "{\"roster-x2 flat check value\": \"roster-x2-ok\"}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "flat",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x2 flat check value",
+      "room": "supply-planning",
+      "value_json": "{\"roster-x2 flat check value\": \"roster-x2-ok\"}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "flat",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-x2 flat check value",
+      "value_json": "{\"roster-x2 flat check value\": \"roster-x2-ok\"}",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "contact",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "dispute-x3 escalation contact and deadline",
+      "value_json": "{\"dispute_id\": \"dispute-x3\", \"escalation_contact_name\": \"Dana\", \"escalation_contact_id\": \"ab12cd34-ef56\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "contact",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "escalation contact for dispute-x3",
+      "value_json": "{\"contact\": \"Dana ab12cd34-ef56\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "contact",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "dispute-x3 escalation",
+      "room": "supply-planning",
+      "value_json": "{\"dispute_id\": \"dispute-x3\", \"escalation_contact_name\": \"Dana\", \"escalation_contact_id\": \"ab12cd34-ef56\", \"deadline\": \"2026-11-20\"}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "contact",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "dispute-x3 escalation contact",
+      "value_json": "{\"contact\": \"Dana ab12cd34-ef56\", \"deadline\": \"2026-11-20\"}",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "contact",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"contact\": \"Dana ab12cd34-ef56\", \"deadline\": \"2026-11-20\"}",
+      "key": "dispute-x3 escalation",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "text": null
+  }
+ ]
+}

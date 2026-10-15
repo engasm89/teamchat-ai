@@ -7,6 +7,7 @@ A multi-tenant team chat where an AI participant answers retail questions by cal
 - Technical brief as submitted on 8 October 2026: [`reference/TeamChat_AI_Technical_Brief_SUBMITTED_2026-10-08.pdf`](reference/TeamChat_AI_Technical_Brief_SUBMITTED_2026-10-08.pdf)
 - Requirement status, derived from evidence rather than written by hand: `docs/REQUIREMENTS_FINAL_SUMMARY.md` and `docs/REQUIREMENTS_FINAL_MATRIX.md`
 - Release decision: `docs/FINAL_GO_NO_GO_REPORT.md`
+- Changes after the 14 October review (conversational AI, names and auto-scroll, tenant-wide new chats), their test evidence and deployment status: `docs/GONZALO_REMEDIATION_REPORT.md`. **These changes run on an isolated staging stack; the live app above still runs the earlier release until the production rollout described there is done.**
 
 ## How to run
 
@@ -22,8 +23,8 @@ npm run seed:sql         # regenerates db/generated/seed.sql from the datasets
 
 Database, as a privileged migration role (never the runtime role):
 
-1. Apply `db/migrations/001_schema.sql` to `007_semantic_memory.sql` in order (`007` needs `CREATE EXTENSION vector`).
-2. Create the login `teamchat_api` (not superuser, not owner, no `BYPASSRLS`) and apply `db/provision_runtime_role.sql`.
+1. `MIGRATION_DATABASE_URL=postgres://<owner>@.../teamchat node --experimental-strip-types scripts/db/migrate.ts` applies `db/migrations/001_schema.sql` to `008_tenant_chats.sql` in order and records each file's SHA-256 in `teamchat.schema_migrations`; it refuses to run as the runtime role and stops if an applied file has changed. A database migrated by hand before tracking existed is recognised and baselined. (`007` needs `CREATE EXTENSION vector`.)
+2. Create the runtime login with `scripts/db/create-runtime-login.ts` (not superuser, not owner, no `BYPASSRLS`, no memberships; the password is sent as a SCRAM verifier) and apply `db/provision_runtime_role.sql` (`scripts/db/provision-runtime-role.ts`).
 3. Run `db/generated/seed.sql`.
 4. `DATABASE_ADMIN_URL=... ASSESSMENT_USERS_JSON=... npm run provision:users` creates the six Firebase users and their memberships. Passwords come from the environment and are never printed.
 5. `npm run embed:backfill` writes 768-dimension Vertex embeddings for the seeded memories.
@@ -104,7 +105,15 @@ How each behaviour in the assessment is guaranteed, and where it is tested again
 
 ## How the model acts
 
-The worker sends Gemini native function declarations (`src/tools.ts`): `search_catalog`, `get_catalog_code`, `get_store_assortment`, `calculate_uplift`, `compare_assortment_options`, `search_memory` and `save_memory`. The `@AI` mention only starts a turn; Gemini chooses the tools. Nothing routes a question to a tool by keyword.
+The worker sends Gemini native function declarations (`src/tools.ts`): `search_catalog`, `get_catalog_code`, `get_store_assortment`, `calculate_uplift`, `compare_assortment_options`, `search_memory` and `save_memory`. A turn starts on `@AI` in a team chat, or on any message in an AI chat. Gemini runs with tool choice `AUTO`: it decides whether a tool is needed at all, so "hello" or "what has this chat been about?" is answered directly. Nothing routes a question to a tool by keyword or regex.
+
+The model sees the room as a conversation (`buildConversationContents` in `src/worker/gemini.ts`): earlier human messages with display names (never Firebase UIDs), earlier AI answers as its own turns, and the triggering message marked as the current request. Earlier answers are context, not evidence.
+
+Answers stream as segments (`ai_answer_segment`), each checked before it is broadcast (`src/answer-contract.ts`):
+
+- `say` is conversational text. It may not contain numbers, identifiers, workspace names, claim wording, or catalog vocabulary that no human in the shown conversation wrote.
+- `fact` is a typed claim (product, margin class, store summary, carried code, gap, memory, calculation, quoted room message). The model names the claim and its source; the server writes the sentence from the record fetched in this turn.
+- Anything that fails a check is dropped and logged; if nothing survives, a neutral fallback is shown instead of an unverified sentence.
 
 At the boundary the model is treated as untrusted:
 
@@ -125,11 +134,10 @@ At the boundary the model is treated as untrusted:
 
 ## What does not work
 
-- **Sender names are raw Firebase user IDs.** Messages show the author's UID (for example `m8O2in6s…`), not a display name, even though display names exist in `user_memberships`.
-- **No auto-scroll.** New messages arrive but the transcript does not scroll to them. The walkthrough's recording script scrolls for the viewer.
+- **In the live app (earlier release) only:** sender names are raw Firebase user IDs, the transcript does not auto-scroll, there is no way to start a chat, and the AI is forced to call a tool on every turn. All four are fixed in the remediation branch and verified on staging; see `docs/GONZALO_REMEDIATION_REPORT.md`.
+- **Gemini still varies run to run.** With tool choice `AUTO`, a multi-part request occasionally gets a partial answer (for example the gaps without the score change). Every shown fact is still checked; what can be missing is a part of the answer, not its correctness.
 - **Only the newest 500 events of a room are rendered.** There is no "load older" control.
 - **No monetary uplift**, as described above.
-- **Answers are terse.** Because only verified blocks are shown, replies read as data cards rather than conversation. An injection attempt can produce an odd but harmless answer; in the walkthrough, Gemini answered the admin-mode line by searching the catalog for "stores".
 - **Gemini is nondeterministic.** Acceptance asserts tool calls and server-computed values, not wording. S01–S18 each needed two passing runs against the deployment; S19, which forces new revisions, needed one.
 - **Operational hardening is not done.** Cloud SQL has automated backups disabled, a public IPv4 address, and its SSL mode allows unencrypted connections (`ALLOW_UNENCRYPTED_AND_ENCRYPTED`). No authorized networks are configured, so the public address only accepts IAM-authorized Cloud SQL connector and proxy connections, but these settings should be tightened before real use.
 - **A silent provider switch.** If `GEMINI_API_KEY` is set, the worker uses the Gemini Developer API instead of Vertex AI. Production does not set it.
@@ -152,8 +160,10 @@ To check isolation yourself: sign in as a Northside user and ask `@AI Show me th
 
 - `tests/` — unit and mocked-integration tests: catalog matching, supersession and arithmetic, grounding rejection, tenant context, memory validation, socket and job lifecycle.
 - `scripts/integration/live-postgres.test.ts` — row-level security, grants and forbidden writes as the real runtime role.
-- `scripts/acceptance` — the employer scenarios S01–S19 against the deployed stack, a browser suite for S01/S15/S16/S17 with negative controls, and an independent oracle that reads the supplied datasets directly.
+- `scripts/acceptance` — the employer scenarios S01–S19 against the deployed stack, a browser suite for S01/S15/S16/S17 with negative controls, a conversational suite (small talk, who said what, follow-ups, capabilities, new chats) and an independent oracle that reads the supplied datasets directly. Every live runner needs `TEAMCHAT_TARGET=staging|production` (`config/targets/*.json`); there is no default, and S19, which forces new Cloud Run revisions, refuses any target that shares a service, URL, database, secret, role, Keychain service or account with production.
+- `scripts/integration/tenant-chats.test.ts` — chat creation, membership and row-level-security checks as the runtime role on a local PostgreSQL cluster.
 - `scripts/handoff`, `scripts/video`, `scripts/gates` — reviewer accounts and isolation, the walkthrough and its secret scan, and clean-clone build and test gates.
+- `qa_evidence/staging/runs/<run>/` — the same, for the staging stack.
 - `qa_evidence/runs/<run>/` — `results.json` (assertions, inputs, expected and actual values, tool traces), raw artifacts and a `MANIFEST.json` of checksums for each run.
 - `docs/history/` — superseded audits, status reports and planning-agent instructions from before the deployment, kept for the record.
 

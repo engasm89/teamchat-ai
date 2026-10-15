@@ -1,0 +1,76 @@
+{
+ "gate": "Gate 4, production",
+ "date": "2026-10-14 (UTC) / 2026-10-15 01:36-01:41 Cairo",
+ "precheck": {
+  "result": "no production runtime uses postgres",
+  "cloudRun": "teamchat-api and teamchat-worker read DATABASE_URL from secret teamchat-database-url, whose user is teamchat_api; staging services read teamchat-staging-database-url; no Cloud Run jobs, Cloud Functions or Scheduler jobs",
+  "sessions": "pg_stat_activity as teamchat_api showed only teamchat_api client sessions (visibility may be limited to the role's own sessions)"
+ },
+ "ownerCredential": {
+  "method": "password generated in-process (32 random bytes, hex), written to macOS Keychain service teamchat-ai-prod-postgres-owner (account postgres) over security -i stdin, set through the Cloud SQL Admin API users.update with the value read from Keychain inside the process; never printed, never in argv, logs or Git",
+  "operation": "cdf7acf9-a225-4220-a603-c03c00000032",
+  "operationType": "UPDATE_USER",
+  "status": "DONE",
+  "endTime": "2026-10-14T22:36:28.293Z",
+  "verified": {
+   "current_user": "postgres",
+   "rolsuper": false,
+   "rooms_owner": "postgres"
+  }
+ },
+ "backup": {
+  "id": "1792017407307",
+  "type": "ON_DEMAND",
+  "status": "SUCCESSFUL",
+  "windowStart": "2026-10-14T22:36:47.307Z",
+  "endTime": "2026-10-14T22:37:48.289Z",
+  "description": "pre-008 Gonzalo remediation rollout 2026-10-15"
+ },
+ "migration": {
+  "dryRun": {
+   "baseline": [
+    "001_schema",
+    "002_notifications",
+    "003_auth_grants",
+    "004_ai_consent",
+    "005_job_lookup",
+    "006_ephemeral",
+    "007_semantic_memory"
+   ],
+   "pending": [
+    "008_tenant_chats"
+   ]
+  },
+  "applied": "008_tenant_chats",
+  "sha256": "9b243ca9ac426ee8a140ab2d2459af9d3c37d7c980700a838dc59ea3d07aac1f",
+  "ms": 1931,
+  "runtimeRole": "teamchat_api provisioned (scripts/db/provision-runtime-role.ts)",
+  "after": "schema_migrations tracks 001-008, none pending"
+ },
+ "backwardCompatibility": {
+  "release": "teamchat-api-00016-ct7 / teamchat-worker-00016-24v (d66da3d) on the migrated schema",
+  "run": "qa_evidence/runs/20261014T223840Z-live-smoke-94e042",
+  "result": "PASS (exit 0): health, room list, delivery, @AI answer with search_catalog, replay equal to the database; accounts northside.analyst3 and northside.buyer2 in supply-planning"
+ },
+ "deploy": {
+  "source": "edbdfb2b21b2c246000a2c42c8908eef2972bf9f",
+  "build": "1b6bcd57-cf89-460d-b7ec-b70d00ed7b41",
+  "worker": {
+   "revision": "teamchat-worker-00017-2rb",
+   "digest": "sha256:b622a9a2388ee9fdcdf972cb9583351e47e8c7ce91d1603e2cce88f729692880",
+   "deployedAt": "2026-10-14T22:39Z"
+  },
+  "api": {
+   "revision": "teamchat-api-00017-7gz",
+   "digest": "sha256:bb47e840488d280355210a9a50d0f9e83253a62aef2be77ffee6becf131475f2"
+  },
+  "hosting": {
+   "version": "33bae4d9769be62c",
+   "releasedAt": "2026-10-14T22:40:26.427Z",
+   "bundle": "assets/index-BEJPLAzG.js"
+  },
+  "sameDigestsAsStaging": "yes: staging 00016-ccj / 00016-7tj served these digests for the edbdfb2 chain",
+  "provenance": "qa_evidence/provenance.json (assetsMatchLocalBuild true, datasetHashesMatchFixtures true, memoriesWithout768Embedding 0)"
+ },
+ "rollbackPoints": "qa_evidence/production/rollback-points.json"
+}

@@ -1,0 +1,742 @@
+{
+ "purpose": "Conversational failures on staging 5a82e6e (run 20261014T203100Z-conversational-690429): C02 answered without the colleague's name, C03's follow-up fell back. Replayed with the worker's own history, names, config and say check (scripts/experiments/turn-replay.ts).",
+ "runs": {
+  "c02-current": {
+   "ranAt": "2026-10-14T20:48:28.735Z",
+   "turnId": "15eb6164-920d-4413-8c15-76a7a29f22d2",
+   "requester": "Northside Buyer One",
+   "extraInstruction": null,
+   "escalation": "current",
+   "results": [
+    {
+     "trial": 1,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 2,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 3,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "hiking range"
+        }
+       },
+       {
+        "name": "get_catalog_code",
+        "args": {
+         "catalog_code": "x-mv8keq2r-mezt"
+        }
+       }
+      ],
+      "text": ""
+     }
+    },
+    {
+     "trial": 4,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 5,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 6,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 7,
+     "first": {
+      "calls": [],
+      "text": "Your colleague said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 8,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 9,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 10,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 11,
+     "first": {
+      "calls": [],
+      "text": "Your colleague said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    },
+    {
+     "trial": 12,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said they'd draft the supplier email for the hiking range x-mv8keq2r-mezt."
+     }
+    }
+   ]
+  },
+  "c02-new": {
+   "ranAt": "2026-10-14T20:48:23.391Z",
+   "turnId": "15eb6164-920d-4413-8c15-76a7a29f22d2",
+   "requester": "Northside Buyer One",
+   "extraInstruction": "- When you tell someone what a person in the room said or will do, name that person and quote their words.",
+   "escalation": "current",
+   "results": [
+    {
+     "trial": 1,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     }
+    },
+    {
+     "trial": 2,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     }
+    },
+    {
+     "trial": 3,
+     "first": {
+      "calls": [],
+      "text": "Your colleague Northside Buyer Two said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague Northside Buyer Two said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     }
+    },
+    {
+     "trial": 4,
+     "first": {
+      "calls": [],
+      "text": "Your colleague, Northside Buyer Two, said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague, Northside Buyer Two, said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     }
+    },
+    {
+     "trial": 5,
+     "first": {
+      "calls": [],
+      "text": "Northside Buyer Two said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "hiking range x-mv8keq2r-mezt"
+        }
+       }
+      ],
+      "text": ""
+     }
+    },
+    {
+     "trial": 6,
+     "first": {
+      "calls": [],
+      "text": "Northside Buyer Two said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\"."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Northside Buyer Two said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\"."
+     }
+    },
+    {
+     "trial": 7,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\"."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\"."
+     }
+    },
+    {
+     "trial": 8,
+     "first": {
+      "calls": [],
+      "text": "Your colleague said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     }
+    },
+    {
+     "trial": 9,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\"."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\"."
+     }
+    },
+    {
+     "trial": 10,
+     "first": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague just said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     }
+    },
+    {
+     "trial": 11,
+     "first": {
+      "calls": [],
+      "text": "Your colleague, Northside Buyer Two, said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Your colleague, Northside Buyer Two, said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     }
+    },
+    {
+     "trial": 12,
+     "first": {
+      "calls": [],
+      "text": "Northside Buyer Two said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [],
+      "text": "Northside Buyer Two said: \"I'll draft the supplier email for the hiking range x-mv8keq2r-mezt\""
+     }
+    }
+   ]
+  },
+  "c03-current": {
+   "ranAt": "2026-10-14T20:48:01.700Z",
+   "turnId": "4178565c-cdfa-4c05-8493-8e3d1be4a9e0",
+   "requester": "Northside Buyer Two",
+   "extraInstruction": null,
+   "escalation": "current",
+   "results": [
+    {
+     "trial": 1,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "Portable air conditioners, low-noise"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 2,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 3,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 4,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 5,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 6,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "Portable air conditioners, low-noise"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 7,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 8,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 9,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "Portable air conditioners, low-noise"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 10,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 11,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 12,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    }
+   ]
+  },
+  "c03-new": {
+   "ranAt": "2026-10-14T20:48:04.540Z",
+   "turnId": "4178565c-cdfa-4c05-8493-8e3d1be4a9e0",
+   "requester": "Northside Buyer Two",
+   "extraInstruction": null,
+   "escalation": "Server note (trusted): your draft reply mentions workspace details (products, codes, stores, numbers, people's names or decisions) that were not retrieved with a tool in this turn. Earlier answers in the room are not evidence: to name a product, code, store or figure from them, fetch it again with the tools now. If the request is only about this room's conversation and needs no workspace facts, or is small talk, reply again without tools.",
+   "results": [
+    {
+     "trial": 1,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 2,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "Portable air conditioners, low-noise"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 3,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 4,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "Portable air conditioners, low-noise"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 5,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 6,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 7,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 8,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "Portable air conditioners, low-noise"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 9,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 10,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "Portable air conditioners, low-noise"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    },
+    {
+     "trial": 11,
+     "first": {
+      "calls": [],
+      "text": "APP-100.19 is \u201cPortable air conditioners, low-noise\u201d."
+     },
+     "directPathShown": false,
+     "second": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     }
+    },
+    {
+     "trial": 12,
+     "first": {
+      "calls": [
+       {
+        "name": "search_catalog",
+        "args": {
+         "query": "low-noise portable air conditioners"
+        }
+       }
+      ],
+      "text": ""
+     },
+     "directPathShown": false,
+     "second": null
+    }
+   ]
+  }
+ },
+ "summary": {
+  "C02 current instructions": "0/12 first drafts name Northside Buyer Two",
+  "C02 with 'name that person and quote their words'": "6/12 name them; a named draft fails the direct say check and goes through compose's checked message_quote",
+  "C03 current escalation note": "12/12 fetched the code with a tool (live failure not reproduced)",
+  "C03 alternative escalation note": "12/12 fetched; no change adopted without evidence of benefit"
+ }
+}

@@ -1,0 +1,218 @@
+{
+ "label": "s05",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI For ST-4003, what coefficient score changes if we add APP-100.12? Show class supersession.",
+ "consent": false,
+ "turnId": "40a01c40-b1cc-4be0-995a-9f8f8d5f95fc",
+ "messageSequence": 1686,
+ "at": "2026-10-14T19:56:19.783Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "get_store_assortment",
+   "arguments": {
+    "store_id": "ST-4003"
+   },
+   "result": {
+    "ref": "40a01c40-b1cc-4be0-995a-9f8f8d5f95fc:northside-outfitters:store:ST-4003",
+    "store": {
+     "buyer": "M. Varga",
+     "opened": 2007,
+     "channel": "omni",
+     "segment": "loyalty",
+     "store_id": "ST-4003",
+     "store_name": "Kingsgate",
+     "last_review": "2026-04-16T00:00:00.000Z",
+     "store_format": "standard",
+     "suspected_gaps": [
+      {
+       "evidence": "cooling category down 18% against a market up 6%; assortment sits on the unspecified line, which carries no margin class",
+       "description": "Portable air conditioners, 8,000 to 10,000 BTU",
+       "catalog_code": "APP-100.12",
+       "last_carried": "never"
+      },
+      {
+       "evidence": "10 unfulfilled special orders logged by store colleagues this season",
+       "description": "Refrigerators and freezers, beverage cooler",
+       "catalog_code": "APP-192.18",
+       "last_carried": "2025"
+      },
+      {
+       "evidence": "12 unfulfilled special orders logged by store colleagues this season",
+       "description": "Women's ready-to-wear bottoms, jeans, wide leg",
+       "catalog_code": "APR-192.13",
+       "last_carried": "never"
+      },
+      {
+       "evidence": "26% of basket-level demand met by click-and-collect from a sister store",
+       "description": "Laptops and desktops, all-in-one desktops",
+       "catalog_code": "ELC-238.16",
+       "last_carried": "2024"
+      },
+      {
+       "evidence": "returns rate 19% below chain average, suggesting unmet demand rather than fit issues",
+       "description": "Fishing equipment, fly rods",
+       "catalog_code": "OUT-192.13",
+       "last_carried": "2024"
+      },
+      {
+       "evidence": "20% of basket-level demand met by click-and-collect from a sister store",
+       "description": "Technical outerwear, insulated jackets, down",
+       "catalog_code": "OUT-307.14",
+       "last_carried": "never"
+      }
+     ],
+     "carried_categories_2026": [
+      "APP-100.11",
+      "APP-100.99",
+      "APP-146.13",
+      "APR-123.18",
+      "ELC-123.14",
+      "ELC-169.13",
+      "HBA-215.16",
+      "HBA-238.18",
+      "HBA-238.19",
+      "HOM-100.17",
+      "HOM-192.16",
+      "OUT-123.13",
+      "OUT-169.19",
+      "OUT-192.12",
+      "SEA-169.11",
+      "SEA-169.13",
+      "SPT-146.16",
+      "SPT-215.14",
+      "SPT-238.15"
+     ]
+    }
+   }
+  },
+  {
+   "operationId": "r1-c1",
+   "name": "calculate_uplift",
+   "arguments": {
+    "store_id": "ST-4003",
+    "add_codes": [
+     "APP-100.12"
+    ]
+   },
+   "result": {
+    "ref": "40a01c40-b1cc-4be0-995a-9f8f8d5f95fc:northside-outfitters:calculation:ST-4003",
+    "after": {
+     "codes": [
+      "APP-100.11",
+      "APP-100.99",
+      "APP-146.13",
+      "APR-123.18",
+      "ELC-123.14",
+      "ELC-169.13",
+      "HBA-215.16",
+      "HBA-238.18",
+      "HBA-238.19",
+      "HOM-100.17",
+      "HOM-192.16",
+      "OUT-123.13",
+      "OUT-169.19",
+      "OUT-192.12",
+      "SEA-169.11",
+      "SEA-169.13",
+      "SPT-146.16",
+      "SPT-215.14",
+      "SPT-238.15",
+      "APP-100.12"
+     ],
+     "score": "1.047585",
+     "removed": [
+      "1003",
+      "506"
+     ],
+     "segment": "loyalty",
+     "retained": [
+      "1001",
+      "1101",
+      "318",
+      "320",
+      "411",
+      "413",
+      "505",
+      "509",
+      "601",
+      "605",
+      "706",
+      "707",
+      "801"
+     ],
+     "unmapped": [
+      "APP-100.99"
+     ],
+     "multiplier": "0.231000",
+     "provenance": {
+      "dataset": "assessment fixtures",
+      "version": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb"
+     }
+    },
+    "before": {
+     "codes": [
+      "APP-100.11",
+      "APP-100.99",
+      "APP-146.13",
+      "APR-123.18",
+      "ELC-123.14",
+      "ELC-169.13",
+      "HBA-215.16",
+      "HBA-238.18",
+      "HBA-238.19",
+      "HOM-100.17",
+      "HOM-192.16",
+      "OUT-123.13",
+      "OUT-169.19",
+      "OUT-192.12",
+      "SEA-169.11",
+      "SEA-169.13",
+      "SPT-146.16",
+      "SPT-215.14",
+      "SPT-238.15"
+     ],
+     "score": "1.047585",
+     "removed": [
+      "1003",
+      "506"
+     ],
+     "segment": "loyalty",
+     "retained": [
+      "1001",
+      "1101",
+      "318",
+      "320",
+      "411",
+      "413",
+      "505",
+      "509",
+      "601",
+      "605",
+      "706",
+      "707",
+      "801"
+     ],
+     "unmapped": [
+      "APP-100.99"
+     ],
+     "multiplier": "0.231000",
+     "provenance": {
+      "dataset": "assessment fixtures",
+      "version": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb"
+     }
+    },
+    "result": {
+     "delta": "0.000000",
+     "caveat": "Dimensionless assortment coefficient score only; not sales, a percentage, or a forecast. Monetary baseline and linear scenario are user assumptions.",
+     "baseline": "1.047585",
+     "proposed": "1.047585"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "For ST-4003, adding APP-100.12 changes the assortment coefficient score from 1.047585 to 1.047585 (difference 0.000000). Retained classes: 1001, 1101, 318, 320, 411, 413, 505, 509, 601, 605, 706, 707, 801; superseded classes: 1003, 506. The score is a dimensionless coefficient, not a sales forecast.\n\nST-4003 (Kingsgate) is a standard omni store in the loyalty segment. It carries 19 catalog codes and has 6 suspected assortment gaps (suspected, not confirmed demand).\n\nSuspected gaps at ST-4003 (not confirmed demand): APP-100.12 (Portable air conditioners, 8,000 to 10,000 BTU; last carried never; evidence: cooling category down 18% against a market up 6%; assortment sits on the unspecified line, which carries no margin class); APP-192.18 (Refrigerators and freezers, beverage cooler; last carried 2025; evidence: 10 unfulfilled special orders logged by store colleagues this season); APR-192.13 (Women's ready-to-wear bottoms, jeans, wide leg; last carried never; evidence: 12 unfulfilled special orders logged by store colleagues this season); ELC-238.16 (Laptops and desktops, all-in-one desktops; last carried 2024; evidence: 26% of basket-level demand met by click-and-collect from a sister store); OUT-192.13 (Fishing equipment, fly rods; last carried 2024; evidence: returns rate 19% below chain average, suggesting unmet demand rather than fit issues); OUT-307.14 (Technical outerwear, insulated jackets, down; last carried never; evidence: 20% of basket-level demand met by click-and-collect from a sister store).\n\nST-4003 — Kingsgate\nChannel: omni · Format: standard · Segment: loyalty\nCarried codes (19): APP-100.11, APP-100.99, APP-146.13, APR-123.18, ELC-123.14, ELC-169.13, HBA-215.16, HBA-238.18, HBA-238.19, HOM-100.17, HOM-192.16, OUT-123.13, OUT-169.19, OUT-192.12, SEA-169.11, SEA-169.13, SPT-146.16, SPT-215.14, SPT-238.15\nSuspected assortment gaps (6; not confirmed demand):\n• APP-100.12: Portable air conditioners, 8,000 to 10,000 BTU (evidence: cooling category down 18% against a market up 6%; assortment sits on the unspecified line, which carries no margin class)\n• APP-192.18: Refrigerators and freezers, beverage cooler (evidence: 10 unfulfilled special orders logged by store colleagues this season)\n• APR-192.13: Women's ready-to-wear bottoms, jeans, wide leg (evidence: 12 unfulfilled special orders logged by store colleagues this season)\n• ELC-238.16: Laptops and desktops, all-in-one desktops (evidence: 26% of basket-level demand met by click-and-collect from a sister store)\n• OUT-192.13: Fishing equipment, fly rods (evidence: returns rate 19% below chain average, suggesting unmet demand rather than fit issues)\n• OUT-307.14: Technical outerwear, insulated jackets, down (evidence: 20% of basket-level demand met by click-and-collect from a sister store)\nSeasonal relevance has not been inferred beyond fixture labels.\nSource: 40a01c40-b1cc-4be0-995a-9f8f8d5f95fc:northside-outfitters:store:ST-4003\n\nAssortment coefficient score: 1.047585 → 1.047585\nDifference: 0.000000\nRetained classes: [\"1001\",\"1101\",\"318\",\"320\",\"411\",\"413\",\"505\",\"509\",\"601\",\"605\",\"706\",\"707\",\"801\"]\nSuperseded classes: [\"1003\",\"506\"]\nAssumption: each distinct mapped class counts once; segment-specific coefficients, then channel/format factor. This is not a sales forecast.\nSource: 40a01c40-b1cc-4be0-995a-9f8f8d5f95fc:northside-outfitters:calculation:ST-4003"
+}

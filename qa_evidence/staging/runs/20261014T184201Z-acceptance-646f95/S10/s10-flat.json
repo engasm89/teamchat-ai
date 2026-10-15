@@ -1,0 +1,33 @@
+{
+ "label": "s10-flat",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that the roster-mv8gkv0z-2htb flat check value is roster-mv8gkv0z-2htb-ok.",
+ "consent": true,
+ "turnId": "e9530946-6892-43dd-b841-1e5e3870fb1c",
+ "messageSequence": 370,
+ "at": "2026-10-14T18:44:11.392Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "roster-mv8gkv0z-2htb_flat_check_value",
+    "room": "supply-planning",
+    "value_json": "\"roster-mv8gkv0z-2htb-ok\""
+   },
+   "result": {
+    "saved": false,
+    "validation_errors": [
+     {
+      "field": "value",
+      "issue": "Expected a flat object"
+     }
+    ]
+   }
+  }
+ ],
+ "renderedAnswer": "Not saved — the value must be a flat set of named text, number or yes/no fields: value (Expected a flat object).\n\nNot saved — the value does not fit the shared-memory shape (a flat set of named text, number or yes/no fields):\n• value: Expected a flat object"
+}

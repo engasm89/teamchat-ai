@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-15T08:27:39.112Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "1b01258b7473f87954e52102d00a0b06bd2c9993774e9a5c59d44479726ce6b7"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1441,
+   "sha256": "9777ebf13de3fbb5ea752020f4cde6d28683a100d0a77c24ffeee6f1b0295256"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13181,
+   "sha256": "4a1dd0a988618cb746cdfc362a2b8d51d897d153d4d9cbec1a3e758081d4ac10"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 709,
+   "sha256": "eba82dcebf9b45435808c00ca0e180bbe7b837104f2972e18fb3ee7b64f6294a"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 4507,
+   "sha256": "bc70b9649f26fc788d7610d15bde883c81f284390e431ee136cd453f6ff64d91"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10410,
+   "sha256": "224a7ca9dc6411d512a76dd6be752063acb07627588027ffb4d1ad5711b0d9f8"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 2976,
+   "sha256": "605953c4056fd4c3bb8a1a9e008eb01bfed0f1221efa8e5bc37d367ea179d00f"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2271,
+   "sha256": "caeb1e95129d3b8d4ec1bd3a9e97bdc2ef760ad4c2def1ce8cfdf74ed7fd2c2d"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 681,
+   "sha256": "95b04967f2dd9e9a822cfe2ff74e36f2c3e72d289d0f84ea55fe740acf7baa9b"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 630,
+   "sha256": "35677565ce4006c60ee3b8fea97c825f51abde4eb2fa90e55f77061afb488a3b"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 6121,
+   "sha256": "28571e77c5eb36c347fe30219eb8421e40b3bfc964e1619fc6266bf7956fc62b"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 2233,
+   "sha256": "3af587a5f5bc8e4dcdadfde3c2c8034caf3cb8d4bb943f8a8cc7e8cea40ac160"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2877,
+   "sha256": "269005e5eea3844d4519ed09d9313bc83538d7ff74729ea28f686e7c95e98147"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1646,
+   "sha256": "b532d253b7a6d9029f47c3a1ffd7b9954a68d8ce8c3d4f00f6d72a802356f289"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "dcd13feb65450a52d1751eaaa083d8d9c2aec455bcda7abbc1bbe2683c594c12"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3977,
+   "sha256": "3b7df6c8514ee15d6defe408e7ed75837645f8d82395e550b1ef31ffa5cafa42"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "326eebd7f6fc6bd798baf28ba8ae8956b5b5647e3cf151297d5e68192bb92310"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "541190a02662278b89bdd03b30386aa15d04989cb411295d2f2a956f91229b58"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 720,
+   "sha256": "c678f4dba031c8ad555c1ffa654b6772405c5c41903ad10665a29619f24308ac"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 771,
+   "sha256": "17a2819b1edfbb2f436bb289467e67edf6d78e2a968a4cd0f2adc055caad35ce"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 722,
+   "sha256": "ed2412fb6612af00e19418fda42a8b83418839710c38170db70b305a05f5ef73"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "c34849b039e16fc78859765967a4d5c48ee91eac7ce3ed3e9c70ebfb430cd2bb"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13627,
+   "sha256": "c8a042049719f22efdd63fa40bfdb17119780be73e7c4b90c9f9616e110cccae"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "958ba2982e6dd29f02c8fa7ee9f823838a992e147a0cce713fc7e56097e81438"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "2319139906ef4590b66e4b99fcb22501012073354e57878223b2bb0c277ca4aa"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "56a32d96054b90f235e011825b635279f8ce165dbe3fa97d496a647c4ebc3d5f"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50493,
+   "sha256": "f4166d97aa688c7e5e6ac7de65b99b035cab5077920d33edc39342207ec1eab0"
+  }
+ ]
+}

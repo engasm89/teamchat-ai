@@ -14,6 +14,13 @@ export async function createPgPool(connectionString=process.env.DATABASE_URL):Pr
  return raw as SqlPool & {end():Promise<void>};
 }
 
+/** PostgreSQL roles are cluster-wide, so an isolated staging database on the
+ * same instance needs its own runtime login; only these two names are accepted. */
+export function runtimeRoleName(value=process.env.DB_RUNTIME_ROLE):string{
+ const role=value??"teamchat_api";
+ if(role!=="teamchat_api"&&role!=="teamchat_api_staging")throw Error("DB_RUNTIME_ROLE must be teamchat_api or teamchat_api_staging");
+ return role;
+}
 /** Refuse to start public or worker services using migration-owner credentials.
  * Checking a configured string is insufficient; inspect PostgreSQL's real role. */
 export async function assertRuntimeDbRole(pool:SqlPool):Promise<void>{
@@ -25,7 +32,7 @@ export async function assertRuntimeDbRole(pool:SqlPool):Promise<void>{
    FROM pg_roles r JOIN pg_class c ON c.oid='teamchat.stores'::regclass
    WHERE r.rolname=current_user`);
   const r=row.rows[0];
-  if(!r||r.role_name!=="teamchat_api"||r.rolsuper||r.rolbypassrls||r.table_owner===r.role_name)
+  if(!r||r.role_name!==runtimeRoleName()||r.rolsuper||r.rolbypassrls||r.table_owner===r.role_name)
    throw Error("Refusing privileged or unexpected PostgreSQL application role");
  }finally{client.release();}
 }
@@ -92,6 +99,6 @@ export async function connectEventListener(connectionString=process.env.DATABASE
  const moduleName="pg";const imported=await import(moduleName);
  const {Client}=(imported.default??imported) as {Client:new (config:unknown)=>PgListener & {connect():Promise<void>;end():Promise<void>}};
  const client=new Client({connectionString,connectionTimeoutMillis:5000,keepAlive:true}) as PgListener & {connect():Promise<void>;end():Promise<void>};
- await client.connect();await client.query("LISTEN teamchat_events");await client.query("LISTEN teamchat_presence");await client.query("LISTEN teamchat_typing");
+ await client.connect();await client.query("LISTEN teamchat_events");await client.query("LISTEN teamchat_presence");await client.query("LISTEN teamchat_typing");await client.query("LISTEN teamchat_rooms");
  return {client,close:()=>client.end()};
 }

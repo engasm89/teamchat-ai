@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T18:35:02.977Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7098,
+   "sha256": "84cab690d2f9b42da5000890055e4e41376c511a01af768e4d4e05a644813383"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1427,
+   "sha256": "dc5ab4be5f84c41393474bb92f3745a53f1c5687c09cb59fb0b828206870f9a2"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13228,
+   "sha256": "bd0d3e85b250d57819575c248f1587045c43bbafc3b857211ee73332affcf5d9"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 703,
+   "sha256": "d8d010ea8f8585ba44114df9c99e5fd4ac55018c93f52aa8662a6d96516f349c"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3697,
+   "sha256": "d0ac5026e0f34930216deda73337d99d54ded1133d916219d5fb64cafe2ec436"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 9957,
+   "sha256": "052cc3132f3ac0e97bc1680417ffe9daee272a822da574e5b43d8000ad01a5a4"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3070,
+   "sha256": "1f984d3d4d217b0b8071c3a745de5cd24f4ad3bdb1ce1cdf1e0e53906e209580"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2269,
+   "sha256": "420ee6645e5bbb9894c7f87822d52402a54037c66ad5710edae1f8feeb22778b"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 704,
+   "sha256": "a20be59530689d3d8ce5d01d205a4168523b17fabf7dacaa05056577936a36d3"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 742,
+   "sha256": "3b881059166196ba4230b6427627a54c2959e3badec1b77ea2b15c2c958e7a6c"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 4151,
+   "sha256": "d7bea5197e88fa780c4f159fb8c35244e7277d38f94c210a2d0baebf38f9dc2b"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1803,
+   "sha256": "5870044b9c93be80a34fa80e189c9cc45c2f7296e41ce83f21c5ea3f4c5cd48e"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2902,
+   "sha256": "c1ab1818c2210aa341f2dc950967c75a67c52bca1de7725493259a44dc2e2d3f"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1674,
+   "sha256": "b9c6c1bd8c72eed64de9fe3333c4efff384f9a0e893f9b5afe75d62586b8c625"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 659,
+   "sha256": "4c7cdfa3af678d45d91f9c14f142fd000d806b33504eb79a71c759a072571ac2"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3976,
+   "sha256": "701a25a4b51eb968cb1fad70a3b40c670981924c7a98b37f1a49546fe6ec0b92"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 5028,
+   "sha256": "ce552bfb442f4e1a4abaf87ce625e628abe57467575cd46121c8aa94d604c796"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 856,
+   "sha256": "447f55c16f002f6fec6edca3faa592f97998810e95e66f39d367dfd358231fd8"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 719,
+   "sha256": "03df32a5f71c1af0e3ddeb5fdb4cd5b32933a541f2abdf441e4ebe9ecdd6207f"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 770,
+   "sha256": "cfbbe03b379a1798b3572183dda7a319733cf83f1f273fcc682ce1ac947ef96c"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 721,
+   "sha256": "d99e5dd62c487c3a104c6f2b95769afc1ad45bb877d406675ac15d89bdacb812"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 498,
+   "sha256": "b32cb8111ead1ead25c25f63fe841d58345e57de1cfcf90bbc75098f7b036893"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13233,
+   "sha256": "7a3714fd03f0443aba07856aac80275e9ef3c3304578d900967fcad72022ba76"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 721,
+   "sha256": "d5a3471fbebfe445118924d57c152814603f0c05fab7dd01666512161ce76e75"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 5028,
+   "sha256": "af2c6e83b4ceae6d4f9e21434f5b63e06ae70c249018df4975bd1f71fc5ce314"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 808,
+   "sha256": "782cf28690ca4cf9099a4153c997804cdaa7194b4d135516d3d1d1f57464af05"
+  },
+  {
+   "path": "results.json",
+   "bytes": 48600,
+   "sha256": "34c922516e1f01cd86231c9a2a11714e96ee3a3b7b7a3355b2049d8ca7d88d78"
+  }
+ ]
+}

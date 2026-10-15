@@ -1,0 +1,99 @@
+{
+ "label": "s19-recall",
+ "user": "northside.buyer2.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "category-strategy",
+ "prompt": "@AI What is the cold-start check code for rehearsal mv8j3ac2-t4p7?",
+ "consent": false,
+ "turnId": "479aad8f-272a-45e3-bab0-ebc04f7466d2",
+ "messageSequence": 50,
+ "at": "2026-10-14T19:55:19.121Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "cold-start check code for rehearsal mv8j3ac2-t4p7"
+   },
+   "result": [
+    {
+     "ref": "479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:85aed092-4521-416b-906c-0502fd297831",
+     "memory": {
+      "key": "cold-start check code for rehearsal mv8j3ac2-t4p7",
+      "value": {
+       "code": "cold-mv8j3ac2-eipe"
+      },
+      "distance": 0.14397840279701135,
+      "memory_id": "85aed092-4521-416b-906c-0502fd297831",
+      "created_at": "2026-10-14 19:54:23.536516+00",
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:7ec381eb-66e0-4be2-a26b-2cf82fcaf329",
+     "memory": {
+      "key": "roster-mv8ip71i-2rre flat check value",
+      "value": {
+       "flat_check_value": "roster-mv8ip71i-2rre-ok"
+      },
+      "distance": 0.450307635224642,
+      "memory_id": "7ec381eb-66e0-4be2-a26b-2cf82fcaf329",
+      "created_at": "2026-10-14 19:43:28.108921+00",
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:17a92fec-e168-4d0d-b72e-2008261ca914",
+     "memory": {
+      "key": "roster-mv8g2yz7-zfek_flat_check_value",
+      "value": {
+       "value": "roster-mv8g2yz7-zfek-ok"
+      },
+      "distance": 0.490167469285279,
+      "memory_id": "17a92fec-e168-4d0d-b72e-2008261ca914",
+      "created_at": "2026-10-14 18:30:12.170513+00",
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:ae0c4ab3-c378-4833-a0a7-3f51a727a74f",
+     "memory": {
+      "key": "roster-mv8hdccf-jnln flat check value",
+      "value": {
+       "value": "roster-mv8hdccf-jnln-ok"
+      },
+      "distance": 0.4948274339062412,
+      "memory_id": "ae0c4ab3-c378-4833-a0a7-3f51a727a74f",
+      "created_at": "2026-10-14 19:06:17.352104+00",
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:02143239-a97b-4e4c-aa97-e9b6347314bf",
+     "memory": {
+      "key": "roster-mv8gzyao-uxxn flat check value",
+      "value": {
+       "flat_check_value": "roster-mv8gzyao-uxxn-ok"
+      },
+      "distance": 0.5036358332620028,
+      "memory_id": "02143239-a97b-4e4c-aa97-e9b6347314bf",
+      "created_at": "2026-10-14 18:55:50.298769+00",
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "Here is the information I found:\n\nRecorded decision “cold-start check code for rehearsal mv8j3ac2-t4p7”: code: cold-mv8j3ac2-eipe. Recorded by Northside Buyer One on 2026-10-14 in #supply-planning.\n\nRecorded decision: cold-start check code for rehearsal mv8j3ac2-t4p7\n{\"code\":\"cold-mv8j3ac2-eipe\"}\nRecorded by: Northside Buyer One on 2026-10-14 19:54:23.536516+00 in #supply-planning\nSource: 479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:85aed092-4521-416b-906c-0502fd297831\n\nRecorded decision: roster-mv8ip71i-2rre flat check value\n{\"flat_check_value\":\"roster-mv8ip71i-2rre-ok\"}\nRecorded by: Northside Buyer One on 2026-10-14 19:43:28.108921+00 in #supply-planning\nSource: 479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:7ec381eb-66e0-4be2-a26b-2cf82fcaf329\n\nRecorded decision: roster-mv8g2yz7-zfek_flat_check_value\n{\"value\":\"roster-mv8g2yz7-zfek-ok\"}\nRecorded by: Northside Buyer One on 2026-10-14 18:30:12.170513+00 in #supply-planning\nSource: 479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:17a92fec-e168-4d0d-b72e-2008261ca914\n\nRecorded decision: roster-mv8hdccf-jnln flat check value\n{\"value\":\"roster-mv8hdccf-jnln-ok\"}\nRecorded by: Northside Buyer One on 2026-10-14 19:06:17.352104+00 in #supply-planning\nSource: 479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:ae0c4ab3-c378-4833-a0a7-3f51a727a74f\n\nRecorded decision: roster-mv8gzyao-uxxn flat check value\n{\"flat_check_value\":\"roster-mv8gzyao-uxxn-ok\"}\nRecorded by: Northside Buyer One on 2026-10-14 18:55:50.298769+00 in #supply-planning\nSource: 479aad8f-272a-45e3-bab0-ebc04f7466d2:northside-outfitters:memory:02143239-a97b-4e4c-aa97-e9b6347314bf"
+}

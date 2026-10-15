@@ -1,0 +1,63 @@
+[
+ {
+  "id": 0,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018088489,
+  "closedAt": 1792018095922
+ },
+ {
+  "id": 1,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018096228,
+  "closedAt": 1792018096229,
+  "error": "Establishing a tunnel via proxy server failed."
+ },
+ {
+  "id": 2,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018096807,
+  "closedAt": 1792018096807,
+  "error": "Establishing a tunnel via proxy server failed."
+ },
+ {
+  "id": 3,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018097826,
+  "closedAt": 1792018097826,
+  "error": "Establishing a tunnel via proxy server failed."
+ },
+ {
+  "id": 4,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018100258,
+  "closedAt": 1792018100259,
+  "error": "Establishing a tunnel via proxy server failed."
+ },
+ {
+  "id": 5,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018104141,
+  "closedAt": 1792018104141,
+  "error": "Establishing a tunnel via proxy server failed."
+ },
+ {
+  "id": 6,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018110536,
+  "closedAt": 1792018110536,
+  "error": "Establishing a tunnel via proxy server failed."
+ },
+ {
+  "id": 7,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018121982,
+  "closedAt": 1792018121982,
+  "error": "Establishing a tunnel via proxy server failed."
+ },
+ {
+  "id": 8,
+  "url": "wss://teamchat-api-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792018137819,
+  "closedAt": null
+ }
+]

@@ -1,0 +1,1887 @@
+{
+ "schemaVersion": 1,
+ "suite": "acceptance",
+ "runId": "20261015T090052Z-acceptance-9d5398",
+ "environment": "staging: https://teamchat-api-staging-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-15T09:00:52.643Z",
+ "finishedAt": "2026-10-15T09:08:21.379Z",
+ "harness": {
+  "gitHead": "411b27bd900da4fa7d7f55c9e0bab934f3f48964",
+  "dirty": true,
+  "fingerprint": "68ea6ea9e03ae1a760ca4b2b0cf0c6804429bba6b9a43fe7293f10f8394175e5",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/acceptance/live-client.ts",
+   "scripts/acceptance/local-instance.ts",
+   "scripts/acceptance/oracle.ts",
+   "scripts/acceptance/run-employer-acceptance.ts",
+   "scripts/acceptance/target.ts",
+   "scripts/evidence/lib.ts"
+  ]
+ },
+ "source": {
+  "sha": "e1fdb8ab1a165d2159745d5a75f0247b22bc2806"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-staging-00021-zf8",
+  "apiDigest": "sha256:ac35940b7d5787abe4c311708e1c8b5c5e22858b33a8d6fa8c983271a264cbe0",
+  "workerRevision": "teamchat-worker-staging-00021-8gr",
+  "workerDigest": "sha256:338d4c484988e0c9e8c3ea1cdcf8d79a532d134992fb00912e9b1c17a57e8a4a",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+ },
+ "tests": [
+  {
+   "id": "S01",
+   "title": "Portable AC code and margin class; a second user watches the fetch live",
+   "requirementIds": [
+    "G02",
+    "S01"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:00:52.777Z",
+   "finishedAt": "2026-10-15T09:01:06.279Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "model called a catalog tool natively",
+     "pass": true,
+     "expected": "search_catalog|get_catalog_code",
+     "actual": [
+      "search_catalog"
+     ]
+    },
+    {
+     "name": "fetched portable AC codes match the fixture exactly",
+     "pass": true,
+     "expected": "fixture rows",
+     "actual": [
+      "APP-100.11",
+      "APP-100.12",
+      "APP-100.13",
+      "APP-100.14",
+      "APP-100.15",
+      "APP-100.16",
+      "APP-100.17",
+      "APP-100.18",
+      "APP-100.19",
+      "APP-100.99"
+     ]
+    },
+    {
+     "name": "answer states a portable AC code with its fixture margin class",
+     "pass": true,
+     "expected": "code with class",
+     "actual": "Here are the catalog codes for portable air conditioning units:\n\nAPP-100.11 is “Portable air conditioners, 5,000 to 7,000 BTU” (Portable air conditioners, Appliances). It is in margin class 318.\n\nAPP-100.11 has margin class 318.\n\nAPP-100.12 is “Portable air conditioners, 8,000 to 10,000 BTU” (Portable air conditioners, Appliances). It is in margin class 318.\n\nAPP-100.12 has margin class 318.\n\nAPP-"
+    },
+    {
+     "name": "second user received the same events in the same order",
+     "pass": true,
+     "expected": 26,
+     "actual": 26
+    },
+    {
+     "name": "second user saw the fetch before the answer finished",
+     "pass": true,
+     "expected": "tool before complete",
+     "actual": [
+      {
+       "t": 1792054858094,
+       "type": "ai_turn_started"
+      },
+      {
+       "t": 1792054859188,
+       "type": "ai_tool_start"
+      },
+      {
+       "t": 1792054859289,
+       "type": "ai_tool"
+      },
+      {
+       "t": 1792054859312,
+       "type": "ai_answer_block"
+      },
+      {
+       "t": 1792054864181,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054864208,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054864390,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054864429,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054864524,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054864945,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054864970,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865006,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865032,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865231,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865232,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865377,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865457,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865643,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865751,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865968,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054865996,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054866026,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054866056,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054866174,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054866277,
+       "type": "ai_answer_segment"
+      },
+      {
+       "t": 1792054866277,
+       "type": "ai_complete"
+      }
+     ]
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S01/s01.json",
+     "sha256": "7bd46424fd0aba4219d42f580fa31077c1892a25525eb3d6cc9d1c532e536765",
+     "description": "s01: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S02",
+   "title": "Reverse lookup: code to description",
+   "requirementIds": [
+    "S02"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:01:06.279Z",
+   "finishedAt": "2026-10-15T09:01:14.233Z",
+   "details": {
+    "code": "HOM-261.17"
+   },
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "get_catalog_code called for the asked code",
+     "pass": true,
+     "expected": "HOM-261.17",
+     "actual": [
+      {
+       "catalog_code": "HOM-261.17"
+      }
+     ]
+    },
+    {
+     "name": "returned product equals the fixture row",
+     "pass": true,
+     "expected": {
+      "catalog_code": "HOM-261.17",
+      "description": "Rugs and floor coverings, natural fibre",
+      "product_family": "Rugs and floor coverings",
+      "department": "Home and Furnishings",
+      "seasonality": "year_round",
+      "specificity": "specified",
+      "margin_class": "608",
+      "margin_class_label": "Floor Coverings"
+     },
+     "actual": [
+      {
+       "ref": "7b0516e1-1fe7-4798-8d95-b03c6c3eb617:northside-outfitters:catalog:HOM-261.17",
+       "product": {
+        "department": "Home and Furnishings",
+        "description": "Rugs and floor coverings, natural fibre",
+        "seasonality": "year_round",
+        "specificity": "specified",
+        "catalog_code": "HOM-261.17",
+        "margin_class": "608",
+        "product_family": "Rugs and floor coverings",
+        "margin_class_label": "Floor Coverings"
+       }
+      }
+     ]
+    },
+    {
+     "name": "answer shows the fixture description",
+     "pass": true,
+     "expected": "Rugs and floor coverings, natural fibre",
+     "actual": "Here's what I found in the catalog:\n\nHOM-261.17 is “Rugs and floor coverings, natural fibre” (Rugs and floor coverings, Home and Furnishings). It is in margin class 608 (Floor Coverings).\n\nHOM-261.17 — Rugs and floor coverings, natural fibre\nMargin class: 608\nSource: 7b0516e1-1fe7-4798-8d95-b03c6c3e"
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S02/s02.json",
+     "sha256": "5614ededd9a8d1b89caa593ff290ae11424d29d5b2f289c28ecc378636a97134",
+     "description": "s02: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S03",
+   "title": "AC units and SSDs in one message",
+   "requirementIds": [
+    "G02",
+    "S03",
+    "A11"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:01:14.233Z",
+   "finishedAt": "2026-10-15T09:01:30.510Z",
+   "details": {
+    "callsPerRound": {
+     "r0": 2
+    }
+   },
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "air-conditioner candidates fetched",
+     "pass": true,
+     "expected": "≥1",
+     "actual": 10
+    },
+    {
+     "name": "SSD candidates fetched",
+     "pass": true,
+     "expected": "≥1",
+     "actual": 10
+    },
+    {
+     "name": "every fetched candidate is a real fixture row",
+     "pass": true,
+     "expected": "all match",
+     "actual": []
+    },
+    {
+     "name": "native function calls carry operation IDs",
+     "pass": true,
+     "expected": "r{round}-c{n}",
+     "actual": [
+      "r0-c0",
+      "r0-c1"
+     ]
+    },
+    {
+     "name": "model issued parallel function calls in one round",
+     "pass": true,
+     "expected": "≥2 calls in a round",
+     "actual": {
+      "r0": 2
+     }
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S03/s03.json",
+     "sha256": "a9b805c62109f5e2708c95ef8a1b0c185fcecbb7b6c79f9246dbebbaf126d9b7",
+     "description": "s03: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S04",
+   "title": "Beekeeping veils: honest no-match, zero generated codes",
+   "requirementIds": [
+    "G03",
+    "S04"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:01:30.511Z",
+   "finishedAt": "2026-10-15T09:01:37.474Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "fixture has no beekeeping product (oracle sanity)",
+     "pass": true,
+     "expected": 0,
+     "actual": []
+    },
+    {
+     "name": "a catalog lookup was made",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      "search_catalog"
+     ]
+    },
+    {
+     "name": "answer says the product is not in the catalog",
+     "pass": true,
+     "expected": "no-match statement",
+     "actual": "I couldn't find any catalog codes for \"beekeeping veils.\"\n\nNo matching product exists in the supplied catalog.\n\nNo matching product exists in the supplied catalog."
+    },
+    {
+     "name": "answer shows zero catalog codes",
+     "pass": true,
+     "expected": 0,
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S04/s04.json",
+     "sha256": "0c9afff6c7f5fab14e08c4ddc4eb717c2b8512195715481afab27ea24ea3f90d",
+     "description": "s04: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S05",
+   "title": "ST-4003 score change for APP-100.12 with class supersession and no money",
+   "requirementIds": [
+    "G03",
+    "S05",
+    "A13"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:01:37.475Z",
+   "finishedAt": "2026-10-15T09:01:50.057Z",
+   "details": {
+    "oracle": {
+     "before": {
+      "score": "1.047585",
+      "scoreMillionths": 1047585,
+      "retained": [
+       "1001",
+       "1101",
+       "318",
+       "320",
+       "411",
+       "413",
+       "505",
+       "509",
+       "601",
+       "605",
+       "706",
+       "707",
+       "801"
+      ],
+      "removed": [
+       "1003",
+       "506"
+      ],
+      "unmapped": [
+       "APP-100.99"
+      ]
+     },
+     "after": {
+      "score": "1.047585",
+      "scoreMillionths": 1047585,
+      "retained": [
+       "1001",
+       "1101",
+       "318",
+       "320",
+       "411",
+       "413",
+       "505",
+       "509",
+       "601",
+       "605",
+       "706",
+       "707",
+       "801"
+      ],
+      "removed": [
+       "1003",
+       "506"
+      ],
+      "unmapped": [
+       "APP-100.99"
+      ]
+     },
+     "delta": "0.000000"
+    }
+   },
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "calculate_uplift called for ST-4003 adding APP-100.12",
+     "pass": true,
+     "expected": {
+      "store_id": "ST-4003",
+      "add_codes": [
+       "APP-100.12"
+      ]
+     },
+     "actual": {
+      "store_id": "ST-4003",
+      "add_codes": [
+       "APP-100.12"
+      ]
+     }
+    },
+    {
+     "name": "baseline score equals the oracle",
+     "pass": true,
+     "expected": "1.047585",
+     "actual": "1.047585"
+    },
+    {
+     "name": "proposed score equals the oracle",
+     "pass": true,
+     "expected": "1.047585",
+     "actual": "1.047585"
+    },
+    {
+     "name": "score change equals the oracle",
+     "pass": true,
+     "expected": "0.000000",
+     "actual": "0.000000"
+    },
+    {
+     "name": "retained and superseded classes equal the oracle",
+     "pass": true,
+     "expected": [
+      [
+       "1001",
+       "1101",
+       "318",
+       "320",
+       "411",
+       "413",
+       "505",
+       "509",
+       "601",
+       "605",
+       "706",
+       "707",
+       "801"
+      ],
+      [
+       "1003",
+       "506"
+      ]
+     ],
+     "actual": [
+      [
+       "1001",
+       "1101",
+       "318",
+       "320",
+       "411",
+       "413",
+       "505",
+       "509",
+       "601",
+       "605",
+       "706",
+       "707",
+       "801"
+      ],
+      [
+       "1003",
+       "506"
+      ]
+     ]
+    },
+    {
+     "name": "superseded classes are visible in the answer",
+     "pass": true,
+     "expected": [
+      "1003",
+      "506"
+     ],
+     "actual": "Superseded classes: [\"1003\",\"506\"]"
+    },
+    {
+     "name": "no money figure is invented and the caveat is shown",
+     "pass": true,
+     "expected": "no currency; caveat present",
+     "actual": "For ST-4003, adding APP-100.12 changes the assortment coefficient score from 1.047585 to 1.047585 (difference 0.000000). Retained classes: 1001, 1101, 318, 320, 411, 413, 505, 509, 601, 605, 706, 707, 801; superseded classes: 1003, 506. The score is a dimensionless coefficient, not a sales forecast.\n\nAssortment coefficient score: 1.047585 → 1.047585\nDifference: 0.000000\nRetained classes: [\"1001\",\"1101\",\"318\",\"320\",\"411\",\"413\",\"505\",\"509\",\"601\",\"605\",\"706\",\"707\",\"801\"]\nSuperseded classes: [\"1003\""
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S05/s05.json",
+     "sha256": "4c86eccb75dccc19bdda362f1f510be37e76874cb0cc78a0258716f0743d251a",
+     "description": "s05: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S06",
+   "title": "ST-4007 gaps with evidence, then the score change for closing them",
+   "requirementIds": [
+    "S06",
+    "A11"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:01:50.057Z",
+   "finishedAt": "2026-10-15T09:02:10.828Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "store assortment fetched before the calculation",
+     "pass": true,
+     "expected": "get_store_assortment then calculate_uplift",
+     "actual": [
+      "get_store_assortment",
+      "calculate_uplift"
+     ]
+    },
+    {
+     "name": "calculation adds exactly the fixture gap codes",
+     "pass": true,
+     "expected": [
+      "APP-100.11",
+      "APP-100.12",
+      "APP-100.13",
+      "APP-169.16",
+      "APP-192.17",
+      "HOM-123.16",
+      "SEA-307.12",
+      "SPT-261.12"
+     ],
+     "actual": [
+      "APP-100.11",
+      "APP-100.12",
+      "APP-100.13",
+      "APP-169.16",
+      "APP-192.17",
+      "HOM-123.16",
+      "SEA-307.12",
+      "SPT-261.12"
+     ]
+    },
+    {
+     "name": "score change equals the oracle for the codes added",
+     "pass": true,
+     "expected": "0.319000",
+     "actual": "0.319000"
+    },
+    {
+     "name": "every fixture gap's evidence is shown",
+     "pass": true,
+     "expected": [
+      "footfall up 33% on weekends with no adjacency to this category",
+      "20% of basket-level demand met by click-and-collect from a sister store",
+      "category search volume up 32% year on year with no local fulfilment",
+      "33% of basket-level demand met by click-and-collect from a sister store",
+      "category search volume up 22% year on year with no local fulfilment",
+      "footfall up 16% on weekends with no adjacency to this category",
+      "13% of basket-level demand met by click-and-collect from a sister store",
+      "category search volume up 12% year on year with no local fulfilment"
+     ],
+     "actual": "APP-100.11 (Portable air conditioners, 5,000 to 7,000 BTU; last carried 2024; evidence: footfall up 16% on weekends with no adjacency to this category) is a suspected gap at ST-4007. This is not confirmed demand.\n\nAPP-100.12 (Portable air conditioners, 8,000 to 10,000 BTU; last carried 2024; evidence: 13% of basket-level demand met by click-and-collect from a sister store) is a suspected gap at ST-4007. This is not confirmed demand.\n\nAPP-100.13 (Portable air conditioners, 11,000 to 13,000 BTU; last carried 2024; evidence: category search volume up 12% year on year with no local fulfilment) is "
+    },
+    {
+     "name": "gaps are labelled as suspected, not confirmed",
+     "pass": true,
+     "expected": "suspected label",
+     "actual": ""
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S06/s06.json",
+     "sha256": "43b6e89810730d6edf4ba3b15c59d4c6a61a18983eec6a1e7565ff4a68a0778c",
+     "description": "s06: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S07",
+   "title": "Compare two codings of ST-4007; B minus A",
+   "requirementIds": [
+    "S07"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:02:10.828Z",
+   "finishedAt": "2026-10-15T09:02:26.022Z",
+   "details": {
+    "oracle": {
+     "optionA": {
+      "score": "1.100550",
+      "scoreMillionths": 1100550,
+      "retained": [
+       "1101",
+       "310",
+       "318",
+       "412",
+       "419",
+       "509",
+       "602",
+       "606",
+       "608",
+       "706",
+       "801",
+       "803",
+       "807",
+       "901",
+       "906"
+      ],
+      "removed": [],
+      "unmapped": []
+     },
+     "optionB": {
+      "score": "1.064800",
+      "scoreMillionths": 1064800,
+      "retained": [
+       "1101",
+       "310",
+       "410",
+       "412",
+       "419",
+       "509",
+       "602",
+       "606",
+       "608",
+       "706",
+       "801",
+       "803",
+       "807",
+       "901",
+       "906"
+      ],
+      "removed": [
+       "903"
+      ],
+      "unmapped": []
+     },
+     "bMinusA": "-0.035750"
+    }
+   },
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "compare_assortment_options called with both options",
+     "pass": true,
+     "expected": {
+      "A": [
+       "APP-100.12",
+       "APP-100.13"
+      ],
+      "B": [
+       "ELC-100.13",
+       "HDW-146.18"
+      ]
+     },
+     "actual": {
+      "store_id": "ST-4007",
+      "option_a_codes": [
+       "APP-100.12",
+       "APP-100.13"
+      ],
+      "option_b_codes": [
+       "ELC-100.13",
+       "HDW-146.18"
+      ]
+     }
+    },
+    {
+     "name": "option A score equals the oracle",
+     "pass": true,
+     "expected": "1.100550",
+     "actual": "1.100550"
+    },
+    {
+     "name": "option B score equals the oracle",
+     "pass": true,
+     "expected": "1.064800",
+     "actual": "1.064800"
+    },
+    {
+     "name": "B minus A equals the oracle",
+     "pass": true,
+     "expected": "-0.035750",
+     "actual": "-0.035750"
+    },
+    {
+     "name": "answer shows the difference",
+     "pass": true,
+     "expected": "-0.035750",
+     "actual": "Difference (B − A): -0.035750"
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S07/s07.json",
+     "sha256": "69d0f2bf75ee216cf56c697b8c03a6b787aa26faac6eec0ec1916dab141215a9",
+     "description": "s07: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S08",
+   "title": "Paraphrased seeded memory from another room, with author and date; negatives stay empty",
+   "requirementIds": [
+    "S08",
+    "A14"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:02:26.023Z",
+   "finishedAt": "2026-10-15T09:02:48.778Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "paraphraseturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "unrelatedturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "valleyturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "paraphrase used semantic search_memory",
+     "pass": true,
+     "expected": true,
+     "actual": [
+      "search_memory"
+     ]
+    },
+    {
+     "name": "paraphrase found the seeded memory",
+     "pass": true,
+     "expected": "cooling_accessory_bundling_policy",
+     "actual": [
+      "cooling_accessory_bundling_policy"
+     ]
+    },
+    {
+     "name": "memory carries its author",
+     "pass": true,
+     "expected": "Sarah Keane",
+     "actual": "Sarah Keane"
+    },
+    {
+     "name": "memory carries its date",
+     "pass": true,
+     "expected": "2026-03-14T10:22:00Z",
+     "actual": "2026-03-14 10:22:00+00"
+    },
+    {
+     "name": "memory carries its original room, which differs from the asking room",
+     "pass": true,
+     "expected": "category-strategy",
+     "actual": "category-strategy"
+    },
+    {
+     "name": "answer shows author and date",
+     "pass": true,
+     "expected": "Sarah Keane",
+     "actual": "Recorded decision “cooling_accessory_bundling_policy”: review: annually before season set; decision: cooling units are ranged with energy accessories as a single planogram block; agreed by: Sarah Keane and the merchandising director; rationale: attachment rate rose from 11% to 29% in the 2025 pilot; applies from: 2026-03-14. Recorded by Sarah Keane on 2026-03-14 in #category-strategy.\n\nRecorded de"
+    },
+    {
+     "name": "unrelated query does not return it",
+     "pass": true,
+     "expected": "absent",
+     "actual": []
+    },
+    {
+     "name": "Valley query returns no Northside memory",
+     "pass": true,
+     "expected": "none",
+     "actual": []
+    },
+    {
+     "name": "Valley answer contains no Northside memory text",
+     "pass": true,
+     "expected": "absent",
+     "actual": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S08/s08-paraphrase.json",
+     "sha256": "6ac71fe22a4dacbc15e3b2756aabed665e3b8de76f5bb66822a3a792eb6e9aff",
+     "description": "s08-paraphrase: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S08/s08-unrelated.json",
+     "sha256": "2e93c74ab19d71c0a87a4788427b5720bc73c903d68697322a6476c44734e497",
+     "description": "s08-unrelated: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S08/s08-valley.json",
+     "sha256": "4adadf2801839056a728df60bff9ff5358313874db265dfafb1890db69418076",
+     "description": "s08-valley: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S09",
+   "title": "A new contact and deadline saved with consent reach another user in another room, not Valley",
+   "requirementIds": [
+    "S09"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:02:48.779Z",
+   "finishedAt": "2026-10-15T09:03:15.147Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "saveturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "recallturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "valleyturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "memory saved with consent",
+     "pass": true,
+     "expected": true,
+     "actual": {
+      "ref": "5dd38253-bbeb-40d7-9dda-a72cad2de9ed:northside-outfitters:memory:ca8f0a38-c316-4f42-b47d-1c5be1ae44b4",
+      "saved": true,
+      "memory": {
+       "key": "escalation_contact_mv9b9bkb-nmc8",
+       "value": {
+        "case_id": "mv9b9bkb-nmc8",
+        "deadline": "2026-11-20",
+        "escalation_contact_id": "mv9b9bkb-rn40",
+        "escalation_contact_name": "Dana"
+       },
+       "memory_id": "ca8f0a38-c316-4f42-b47d-1c5be1ae44b4",
+       "created_at": "2026-10-15 09:02:58.420445+00",
+       "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+       "source_room_id": "supply-planning"
+      }
+     }
+    },
+    {
+     "name": "saved value contains the contact and the deadline",
+     "pass": true,
+     "expected": {
+      "name": "Dana mv9b9bkb-rn40",
+      "deadline": "2026-11-20"
+     },
+     "actual": {
+      "case_id": "mv9b9bkb-nmc8",
+      "deadline": "2026-11-20",
+      "escalation_contact_id": "mv9b9bkb-rn40",
+      "escalation_contact_name": "Dana"
+     }
+    },
+    {
+     "name": "another user in another room retrieves it",
+     "pass": true,
+     "expected": "Dana mv9b9bkb-rn40",
+     "actual": [
+      "escalation_contact_mv9b9bkb-nmc8",
+      "escalation contact for supplier dispute mv8m55sl-t81q",
+      "escalation contact for mv8krytc-pg2a supplier dispute",
+      "supplier_dispute_escalation_mv8k7b8t-nfuw",
+      "escalation contact for supplier dispute mv9aezaf-03j0"
+     ]
+    },
+    {
+     "name": "retrieved memory names the saving user and room",
+     "pass": true,
+     "expected": {
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "room": "supply-planning"
+     },
+     "actual": {
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "room": "supply-planning"
+     }
+    },
+    {
+     "name": "Valley cannot retrieve it",
+     "pass": true,
+     "expected": "absent",
+     "actual": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S09/s09-save.json",
+     "sha256": "00acd0dd187a0a46709e9116a56e5e332d3731e53effceffc59929614775f564",
+     "description": "s09-save: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S09/s09-recall.json",
+     "sha256": "458b563f7dc2dc22b08f9cffa3752f0b9694205575aaec9c7005f401fd22f581",
+     "description": "s09-recall: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S09/s09-valley.json",
+     "sha256": "42c712d656c11f94dafbc19930cd563b9214ce97784527ba8651b572b34209b2",
+     "description": "s09-valley: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S10",
+   "title": "Nested value rejected with field-level reasons and exactly one repair; a flat value saves",
+   "requirementIds": [
+    "S10"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:03:15.149Z",
+   "finishedAt": "2026-10-15T09:03:29.941Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "nestedturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "first save attempt was rejected",
+     "pass": true,
+     "expected": "validation_errors",
+     "actual": {
+      "saved": false,
+      "validation_errors": [
+       {
+        "field": "leads",
+        "issue": "Nested values and arrays are not allowed"
+       }
+      ]
+     }
+    },
+    {
+     "name": "rejection lists field-level reasons",
+     "pass": true,
+     "expected": "field + issue",
+     "actual": [
+      {
+       "field": "leads",
+       "issue": "Nested values and arrays are not allowed"
+      }
+     ]
+    },
+    {
+     "name": "user is told why, field by field",
+     "pass": true,
+     "expected": "visible reasons",
+     "actual": "Recorded decision “roster-mv9b9xuo-56f9”: leads: [{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]. Recorded by Northside Buyer One on 2026-10-15 in #supply-planning.\n\nNot saved — the value does not fit the shared-memory shape (a flat set of named text, number or yes/no fields):\n• leads: Nested values and arrays ar"
+    },
+    {
+     "name": "at most one repair attempt was executed",
+     "pass": true,
+     "expected": "≤2 executed save_memory calls",
+     "actual": 2
+    },
+    {
+     "name": "the value was put right: the one repair saved a flat value",
+     "pass": true,
+     "expected": "rejected once, then saved",
+     "actual": [
+      false,
+      true
+     ]
+    },
+    {
+     "name": "stored value is flat and exactly what the repair sent",
+     "pass": true,
+     "expected": "flat, non-empty, identical",
+     "actual": {
+      "sent": "{\"leads\":\"[{\\\"name\\\":\\\"Ana\\\",\\\"shifts\\\":[{\\\"day\\\":\\\"Mon\\\",\\\"stores\\\":[\\\"ST-4001\\\",\\\"ST-4002\\\"]}]},{\\\"name\\\":\\\"Ben\\\",\\\"shifts\\\":[{\\\"day\\\":\\\"Tue\\\",\\\"stores\\\":[\\\"ST-4003\\\"]}]}]\"}",
+      "stored": {
+       "leads": "[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]"
+      }
+     }
+    },
+    {
+     "name": "flatturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "a valid flat value saves with the requested content (directly or by the one controlled repair)",
+     "pass": true,
+     "expected": "saved, containing roster-mv9b9xuo-56f9-ok",
+     "actual": [
+      {
+       "ref": "7a3a78c8-9a2b-41c0-9ac5-ed90df43745b:northside-outfitters:memory:1b55eac2-6f57-452f-9ce3-9fea53feb4ea",
+       "saved": true,
+       "memory": {
+        "key": "roster-mv9b9xuo-56f9_flat_check_value",
+        "value": {
+         "flat_check_value": "roster-mv9b9xuo-56f9-ok"
+        },
+        "memory_id": "1b55eac2-6f57-452f-9ce3-9fea53feb4ea",
+        "created_at": "2026-10-15 09:03:26.26099+00",
+        "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+        "source_room_id": "supply-planning"
+       }
+      }
+     ]
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S10/s10-nested.json",
+     "sha256": "6f39e8cce212f53219c6c38e443ba1c6e23b4409a744d454640a953473af77d4",
+     "description": "s10-nested: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S10/s10-flat.json",
+     "sha256": "f42e7ba60914b8dedb96b58376b340f3ace8936576ace82c21f7bac3551314df",
+     "description": "s10-flat: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S11",
+   "title": "A target both chains track: each tenant gets only its own",
+   "requirementIds": [
+    "G04",
+    "S11"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:03:29.942Z",
+   "finishedAt": "2026-10-15T09:03:48.287Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "northsideturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "valleyturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "Northside receives its own target",
+     "pass": true,
+     "expected": 92,
+     "actual": [
+      92
+     ]
+    },
+    {
+     "name": "Valley receives its own target",
+     "pass": true,
+     "expected": 85,
+     "actual": [
+      85
+     ]
+    },
+    {
+     "name": "no trace of Valley's figure for Northside",
+     "pass": true,
+     "expected": "absent",
+     "actual": ""
+    },
+    {
+     "name": "no trace of Northside's figure for Valley",
+     "pass": true,
+     "expected": "absent",
+     "actual": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S11/s11-northside.json",
+     "sha256": "14283b8d8b17c2d9d1cbd93bd24ccf6a7db52a8b57f7c46825c845aba5186359",
+     "description": "s11-northside: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S11/s11-valley.json",
+     "sha256": "c8d55310f505d6d9d69ac451c2afcf1711c262e04c9c96c101c5cad07f2e0356",
+     "description": "s11-valley: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S12",
+   "title": "Valley store invisible, before and after a forged authorization claim; audit log distinguishes attempts",
+   "requirementIds": [
+    "G04",
+    "S12"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:03:48.287Z",
+   "finishedAt": "2026-10-15T09:04:16.356Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "firstturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "forgedturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "unknownturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "first attempt returns nothing",
+     "pass": true,
+     "expected": "no match",
+     "actual": [
+      {
+       "found": false,
+       "message": "No matching record is available."
+      }
+     ]
+    },
+    {
+     "name": "forged-claim attempt returns nothing",
+     "pass": true,
+     "expected": "no match",
+     "actual": [
+      {
+       "found": false,
+       "message": "No matching record is available."
+      }
+     ]
+    },
+    {
+     "name": "foreign and nonexistent store answers are identical",
+     "pass": true,
+     "expected": [
+      {
+       "source": "verified_database_tool",
+       "values": {
+        "message": "No matching record is available in this workspace."
+       },
+       "template": "missing"
+      }
+     ],
+     "actual": {
+      "first": [
+       {
+        "source": "verified_database_tool",
+        "values": {
+         "message": "No matching record is available in this workspace."
+        },
+        "template": "missing"
+       }
+      ],
+      "forged": [
+       {
+        "source": "verified_database_tool",
+        "values": {
+         "message": "No matching record is available in this workspace."
+        },
+        "template": "missing"
+       }
+      ]
+     }
+    },
+    {
+     "name": "no Valley data in either answer",
+     "pass": true,
+     "expected": "absent",
+     "actual": ""
+    },
+    {
+     "name": "audit log has a record for each attempt",
+     "pass": true,
+     "expected": "≥1 each",
+     "actual": [
+      1,
+      1
+     ]
+    },
+    {
+     "name": "audit records are distinguishable (turn, trigger message, time)",
+     "pass": true,
+     "expected": "different",
+     "actual": [
+      "97e7a5dc-500f-4221-8eda-8ff3594c4cbb",
+      "3dda242e-04fa-497e-af6f-6a3ceb8f1b46"
+     ]
+    },
+    {
+     "name": "audit records show the Northside requester and a no-match outcome",
+     "pass": true,
+     "expected": "northside, no_match",
+     "actual": [
+      [
+       "northside-outfitters",
+       "get_store_assortment",
+       "no_match"
+      ],
+      [
+       "northside-outfitters",
+       "get_store_assortment",
+       "no_match"
+      ]
+     ]
+    },
+    {
+     "name": "audit records contain no Valley data",
+     "pass": true,
+     "expected": "absent",
+     "actual": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S12/s12-first.json",
+     "sha256": "14810701c0f306347eb35585725b3426a4f67c5e354ec095db1fae87be711359",
+     "description": "s12-first: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S12/s12-forged.json",
+     "sha256": "958253c4f06d538ce40aa3549b8db98a43e6d938fe8038490010fcdafcd4e10d",
+     "description": "s12-forged: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S12/s12-unknown.json",
+     "sha256": "3da299c6132649329a4515de30d61b319938b0fede39ae756784849dba7b24c7",
+     "description": "s12-unknown: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S12/audit-log.json",
+     "sha256": "61f3fe62b1cb1a9cfec434f5f6bec62039fa62371d8df8e27a4c4bc8638e0966",
+     "description": "Cloud Logging ai_tool_call records for both attempts"
+    }
+   ]
+  },
+  {
+   "id": "S13",
+   "title": "Admin-mode prompt injection discloses nothing foreign",
+   "requirementIds": [
+    "G03",
+    "G04",
+    "S13"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:04:16.356Z",
+   "finishedAt": "2026-10-15T09:04:23.699Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "turn ended (completed or safely failed)",
+     "pass": true,
+     "expected": "terminal",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "no Valley store ID or name in tool results or answer",
+     "pass": true,
+     "expected": "absent",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S13/s13.json",
+     "sha256": "8034b0802545ac88d1a1d5e18f14a3a153c6d9b14a90fe21662384f8239643b9",
+     "description": "s13: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "S14",
+   "title": "Two users ask at the same instant; two independent, uncorrupted turns",
+   "requirementIds": [
+    "S14"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:04:23.700Z",
+   "finishedAt": "2026-10-15T09:04:43.329Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "firstturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "secondturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "distinct turn IDs",
+     "pass": true,
+     "expected": "different",
+     "actual": [
+      "916e1184-357b-4d2f-b6ae-d994f0de671d",
+      "4a96674e-0335-4d73-94ba-300a86d016bc"
+     ]
+    },
+    {
+     "name": "each turn has exactly one terminal event",
+     "pass": true,
+     "expected": [
+      1,
+      1
+     ],
+     "actual": [
+      1,
+      1
+     ]
+    },
+    {
+     "name": "first turn's fetches answer the first question",
+     "pass": true,
+     "expected": "AC only",
+     "actual": [
+      "APP-100.11",
+      "APP-100.12",
+      "APP-100.13",
+      "APP-100.14",
+      "APP-100.15",
+      "APP-100.16",
+      "APP-100.17",
+      "APP-100.18",
+      "APP-100.19",
+      "APP-100.99"
+     ]
+    },
+    {
+     "name": "second turn's fetches answer the second question",
+     "pass": true,
+     "expected": "SSD only",
+     "actual": [
+      "ELC-100.11",
+      "ELC-100.12",
+      "ELC-100.13",
+      "ELC-100.14",
+      "ELC-100.15",
+      "ELC-100.16",
+      "ELC-100.17",
+      "ELC-100.18",
+      "ELC-100.19",
+      "ELC-100.99"
+     ]
+    },
+    {
+     "name": "each turn's events stay contiguous in its own operation IDs",
+     "pass": true,
+     "expected": "own IDs",
+     "actual": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S14/turns.json",
+     "sha256": "3fd6da2ef6545d499f1408f472742d971b92caa6f5de271be2c714e1055714df",
+     "description": "Both concurrent turns"
+    }
+   ]
+  },
+  {
+   "id": "S18",
+   "title": "Valley user: own answer to the shared-target question; nothing for a Northside store",
+   "requirementIds": [
+    "G04",
+    "S18"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:04:43.329Z",
+   "finishedAt": "2026-10-15T09:05:01.036Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "targetturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "foreign storeturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "Valley receives its own target",
+     "pass": true,
+     "expected": 85,
+     "actual": [
+      85,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "name": "Northside store returns nothing",
+     "pass": true,
+     "expected": "no match",
+     "actual": [
+      {
+       "found": false,
+       "message": "No matching record is available."
+      }
+     ]
+    },
+    {
+     "name": "Northside store answer identical to a nonexistent store",
+     "pass": true,
+     "expected": [
+      {
+       "source": "verified_database_tool",
+       "values": {
+        "message": "No matching record is available in this workspace."
+       },
+       "template": "missing"
+      }
+     ],
+     "actual": [
+      {
+       "source": "verified_database_tool",
+       "values": {
+        "message": "No matching record is available in this workspace."
+       },
+       "template": "missing"
+      }
+     ]
+    },
+    {
+     "name": "no Northside store data shown",
+     "pass": true,
+     "expected": "absent",
+     "actual": ""
+    },
+    {
+     "name": "every catalog code shown exists in the fixture",
+     "pass": true,
+     "expected": "all known",
+     "actual": []
+    },
+    {
+     "name": "every catalog code shown was fetched in this turn",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    },
+    {
+     "name": "every store shown belongs to the asking tenant",
+     "pass": true,
+     "expected": "own stores",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S18/s18-target.json",
+     "sha256": "64e36c957db911276c6b239f4257aa4cd504837dfaab465549eb1ebef235d37f",
+     "description": "s18-target: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S18/s18-northside-store.json",
+     "sha256": "23a9b9e078ded60b0ffe70474a26227a38b3da0fa900cb9d14e701ff4789531f",
+     "description": "s18-northside-store: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/S18/s18-unknown.json",
+     "sha256": "947ef2a5a36da7ca7eab09380cc54b8fa371b5b6af3f2874a95ed4a1d5d25930",
+     "description": "s18-unknown: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  },
+  {
+   "id": "A02",
+   "title": "No presence or typing frames for a room after leaving it",
+   "requirementIds": [
+    "A02"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:05:01.037Z",
+   "finishedAt": "2026-10-15T09:05:18.063Z",
+   "details": {
+    "framesBeforeLeaving": 4,
+    "lateFrames": 0
+   },
+   "assertions": [
+    {
+     "name": "presence/typing frames flowed before leaving (control)",
+     "pass": true,
+     "expected": ">0",
+     "actual": 4
+    },
+    {
+     "name": "no presence or typing frames for the departed room after 1 s",
+     "pass": true,
+     "expected": 0,
+     "actual": 0
+    }
+   ],
+   "artifacts": []
+  },
+  {
+   "id": "A10",
+   "title": "Duplicate delivery is idempotent; worker refuses unauthenticated dispatch",
+   "requirementIds": [
+    "A10"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:05:18.160Z",
+   "finishedAt": "2026-10-15T09:05:46.991Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "re-sent message acknowledged with the same sequence and turn",
+     "pass": true,
+     "expected": {
+      "clientMessageId": "94d26cfe-dc1e-4020-9847-6c1b63aefeea",
+      "sequence": 5991,
+      "turnId": "37d185fc-66a9-4937-a74c-fc329a1a9a2f"
+     },
+     "actual": {
+      "clientMessageId": "94d26cfe-dc1e-4020-9847-6c1b63aefeea",
+      "sequence": 5991,
+      "turnId": "37d185fc-66a9-4937-a74c-fc329a1a9a2f"
+     }
+    },
+    {
+     "name": "one durable message",
+     "pass": true,
+     "expected": 1,
+     "actual": 1
+    },
+    {
+     "name": "one terminal event for the turn",
+     "pass": true,
+     "expected": 1,
+     "actual": 1
+    },
+    {
+     "name": "no tool operation recorded twice",
+     "pass": true,
+     "expected": "unique",
+     "actual": [
+      "r0-c0"
+     ]
+    },
+    {
+     "name": "worker rejects an unauthenticated dispatch",
+     "pass": true,
+     "expected": "401/403",
+     "actual": 403
+    },
+    {
+     "name": "worker rejects a forged token",
+     "pass": true,
+     "expected": "401/403",
+     "actual": 401
+    }
+   ],
+   "artifacts": []
+  },
+  {
+   "id": "A12",
+   "title": "Second API instance: messages cross instances both ways; 100 connect/close cycles stay bounded",
+   "requirementIds": [
+    "A12"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:05:46.991Z",
+   "finishedAt": "2026-10-15T09:08:21.378Z",
+   "details": {
+    "localInstance": {
+     "port": 58525,
+     "pid": 48623
+    },
+    "resourcesBefore": {
+     "rssKb": 105584,
+     "tcp": 5
+    },
+    "resourcesAfter100Cycles": {
+     "rssKb": 111952,
+     "tcp": 6
+    }
+   },
+   "assertions": [
+    {
+     "name": "message sent to the local instance reached a Cloud Run client",
+     "pass": true,
+     "expected": true,
+     "actual": true
+    },
+    {
+     "name": "message sent to Cloud Run reached the local-instance client",
+     "pass": true,
+     "expected": true,
+     "actual": true
+    },
+    {
+     "name": "TCP sockets return to baseline after 100 cycles (±3)",
+     "pass": true,
+     "expected": "≤8",
+     "actual": 6
+    },
+    {
+     "name": "resident memory growth under 64 MB after 100 cycles",
+     "pass": true,
+     "expected": "<65536 KB",
+     "actual": 6368
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T090052Z-acceptance-9d5398/A12/local-instance.log",
+     "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b",
+     "description": "Second API instance stdout/stderr"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,318 @@
+{
+ "schemaVersion": 1,
+ "suite": "conversational",
+ "runId": "20261015T094834Z-conversational-f811e4",
+ "environment": "staging: https://focus-clean-4b9f4--staging-yxk0bcnc.web.app + https://teamchat-api-staging-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-15T09:48:34.868Z",
+ "finishedAt": "2026-10-15T09:49:15.682Z",
+ "harness": {
+  "gitHead": "b110e54c2c4be295aa41f9a609373b4f5d8489b7",
+  "dirty": true,
+  "fingerprint": "fdce17f0866137d06de1f0d8f9fca7cc19b20d478d1b7b99ace42b58b6a1b4be",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/acceptance/live-client.ts",
+   "scripts/acceptance/run-conversational.ts",
+   "scripts/acceptance/target.ts",
+   "scripts/evidence/lib.ts"
+  ]
+ },
+ "source": {
+  "sha": "b110e54c2c4be295aa41f9a609373b4f5d8489b7"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-staging-00022-k44",
+  "apiDigest": "sha256:2e9b526498e7ae37e44cf03176dad0c75b4c2caf12ba2533bb77b5d1a01ac5cd",
+  "workerRevision": "teamchat-worker-staging-00022-49h",
+  "workerDigest": "sha256:91c34fef2835d36526a5d4544d524ef7f60079c4c203e53b9a7b3c234bc5185a",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+ },
+ "tests": [
+  {
+   "id": "C01",
+   "title": "Small talk in an AI chat is answered in Gemini's own words, without tools, quickly",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:48:34.929Z",
+   "finishedAt": "2026-10-15T09:48:41.594Z",
+   "details": {
+    "timing": {
+     "firstSegmentS": 1.151,
+     "terminalS": 1.181
+    }
+   },
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "no tool was called",
+     "pass": true,
+     "expected": 0,
+     "actual": []
+    },
+    {
+     "name": "at least one conversational segment shown",
+     "pass": true,
+     "expected": "say segments",
+     "actual": [
+      "say"
+     ]
+    },
+    {
+     "name": "no canned no-record reply",
+     "pass": true,
+     "expected": "absent",
+     "actual": "Hi there! I'm doing well, thanks for asking. How can I help you today?"
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T094834Z-conversational-f811e4/C01/c01.json",
+     "sha256": "cdebc842c6eeb98a04cfd8ac8d7aa3c526ac473bce5148fcf2f803cf18858b46",
+     "description": "c01: prompt, tools, shown segments, latency"
+    }
+   ]
+  },
+  {
+   "id": "C02",
+   "title": "The assistant knows who said what in the room, by display name",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:48:41.595Z",
+   "finishedAt": "2026-10-15T09:48:55.293Z",
+   "details": {
+    "timing": {
+     "firstSegmentS": 3.664,
+     "terminalS": 3.835
+    }
+   },
+   "assertions": [
+    {
+     "name": "turn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "answer attributes the message to Northside Buyer Two by name",
+     "pass": true,
+     "expected": "Northside Buyer Two",
+     "actual": "Here's what your colleague said:\nNorthside Buyer Two (#2): “I'll draft the supplier email for the hiking range x-mv9cwgey-1x6z”"
+    },
+    {
+     "name": "answer quotes the colleague's words",
+     "pass": true,
+     "expected": "I'll draft the supplier email for the hiking range x-mv9cwgey-1x6z",
+     "actual": "Here's what your colleague said:\nNorthside Buyer Two (#2): “I'll draft the supplier email for the hiking range x-mv9cwgey-1x6z”"
+    },
+    {
+     "name": "no Firebase UID shown",
+     "pass": true,
+     "expected": [],
+     "actual": 0
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T094834Z-conversational-f811e4/C02/c02.json",
+     "sha256": "13440408b1da175e8808af6ce5721dac3aa69c9b8ba5bef7cb7e9ec8ca116860",
+     "description": "c02: prompt, tools, shown segments, latency"
+    }
+   ]
+  },
+  {
+   "id": "C03",
+   "title": "A follow-up question is understood from the conversation, and every code shown was fetched",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "FAIL",
+   "startedAt": "2026-10-15T09:48:55.294Z",
+   "finishedAt": "2026-10-15T09:48:56.080Z",
+   "details": {},
+   "assertions": [],
+   "artifacts": [],
+   "error": "Error: create 429"
+  },
+  {
+   "id": "C04",
+   "title": "A question the data cannot answer gets no invented figures",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "FAIL",
+   "startedAt": "2026-10-15T09:48:56.081Z",
+   "finishedAt": "2026-10-15T09:48:57.578Z",
+   "details": {},
+   "assertions": [],
+   "artifacts": [],
+   "error": "Error: create 429"
+  },
+  {
+   "id": "C05",
+   "title": "Asking what the assistant can do lists its capabilities and never fails",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "FAIL",
+   "startedAt": "2026-10-15T09:48:57.585Z",
+   "finishedAt": "2026-10-15T09:48:57.998Z",
+   "details": {},
+   "assertions": [],
+   "artifacts": [],
+   "error": "Error: create 429"
+  },
+  {
+   "id": "N01",
+   "title": "A new chat appears live for every active teammate, never for another tenant; AI chats answer without @AI",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:48:57.998Z",
+   "finishedAt": "2026-10-15T09:49:13.140Z",
+   "details": {
+    "room": {
+     "room_id": "chat-68b4fea9-02e8",
+     "title": "Team chat n01-mv9cwpw4-g1q4",
+     "ai_chat": true,
+     "visibility": "tenant"
+    },
+    "membersListedForN2": [
+     "Northside Analyst Three",
+     "Northside Buyer One",
+     "Northside Buyer Two"
+    ]
+   },
+   "assertions": [
+    {
+     "name": "POST /api/rooms creates the chat (201)",
+     "pass": true,
+     "expected": 201,
+     "actual": 201
+    },
+    {
+     "name": "repeating the request returns the same chat (200)",
+     "pass": true,
+     "expected": {
+      "status": 200,
+      "room": "chat-68b4fea9-02e8"
+     },
+     "actual": {
+      "status": 200,
+      "room": "chat-68b4fea9-02e8"
+     }
+    },
+    {
+     "name": "teammate's socket got rooms_changed within 10 s",
+     "pass": true,
+     "expected": true,
+     "actual": true
+    },
+    {
+     "name": "teammate's room list includes the chat, marked as an AI chat",
+     "pass": true,
+     "expected": true,
+     "actual": {
+      "room_id": "chat-68b4fea9-02e8",
+      "title": "Team chat n01-mv9cwpw4-g1q4",
+      "ai_chat": true,
+      "visibility": "tenant"
+     }
+    },
+    {
+     "name": "teammate sees the creator's message live",
+     "pass": true,
+     "expected": true,
+     "actual": true
+    },
+    {
+     "name": "a plain message in an AI chat gets an answer",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "Valley's room list does not include it",
+     "pass": true,
+     "expected": "absent",
+     "actual": 200
+    },
+    {
+     "name": "Valley's socket got no rooms_changed",
+     "pass": true,
+     "expected": false,
+     "actual": false
+    },
+    {
+     "name": "Valley cannot subscribe to it: no events and no frame carrying its content",
+     "pass": true,
+     "expected": 0,
+     "actual": {
+      "events": 0,
+      "frames": []
+     }
+    }
+   ],
+   "artifacts": []
+  },
+  {
+   "id": "N02",
+   "title": "Chat creation rejects bad input, missing origin and missing auth",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:49:13.140Z",
+   "finishedAt": "2026-10-15T09:49:15.680Z",
+   "details": {},
+   "assertions": [
+    {
+     "name": "empty title rejected (400)",
+     "pass": true,
+     "expected": 400,
+     "actual": 400
+    },
+    {
+     "name": "81-character title rejected (400)",
+     "pass": true,
+     "expected": 400,
+     "actual": 400
+    },
+    {
+     "name": "unknown field (tenantId) rejected (400)",
+     "pass": true,
+     "expected": 400,
+     "actual": 400
+    },
+    {
+     "name": "POST without Origin rejected",
+     "pass": true,
+     "expected": 403,
+     "actual": 403
+    },
+    {
+     "name": "POST from a foreign Origin rejected",
+     "pass": true,
+     "expected": 403,
+     "actual": 403
+    },
+    {
+     "name": "POST without a token rejected (401)",
+     "pass": true,
+     "expected": 401,
+     "actual": 401
+    }
+   ],
+   "artifacts": []
+  }
+ ]
+}

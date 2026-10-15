@@ -1,0 +1,24 @@
+{
+ "label": "c03-follow-up",
+ "user": "Northside Buyer Two",
+ "room": "chat-69f6e800-49c3",
+ "prompt": "@AI which one of those is the low-noise model?",
+ "turnId": "7b2bf86c-d470-442c-9e4b-8c531bd6ff90",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 4.814,
+  "terminalS": 4.846
+ },
+ "tools": [],
+ "segments": [
+  {
+   "kind": "fallback",
+   "rendered": "I couldn't answer that with information I could verify in this workspace."
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}

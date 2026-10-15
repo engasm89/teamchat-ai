@@ -22,12 +22,17 @@ async function scenario(label:string,supplied:Record<string,unknown>,retryAfterR
  const sent=await sendDurableMessage(pool,ctx,{roomId:room,clientMessageId:crypto.randomUUID(),body:`@AI Remember this as ${key}: ${JSON.stringify(supplied,null,1)}`,allowSharedMemorySave:true});
  if(!sent.aiTurnId)throw Error("No AI turn was created");
  const rounds:number[]=[];
- const provider={async generate(_contents:unknown,firstRound:boolean){
-  rounds.push(rounds.length);
-  if(firstRound)return {functionCalls:[{id:"call-1",name:"save_memory",args:{key,room,value_json:JSON.stringify(modelValue)}}]};
-  if(retryAfterRepair&&rounds.length===2)return {functionCalls:[{id:"call-2",name:"save_memory",args:{key,room,value_json:JSON.stringify({note:"model retry"})}}]};
-  return {functionCalls:[]};
- }};
+ const call=(id:string,args:Record<string,unknown>)=>{const c={id,name:"save_memory",args};return {text:"",functionCalls:[c],content:{role:"model" as const,parts:[{functionCall:c}]}};};
+ const provider={
+  async round(){
+   rounds.push(rounds.length);
+   if(rounds.length===1)return call("call-1",{key,room,value_json:JSON.stringify(modelValue)});
+   if(retryAfterRepair&&rounds.length===2)return call("call-2",{key,room,value_json:JSON.stringify({note:"model retry"})});
+   return {text:"Done.",functionCalls:[],content:{role:"model" as const,parts:[{text:"Done."}]}};
+  },
+  // An empty reply: the server falls back to rendering the save outcome itself.
+  async *compose(){yield "[]";},
+ };
  const first=await executeAiJob(pool,provider,sent.aiTurnId,embeddings);
  const eventsAfterFirst=(await replayRoom(pool,ctx,room,sent.sequence,500)).filter((e:any)=>e.turn_id===sent.aiTurnId);
  const again=await executeAiJob(pool,provider,sent.aiTurnId,embeddings);

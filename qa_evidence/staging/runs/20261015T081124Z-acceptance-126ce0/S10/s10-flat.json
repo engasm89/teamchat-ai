@@ -1,0 +1,56 @@
+{
+ "label": "s10-flat",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that the roster-mv99iewh-4tod flat check value is roster-mv99iewh-4tod-ok.",
+ "consent": true,
+ "turnId": "5a9cd244-399c-4003-9baa-9b33709e961c",
+ "messageSequence": 4705,
+ "at": "2026-10-15T08:14:10.428Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "roster-mv99iewh-4tod flat check value",
+    "room": "supply-planning",
+    "value_json": "{\"flat check value\": \"roster-mv99iewh-4tod-ok\"}"
+   },
+   "result": {
+    "saved": false,
+    "validation_errors": [
+     {
+      "field": "flat check value",
+      "issue": "Invalid field name"
+     }
+    ]
+   }
+  },
+  {
+   "operationId": "r0-c1",
+   "name": "save_memory",
+   "arguments": {
+    "key": "roster-mv99iewh-4tod flat check value",
+    "room": "supply-planning",
+    "value_json": "{\"flat_check_value\":\"roster-mv99iewh-4tod-ok\"}"
+   },
+   "result": {
+    "ref": "5a9cd244-399c-4003-9baa-9b33709e961c:northside-outfitters:memory:297abac2-d798-4ad0-a142-08232b107e75",
+    "saved": true,
+    "memory": {
+     "key": "roster-mv99iewh-4tod flat check value",
+     "value": {
+      "flat_check_value": "roster-mv99iewh-4tod-ok"
+     },
+     "memory_id": "297abac2-d798-4ad0-a142-08232b107e75",
+     "created_at": "2026-10-15 08:14:04.647124+00",
+     "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "OK. I'll remember that.\n\nRecorded decision “roster-mv99iewh-4tod flat check value”: flat check value: roster-mv99iewh-4tod-ok. Recorded by Northside Buyer One on 2026-10-15 in #supply-planning.\n\nNot saved — the value does not fit the shared-memory shape (a flat set of named text, number or yes/no fields):\n• flat check value: Invalid field name\n\nSaved to shared memory: roster-mv99iewh-4tod flat check value\n{\"flat_check_value\":\"roster-mv99iewh-4tod-ok\"}\nRecorded by: xg9AHjCrMcZeReDTV5dJRl42H3g1 on 2026-10-15 08:14:04.647124+00 in #supply-planning\nSource: 5a9cd244-399c-4003-9baa-9b33709e961c:northside-outfitters:memory:297abac2-d798-4ad0-a142-08232b107e75"
+}

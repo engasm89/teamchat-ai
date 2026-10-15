@@ -1,0 +1,53 @@
+{
+ "gate": "Gate 5, production",
+ "source": "edbdfb2b21b2c246000a2c42c8908eef2972bf9f",
+ "api": "teamchat-api-00017-7gz",
+ "worker": "teamchat-worker-00017-2rb",
+ "hosting": "33bae4d9769be62c",
+ "constraints": {
+  "accounts": "northside.analyst3 (requester), northside.buyer2, valley.buyer1; northside.buyer1 is a protected account the target refuses (config/targets/production.json protectedAccounts); 0 mentions of it in the run",
+  "rooms": "QA rooms only: supply-planning (Northside), range-planning (Valley)",
+  "notRun": [
+   "S09 (its recall step posts in category-strategy, not a QA room)",
+   "S19 (restarts services)",
+   "A02, A10, A12",
+   "conversational suite and reviewer replay (they create chats)",
+   "UX-BROWSER new-chat step (skipped by the runner on production)"
+  ],
+  "chatsCreated": "0 in both tenants (rooms.created_by / ai_chat counts after the runs)",
+  "seeds": "none run",
+  "reviewerHistory": "not touched (no posts outside the QA rooms)"
+ },
+ "results": [
+  {
+   "suite": "employer acceptance --only S01-S08,S10-S14,S18",
+   "exit": 0,
+   "result": "14/14 PASS",
+   "run": "qa_evidence/runs/20261014T224119Z-acceptance-f823b5"
+  },
+  {
+   "suite": "browser (S01-BROWSER, UX-BROWSER without new chat, S15, S16, S16-OFFLINE, S17, NEG controls)",
+   "exit": 0,
+   "result": "10/10 PASS",
+   "run": "qa_evidence/runs/20261014T224458Z-browser-b70bb3"
+  },
+  {
+   "suite": "leak scan (publishable files, branch diff, run logs; 20 Keychain/Secret Manager secrets incl. the new owner password; 4 credential shapes)",
+   "exit": 0,
+   "result": "0 hits"
+  },
+  {
+   "suite": "latency (question to terminal, from room_events.created_at, 21 turns)",
+   "exit": 0,
+   "result": "p50 5030 ms, p95 11378 ms, max 12131 ms",
+   "file": "qa_evidence/latency/20261014T224119Z-acceptance-f823b5.json"
+  }
+ ],
+ "beforeDeploy": {
+  "suite": "live smoke on release 00016 after migration 008",
+  "exit": 0,
+  "result": "PASS",
+  "run": "qa_evidence/runs/20261014T223840Z-live-smoke-94e042"
+ },
+ "rollback": "not performed; not needed"
+}

@@ -1,7 +1,7 @@
 import {createServer,type IncomingMessage,type ServerResponse} from "node:http";
 import {randomUUID} from "node:crypto";
 import {createPgPool,assertRuntimeDbRole,createFirebaseVerifier,resolveVerifiedIdentity,connectEventListener,type FirebaseIdentityVerifier} from "./database.ts";
-import {sendDurableMessage,replayRoom,inTenantTransaction,type SqlPool} from "../persistence/postgres.ts";
+import {sendDurableMessage,replayRoom,inTenantTransaction,listRoomDirectory,createTenantChat,RoomCreationError,type SqlPool} from "../persistence/postgres.ts";
 import {NO_MATCH,type TenantContext} from "../tenant.ts";
 import type {PersistedEvent} from "../persistence/postgres.ts";
 import {dispatchJob,validateDispatchConfig} from "./task-dispatch.ts";
@@ -14,6 +14,14 @@ const send=(socket:Socket,frame:Record<string,unknown>)=>{
  socket.send(JSON.stringify({v:1,...frame}));
 };
 const id=(v:unknown)=>typeof v==="string"&&/^[-a-z0-9_]{1,128}$/i.test(v);
+function readBody(req:IncomingMessage,limit:number):Promise<string>{
+ return new Promise((resolve,reject)=>{
+  let size=0;const chunks:Buffer[]=[];
+  req.on("data",(chunk:Buffer)=>{size+=chunk.length;if(size>limit){reject(Error("Body too large"));req.destroy();return;}chunks.push(chunk);});
+  req.on("end",()=>resolve(Buffer.concat(chunks).toString("utf8")));
+  req.on("error",reject);
+ });
+}
 /** Do not discard a queued message after transient database or transport
  * failures. Only authorization/validation and conflicting-id rejections are
  * permanent; retries of these can never succeed without a changed command. */
@@ -228,29 +236,43 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
  const server=createServer((req:IncomingMessage,res:ServerResponse)=>{void (async()=>{
   // Cloud Run's front end reserves paths ending in "z"; /health is the public probe.
   if(req.url==="/health"||req.url==="/healthz"){res.writeHead(healthy?200:503,{"content-type":"application/json"});res.end(JSON.stringify({up:healthy}));return;}
-  if(req.method==="OPTIONS"&&["/api/me","/api/rooms"].includes(req.url??"")){
+  const route=req.url==="/api/me"?"me":req.url==="/api/rooms"?"rooms":null;
+  if(req.method==="OPTIONS"&&route){
    if(!req.headers.origin||!origins.includes(req.headers.origin)){res.writeHead(403);res.end();return;}
-   res.writeHead(204,{"Access-Control-Allow-Origin":req.headers.origin,"Access-Control-Allow-Headers":"Authorization,Content-Type","Access-Control-Allow-Methods":"GET,OPTIONS","Vary":"Origin"});res.end();return;
+   res.writeHead(204,{"Access-Control-Allow-Origin":req.headers.origin,"Access-Control-Allow-Headers":"Authorization,Content-Type","Access-Control-Allow-Methods":route==="rooms"?"GET,POST,OPTIONS":"GET,OPTIONS","Vary":"Origin"});res.end();return;
   }
-  if(!["/api/me","/api/rooms"].includes(req.url??"")||req.method!=="GET"){res.writeHead(404);res.end();return;}
+  if(!route||!(req.method==="GET"||(route==="rooms"&&req.method==="POST"))){res.writeHead(404);res.end();return;}
   if(req.headers.origin&&!origins.includes(req.headers.origin)){res.writeHead(403);res.end();return;}
+  // A cross-site form post cannot set Authorization, but require an allowed
+  // Origin for writes anyway so the browser's CORS rules are never the only gate.
+  if(req.method==="POST"&&!req.headers.origin){res.writeHead(403);res.end();return;}
   res.setHeader("Cache-Control","no-store");res.setHeader("Vary","Origin");
   if(req.headers.origin)res.setHeader("Access-Control-Allow-Origin",req.headers.origin);
+  const reply=(status:number,body:unknown)=>{res.writeHead(status,{"content-type":"application/json"});res.end(JSON.stringify(body));};
+  let ctx:TenantContext;
   try{
    const raw=/^Bearer (\S+)$/.exec(req.headers.authorization??"");
    if(!raw)throw Error("Unauthorized");
-   const uid=await verifier.verify(raw[1]!);const ctx=await resolveVerifiedIdentity(pool,uid);
-   const data=req.url==="/api/me"?{uid,tenantId:ctx.tenantId}:
-    await inTenantTransaction(pool,ctx,async c=>{
-     // Recheck active membership in the same query: the identity may have
-     // been revoked between token resolution and the room-list transaction.
-     const rows=await c.query(`SELECT r.room_id,r.title FROM teamchat.rooms r
-       JOIN teamchat.room_memberships rm ON rm.tenant_id=r.tenant_id AND rm.room_id=r.room_id
-       JOIN teamchat.user_memberships m ON m.tenant_id=rm.tenant_id AND m.firebase_uid=rm.firebase_uid
-       WHERE rm.tenant_id=$1 AND rm.firebase_uid=$2 AND m.active=true ORDER BY r.room_id`,[ctx.tenantId,uid]);return {tenantId:ctx.tenantId,rooms:rows.rows};
-    });
-   res.writeHead(200,{"content-type":"application/json"});res.end(JSON.stringify(data));
-  }catch{res.writeHead(401);res.end(JSON.stringify({error:"Unauthorized"}));}
+   ctx=await resolveVerifiedIdentity(pool,await verifier.verify(raw[1]!));
+  }catch{reply(401,{error:"Unauthorized"});return;}
+  try{
+   if(route==="me"){reply(200,{uid:ctx.uid,tenantId:ctx.tenantId});return;}
+   if(req.method==="GET"){
+    const directory=await listRoomDirectory(pool,ctx);
+    if("found" in directory){reply(403,{error:"Forbidden"});return;}
+    reply(200,directory);return;
+   }
+   if(!/^application\/json\b/i.test(req.headers["content-type"]??"")){reply(415,{error:"Expected application/json"});return;}
+   let body:unknown;
+   try{body=JSON.parse(await readBody(req,16_384));}catch{reply(400,{error:"Invalid request"});return;}
+   const result=await createTenantChat(pool,ctx,body,()=>`chat-${randomUUID().slice(0,13)}`);
+   if("found" in result){reply(403,{error:"Forbidden"});return;}
+   reply(result.created?201:200,{room:result.room,created:result.created});
+  }catch(error){
+   if(error instanceof RoomCreationError){reply(error.status,{error:error.message});return;}
+   console.error("API request failed",route,error instanceof Error?error.name:"UnknownError");
+   reply(500,{error:"Request failed"});
+  }
  })();});
  const wss=new WebSocketServer({noServer:true,maxPayload:16_384,perMessageDeflate:false});
  const maxSockets=Number(process.env.MAX_WS_CONNECTIONS??200);
@@ -260,8 +282,17 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
   if(wss.clients.size>=maxSockets){socket.write("HTTP/1.1 503 Service Unavailable\r\n\r\n");socket.destroy();return;}
   wss.handleUpgrade(req,socket,head,(ws:any)=>wss.emit("connection",ws,req));
  });
+ // Authenticated sockets by tenant, for room-list changes. The notification
+ // names only a tenant; each client refetches its own list over HTTP.
+ const authenticated=new Map<Socket,TenantContext>();
  listener.client.on("notification",(message:{channel:string;payload?:string})=>{
-  try{const {opaque_room}=JSON.parse(message.payload??"{}");if(typeof opaque_room!=="string")return;
+  try{
+   if(message.channel==="teamchat_rooms"){
+    const {tenant}=JSON.parse(message.payload??"{}");if(typeof tenant!=="string")return;
+    for(const [socket,c] of authenticated)if(c.tenantId===tenant&&socket.readyState===1)send(socket,{type:"rooms_changed"});
+    return;
+   }
+   const {opaque_room}=JSON.parse(message.payload??"{}");if(typeof opaque_room!=="string")return;
    if(message.channel==="teamchat_events")hub.notify(opaque_room);
    if(message.channel==="teamchat_presence")hub.notifyPresence(opaque_room,"presence");
    if(message.channel==="teamchat_typing")hub.notifyPresence(opaque_room,"typing");
@@ -275,7 +306,7 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
   const heartbeat=setInterval(()=>{if(!alive){socket.close(1001,"Heartbeat timeout");return;}alive=false;socket.ping();},25_000);
   const leaseRenewal=setInterval(()=>{if(ctx)void hub.heartbeat(socket).catch(()=>socket.close(1008,"Membership revoked"));},20_000);
   socket.on("pong",()=>{alive=true;});
-  socket.on("close",()=>{clearTimeout(authDeadline);clearTimeout(lifespan);clearInterval(heartbeat);clearInterval(leaseRenewal);hub.remove(socket);});
+  socket.on("close",()=>{clearTimeout(authDeadline);clearTimeout(lifespan);clearInterval(heartbeat);clearInterval(leaseRenewal);authenticated.delete(socket);hub.remove(socket);});
   socket.on("message",(data:unknown)=>{void (async()=>{
    try{
     if(++activeCommands>8)throw Error("Too many concurrent commands");
@@ -292,7 +323,7 @@ export async function createSocketServer(config:{pool:SqlPool;verifier:FirebaseI
      // The verifier and membership lookup may outlive the initial auth timer.
      // Never authorize a socket that closed while verification was in flight.
      if(socket.readyState!==1)return;
-     ctx=membership;
+     ctx=membership;authenticated.set(socket,membership);
      clearTimeout(lifespan);
      lifespan=setTimeout(()=>socket.close(1001,"Firebase session renewal required"),lifetime);
      clearTimeout(authDeadline);send(socket,{type:"auth_ok"});return;

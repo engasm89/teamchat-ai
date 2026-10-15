@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T22:11:36.730Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "a85818048a3c1637d5634eec822321cca24834b75f52b64e015a87c396d728f4"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1370,
+   "sha256": "53631e57a35600950d60339a15913b57d2d7483532d5849d6ac32bfedde17ee8"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13691,
+   "sha256": "0c2b8be7fc766374c55d314e6c3e39cd9fa8a7f814e4bc77fdb47b0ffdec6e03"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 709,
+   "sha256": "6d9b39bd702e40b06df0747c8d47768f2db8b344b847cd3cfdfd99ba5ff17fa1"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 4472,
+   "sha256": "09e5fbf93db8241461f5529500fd2ccc98ae93497377d90595fbe28cc1455c04"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 9864,
+   "sha256": "c4e24095c4fa4396afb38c15e5140f7edc4b7b97ff0a403e6c16b8ce519fcdbd"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "0cbbc236ee46010bca13e8232e12eb15cf52c292d23e303bf1be577fcdbd0636"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 4331,
+   "sha256": "30b9b22ba492c1b41365ea58cf12a2943e3d68ce1b44b6fa4115551b100d5816"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 681,
+   "sha256": "e8a84c5bd45cfec2842170eea01b6012e0702ee82a0e4457c7a56237abe5f9ca"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 630,
+   "sha256": "a7d7ddaa62c5fd3231e6fcd6a7c50b468efef10fd56f63f413c31f312d622e92"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 5927,
+   "sha256": "ef5b8a2497fcd4856561714f96c46872e48fb15c2d3301fba169717c68bfa9ab"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 2036,
+   "sha256": "ed2c2257ee9a3654dee2741ffd2223ac7d9641a1d3efd99f883e93b09f35f2d9"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2895,
+   "sha256": "6bcb9ecbbc5c7b60e6d122fbf5f08c10686027b535deee18525e2dce81d4b6cd"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1646,
+   "sha256": "c2bd2585c1d8dfcc677eff90f559d5b35258fd80814bb8aabc7119525f44eaaa"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "7ffe6f1d16d442b0aafb941bc46951692e2dd91a577b82f6678ec3fbd28b279d"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3977,
+   "sha256": "1f1f8c89f7fc3af3c796465e7be21b62de729ea8e255affdd7500012f0599b4b"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "c981fe177401fe55c1b39a5d5584f8e1f32889a1f8a91db082cfb0bb7aa9e80d"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "7a53fad8fe5eb0e2c994b90acea5f29ab63276e7977400bd3afdfb9923e76011"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 815,
+   "sha256": "ebbfc6146e403c4892147ed24fa57275387706fbd1e9047d0f1c491850625481"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 866,
+   "sha256": "2744321ada64de1e94446f667d974aabbe6746fa05ecfd4efd41c2a9fbeb724f"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 722,
+   "sha256": "dd1c7323a8fb3f634926ff28fcdf31a7ec38615f9bfe26247fad17c76ae92ed7"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "40a8307c2e16db423630463fc22cd17382f3bea75da69b4b4695f331b20bd714"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13627,
+   "sha256": "9e3cab8996481a840cff6d76d1f023948c20e71352631ed42f8f88e7bc7a0fd3"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "2cc71ca3cf99e3ab0fe0bc1699a4dc0f4f281fc89e6c552ad9f20bc7f9b422c0"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "aa010fac3f027be761fda99f0c838c63c0aaa35139c0102744153e046125285f"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "bf7de817495f1d0a92395a657ecec7ca601622e241c491ed043149503b0b25b5"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50332,
+   "sha256": "dd4321c965a10067371424a1c745d80bc0b9b5c09ca20439403d5ad0f899c129"
+  }
+ ]
+}

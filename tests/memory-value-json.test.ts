@@ -20,6 +20,13 @@ test("every OBJECT tool parameter declares its properties (Gemini emits {} for o
  assert.equal((save.properties as any).value_json.type,"STRING");
 });
 
+test("save_memory's description leaves validation to the server (under AUTO, 'nested structures are rejected' made Gemini refuse instead of calling)",()=>{
+ const save=TOOL_DECLARATIONS.find(t=>t.name==="save_memory")!;
+ assert.doesNotMatch(save.description,/\brejected\b/i);
+ assert.match(save.description,/Always call this with the human's details as given/);
+ assert.match(save.description,/server checks the shape/);
+});
+
 test("memory value JSON: flat values parse; nested, empty and malformed values get field-level reasons",()=>{
  assert.deepEqual(parseMemoryValueJson('{"contact":"Dana","deadline":"2026-11-20","priority":2,"confirmed":true,"note":null}'),
   {ok:true,value:{contact:"Dana",deadline:"2026-11-20",priority:2,confirmed:true,note:null}});
@@ -42,6 +49,14 @@ test("the controlled repair re-encodes nested fields as JSON text and drops noth
  assert.equal(controlledMemoryRepair("[1,2]"),null);
  assert.equal(controlledMemoryRepair("{not json"),null);
  assert.equal(controlledMemoryRepair({leads}),null);
+});
+
+test("the controlled repair also turns spaced or punctuated field names into valid ones, values untouched",()=>{
+ assert.equal(controlledMemoryRepair('{"flat check value":"roster-x-ok"}'),'{"flat_check_value":"roster-x-ok"}');
+ assert.deepEqual(JSON.parse(controlledMemoryRepair('{" due date ":"2026-11-20","owner":{"name":"Ben"}}')!),{due_date:"2026-11-20",owner:'{"name":"Ben"}'});
+ assert.equal(controlledMemoryRepair('{"a b":"1","a_b":"2"}'),null,"two names would collide: nothing is merged");
+ assert.equal(controlledMemoryRepair('{"2026 target":"92"}'),null,"a name that cannot be made valid is left to the field-level reason");
+ assert.equal(parseMemoryValueJson(controlledMemoryRepair('{"flat check value":"x"}')).ok,true);
 });
 
 test("the requester's own JSON object is found in their message, exactly and only when there is one",()=>{

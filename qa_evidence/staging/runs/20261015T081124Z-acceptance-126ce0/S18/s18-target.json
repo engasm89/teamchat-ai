@@ -1,0 +1,97 @@
+{
+ "label": "s18-target",
+ "user": "valley.buyer1.staging@teamchat.internal",
+ "tenant": "valley-home-goods",
+ "room": "range-planning",
+ "prompt": "@AI What is our Q1 assortment target?",
+ "consent": false,
+ "turnId": "4712fb35-a897-4af0-94ff-f93304af5d64",
+ "messageSequence": 746,
+ "at": "2026-10-15T08:15:18.784Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "Q1 assortment target"
+   },
+   "result": [
+    {
+     "ref": "4712fb35-a897-4af0-94ff-f93304af5d64:valley-home-goods:memory:mem-v-001",
+     "memory": {
+      "key": "q1_assortment_target",
+      "value": {
+       "due": "2026-05-31",
+       "owner": "head of buying",
+       "measure": "classed lines carried per store",
+       "target_pct": 85,
+       "current_pct": 81
+      },
+      "distance": 0.27554987773830253,
+      "memory_id": "mem-v-001",
+      "created_at": "2026-01-11 11:30:00+00",
+      "created_by": "T. Alsop",
+      "author_name": "T. Alsop",
+      "source_room_id": "range-planning"
+     }
+    },
+    {
+     "ref": "4712fb35-a897-4af0-94ff-f93304af5d64:valley-home-goods:memory:mem-v-004",
+     "memory": {
+      "key": "own_brand_share_goal",
+      "value": {
+       "horizon": "2027",
+       "goal_pct": 34,
+       "constraint": "not at the expense of classed-line coverage",
+       "current_pct": 27
+      },
+      "distance": 0.4242419437917424,
+      "memory_id": "mem-v-004",
+      "created_at": "2026-02-02 10:00:00+00",
+      "created_by": "head of buying",
+      "author_name": "head of buying",
+      "source_room_id": "strategy"
+     }
+    },
+    {
+     "ref": "4712fb35-a897-4af0-94ff-f93304af5d64:valley-home-goods:memory:mem-v-003",
+     "memory": {
+      "key": "markdown_cadence",
+      "value": {
+       "note": "seasonal only; core lines are never marked down on cadence",
+       "clearance_week": 13,
+       "first_markdown_week": 6,
+       "second_markdown_week": 10
+      },
+      "distance": 0.4698250788247944,
+      "memory_id": "mem-v-003",
+      "created_at": "2025-12-03 13:45:00+00",
+      "created_by": "T. Alsop",
+      "author_name": "T. Alsop",
+      "source_room_id": "pricing"
+     }
+    },
+    {
+     "ref": "4712fb35-a897-4af0-94ff-f93304af5d64:valley-home-goods:memory:mem-v-002",
+     "memory": {
+      "key": "compact_format_range_cap",
+      "value": {
+       "agreed_by": "format council",
+       "effective": "2025-09-01",
+       "exception": "seasonal blocks may exceed by 10% for eight weeks",
+       "max_lines": 420
+      },
+      "distance": 0.537158069974651,
+      "memory_id": "mem-v-002",
+      "created_at": "2025-09-01 08:15:00+00",
+      "created_by": "P. Novak",
+      "author_name": "P. Novak",
+      "source_room_id": "range-planning"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "Recorded decision “q1_assortment_target”: due: 2026-05-31; owner: head of buying; measure: classed lines carried per store; target pct: 85; current pct: 81. Recorded by T. Alsop on 2026-01-11 in #range-planning.\n\nRecorded decision: q1_assortment_target\n{\"due\":\"2026-05-31\",\"owner\":\"head of buying\",\"measure\":\"classed lines carried per store\",\"target_pct\":85,\"current_pct\":81}\nRecorded by: T. Alsop on 2026-01-11 11:30:00+00 in #range-planning\nSource: 4712fb35-a897-4af0-94ff-f93304af5d64:valley-home-goods:memory:mem-v-001\n\nRecorded decision: own_brand_share_goal\n{\"horizon\":\"2027\",\"goal_pct\":34,\"constraint\":\"not at the expense of classed-line coverage\",\"current_pct\":27}\nRecorded by: head of buying on 2026-02-02 10:00:00+00 in #strategy\nSource: 4712fb35-a897-4af0-94ff-f93304af5d64:valley-home-goods:memory:mem-v-004\n\nRecorded decision: markdown_cadence\n{\"note\":\"seasonal only; core lines are never marked down on cadence\",\"clearance_week\":13,\"first_markdown_week\":6,\"second_markdown_week\":10}\nRecorded by: T. Alsop on 2025-12-03 13:45:00+00 in #pricing\nSource: 4712fb35-a897-4af0-94ff-f93304af5d64:valley-home-goods:memory:mem-v-003\n\nRecorded decision: compact_format_range_cap\n{\"agreed_by\":\"format council\",\"effective\":\"2025-09-01\",\"exception\":\"seasonal blocks may exceed by 10% for eight weeks\",\"max_lines\":420}\nRecorded by: P. Novak on 2025-09-01 08:15:00+00 in #range-planning\nSource: 4712fb35-a897-4af0-94ff-f93304af5d64:valley-home-goods:memory:mem-v-002"
+}

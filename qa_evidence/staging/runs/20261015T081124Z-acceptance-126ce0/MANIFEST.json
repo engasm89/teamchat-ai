@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-15T08:19:08.075Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "08f440ecaa60d3ea83adee2a96fb0342f036579281a7341a85b8e08c68cdfc00"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1346,
+   "sha256": "9b9440353dfc061f99737c6474846ef780a5641b6739e9a3cdc08d7824062a0f"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13152,
+   "sha256": "47c0a67ad2f945c7e66fbd96261e4c27aadfa1e6b6d89ed6d59a996a4ca4a881"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 706,
+   "sha256": "d7b0613eb1a3f03d2bbf36ebf5ce7030e7127f96fce00ebd5bc3ff06891da29d"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3699,
+   "sha256": "fcb7c5608e241db3daf017e4ed9eca00f30502670affbefac1942583935ea090"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10480,
+   "sha256": "bfbebf1dcfd6526b72ef473f429ba501b7e2be86230fa85fc72797ba017ec322"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "60deb8fd148aa23e2d0f2768a75966bbf7b5fb1daf5cd4d48e6fd2ea52788bd1"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2261,
+   "sha256": "8f7fe3dd89c6672345e6cea571655e93b94f309cb6d57784f0ca3607e8363af7"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 687,
+   "sha256": "e2050eb55fdc0908409a2ff9a72fa89570def43526650649ec9804cfef7c5d6e"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 649,
+   "sha256": "02d16889c4d5b6d641d9f7e8799b68b0cf805828bd51f72fdda6b499a825e692"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 5879,
+   "sha256": "be9833b4af8f6e6bcb2b8dd7bcbb3c126703f8e1b5746469d04be4db4f156293"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1888,
+   "sha256": "4ed5242185bc15c56228d4336da4720a67354fe8c227e23ec650d6d554c0f86d"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2877,
+   "sha256": "247c4f447b0db836676db5fe4d459282324c4852b161c75e131d43f43bba5086"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 2274,
+   "sha256": "130ea969e25fbe8f3d2ceed3b1b9ee96496b8d0c25119d16290f8fcb3e6fa5ce"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "a95da980a3028a5a0d8cc515db90e1689cb66d28367754600cd78136384b80ad"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3977,
+   "sha256": "155ed5f229697eb8daa2ac344f2b9055bdc3fbb998304af56a4a106d30a996b0"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "92a6671293580608bba4f3ac8beb332f199c0b1063fcbef2080f9e9a28c10ad0"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "25f63834c7bea62192c3ddd7cc6d7784341c6f755a55f075b98bd6ead3f607e1"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 769,
+   "sha256": "64b86d7c7fb19c6fdaeba9297cf75613cee8bf8879bd0c1baf39ec252ac0131b"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 861,
+   "sha256": "af9620a77286f1f712dc7a578803a6788fc5a30081fa81c841803083c2b607bf"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 812,
+   "sha256": "d12b9bb78ddbc1b1bcde0141fbcc639f2c5adc845e36e651b75b7dfe418599d7"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "fc93fc593e67a05afac22d13a937dadfb5f495ddf5defc77e541234562d42630"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13261,
+   "sha256": "117efbb1f01e50dca5ccd55833f7db7b4b46a7bfddd4998ef03bf0eab3099e05"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "336786db98ef6891397acae77c517a3ee70e985b8479714fe649b9e4c18f265e"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "2cabcdf282a7ab5b22a6cf2c94bee78a8de9e0af97b0d3ef3878712efd182be9"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "56d3cb7abb14cd434f3c4f4d9598192523d7d501950999f2debc6cb2c57e548a"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50429,
+   "sha256": "7eee884ec42c6acb35971905c007f49327a9b8d3283145e71cd0c326ae016b42"
+  }
+ ]
+}

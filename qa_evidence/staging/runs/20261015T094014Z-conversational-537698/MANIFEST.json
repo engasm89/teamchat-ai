@@ -1,0 +1,20 @@
+{
+ "generatedAt": "2026-10-15T09:40:31.321Z",
+ "files": [
+  {
+   "path": "C03/c03-first.json",
+   "bytes": 2666,
+   "sha256": "0d28080ec5028176185c0cb84fda8a97827cec88ec1cfee7bb60f5d1b7624292"
+  },
+  {
+   "path": "C03/c03-follow-up.json",
+   "bytes": 837,
+   "sha256": "90a49a81b8787b3685763ef7f37d520874f6c5a370b488a9416903dae4baf4a7"
+  },
+  {
+   "path": "results.json",
+   "bytes": 2888,
+   "sha256": "d238a661c0881dd9c79438810c9d91833e7d4d90951a29aa1a8d71e1d2ff7a1e"
+  }
+ ]
+}

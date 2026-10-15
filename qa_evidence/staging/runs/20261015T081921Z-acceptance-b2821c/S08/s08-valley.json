@@ -1,0 +1,23 @@
+{
+ "label": "s08-valley",
+ "user": "valley.buyer1.staging@teamchat.internal",
+ "tenant": "valley-home-goods",
+ "room": "range-planning",
+ "prompt": "@AI What did Sarah's team decide about fans and energy accessories?",
+ "consent": false,
+ "turnId": "aaab9d24-bc3a-4c42-a2af-9a3142424b58",
+ "messageSequence": 769,
+ "at": "2026-10-15T08:21:20.478Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "Sarah's team fans energy accessories"
+   },
+   "result": []
+  }
+ ],
+ "renderedAnswer": "I have no record of that.\n\nI have no record of that."
+}

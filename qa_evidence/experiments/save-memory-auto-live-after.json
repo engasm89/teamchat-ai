@@ -1,0 +1,96 @@
+{
+ "ranAt": "2026-10-14T18:49:32.809Z",
+ "model": "gemini-2.5-flash",
+ "config": "temperature 0.2, thinkingBudget 512, mode AUTO (round 0), consent GRANTED",
+ "proposedDescription": null,
+ "summary": [
+  {
+   "variant": "description as checked out",
+   "prompt": "live",
+   "trials": 5,
+   "calledSaveMemory": 5
+  }
+ ],
+ "results": [
+  {
+   "variant": "description as checked out",
+   "prompt": "live",
+   "trial": 1,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-mv8gkv0z-2htb",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "live",
+   "trial": 2,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "room": "supply-planning",
+      "key": "roster-mv8gkv0z-2htb",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "live",
+   "trial": 3,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "key": "roster-mv8gkv0z-2htb",
+      "room": "supply-planning",
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "live",
+   "trial": 4,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "key": "roster-mv8gkv0z-2htb",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "text": null
+  },
+  {
+   "variant": "description as checked out",
+   "prompt": "live",
+   "trial": 5,
+   "calls": [
+    {
+     "name": "save_memory",
+     "args": {
+      "value_json": "{\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+      "room": "supply-planning",
+      "key": "roster-mv8gkv0z-2htb"
+     }
+    }
+   ],
+   "text": null
+  }
+ ]
+}

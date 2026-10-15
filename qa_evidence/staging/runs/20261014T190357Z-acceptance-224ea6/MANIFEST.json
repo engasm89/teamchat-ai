@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-14T19:10:54.610Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7166,
+   "sha256": "ef94ffde960d8aec1be9ab93c4202fc11ad05fa5c5dcf1b92c28bf4bce6d7fad"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1320,
+   "sha256": "9b58181470dcf0defb55a7e93912fac467ea3b834965c29e678b2ab470ba1da9"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13151,
+   "sha256": "ed6bdac5b66cf94b57bb71e4d8701db0684b7be6eebccc2261bfc94a46e58875"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 708,
+   "sha256": "784a71e5f006494f25daa12a05c03b014b472cd218fa452a7faeb27567f25ae9"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 4739,
+   "sha256": "9011f66d48b4c9ad3868093068eb7618300804cc43e833a3feda83ea65defcbb"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10409,
+   "sha256": "3620c741cf9db6aaa8dc4cb39a7c422691bc1aee46576893f83723993c9f1f5a"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 2975,
+   "sha256": "1313952520e35cb1c85e206f9b173760f3eb2beabee604dd933c4c8e2b9424a4"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2280,
+   "sha256": "bb2c96109bd43d82bdb0d51d7e624debf6f57c108dc980fe1a4f0a5d4ca81a07"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 680,
+   "sha256": "d1d042c265064b9a30d1ce990f5db64f0602f80eceda7ff1098ef4facb5b6a0d"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 630,
+   "sha256": "3d8dee7b6ba45648a47fa02c7a4a2e9fafb6233b9df2f3ad59017dd78341a750"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 5798,
+   "sha256": "368449f0f9ede82987a1b1742db3b8f25c3eb41202ed37a71837fa335309f03c"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 1951,
+   "sha256": "cd2a93f92b598f64a7c94d66bc9929e2137855aa5f67f7a810d1767235c54b9d"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2891,
+   "sha256": "e662b7382e65fda631542176a9d59ff7dda8153d61ef036218e698911c6dcc50"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1645,
+   "sha256": "1c079e6422ee2f82ed1915019c123f0f00fd55d5b909c1ef09a891fd34a9f4bc"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3193,
+   "sha256": "a5ff77ff69b5d22a5b07dbd37563bde842d562266b9a9e83d8647a3f37c0d55a"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3976,
+   "sha256": "1166ae00bf76d423819543153be20806d66ac4a1953679ba034924d58abc540f"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "7334fe6b651c2d067443868fad8286b65523ace54d842809c744dcda09c2b4a3"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 856,
+   "sha256": "c0271e80b9413fd2c3f67af41607fcc31a5e03177f2f7012c72d59936dbf5799"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 814,
+   "sha256": "78731b8daedf8fbaf66c0da18dd02de46797ff67318d1d20b1e21f21c207964c"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 770,
+   "sha256": "8032017cd09163c9d1ba4f1b9345e07a20eb9e1c9df809a5d9da87395d815e8d"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 721,
+   "sha256": "268338e18c774909fe2cd7182f437a087ec0887e5f3a82937e2e48b21a3138fe"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 510,
+   "sha256": "869e34c571ea8deab70bbe37633cb9eb6ebb399526210afaa84736dc7a1bdc8f"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13625,
+   "sha256": "41b81378f4098d3aa101a8bc6f4b56dabd771bd33207acaf3a26e60eb45d7020"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "174f5719e262b5ed0a2bc08f2050e5dd4f87c229e3a1309891ac8ab9db2a6867"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "75efa8794e8014de148a9efa9db002e1788439ff9582f897fbc84afa48e3cea5"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "f925835fbeac004e08f18c5842c5c3363aee7708edc8811dff849909c7b571a1"
+  },
+  {
+   "path": "results.json",
+   "bytes": 49914,
+   "sha256": "4a0999040ce3c5d4c49c7b33debb32f67121362e473da59b4626a7d66e82040a"
+  }
+ ]
+}

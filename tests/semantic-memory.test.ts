@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {validateEmbedding,vectorSql,memoryEmbeddingText,type EmbeddingProvider} from "../src/worker/embeddings.ts";
-import {SqlToolExecutor} from "../src/server/sql-tools.ts";
+import {validateEmbedding,vectorSql,memoryEmbeddingText,withEmbeddingTimeout,type EmbeddingProvider} from "../src/worker/embeddings.ts";
+import {SqlToolExecutor,identifierTerms} from "../src/server/sql-tools.ts";
 import {SourceLedger} from "../src/grounding.ts";
 import {resolvedContext} from "../src/tenant.ts";
 import type {SqlPool,SqlClient,QueryResult} from "../src/persistence/postgres.ts";
@@ -38,9 +38,26 @@ test("semantic search is tenant-scoped, uses model-specific vectors, and suppres
  assert.ok(vectorCall.sql.includes("WHERE mem.tenant_id=$1"));
  assert.ok(calls.some(x=>x.sql.includes("set_config('app.tenant_id'")));
 });
+test("identifier terms are the query words that contain a digit",()=>{
+ assert.deepEqual(identifierTerms("Who is the escalation contact for case MV8LH9ZK-jaw8, due 2026-11-20? ST-4007 and A1"),["mv8lh9zk-jaw8","2026-11-20","st-4007"]);
+ assert.deepEqual(identifierTerms("what did we decide about suppliers?"),[]);
+});
 test("memory saves require consent before embedding/model invocation",async()=>{
  let called=0;const never:EmbeddingProvider={...embedder,embed:async()=>{called++;return good;}};
  const sql:SqlPool={connect:async()=>{throw Error("DB should not be accessed");}};
  await assert.rejects(new SqlToolExecutor(sql,never).execute(ctx,"assortment-review","save_memory",{key:"a",value_json:JSON.stringify({note:"x"}),room:"assortment-review"},new SourceLedger(ctx,"t"),false),/consent/);
  assert.equal(called,0);
+});
+
+test("a stalled embedding request is abandoned after its timeout and retried once, never left hanging",async t=>{
+ let calls=0;const started=Date.now();
+ // AbortSignal.timeout does not hold the event loop open; the worker's HTTP server does.
+ const alive=setInterval(()=>{},1000);t.after(()=>clearInterval(alive));
+ const stalled=(signal:AbortSignal)=>{calls++;return new Promise<number[]>((_,reject)=>signal.addEventListener("abort",()=>reject(signal.reason)));};
+ await assert.rejects(withEmbeddingTimeout(stalled,50,2),/TimeoutError|aborted|timed out/i);
+ assert.equal(calls,2);
+ assert.ok(Date.now()-started<1000,"two 50 ms attempts, not a 300 s wait");
+ let tries=0;
+ assert.deepEqual(await withEmbeddingTimeout(async()=>{if(++tries===1)throw Error("fetch failed");return good;},50,2),good);
+ assert.equal(tries,2);
 });

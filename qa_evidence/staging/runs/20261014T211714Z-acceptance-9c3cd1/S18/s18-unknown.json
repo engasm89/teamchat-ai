@@ -1,0 +1,26 @@
+{
+ "label": "s18-unknown",
+ "user": "valley.buyer1.staging@teamchat.internal",
+ "tenant": "valley-home-goods",
+ "room": "range-planning",
+ "prompt": "@AI Show me the assortment for store ST-4099.",
+ "consent": false,
+ "turnId": "6945b938-c6b4-4524-a248-b215c362f7b6",
+ "messageSequence": 491,
+ "at": "2026-10-14T21:22:36.811Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "get_store_assortment",
+   "arguments": {
+    "store_id": "ST-4099"
+   },
+   "result": {
+    "found": false,
+    "message": "No matching record is available."
+   }
+  }
+ ],
+ "renderedAnswer": "I couldn't find any information about that store.\n\nNo matching record is available in this workspace.\n\nNo matching record is available in this workspace."
+}

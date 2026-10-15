@@ -124,6 +124,20 @@ export async function persistAnswer(pool:SqlPool,ctx:TenantContext,room:string,t
   if(inserted.rows.length)await appendWithinTransaction(c,ctx,room,"ai_answer_block",{blockIndex:index,verified},turnId);
  });
 }
+/** Answer segments share answer_blocks with tool blocks, offset so indexes never
+ * collide. A reclaimed turn deletes them and emits ai_answer_reset like any block. */
+export const SEGMENT_INDEX_BASE=1000;
+export async function persistSegment(pool:SqlPool,ctx:TenantContext,room:string,turnId:string,fence:number,index:number,segment:Record<string,unknown>){
+ if(!Number.isSafeInteger(index)||index<0||index>=1000)throw Error("Answer segment budget exceeded");
+ await fencedUpdate(pool,ctx,turnId,fence,async c=>{
+  const inserted=await c.query("INSERT INTO teamchat.answer_blocks(tenant_id,turn_id,block_index,verified_payload) VALUES($1,$2::uuid,$3,$4::jsonb) ON CONFLICT (tenant_id,turn_id,block_index) DO NOTHING RETURNING block_index",[ctx.tenantId,turnId,SEGMENT_INDEX_BASE+index,JSON.stringify({segment})]);
+  if(inserted.rows.length)await appendWithinTransaction(c,ctx,room,"ai_answer_segment",{turnId,index,...segment},turnId);
+ });
+}
+/** Progress events (turn started, retrying) are fenced like every other AI write. */
+export async function persistProgress(pool:SqlPool,ctx:TenantContext,room:string,turnId:string,fence:number,type:"ai_turn_started"|"ai_retrying",payload:Record<string,unknown>){
+ await fencedUpdate(pool,ctx,turnId,fence,async c=>{await appendWithinTransaction(c,ctx,room,type,{turnId,...payload},turnId);});
+}
 export async function finishJob(pool:SqlPool,ctx:TenantContext,room:string,turnId:string,fence:number,status:"completed"|"failed",reason?:string){
  await fencedUpdate(pool,ctx,turnId,fence,async c=>{
   await appendWithinTransaction(c,ctx,room,status==="completed"?"ai_complete":"ai_failed",{status,...(reason?{reason}:{} )},turnId);

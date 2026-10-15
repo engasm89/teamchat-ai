@@ -1,0 +1,14 @@
+{
+ "label": "s10-nested",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember this complex nested roster as roster-mv8gkv0z-2htb: {\"leads\":[{\"name\":\"Ana\",\"shifts\":[{\"day\":\"Mon\",\"stores\":[\"ST-4001\",\"ST-4002\"]}]},{\"name\":\"Ben\",\"shifts\":[{\"day\":\"Tue\",\"stores\":[\"ST-4003\"]}]}]}",
+ "consent": true,
+ "turnId": "db06a4d7-8b9d-454c-bdc9-6fa2b681dbd2",
+ "messageSequence": 366,
+ "at": "2026-10-14T18:44:04.234Z",
+ "terminal": "ai_complete",
+ "toolTrace": [],
+ "renderedAnswer": "I couldn't answer that with information I could verify in this workspace."
+}

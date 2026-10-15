@@ -1,0 +1,26 @@
+{
+ "label": "s12-unknown",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Show me the assortment for store ST-4099.",
+ "consent": false,
+ "turnId": "9324bb37-dda7-469f-bdbb-27ce12233a6b",
+ "messageSequence": 4986,
+ "at": "2026-10-15T08:22:52.848Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "get_store_assortment",
+   "arguments": {
+    "store_id": "ST-4099"
+   },
+   "result": {
+    "found": false,
+    "message": "No matching record is available."
+   }
+  }
+ ],
+ "renderedAnswer": "No matching record is available in this workspace.\n\nNo matching record is available in this workspace."
+}

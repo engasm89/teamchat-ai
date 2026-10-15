@@ -1,0 +1,61 @@
+{
+ "label": "s09-valley",
+ "user": "valley.buyer1.staging@teamchat.internal",
+ "tenant": "valley-home-goods",
+ "room": "range-planning",
+ "prompt": "@AI Who is our escalation contact for the case mv98w1p6-jb1o supplier dispute, and when is the deadline?",
+ "consent": false,
+ "turnId": "82faa40a-2a68-4cd4-a903-57ff7a020b22",
+ "messageSequence": 686,
+ "at": "2026-10-15T07:56:54.958Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "escalation contact mv98w1p6-jb1o supplier dispute deadline"
+   },
+   "result": [
+    {
+     "ref": "82faa40a-2a68-4cd4-a903-57ff7a020b22:valley-home-goods:memory:mem-v-001",
+     "memory": {
+      "key": "q1_assortment_target",
+      "value": {
+       "due": "2026-05-31",
+       "owner": "head of buying",
+       "measure": "classed lines carried per store",
+       "target_pct": 85,
+       "current_pct": 81
+      },
+      "distance": 0.49351745575928274,
+      "memory_id": "mem-v-001",
+      "created_at": "2026-01-11 11:30:00+00",
+      "created_by": "T. Alsop",
+      "author_name": "T. Alsop",
+      "source_room_id": "range-planning"
+     }
+    },
+    {
+     "ref": "82faa40a-2a68-4cd4-a903-57ff7a020b22:valley-home-goods:memory:mem-v-003",
+     "memory": {
+      "key": "markdown_cadence",
+      "value": {
+       "note": "seasonal only; core lines are never marked down on cadence",
+       "clearance_week": 13,
+       "first_markdown_week": 6,
+       "second_markdown_week": 10
+      },
+      "distance": 0.5062114163221232,
+      "memory_id": "mem-v-003",
+      "created_at": "2025-12-03 13:45:00+00",
+      "created_by": "T. Alsop",
+      "author_name": "T. Alsop",
+      "source_room_id": "pricing"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "Recorded decision “q1_assortment_target”: due: 2026-05-31; owner: head of buying; measure: classed lines carried per store; target pct: 85; current pct: 81. Recorded by T. Alsop on 2026-01-11 in #range-planning.\n\nRecorded decision “markdown_cadence”: note: seasonal only; core lines are never marked down on cadence; clearance week: 13; first markdown week: 6; second markdown week: 10. Recorded by T. Alsop on 2025-12-03 in #pricing.\n\nRecorded decision: q1_assortment_target\n{\"due\":\"2026-05-31\",\"owner\":\"head of buying\",\"measure\":\"classed lines carried per store\",\"target_pct\":85,\"current_pct\":81}\nRecorded by: T. Alsop on 2026-01-11 11:30:00+00 in #range-planning\nSource: 82faa40a-2a68-4cd4-a903-57ff7a020b22:valley-home-goods:memory:mem-v-001\n\nRecorded decision: markdown_cadence\n{\"note\":\"seasonal only; core lines are never marked down on cadence\",\"clearance_week\":13,\"first_markdown_week\":6,\"second_markdown_week\":10}\nRecorded by: T. Alsop on 2025-12-03 13:45:00+00 in #pricing\nSource: 82faa40a-2a68-4cd4-a903-57ff7a020b22:valley-home-goods:memory:mem-v-003"
+}

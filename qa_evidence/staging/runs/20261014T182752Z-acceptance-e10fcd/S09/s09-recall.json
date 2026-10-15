@@ -1,0 +1,77 @@
+{
+ "label": "s09-recall",
+ "user": "northside.buyer2.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "category-strategy",
+ "prompt": "@AI Who is our escalation contact for the case mv8g2dqy-j1s5 supplier dispute, and when is the deadline?",
+ "consent": false,
+ "turnId": "4944d632-7f8e-464c-a0cf-b25480da9956",
+ "messageSequence": 1,
+ "at": "2026-10-14T18:29:54.705Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "search_memory",
+   "arguments": {
+    "query": "escalation contact deadline mv8g2dqy-j1s5 supplier dispute"
+   },
+   "result": [
+    {
+     "ref": "4944d632-7f8e-464c-a0cf-b25480da9956:northside-outfitters:memory:e2348f4b-b0e6-464b-b55b-8f9a05d54ede",
+     "memory": {
+      "key": "escalation_contact_mv8g2dqy-j1s5",
+      "value": {
+       "contact": "Dana mv8g2dqy-2euz",
+       "deadline": "2026-11-20"
+      },
+      "distance": 0.3462385950614917,
+      "memory_id": "e2348f4b-b0e6-464b-b55b-8f9a05d54ede",
+      "created_at": "2026-10-14 18:29:46.44467+00",
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "author_name": "Northside Buyer One",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "4944d632-7f8e-464c-a0cf-b25480da9956:northside-outfitters:memory:mem-n-004",
+     "memory": {
+      "key": "supplier_lead_time_assumption",
+      "value": {
+       "note": "seasonal commitments close two weeks earlier than the calendar suggests",
+       "source": "2025 season post-mortem",
+       "seasonal_weeks": 14,
+       "standard_weeks": 9
+      },
+      "distance": 0.45711729944878743,
+      "memory_id": "mem-n-004",
+      "created_at": "2026-02-18 16:12:00+00",
+      "created_by": "D. Brennan",
+      "author_name": "D. Brennan",
+      "source_room_id": "supply-planning"
+     }
+    },
+    {
+     "ref": "4944d632-7f8e-464c-a0cf-b25480da9956:northside-outfitters:memory:mem-n-002",
+     "memory": {
+      "key": "q1_assortment_target",
+      "value": {
+       "due": "2026-06-30",
+       "owner": "merchandising director",
+       "measure": "classed lines carried per store",
+       "target_pct": 92,
+       "current_pct": 78
+      },
+      "distance": 0.5081519883768024,
+      "memory_id": "mem-n-002",
+      "created_at": "2026-01-09 14:05:00+00",
+      "created_by": "M. Varga",
+      "author_name": "M. Varga",
+      "source_room_id": "assortment-review"
+     }
+    }
+   ]
+  }
+ ],
+ "renderedAnswer": "Recorded decision “escalation_contact_mv8g2dqy-j1s5”: contact: Dana mv8g2dqy-2euz; deadline: 2026-11-20. Recorded by Northside Buyer One on 2026-10-14 in #supply-planning.\n\nRecorded decision “supplier_lead_time_assumption”: note: seasonal commitments close two weeks earlier than the calendar suggests; source: 2025 season post-mortem; seasonal weeks: 14; standard weeks: 9. Recorded by D. Brennan on 2026-02-18 in #supply-planning.\n\nRecorded decision “q1_assortment_target”: due: 2026-06-30; owner: merchandising director; measure: classed lines carried per store; target pct: 92; current pct: 78. Recorded by M. Varga on 2026-01-09 in #assortment-review.\n\nRecorded decision: escalation_contact_mv8g2dqy-j1s5\n{\"contact\":\"Dana mv8g2dqy-2euz\",\"deadline\":\"2026-11-20\"}\nRecorded by: Northside Buyer One on 2026-10-14 18:29:46.44467+00 in #supply-planning\nSource: 4944d632-7f8e-464c-a0cf-b25480da9956:northside-outfitters:memory:e2348f4b-b0e6-464b-b55b-8f9a05d54ede\n\nRecorded decision: supplier_lead_time_assumption\n{\"note\":\"seasonal commitments close two weeks earlier than the calendar suggests\",\"source\":\"2025 season post-mortem\",\"seasonal_weeks\":14,\"standard_weeks\":9}\nRecorded by: D. Brennan on 2026-02-18 16:12:00+00 in #supply-planning\nSource: 4944d632-7f8e-464c-a0cf-b25480da9956:northside-outfitters:memory:mem-n-004\n\nRecorded decision: q1_assortment_target\n{\"due\":\"2026-06-30\",\"owner\":\"merchandising director\",\"measure\":\"classed lines carried per store\",\"target_pct\":92,\"current_pct\":78}\nRecorded by: M. Varga on 2026-01-09 14:05:00+00 in #assortment-review\nSource: 4944d632-7f8e-464c-a0cf-b25480da9956:northside-outfitters:memory:mem-n-002"
+}

@@ -1,0 +1,39 @@
+{
+ "label": "c02",
+ "user": "Northside Buyer One",
+ "room": "chat-4c9b1a78-d045",
+ "prompt": "@AI what did my colleague just say they'd do?",
+ "turnId": "8bda6ce2-8e9d-4cca-a537-5d0755209161",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 8.388,
+  "terminalS": 8.585
+ },
+ "tools": [
+  {
+   "name": "get_catalog_code",
+   "arguments": {
+    "catalog_code": "x-mv9ct9o3-g46e"
+   }
+  }
+ ],
+ "segments": [
+  {
+   "kind": "say",
+   "rendered": "Here's what your colleague said:"
+  },
+  {
+   "kind": "fact",
+   "rendered": "Northside Buyer Two (#2): “I'll draft the supplier email for the hiking range x-mv9ct9o3-g46e”"
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_tool_start",
+  "ai_tool",
+  "ai_answer_block",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}

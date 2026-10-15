@@ -1,5 +1,6 @@
 import type { MemoryValue, TeamMemory } from "./types.ts";
 export interface ValidationError { field: string; issue: string; }
+const FIELD_NAME = /^[a-zA-Z][a-zA-Z0-9_]{0,63}$/;
 export function validateMemoryValue(value: unknown): {ok:true,value:MemoryValue} | {ok:false,errors:ValidationError[]} {
   const errors: ValidationError[] = [];
   if (!value || typeof value !== "object" || Array.isArray(value)) return {ok:false,errors:[{field:"value",issue:"Expected a flat object"}]};
@@ -9,7 +10,7 @@ export function validateMemoryValue(value: unknown): {ok:true,value:MemoryValue}
   const size = Buffer.byteLength(JSON.stringify(obj),"utf8");
   if (size > 8192) errors.push({field:"value",issue:"Maximum 8192 UTF-8 bytes"});
   for (const [key, v] of Object.entries(obj)) {
-    if (!/^[a-zA-Z][a-zA-Z0-9_]{0,63}$/.test(key)) errors.push({field:key,issue:"Invalid field name"});
+    if (!FIELD_NAME.test(key)) errors.push({field:key,issue:"Invalid field name"});
     if (v !== null && !["string","number","boolean"].includes(typeof v)) errors.push({field:key,issue:"Nested values and arrays are not allowed"});
     if (typeof v === "number" && !Number.isFinite(v)) errors.push({field:key,issue:"Finite number required"});
     if (typeof v === "string" && v.length > 2048) errors.push({field:key,issue:"Maximum 2048 characters"});
@@ -25,15 +26,20 @@ export function parseMemoryValueJson(text: unknown): ReturnType<typeof validateM
   return validateMemoryValue(value);
 }
 /** The one controlled repair of a rejected value: each nested object or array field is kept,
- * re-encoded as JSON text, so nothing is dropped. Null when re-encoding cannot change the outcome. */
+ * re-encoded as JSON text, and a field name with spaces or punctuation ("flat check value")
+ * becomes its underscored form, so nothing is dropped and no value changes. Null when the
+ * repair cannot change the outcome or two names would collide. */
 export function controlledMemoryRepair(text: unknown): string | null {
   if (typeof text !== "string") return null;
   let value: unknown;
   try { value = JSON.parse(text); } catch { return null; }
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const entries = Object.entries(value as Record<string, unknown>);
-  if (!entries.some(([, v]) => v !== null && typeof v === "object")) return null;
-  return JSON.stringify(Object.fromEntries(entries.map(([k, v]) => [k, v !== null && typeof v === "object" ? JSON.stringify(v) : v])));
+  const rename = (k: string) => FIELD_NAME.test(k) ? k : k.trim().replace(/[^a-zA-Z0-9_]+/g, "_").replace(/^_+|_+$/g, "");
+  const repaired = entries.map(([k, v]) => [rename(k), v !== null && typeof v === "object" ? JSON.stringify(v) : v] as const);
+  if (repaired.some(([k]) => !FIELD_NAME.test(k)) || new Set(repaired.map(([k]) => k)).size !== entries.length) return null;
+  if (repaired.every(([k, v], i) => k === entries[i]![0] && v === entries[i]![1])) return null;
+  return JSON.stringify(Object.fromEntries(repaired));
 }
 /** The JSON object the requester typed into their own message, as compact text, when there is
  * exactly one. The model can reshape a value before calling save_memory (it does so reliably once

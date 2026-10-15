@@ -1,0 +1,39 @@
+{
+ "label": "s09-save",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI Remember that our escalation contact for the case mv99hs5f-rg1j supplier dispute is Dana mv99hs5f-qmcj and the deadline is 2026-11-20.",
+ "consent": true,
+ "turnId": "9c69bd4a-8d0f-4f4d-9674-cde579a9118c",
+ "messageSequence": 4687,
+ "at": "2026-10-15T08:13:37.463Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "save_memory",
+   "arguments": {
+    "key": "escalation contact for supplier dispute mv99hs5f-rg1j",
+    "room": "supply-planning",
+    "value_json": "{\"contact\": \"Dana mv99hs5f-qmcj\", \"deadline\": \"2026-11-20\"}"
+   },
+   "result": {
+    "ref": "9c69bd4a-8d0f-4f4d-9674-cde579a9118c:northside-outfitters:memory:76041b94-40d0-46e2-adb9-5524ded977a0",
+    "saved": true,
+    "memory": {
+     "key": "escalation contact for supplier dispute mv99hs5f-rg1j",
+     "value": {
+      "contact": "Dana mv99hs5f-qmcj",
+      "deadline": "2026-11-20"
+     },
+     "memory_id": "76041b94-40d0-46e2-adb9-5524ded977a0",
+     "created_at": "2026-10-15 08:13:33.609319+00",
+     "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+     "source_room_id": "supply-planning"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "OK. I'll remember that.\n\nRecorded decision “escalation contact for supplier dispute mv99hs5f-rg1j”: contact: Dana mv99hs5f-qmcj; deadline: 2026-11-20. Recorded by Northside Buyer One on 2026-10-15 in #supply-planning.\n\nSaved to shared memory: escalation contact for supplier dispute mv99hs5f-rg1j\n{\"contact\":\"Dana mv99hs5f-qmcj\",\"deadline\":\"2026-11-20\"}\nRecorded by: xg9AHjCrMcZeReDTV5dJRl42H3g1 on 2026-10-15 08:13:33.609319+00 in #supply-planning\nSource: 9c69bd4a-8d0f-4f4d-9674-cde579a9118c:northside-outfitters:memory:76041b94-40d0-46e2-adb9-5524ded977a0"
+}
