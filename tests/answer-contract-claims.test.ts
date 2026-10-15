@@ -110,3 +110,15 @@ test("the fallback never contradicts a verified fact already shown, and never re
  assert.ok(none.length===1&&none[0]!.predicate==="score_change"&&/superseded classes: 1003, 506/.test(none[0]!.rendered));
  assert.ok(none.every(x=>!/no class supersession/i.test(x.rendered)));
 });
+
+test("a rejected segment is disclosed; the notice vouches for figures only when a verified fact was shown",()=>{
+ const s=s05Sources();
+ const afterFact=fallbackSegments(s,new Set(["S1"]),true,true);
+ assert.deepEqual(afterFact.map(x=>[x.kind,x.rendered,x.refs.length]),
+  [["fallback","Part of my answer couldn't be verified against this workspace's records, so I've left it out. The details above are verified.",0]]);
+ const afterSayOnly=fallbackSegments(new TurnSources(TURN,T),new Set(),true,true);
+ assert.deepEqual(afterSayOnly.map(x=>x.rendered),["Part of my answer couldn't be verified against this workspace's records, so I've left it out."]);
+ for(const x of [...afterFact,...afterSayOnly])assert.ok(!/complete|everything|all of/i.test(x.rendered),x.rendered);
+ assert.deepEqual(fallbackSegments(s,new Set(["S1"]),true,false),[],"nothing was rejected, so there is nothing to disclose");
+ assert.equal(fallbackSegments(s,new Set(),true,true)[0]!.predicate,"score_change","an unshown source is re-rendered instead of a bare notice");
+});

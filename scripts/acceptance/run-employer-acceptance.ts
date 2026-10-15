@@ -16,10 +16,11 @@ import {assertRestartableTarget} from "./target.ts";
 import {freePort,waitForOwnHealth,sampleProcess} from "./local-instance.ts";
 import {LiveClient,type Turn} from "./live-client.ts";
 import * as oracle from "./oracle.ts";
+import {upliftContradictions} from "./consistency.ts";
 import {renderVerifiedBlock} from "../../apps/web/src/verified.ts";
 
 const HARNESS=["scripts/acceptance/run-employer-acceptance.ts","scripts/acceptance/live-client.ts","scripts/acceptance/oracle.ts","scripts/acceptance/local-instance.ts",
- "scripts/acceptance/common.ts","scripts/acceptance/target.ts","scripts/evidence/lib.ts"];
+ "scripts/acceptance/consistency.ts","scripts/acceptance/common.ts","scripts/acceptance/target.ts","scripts/evidence/lib.ts"];
 const args=process.argv.slice(2);
 const RESTART=args.includes("--restart");
 const ONLY=args.includes("--only")?new Set(args[args.indexOf("--only")+1]!.split(",")):null;
@@ -66,6 +67,12 @@ function grounded(turn:Turn,tenant:string,label=""):Assertion[]{
   a(`${label}every catalog code shown was fetched in this turn`.trim(),codes.every(c=>fetched.includes(c)),"all fetched",codes.filter(c=>!fetched.includes(c))),
   a(`${label}every store shown belongs to the asking tenant`.trim(),storesShown.every(s=>tenantStores.has(s)),"own stores",storesShown.filter(s=>!tenantStores.has(s))),
  ];
+}
+/** Independent of the app's claim checks: no visible sentence may contradict a verified calculate_uplift result. */
+function consistentWithCalculations(turn:Turn,text:string):Assertion{
+ const calcs=turn.tools.filter(x=>x.name==="calculate_uplift"&&typeof x.result?.result?.delta==="string").map(x=>x.result);
+ const found=upliftContradictions(text,calcs);
+ return a("no visible sentence contradicts the verified calculation",calcs.length>0&&found.length===0,"≥1 calculation; 0 contradictions",calcs.length?found:"no calculation");
 }
 const productsIn=(turn:Turn)=>turn.tools.flatMap(x=>{
  const r=x.result;
@@ -161,6 +168,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
     [after.retained,after.removed],[calc?.result?.after?.retained,calc?.result?.after?.removed]),
    a("superseded classes are visible in the answer",after.removed.every(c=>text.includes(`"${c}"`)),after.removed,text.match(/Superseded classes: .*/)?.[0]),
    a("no money figure is invented and the caveat is shown",!/[$€£]\s?\d/.test(text)&&/not a sales forecast/i.test(text),"no currency; caveat present",text.slice(0,500)),
+   consistentWithCalculations(turn,text),
    ...grounded(turn,N)]);
  }],
  ["S06","ST-4007 gaps with evidence, then the score change for closing them",["S06","A11"],async t=>{
@@ -178,6 +186,7 @@ const scenarios:Array<[string,string,string[],(t:TestRecorder)=>Promise<void>]>=
    a("score change equals the oracle for the codes added",!!expected&&calc?.result?.result?.delta===oracle.delta(before,expected),expected&&oracle.delta(before,expected),calc?.result?.result?.delta),
    a("every fixture gap's evidence is shown",store.suspected_gaps.every(g=>text.includes(g.evidence)),store.suspected_gaps.map(g=>g.evidence),text.slice(0,600)),
    a("gaps are labelled as suspected, not confirmed",/not confirmed demand/i.test(text),"suspected label",""),
+   consistentWithCalculations(turn,text),
    ...grounded(turn,N)]);
  }],
  ["S07","Compare two codings of ST-4007; B minus A",["S07"],async t=>{
