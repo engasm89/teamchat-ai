@@ -1,6 +1,6 @@
 # Remediation after the 14 October review
 
-Status on 15 October 2026, 12:30 Cairo. Branch `fix/gonzalo-conversational-review`. **Production runs `edbdfb2`** (unchanged since the 14 October rollout). **Staging runs `e1fdb8a`** (the S06 fix-forward, not promoted). See "15 October: S06 fix-forward" below.
+Status on 15 October 2026, 13:10 Cairo. Branch `fix/gonzalo-conversational-review`. **Production is on hold on `edbdfb2`** (revision 00017, unchanged since the 14 October rollout) by Ashraf's decision at 12:10 Cairo. **Staging runs `b110e54`**: the S06 completeness review plus the C03 fix, neither promoted. See "15 October" sections below.
 
 **In one paragraph.** All three requested changes are built and **deployed to production**:
 
@@ -18,7 +18,7 @@ Three things keep this short of "fully verified":
 
 See "Remaining issues" for these and the rest.
 
-**15 October.** That rollout went ahead while the last staging chain on `edbdfb2` still had a failing step (second acceptance run, S06, exit 1). From now on, any non-zero exit in a staging chain blocks production. On 15 October an S06 fix (`e1fdb8a`) passed two full staging chains with every exit code 0. The third chain failed one step: C03, a different, older flake, exit 1. Under that rule, **production was not redeployed** and stays on `edbdfb2` (API `teamchat-api-00017-7gz`, worker `teamchat-worker-00017-2rb`).
+**15 October.** That rollout went ahead while the last staging chain on `edbdfb2` still had a failing step (second acceptance run, S06, exit 1). From now on, any non-zero exit in a staging chain blocks production. On 15 October an S06 fix (`e1fdb8a`) passed two full staging chains with every exit code 0. The third chain failed one step: C03, a different, older flake, exit 1. Under that rule, **production was not redeployed** and stays on `edbdfb2` (API `teamchat-api-00017-7gz`, worker `teamchat-worker-00017-2rb`). At 12:10 Cairo Ashraf put production on hold: no redeploy, and only read-only checks in production.
 
 ## The review
 
@@ -213,6 +213,52 @@ It reproduces offline: the first round is text-only in 4 of 20, 15 of 40 and 8 o
 
 **Per-run data isolation.** Memory keys and S09/S19 topics were already unique per run, and room history is capped at 40 events / 16,000 characters. Running each chain in a fresh staging chat would isolate room history fully, but it was not done: it would change every scenario's room and cannot be mirrored in production, where creating chats is not allowed.
 
+## 15 October: production hold and the C03 fix (staging only)
+
+**Hold.** At 12:10 Cairo, Ashraf decided to keep production on 00017 (`edbdfb2`): no redeploy and no production actions except read-only checks. Three consecutive green chains could not finish before the 13:30 cut-off. Chain 3's evidence is committed as it ran (`6a80c4f`: conversational exit 1, C03 FAIL), and the streak of green chains on `e1fdb8a` ended there.
+
+**C03 root cause.**
+- Sources are per turn by design. `SourceLedger` and `TurnSources` are keyed by the turn ID, and the planner instructions say earlier answers are context, not evidence.
+- In chain 3's failing turn (`7b2bf86c`), round 0 was a 63-character text reply with no tool call: it repeated a code from the earlier AI answer.
+- The say check rejected it. The generic `ESCALATION_NOTE` produced the same text again with no call.
+- Compose had no sources, its only segment was rejected ("bad source ref"), and the user saw "I couldn't answer that with information I could verify in this workspace."
+- So the model did not fetch the code again, and the server failed closed, as designed.
+
+**Fix (`b110e54`).** When a tool-less draft fails the say check, the escalation note now names the codes and store IDs the draft used. Each named code is one the draft used but no tool fetched in this turn. For example: "your draft names APP-100.19, which no tool fetched in this turn. Earlier answers in the room are not evidence. Fetch it with a tool now, then answer."
+- What is unchanged:
+  - drafts without identifiers get the old generic note;
+  - the note is sent at most once;
+  - the tool choice stays `AUTO`;
+  - grounding is unchanged: only facts fetched in this turn are shown.
+- The identifiers are read from the model's own rejected draft, never from the user's message, and do not choose a tool.
+- A new log line, `ai_escalation`, records whether each note was specific.
+- **Tests:**
+  - `tests/planner-context.test.ts` checks the note for codes, duplicates, trailing punctuation and drafts with no identifier.
+  - `scripts/integration/tenant-chats.test.ts` scripts the C03 sequence: a text draft naming APP-100.19, the specific note, `get_catalog_code`, then only the fetched code shown.
+  - The integration suite fails on the old worker (20/21) and passes on the new one (21/21); unit tests pass 194/194; `tsc` is clean.
+
+**Alternative considered, not built.** The other way to fix this is to let facts verified in earlier turns of the same room count as sources, with their provenance. That would change the answer contract: an earlier turn's data could be stale, and the rule "this turn's tools only" is what makes the server's checks simple. That is a design decision for Ashraf, not a fix-forward.
+
+**Staging runs on `b110e54`** (API `teamchat-api-staging-00022-k44` @ `sha256:2e9b5264…`, worker `teamchat-worker-staging-00022-49h` @ `sha256:91c34fef…`; Hosting unchanged at `6bdb55d50b89bb3a`, which provenance confirms equals a clean build of `b110e54`):
+
+| Run | Result | Exit |
+| --- | --- | --- |
+| C03 alone, 11 runs (`20261015T093947Z` … `094405Z-conversational-*`) | C03 PASS 11/11 | 0 each |
+| Full conversational suite, run 1 (`20261015T094440Z-conversational-60bfed`) | 7/7 | 0 |
+| Full suite, run 2 (`…094604Z-conversational-a4f3e3`) | 6/7: C05 could not create its chat (HTTP 429) | 1 |
+| Full suite, runs 3–5 (`…094740Z-…9f7461`, `…094834Z-…f811e4`, `…094930Z-…8fc522`) | 4/7 each: C03, C04 and C05 could not create their chats (HTTP 429); C01, C02, N01 and N02 PASS | 1 each |
+
+- **Not counted:**
+  - Two batches of runs never started a test. In the first, 8 full-suite runs and 1 C03-only run were refused by the runner's deployment check, because they started before staging provenance was updated for `b110e54`.
+  - Run 6 of the second batch was stopped before it recorded anything.
+- **What the 429s mean.** They are the product's limit of 20 new chats per user per hour (`createTenantChat`). The suite creates each scenario's chat as `northside.buyer2`, and about 25 runs in 11 minutes exhausted it. No AI turn ran in those scenarios, so they say nothing about the fix either way. The limit was left as it is.
+- **Where C03 actually ran:** 13 times (11 alone and 2 in full runs), PASS 13/13.
+- **The worker logs:**
+  - The specific note fired on 3 C03 follow-ups. Each time the model then fetched the code (`search_catalog` twice, `get_catalog_code` once) and the answer showed only fetched codes.
+  - It also fired twice on C04 ("how many tents did ST-4007 sell last week?"). Once the model fetched the store and showed its summary and gaps. Once it replied in text again and the user got the neutral fallback.
+  - C04 passed both times (no invented figures). The store summary answers a question that wasn't asked, which is a wording issue, not a grounding one.
+- **Not done:** three consecutive full chains on `b110e54`. That remains the bar for production.
+
 ## Staging stack
 
 - **Isolation.**
@@ -276,7 +322,7 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
 ## Remaining issues
 
 - **S06 in production.** Production (`edbdfb2`) does not have the completeness review, so it can still stop after the gaps. The fix is on staging (`e1fdb8a`). Why live runs stop early when replays never do is still unexplained.
-- **C03 on both.** A follow-up can be answered from an earlier AI message without a fetch, and then falls back. It failed live in 2 of 9 chains and offline in about 1 in 4. A measured fix (a note naming the unverified codes) is ready but not shipped.
+- **C03 in production.** On `edbdfb2`, a follow-up can be answered from an earlier AI message without a fetch, and then falls back. It failed live in 2 of 9 staging chains and offline in about 1 in 4. The fix (`b110e54`) is on staging only: C03 passed 13 of 13 there, and the note rescued all 3 follow-ups where it fired. The full-suite count is limited by the chat-creation rate limit (see "15 October: production hold").
 - **The review's false positives.** In chain 1, the review asked for one more round in about 1 in 15 reviewed turns (S05, S09's Valley check, and S06 after the calculation). In the 10 S06-only runs it did so in 5 of 10. Those extra rounds changed no answer, but each cost about 4–6 s. The next step is to log what the review reports missing, then tighten the review or skip it when the last round already called the tools that cover the request.
 - **Other Gemini nondeterminism seen once.** C03 (a follow-up fell back, `5a82e6e`) and A02 (4 typing frames arrived more than 1 s after leaving a room, `fec3b9e`, right after an S19 restart). A02's control saw only 1 frame in 4 s, so this looks like delayed delivery rather than a leak, but the test cannot tell the two apart. Neither recurred in the next two chains.
 - **The `say` check is a heuristic.** It is conservative. When it rejects text, the user sees a neutral fallback or "I left out part of my reply…". It may still let through harmless paraphrase, or block a legitimate phrase.
@@ -302,4 +348,5 @@ None of these has been done.
 5. **Reply to Gonzalo.** Review and send it yourself. A suggested note is in `audit/gonzalo-2026-10-14/SUGGESTED_GMAIL_REPLY_PRIVATE.md`; it predates the production rollout, so update it first. Nothing has been sent to anyone at Controlease.
 6. **The owner credential.** Keep, rotate or delete Keychain `teamchat-ai-prod-postgres-owner` (see "Remaining issues").
 7. **QA memories in production.** Decide whether to delete the 37 QA memories, 35 of them attributed to the reviewer's account. The list is in `audit/gonzalo-2026-10-14/QA_MEMORIES_PRIVATE.md`. There is no delete path in the app, so this would be an owner-run SQL change; it has not been done.
-8. **Next rollout.** Authorize the C03 note and a new three-chain run on one commit (with `e1fdb8a`'s review), then Gate 4/5, or keep production on `edbdfb2`.
+8. **Next rollout.** Production is on hold on `edbdfb2` by your 12:10 decision. Staging runs `b110e54` (S06 review and C03 note). Before any promotion: three consecutive full chains on one commit with every exit 0, spaced to stay under the 20-chats-per-user-per-hour limit, then Gate 4/5.
+9. **Demo.** Read `audit/gonzalo-2026-10-14/DEMO_READINESS_PRIVATE.md` (git-ignored) before any live demo on 00017. It covers what works reliably, the S06 and C03 behaviours, phrasings that avoid them, and live recovery.
