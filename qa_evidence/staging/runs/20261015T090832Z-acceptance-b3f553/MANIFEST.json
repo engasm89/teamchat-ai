@@ -1,0 +1,15 @@
+{
+ "generatedAt": "2026-10-15T09:08:55.508Z",
+ "files": [
+  {
+   "path": "S06/s06.json",
+   "bytes": 10381,
+   "sha256": "f690ac7ded8ee4546e43425eb3b7b9d1c7473ee1450a19a0ebfdad1076ddd850"
+  },
+  {
+   "path": "results.json",
+   "bytes": 4739,
+   "sha256": "877b1fdddfcdfa85f8b8c358d0e483cbcfa2ba5e09c27714d08e6d61a4219b4c"
+  }
+ ]
+}

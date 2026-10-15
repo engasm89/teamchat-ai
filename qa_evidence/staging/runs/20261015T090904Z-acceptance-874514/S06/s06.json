@@ -1,0 +1,238 @@
+{
+ "label": "s06",
+ "user": "northside.buyer1.staging@teamchat.internal",
+ "tenant": "northside-outfitters",
+ "room": "supply-planning",
+ "prompt": "@AI For ST-4007, which category gaps exist this season, what evidence supports them and what is the score change from adding the corresponding codes?",
+ "consent": false,
+ "turnId": "bdb2aa31-704c-4c99-93a7-f68f4b465b4a",
+ "messageSequence": 6039,
+ "at": "2026-10-15T09:09:25.536Z",
+ "terminal": "ai_complete",
+ "toolTrace": [
+  {
+   "operationId": "r0-c0",
+   "name": "get_store_assortment",
+   "arguments": {
+    "store_id": "ST-4007"
+   },
+   "result": {
+    "ref": "bdb2aa31-704c-4c99-93a7-f68f4b465b4a:northside-outfitters:store:ST-4007",
+    "store": {
+     "buyer": "M. Varga",
+     "opened": 2000,
+     "channel": "omni",
+     "segment": "standard",
+     "store_id": "ST-4007",
+     "store_name": "Harbour Point",
+     "last_review": "2026-04-25T00:00:00.000Z",
+     "store_format": "flagship",
+     "suspected_gaps": [
+      {
+       "evidence": "footfall up 16% on weekends with no adjacency to this category",
+       "description": "Portable air conditioners, 5,000 to 7,000 BTU",
+       "catalog_code": "APP-100.11",
+       "last_carried": "2024"
+      },
+      {
+       "evidence": "13% of basket-level demand met by click-and-collect from a sister store",
+       "description": "Portable air conditioners, 8,000 to 10,000 BTU",
+       "catalog_code": "APP-100.12",
+       "last_carried": "2024"
+      },
+      {
+       "evidence": "category search volume up 12% year on year with no local fulfilment",
+       "description": "Portable air conditioners, 11,000 to 13,000 BTU",
+       "catalog_code": "APP-100.13",
+       "last_carried": "2024"
+      },
+      {
+       "evidence": "footfall up 33% on weekends with no adjacency to this category",
+       "description": "Fans and air circulators, ceiling, flush mount",
+       "catalog_code": "APP-169.16",
+       "last_carried": "2025"
+      },
+      {
+       "evidence": "33% of basket-level demand met by click-and-collect from a sister store",
+       "description": "Refrigerators and freezers, upright freezer",
+       "catalog_code": "APP-192.17",
+       "last_carried": "2024"
+      },
+      {
+       "evidence": "20% of basket-level demand met by click-and-collect from a sister store",
+       "description": "Tables and desks, standing desks",
+       "catalog_code": "HOM-123.16",
+       "last_carried": "never"
+      },
+      {
+       "evidence": "category search volume up 22% year on year with no local fulfilment",
+       "description": "Decking, fencing and surfaces, decking fixings",
+       "catalog_code": "SEA-307.12",
+       "last_carried": "never"
+      },
+      {
+       "evidence": "category search volume up 32% year on year with no local fulfilment",
+       "description": "Winter sports, snowboards",
+       "catalog_code": "SPT-261.12",
+       "last_carried": "2024"
+      }
+     ],
+     "carried_categories_2026": [
+      "APP-284.15",
+      "APR-123.11",
+      "APR-215.13",
+      "APR-215.15",
+      "APR-261.16",
+      "ELC-146.18",
+      "ELC-307.13",
+      "HBA-215.15",
+      "HDW-123.12",
+      "HDW-215.12",
+      "HOM-123.13",
+      "HOM-123.15",
+      "HOM-215.18",
+      "HOM-238.15",
+      "OUT-192.14",
+      "SEA-100.11",
+      "SEA-100.12",
+      "SEA-284.15"
+     ]
+    }
+   }
+  },
+  {
+   "operationId": "r1-c1",
+   "name": "calculate_uplift",
+   "arguments": {
+    "store_id": "ST-4007",
+    "add_codes": [
+     "APP-100.11",
+     "APP-100.12",
+     "APP-100.13",
+     "APP-169.16",
+     "APP-192.17",
+     "HOM-123.16",
+     "SEA-307.12",
+     "SPT-261.12"
+    ]
+   },
+   "result": {
+    "ref": "bdb2aa31-704c-4c99-93a7-f68f4b465b4a:northside-outfitters:calculation:ST-4007",
+    "after": {
+     "codes": [
+      "APP-284.15",
+      "APR-123.11",
+      "APR-215.13",
+      "APR-215.15",
+      "APR-261.16",
+      "ELC-146.18",
+      "ELC-307.13",
+      "HBA-215.15",
+      "HDW-123.12",
+      "HDW-215.12",
+      "HOM-123.13",
+      "HOM-123.15",
+      "HOM-215.18",
+      "HOM-238.15",
+      "OUT-192.14",
+      "SEA-100.11",
+      "SEA-100.12",
+      "SEA-284.15",
+      "APP-100.11",
+      "APP-100.12",
+      "APP-100.13",
+      "APP-169.16",
+      "APP-192.17",
+      "HOM-123.16",
+      "SEA-307.12",
+      "SPT-261.12"
+     ],
+     "score": "1.303775",
+     "removed": [
+      "321"
+     ],
+     "segment": "standard",
+     "retained": [
+      "1001",
+      "1101",
+      "301",
+      "310",
+      "318",
+      "412",
+      "419",
+      "509",
+      "602",
+      "606",
+      "608",
+      "706",
+      "801",
+      "803",
+      "807",
+      "901",
+      "906"
+     ],
+     "unmapped": [],
+     "multiplier": "0.275000",
+     "provenance": {
+      "dataset": "assessment fixtures",
+      "version": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb"
+     }
+    },
+    "before": {
+     "codes": [
+      "APP-284.15",
+      "APR-123.11",
+      "APR-215.13",
+      "APR-215.15",
+      "APR-261.16",
+      "ELC-146.18",
+      "ELC-307.13",
+      "HBA-215.15",
+      "HDW-123.12",
+      "HDW-215.12",
+      "HOM-123.13",
+      "HOM-123.15",
+      "HOM-215.18",
+      "HOM-238.15",
+      "OUT-192.14",
+      "SEA-100.11",
+      "SEA-100.12",
+      "SEA-284.15"
+     ],
+     "score": "0.984775",
+     "removed": [],
+     "segment": "standard",
+     "retained": [
+      "1101",
+      "310",
+      "412",
+      "419",
+      "509",
+      "602",
+      "606",
+      "608",
+      "706",
+      "801",
+      "803",
+      "807",
+      "901",
+      "906"
+     ],
+     "unmapped": [],
+     "multiplier": "0.275000",
+     "provenance": {
+      "dataset": "assessment fixtures",
+      "version": "fdcc5f5924e09206573f81c435298641e6a1d7d2da9485ecc2f13349e9ac06bb"
+     }
+    },
+    "result": {
+     "delta": "0.319000",
+     "caveat": "Dimensionless assortment coefficient score only; not sales, a percentage, or a forecast. Monetary baseline and linear scenario are user assumptions.",
+     "baseline": "0.984775",
+     "proposed": "1.303775"
+    }
+   }
+  }
+ ],
+ "renderedAnswer": "APP-100.11 (Portable air conditioners, 5,000 to 7,000 BTU; last carried 2024; evidence: footfall up 16% on weekends with no adjacency to this category) is a suspected gap at ST-4007. This is not confirmed demand.\n\nAPP-100.12 (Portable air conditioners, 8,000 to 10,000 BTU; last carried 2024; evidence: 13% of basket-level demand met by click-and-collect from a sister store) is a suspected gap at ST-4007. This is not confirmed demand.\n\nAPP-100.13 (Portable air conditioners, 11,000 to 13,000 BTU; last carried 2024; evidence: category search volume up 12% year on year with no local fulfilment) is a suspected gap at ST-4007. This is not confirmed demand.\n\nAPP-169.16 (Fans and air circulators, ceiling, flush mount; last carried 2025; evidence: footfall up 33% on weekends with no adjacency to this category) is a suspected gap at ST-4007. This is not confirmed demand.\n\nAPP-192.17 (Refrigerators and freezers, upright freezer; last carried 2024; evidence: 33% of basket-level demand met by click-and-collect from a sister store) is a suspected gap at ST-4007. This is not confirmed demand.\n\nHOM-123.16 (Tables and desks, standing desks; last carried never; evidence: 20% of basket-level demand met by click-and-collect from a sister store) is a suspected gap at ST-4007. This is not confirmed demand.\n\nSEA-307.12 (Decking, fencing and surfaces, decking fixings; last carried never; evidence: category search volume up 22% year on year with no local fulfilment) is a suspected gap at ST-4007. This is not confirmed demand.\n\nSPT-261.12 (Winter sports, snowboards; last carried 2024; evidence: category search volume up 32% year on year with no local fulfilment) is a suspected gap at ST-4007. This is not confirmed demand.\n\nClosing these gaps would result in the following score change:\n\nFor ST-4007, adding APP-100.11, APP-100.12, APP-100.13, APP-169.16, APP-192.17, HOM-123.16, SEA-307.12, SPT-261.12 changes the assortment coefficient score from 0.984775 to 1.303775 (difference 0.319000). Retained classes: 1001, 1101, 301, 310, 318, 412, 419, 509, 602, 606, 608, 706, 801, 803, 807, 901, 906; superseded classes: 321. The score is a dimensionless coefficient, not a sales forecast.\n\nST-4007 — Harbour Point\nChannel: omni · Format: flagship · Segment: standard\nCarried codes (18): APP-284.15, APR-123.11, APR-215.13, APR-215.15, APR-261.16, ELC-146.18, ELC-307.13, HBA-215.15, HDW-123.12, HDW-215.12, HOM-123.13, HOM-123.15, HOM-215.18, HOM-238.15, OUT-192.14, SEA-100.11, SEA-100.12, SEA-284.15\nSuspected assortment gaps (8; not confirmed demand):\n• APP-100.11: Portable air conditioners, 5,000 to 7,000 BTU (evidence: footfall up 16% on weekends with no adjacency to this category)\n• APP-100.12: Portable air conditioners, 8,000 to 10,000 BTU (evidence: 13% of basket-level demand met by click-and-collect from a sister store)\n• APP-100.13: Portable air conditioners, 11,000 to 13,000 BTU (evidence: category search volume up 12% year on year with no local fulfilment)\n• APP-169.16: Fans and air circulators, ceiling, flush mount (evidence: footfall up 33% on weekends with no adjacency to this category)\n• APP-192.17: Refrigerators and freezers, upright freezer (evidence: 33% of basket-level demand met by click-and-collect from a sister store)\n• HOM-123.16: Tables and desks, standing desks (evidence: 20% of basket-level demand met by click-and-collect from a sister store)\n• SEA-307.12: Decking, fencing and surfaces, decking fixings (evidence: category search volume up 22% year on year with no local fulfilment)\n• SPT-261.12: Winter sports, snowboards (evidence: category search volume up 32% year on year with no local fulfilment)\nSeasonal relevance has not been inferred beyond fixture labels.\nSource: bdb2aa31-704c-4c99-93a7-f68f4b465b4a:northside-outfitters:store:ST-4007\n\nAssortment coefficient score: 0.984775 → 1.303775\nDifference: 0.319000\nRetained classes: [\"1001\",\"1101\",\"301\",\"310\",\"318\",\"412\",\"419\",\"509\",\"602\",\"606\",\"608\",\"706\",\"801\",\"803\",\"807\",\"901\",\"906\"]\nSuperseded classes: [\"321\"]\nAssumption: each distinct mapped class counts once; segment-specific coefficients, then channel/format factor. This is not a sales forecast.\nSource: bdb2aa31-704c-4c99-93a7-f68f4b465b4a:northside-outfitters:calculation:ST-4007"
+}
