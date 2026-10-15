@@ -521,9 +521,7 @@ export async function executeAiJob(pool:SqlPool,provider:GeminiProvider,turnId:s
    console.log(JSON.stringify({severity:"WARNING",message:"ai_compose_interrupted",turnId,error:error instanceof Error?error.message.slice(0,200):"error"}));
   }
   if(rejected||interrupted||!shownCount){
-   const replacement=fallbackSegments(sources,shown,shownCount>0);
-   if(replacement.length)for(const s of replacement)await emit(s);
-   else if(rejected)await emit({kind:"fallback",rendered:"I left out part of my reply because I couldn't confirm it against this workspace's records.",refs:[],sources:[]});
+   for(const s of fallbackSegments(sources,shown,shownCount>0,rejected>0))await emit(s);
   }
   await finishJob(pool,ctx,room,turnId,fence,"completed");
   mark("complete",{path:"compose",tools:toolsRun,segments:segmentIndex,rejected,interrupted});

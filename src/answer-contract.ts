@@ -201,8 +201,14 @@ export function checkSegment(raw:unknown,ctx:{sources:TurnSources;messages:reado
  return text?{ok:true,segment:{kind:"fact",predicate,rendered:text,refs:source.ref?[source.ref]:[],sources:[source.label]}}:{ok:false,reason:"unrenderable"};
 }
 
-/** Deterministic, server-written replacement for whatever has not been shown. */
-export function fallbackSegments(sources:TurnSources,shown:ReadonlySet<string>,anyShown:boolean):VerifiedSegment[]{
+export const PARTIAL_REPLY_NOTICE="Part of my answer couldn't be verified against this workspace's records, so I've left it out.";
+export const PARTIAL_REPLY_NOTICE_AFTER_FACTS=`${PARTIAL_REPLY_NOTICE} The figures above are verified.`;
+
+/** Deterministic, server-written replacement for whatever has not been shown.
+ * When segments were rejected and nothing is left to re-render, the reply ends
+ * with a disclosure; it vouches for figures only when a record-backed fact
+ * (the only segments that carry a ref) was actually shown. */
+export function fallbackSegments(sources:TurnSources,shown:ReadonlySet<string>,anyShown:boolean,rejected=false):VerifiedSegment[]{
  const out:VerifiedSegment[]=[];
  const pending=sources.list().filter(s=>!shown.has(s.alias)).slice(0,8);
  const predicateFor:Record<SourceType,Predicate>={catalog:"product_info",store:"store_summary",memory:"memory_recorded",
@@ -220,6 +226,7 @@ export function fallbackSegments(sources:TurnSources,shown:ReadonlySet<string>,a
   }
   if(!out.length)out.push({kind:"fallback",rendered:"I couldn't answer that with information I could verify in this workspace.",refs:[],sources:[]});
  }
+ if(!out.length&&rejected)out.push({kind:"fallback",rendered:shown.size?PARTIAL_REPLY_NOTICE_AFTER_FACTS:PARTIAL_REPLY_NOTICE,refs:[],sources:[]});
  return out;
 }
 
