@@ -1,0 +1,20 @@
+{
+ "generatedAt": "2026-10-15T09:00:42.355Z",
+ "files": [
+  {
+   "path": "S19/s19-recall.json",
+   "bytes": 5295,
+   "sha256": "53247c49517b52fd279afb3d0162d99a61b4f92a209108881cfa1bb18a940c33"
+  },
+  {
+   "path": "S19/s19-save.json",
+   "bytes": 1704,
+   "sha256": "12a667075379c5c6bfeb5401956605cc3511d6bfe555c40bf0b5393aae445702"
+  },
+  {
+   "path": "results.json",
+   "bytes": 5408,
+   "sha256": "51b726cf74119f18c4a0901ceebd28ebf965fd7f837119e715785e11e40adbe3"
+  }
+ ]
+}

@@ -1,0 +1,44 @@
+[
+ {
+  "id": 0,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054498550,
+  "closedAt": null
+ },
+ {
+  "id": 1,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054501903,
+  "closedAt": 1792054510288
+ },
+ {
+  "id": 2,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054506813,
+  "closedAt": 1792054515167
+ },
+ {
+  "id": 3,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054511863,
+  "closedAt": 1792054520247
+ },
+ {
+  "id": 4,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054516920,
+  "closedAt": 1792054525288
+ },
+ {
+  "id": 5,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054521887,
+  "closedAt": null
+ },
+ {
+  "id": 6,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054526813,
+  "closedAt": null
+ }
+]

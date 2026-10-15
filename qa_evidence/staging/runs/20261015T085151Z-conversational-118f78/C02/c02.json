@@ -1,0 +1,29 @@
+{
+ "label": "c02",
+ "user": "Northside Buyer One",
+ "room": "chat-a0f43c03-9de9",
+ "prompt": "@AI what did my colleague just say they'd do?",
+ "turnId": "9e939e4f-d8cd-4f40-8148-12ed0819cfac",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 3.502,
+  "terminalS": 3.708
+ },
+ "tools": [],
+ "segments": [
+  {
+   "kind": "say",
+   "rendered": "Here's what your colleague said:"
+  },
+  {
+   "kind": "fact",
+   "rendered": "Northside Buyer Two (#2): “I'll draft the supplier email for the hiking range x-mv9avgx3-mfs0”"
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_answer_segment",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}

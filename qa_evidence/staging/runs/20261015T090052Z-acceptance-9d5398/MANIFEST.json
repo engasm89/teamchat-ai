@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-10-15T09:08:21.380Z",
+ "files": [
+  {
+   "path": "A12/local-instance.log",
+   "bytes": 23,
+   "sha256": "54fc83fbf816c46d37d141b8415a04327cbba4397085bb88e173b09d101a166b"
+  },
+  {
+   "path": "S01/s01.json",
+   "bytes": 7167,
+   "sha256": "7bd46424fd0aba4219d42f580fa31077c1892a25525eb3d6cc9d1c532e536765"
+  },
+  {
+   "path": "S02/s02.json",
+   "bytes": 1330,
+   "sha256": "5614ededd9a8d1b89caa593ff290ae11424d29d5b2f289c28ecc378636a97134"
+  },
+  {
+   "path": "S03/s03.json",
+   "bytes": 13662,
+   "sha256": "a9b805c62109f5e2708c95ef8a1b0c185fcecbb7b6c79f9246dbebbaf126d9b7"
+  },
+  {
+   "path": "S04/s04.json",
+   "bytes": 709,
+   "sha256": "0c9afff6c7f5fab14e08c4ddc4eb717c2b8512195715481afab27ea24ea3f90d"
+  },
+  {
+   "path": "S05/s05.json",
+   "bytes": 3699,
+   "sha256": "4c86eccb75dccc19bdda362f1f510be37e76874cb0cc78a0258716f0743d251a"
+  },
+  {
+   "path": "S06/s06.json",
+   "bytes": 10476,
+   "sha256": "43b6e89810730d6edf4ba3b15c59d4c6a61a18983eec6a1e7565ff4a68a0778c"
+  },
+  {
+   "path": "S07/s07.json",
+   "bytes": 3071,
+   "sha256": "69d0f2bf75ee216cf56c697b8c03a6b787aa26faac6eec0ec1916dab141215a9"
+  },
+  {
+   "path": "S08/s08-paraphrase.json",
+   "bytes": 2281,
+   "sha256": "6ac71fe22a4dacbc15e3b2756aabed665e3b8de76f5bb66822a3a792eb6e9aff"
+  },
+  {
+   "path": "S08/s08-unrelated.json",
+   "bytes": 705,
+   "sha256": "2e93c74ab19d71c0a87a4788427b5720bc73c903d68697322a6476c44734e497"
+  },
+  {
+   "path": "S08/s08-valley.json",
+   "bytes": 630,
+   "sha256": "4adadf2801839056a728df60bff9ff5358313874db265dfafb1890db69418076"
+  },
+  {
+   "path": "S09/s09-recall.json",
+   "bytes": 6194,
+   "sha256": "458b563f7dc2dc22b08f9cffa3752f0b9694205575aaec9c7005f401fd22f581"
+  },
+  {
+   "path": "S09/s09-save.json",
+   "bytes": 2108,
+   "sha256": "00acd0dd187a0a46709e9116a56e5e332d3731e53effceffc59929614775f564"
+  },
+  {
+   "path": "S09/s09-valley.json",
+   "bytes": 2891,
+   "sha256": "42c712d656c11f94dafbc19930cd563b9214ce97784527ba8651b572b34209b2"
+  },
+  {
+   "path": "S10/s10-flat.json",
+   "bytes": 1715,
+   "sha256": "f42e7ba60914b8dedb96b58376b340f3ace8936576ace82c21f7bac3551314df"
+  },
+  {
+   "path": "S10/s10-nested.json",
+   "bytes": 3099,
+   "sha256": "6f39e8cce212f53219c6c38e443ba1c6e23b4409a744d454640a953473af77d4"
+  },
+  {
+   "path": "S11/s11-northside.json",
+   "bytes": 3977,
+   "sha256": "14283b8d8b17c2d9d1cbd93bd24ccf6a7db52a8b57f7c46825c845aba5186359"
+  },
+  {
+   "path": "S11/s11-valley.json",
+   "bytes": 4357,
+   "sha256": "c8d55310f505d6d9d69ac451c2afcf1711c262e04c9c96c101c5cad07f2e0356"
+  },
+  {
+   "path": "S12/audit-log.json",
+   "bytes": 858,
+   "sha256": "61f3fe62b1cb1a9cfec434f5f6bec62039fa62371d8df8e27a4c4bc8638e0966"
+  },
+  {
+   "path": "S12/s12-first.json",
+   "bytes": 720,
+   "sha256": "14810701c0f306347eb35585725b3426a4f67c5e354ec095db1fae87be711359"
+  },
+  {
+   "path": "S12/s12-forged.json",
+   "bytes": 771,
+   "sha256": "958253c4f06d538ce40aa3549b8db98a43e6d938fe8038490010fcdafcd4e10d"
+  },
+  {
+   "path": "S12/s12-unknown.json",
+   "bytes": 722,
+   "sha256": "3da299c6132649329a4515de30d61b319938b0fede39ae756784849dba7b24c7"
+  },
+  {
+   "path": "S13/s13.json",
+   "bytes": 511,
+   "sha256": "8034b0802545ac88d1a1d5e18f14a3a153c6d9b14a90fe21662384f8239643b9"
+  },
+  {
+   "path": "S14/turns.json",
+   "bytes": 13263,
+   "sha256": "3fd6da2ef6545d499f1408f472742d971b92caa6f5de271be2c714e1055714df"
+  },
+  {
+   "path": "S18/s18-northside-store.json",
+   "bytes": 775,
+   "sha256": "23a9b9e078ded60b0ffe70474a26227a38b3da0fa900cb9d14e701ff4789531f"
+  },
+  {
+   "path": "S18/s18-target.json",
+   "bytes": 4357,
+   "sha256": "64e36c957db911276c6b239f4257aa4cd504837dfaab465549eb1ebef235d37f"
+  },
+  {
+   "path": "S18/s18-unknown.json",
+   "bytes": 767,
+   "sha256": "947ef2a5a36da7ca7eab09380cc54b8fa371b5b6af3f2874a95ed4a1d5d25930"
+  },
+  {
+   "path": "results.json",
+   "bytes": 50398,
+   "sha256": "342f533157beba8b26398df8693b47fa49ca3e6b6d59e26f4091efb57edb7e9c"
+  }
+ ]
+}

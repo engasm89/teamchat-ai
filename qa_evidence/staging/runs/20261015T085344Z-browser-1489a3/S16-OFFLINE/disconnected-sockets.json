@@ -1,0 +1,14 @@
+[
+ {
+  "id": 0,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054681831,
+  "closedAt": 1792054689260
+ },
+ {
+  "id": 1,
+  "url": "wss://teamchat-api-staging-1068908463902.us-central1.run.app/ws",
+  "createdAt": 1792054719249,
+  "closedAt": null
+ }
+]

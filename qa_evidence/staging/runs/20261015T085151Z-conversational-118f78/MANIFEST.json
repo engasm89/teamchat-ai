@@ -1,0 +1,40 @@
+{
+ "generatedAt": "2026-10-15T08:52:52.212Z",
+ "files": [
+  {
+   "path": "C01/c01.json",
+   "bytes": 484,
+   "sha256": "a484944b82affc6f3e63f99c7eb5670b34acb8b7c10d5b25f8eb92d2cc5f133b"
+  },
+  {
+   "path": "C02/c02.json",
+   "bytes": 639,
+   "sha256": "9b5a61419ad306840cf5d97af3f0e2f2a93796fda915478b6500e146bc768fff"
+  },
+  {
+   "path": "C03/c03-first.json",
+   "bytes": 2645,
+   "sha256": "1cd1b79398d93c975f9af23dca5338d9f98401c03aa71f355404feef7677bc2b"
+  },
+  {
+   "path": "C03/c03-follow-up.json",
+   "bytes": 529,
+   "sha256": "1d480022f7a46563345a4e9a170a1aea253d903e117131163cde6fb27d22a5f8"
+  },
+  {
+   "path": "C04/c04.json",
+   "bytes": 519,
+   "sha256": "f04b5dc72bcc5e9366cfce04a717482f80186fedea6ce4118e3020eb9a0a1196"
+  },
+  {
+   "path": "C05/c05.json",
+   "bytes": 979,
+   "sha256": "aaade351b68e0ef346d20e1848446a9e4ff6e1a34b7b786623b7a8b5b09dbd3c"
+  },
+  {
+   "path": "results.json",
+   "bytes": 11378,
+   "sha256": "deb388a4848aebd093b09088843132d7fa4c3e9d77e7511e0ea3ae2df52325fd"
+  }
+ ]
+}

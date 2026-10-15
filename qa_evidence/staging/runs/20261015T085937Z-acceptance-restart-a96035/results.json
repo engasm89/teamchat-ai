@@ -1,0 +1,152 @@
+{
+ "schemaVersion": 1,
+ "suite": "acceptance-restart",
+ "runId": "20261015T085937Z-acceptance-restart-a96035",
+ "environment": "staging: https://teamchat-api-staging-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-15T08:59:37.162Z",
+ "finishedAt": "2026-10-15T09:00:42.355Z",
+ "harness": {
+  "gitHead": "411b27bd900da4fa7d7f55c9e0bab934f3f48964",
+  "dirty": true,
+  "fingerprint": "68ea6ea9e03ae1a760ca4b2b0cf0c6804429bba6b9a43fe7293f10f8394175e5",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/acceptance/live-client.ts",
+   "scripts/acceptance/local-instance.ts",
+   "scripts/acceptance/oracle.ts",
+   "scripts/acceptance/run-employer-acceptance.ts",
+   "scripts/acceptance/target.ts",
+   "scripts/evidence/lib.ts"
+  ]
+ },
+ "source": {
+  "sha": "e1fdb8ab1a165d2159745d5a75f0247b22bc2806"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-staging-00020-dfr",
+  "apiDigest": "sha256:ac35940b7d5787abe4c311708e1c8b5c5e22858b33a8d6fa8c983271a264cbe0",
+  "workerRevision": "teamchat-worker-staging-00020-ht4",
+  "workerDigest": "sha256:338d4c484988e0c9e8c3ea1cdcf8d79a532d134992fb00912e9b1c17a57e8a4a",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+ },
+ "tests": [
+  {
+   "id": "S19",
+   "title": "Forced cold start of API and worker; remembered value still there",
+   "requirementIds": [
+    "S19"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T08:59:37.320Z",
+   "finishedAt": "2026-10-15T09:00:42.355Z",
+   "details": {
+    "revisions": {
+     "before": {
+      "apiRevision": "teamchat-api-staging-00020-dfr",
+      "apiDigest": "sha256:ac35940b7d5787abe4c311708e1c8b5c5e22858b33a8d6fa8c983271a264cbe0",
+      "workerRevision": "teamchat-worker-staging-00020-ht4",
+      "workerDigest": "sha256:338d4c484988e0c9e8c3ea1cdcf8d79a532d134992fb00912e9b1c17a57e8a4a",
+      "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+     },
+     "after": {
+      "apiRevision": "teamchat-api-staging-00021-zf8",
+      "apiDigest": "sha256:ac35940b7d5787abe4c311708e1c8b5c5e22858b33a8d6fa8c983271a264cbe0",
+      "workerRevision": "teamchat-worker-staging-00021-8gr",
+      "workerDigest": "sha256:338d4c484988e0c9e8c3ea1cdcf8d79a532d134992fb00912e9b1c17a57e8a4a",
+      "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+     }
+    },
+    "newRevisionLogLines": 15
+   },
+   "assertions": [
+    {
+     "name": "saveturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "saved before restart",
+     "pass": true,
+     "expected": true,
+     "actual": ""
+    },
+    {
+     "name": "new API and worker revisions serve traffic",
+     "pass": true,
+     "expected": "new revisions",
+     "actual": {
+      "before": {
+       "apiRevision": "teamchat-api-staging-00020-dfr",
+       "apiDigest": "sha256:ac35940b7d5787abe4c311708e1c8b5c5e22858b33a8d6fa8c983271a264cbe0",
+       "workerRevision": "teamchat-worker-staging-00020-ht4",
+       "workerDigest": "sha256:338d4c484988e0c9e8c3ea1cdcf8d79a532d134992fb00912e9b1c17a57e8a4a",
+       "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+      },
+      "after": {
+       "apiRevision": "teamchat-api-staging-00021-zf8",
+       "apiDigest": "sha256:ac35940b7d5787abe4c311708e1c8b5c5e22858b33a8d6fa8c983271a264cbe0",
+       "workerRevision": "teamchat-worker-staging-00021-8gr",
+       "workerDigest": "sha256:338d4c484988e0c9e8c3ea1cdcf8d79a532d134992fb00912e9b1c17a57e8a4a",
+       "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+      }
+     }
+    },
+    {
+     "name": "images unchanged across the restart",
+     "pass": true,
+     "expected": "same digests",
+     "actual": ""
+    },
+    {
+     "name": "new revisions started (Cloud Logging)",
+     "pass": true,
+     "expected": ">0 log lines from new revisions",
+     "actual": 15
+    },
+    {
+     "name": "recallturn completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": "ai_complete"
+    },
+    {
+     "name": "remembered value retrieved after restart",
+     "pass": true,
+     "expected": "cold-mv9b57u1-w1xw",
+     "actual": [
+      "cold-start check code for rehearsal mv9b57u1-7cz4",
+      "rehearsal mv9abbkp-5m5i cold-start check code",
+      "cold-start check code for rehearsal mv99dlb6-rcxp",
+      "cold-start check code for rehearsal mv8nb4bp-x5sl",
+      "cold-start check code for rehearsal mv8m0238-fxkv"
+     ]
+    },
+    {
+     "name": "attribution survives the restart",
+     "pass": true,
+     "expected": {
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "room": "supply-planning"
+     },
+     "actual": {
+      "created_by": "xg9AHjCrMcZeReDTV5dJRl42H3g1",
+      "room": "supply-planning"
+     }
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T085937Z-acceptance-restart-a96035/S19/s19-save.json",
+     "sha256": "12a667075379c5c6bfeb5401956605cc3511d6bfe555c40bf0b5393aae445702",
+     "description": "s19-save: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T085937Z-acceptance-restart-a96035/S19/s19-recall.json",
+     "sha256": "53247c49517b52fd279afb3d0162d99a61b4f92a209108881cfa1bb18a940c33",
+     "description": "s19-recall: prompt, function-call trace (name, args, fetched result) and rendered answer"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+{
+ "label": "c04",
+ "user": "Northside Buyer Two",
+ "room": "chat-d8ec2af6-4791",
+ "prompt": "@AI how many tents did ST-4007 sell last week?",
+ "turnId": "7736f966-6978-422f-aa36-4b7983832af3",
+ "terminal": "ai_complete",
+ "timing": {
+  "firstSegmentS": 2.948,
+  "terminalS": 2.977
+ },
+ "tools": [],
+ "segments": [
+  {
+   "kind": "fallback",
+   "rendered": "I couldn't answer that with information I could verify in this workspace."
+  }
+ ],
+ "events": [
+  "ai_turn_started",
+  "ai_answer_segment",
+  "ai_complete"
+ ]
+}
