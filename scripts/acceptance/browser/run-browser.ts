@@ -190,9 +190,17 @@ async function metrics(cdp:CDPSession){
  const {metrics:list}=await cdp.send("Performance.getMetrics");
  return Object.fromEntries(list.map(m=>[m.name,m.value]));
 }
+/** The room's history arrives as events right after subscribe; idling starts once no event has arrived for `quietMs`. */
+async function historySettled(s:Session,quietMs=5000,maxMs=120000){
+ const started=Date.now();
+ const events=()=>s.log.frames.filter(f=>f.dir==="in"&&f.frame?.type==="event");
+ const lastEventAt=()=>events().reduce((t,f)=>Math.max(t,f.t),started);
+ while(Date.now()-started<maxMs&&Date.now()-lastEventAt()<quietMs)await sleep(250);
+ return {settledMs:Date.now()-started,historyEvents:events().length};
+}
 async function idleWindow(s:Session,peer:Session|null,seconds:number){
  const cdp=await s.context.newCDPSession(s.page);await cdp.send("Performance.enable");
- await sleep(5000);
+ const history=await historySettled(s);
  const metrics0=await metrics(cdp);const start=Date.now();const samples:number[]=[];
  while(Date.now()-start<seconds*1000){samples.push(s.log.sockets.filter(x=>x.closedAt===null).length);await sleep(1000);}
  const end=Date.now();const metrics1=await metrics(cdp);
@@ -201,7 +209,7 @@ async function idleWindow(s:Session,peer:Session|null,seconds:number){
  let postIdleDelivered=false;
  if(peer){const text=`${tag("s17")} after idle`;await post(peer,text);
   postIdleDelivered=Boolean(await until(async()=>(await s.page.locator("article.message",{hasText:text}).count())===1,20000));}
- return {start,end,seconds,samples,requests:inWindow(s.log.requests),framesIn:count("in"),framesOut:count("out"),metrics0,metrics1,postIdleDelivered};
+ return {start,end,seconds,samples,requests:inWindow(s.log.requests),framesIn:count("in"),framesOut:count("out"),metrics0,metrics1,postIdleDelivered,history};
 }
 
 const ac=parse(fs.readFileSync("teamchat-ai-assessment/teamchat-ai-seed-data/product_codes.csv"),{columns:true}) as Array<Record<string,string>>;
@@ -221,7 +229,7 @@ try{
   try{
    const s=await openSession("n1"),peer=await openSession("n2");
    const w=await idleWindow(s,peer,60);monitoringWindows.S17={start:w.start,end:w.end};
-   t.detail("window",{start:new Date(w.start).toISOString(),end:new Date(w.end).toISOString()}).detail("metricsStart",w.metrics0).detail("metricsEnd",w.metrics1)
+   t.detail("window",{start:new Date(w.start).toISOString(),end:new Date(w.end).toISOString()}).detail("historyBeforeIdle",w.history).detail("metricsStart",w.metrics0).detail("metricsEnd",w.metrics1)
     .detail("framesIn",w.framesIn).detail("framesOut",w.framesOut).detail("socketSamples",w.samples);
    record(t,s17Checks(w));
    s.log.write(t,"idle-user");await shot(t,s,"idle-user.png","Idle user's window at the end of the 60 s idle period");
