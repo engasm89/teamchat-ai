@@ -1,6 +1,6 @@
 # Remediation after the 14 October review
 
-Status on 15 October 2026, 01:50 Cairo (14 October, 22:50 UTC). Branch `fix/gonzalo-conversational-review`. Deployed source `edbdfb2`, in staging and production.
+Status on 15 October 2026, 12:30 Cairo. Branch `fix/gonzalo-conversational-review`. **Production runs `edbdfb2`** (unchanged since the 14 October rollout). **Staging runs `e1fdb8a`** (the S06 fix-forward, not promoted). See "15 October: S06 fix-forward" below.
 
 **In one paragraph.** All three requested changes are built and **deployed to production**:
 
@@ -17,6 +17,8 @@ Three things keep this short of "fully verified":
 - **S09 was not run in production.** Its recall step posts outside the QA rooms.
 
 See "Remaining issues" for these and the rest.
+
+**15 October.** That rollout went ahead while the last staging chain on `edbdfb2` still had a failing step (second acceptance run, S06, exit 1). From now on, any non-zero exit in a staging chain blocks production. On 15 October an S06 fix (`e1fdb8a`) passed two full staging chains with every exit code 0. The third chain failed one step: C03, a different, older flake, exit 1. Under that rule, **production was not redeployed** and stays on `edbdfb2` (API `teamchat-api-00017-7gz`, worker `teamchat-worker-00017-2rb`).
 
 ## The review
 
@@ -158,6 +160,59 @@ Earlier failures are kept on purpose. Each one led to a fix, described below.
 - **Production accounts.** The production target's Northside requester (`n1`) is now `northside.analyst3`, because `northside.buyer1` is the reviewer's account and is protected. The assertions are unchanged.
 - **Acceptance runners.** These now take an explicit target and write staging evidence to `qa_evidence/staging/runs`. The assertions are unchanged apart from the two items above. `expectedProjection` now also counts `ai_answer_segment` events, the new event type.
 
+## 15 October: S06 fix-forward (staging only)
+
+**What happened in the failures.** In all three live S06 failures (`5a82e6e`, `a9817cc` and `edbdfb2`), the worker logs show the same thing. Each was a first attempt with no retry. Round 0 called `get_store_assortment`, round 1 spent 3–6 s writing a reply with no tool call, and the loop treated that reply as final. In the three live passes, round 1 called `calculate_uplift`.
+
+**What was ruled out.**
+- The stream collector keeps function calls that arrive alongside text.
+- The worker uses the same Vertex backend, model and configuration as the replays.
+- S06 sends no memory consent.
+- 20 new replays of the failed `edbdfb2` turn recorded every round's `finishReason`. All rounds ended with `STOP`, and all 20 reached the calculation (`qa_evidence/experiments/s06-round-finish.json`).
+
+Across all replays, 0 of 68 stopped early, against 3 of 7 live runs since the planner sentence. Why live and replay differ is still unknown.
+
+**Root cause (the part we control).** After a tool round, the loop accepted any reply without a call as the end of the turn. Nothing checked whether the requester's question had been fully answered. The withdrawn continuation note (`a9817cc`) filled that gap but read the whole room, which is how it answered a colleague's question in S14.
+
+**Fix (`e1fdb8a`).** After the first reply without a call, in a turn that ran tools, the worker makes one tool-less review call (`REVIEW_INSTRUCTIONS`, temperature 0, JSON). It sees only:
+- the requester's own message;
+- the calls made, with the start of each result;
+- the tool list.
+
+It returns the missing part of *that* request, or nothing. If something is missing, the planner gets one more `AUTO` round with a note that quotes the part and says not to take up other people's questions. Otherwise the turn ends as before. The review never sees colleagues' messages.
+
+There is no keyword routing and no forced call. A failed review never fails the turn. Every planner round now logs `finishReason`, and every review logs whether it continued.
+
+**Tests.**
+- `tests/planner-context.test.ts` has 4 unit tests. They check that the review sees only the request and the calls, that its reply is parsed as data, the note wording, and that `finishReason` is reported.
+- `scripts/integration/tenant-chats.test.ts` has 2 scripted-model tests. In the first, the model fetches the gaps and replies early, and the review must lead to `calculate_uplift`; a colleague's earlier SSD question is in the room and must not reach the review. In the second, a complete turn gets no note and no extra round.
+- Both integration tests fail on the old worker (18/20) and pass on the new one (20/20).
+
+**Measured before deploying** (`qa_evidence/experiments/completeness-review.json`):
+- After a forced early stop of the recorded S06 turn, the review flagged the score change 10 of 10 times, and the planner then called `calculate_uplift` 10 of 10.
+- On 46 recorded, completed staging turns, the review flagged 4: S05's "class supersession" twice, and S09's Valley isolation check twice. Each costs one extra planner round, never a new fact.
+- A first version that saw only call names flagged 7 of 46 and was not shipped.
+
+**Staging chains on `e1fdb8a`** (same digests throughout: API `sha256:ac35940b…`, worker `sha256:338d4c48…`; Hosting `6bdb55d50b89bb3a`; provenance in `qa_evidence/staging/provenance.json`):
+
+| Chain | Acceptance 1 | Conversational | Replay | Browser | S19 | Acceptance 2 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 18/18, exit 0 (`…/20261015T075452Z-acceptance-5d9a10`) | 7/7, exit 0 | PASS, exit 0 | 10/10, exit 0 | PASS, exit 0 | 18/18, exit 0 (`…/20261015T081124Z-acceptance-126ce0`) |
+| 2 | 18/18, exit 0 (`…/20261015T081921Z-acceptance-b2821c`) | 7/7, exit 0 | PASS, exit 0 | 10/10, exit 0 | PASS, exit 0 | 18/18, exit 0 (`…/20261015T083733Z-acceptance-60adf2`) |
+| 3 | 18/18, exit 0 (`…/20261015T084429Z-acceptance-a8f0bf`) | **6/7, C03 failed, exit 1** (`…/20261015T085151Z-conversational-118f78`) | PASS, exit 0 | 10/10, exit 0 | PASS, exit 0 | 18/18, exit 0 (`…/20261015T090052Z-acceptance-9d5398`) |
+
+S06 passed in all six acceptance runs. Run alone 10 times on staging (`e1fdb8a`, 09:08–09:13 UTC), it passed 10 of 10, and every run exited 0. The runs are `qa_evidence/staging/runs/20261015T090832Z-acceptance-b3f553` through `20261015T091249Z-acceptance-03925e`.
+
+The worker logs for those 10 turns qualify the result. In every turn the model called `get_store_assortment` and then `calculate_uplift` on its own, so none of the 10 needed the rescue. The review ran in all 10 and wrongly reported a missing part in 5. Each of those 5 turns took one extra round of about 4–6 seconds, and the model returned the same 2,179-character answer without calling another tool. The answers were unaffected, but this is a latency cost on a turn that was already complete, and it is a higher false-positive rate on this prompt than the 4 of 46 measured offline. The log records only whether the review continued, not what it reported missing.
+
+**Not three in a row.** Chain 3's C03 failure is not S06 and not the review. The follow-up "which one of those is the low-noise model?" got a reply with no tool call that repeated a code from an earlier AI answer. The say check rejected it. The generic escalation note produced text again, and the user saw the fallback.
+
+It reproduces offline: the first round is text-only in 4 of 20, 15 of 40 and 8 of 40 replays. The current escalation note recovered 1 of 15. Running the completeness review there would recover 3 of 14. A note that names the unverified codes ("your draft names APP-100.19, which no tool fetched in this turn…") recovered 8 of 8 (`qa_evidence/experiments/c03-escalation.json`). That note is **not shipped**: it needs its own three green chains.
+
+**Production.** Not redeployed: three consecutive green chains were not reached before the 13:30 Cairo cut-off. Chain 3 ended at about 12:07 Cairo. A chain takes about 25 minutes, and chains share the staging rooms, so they cannot run in parallel. A new series of three would have ended after 13:30. Production remains on `edbdfb2` (API `teamchat-api-00017-7gz` @ `sha256:bb47e840…`, worker `teamchat-worker-00017-2rb` @ `sha256:b622a9a2…`, Hosting `33bae4d9769be62c`). No backup was taken, nothing was migrated, and no production test ran today.
+
+**Per-run data isolation.** Memory keys and S09/S19 topics were already unique per run, and room history is capped at 40 events / 16,000 characters. Running each chain in a fresh staging chat would isolate room history fully, but it was not done: it would change every scenario's room and cannot be mirrored in production, where creating chats is not allowed.
+
 ## Staging stack
 
 - **Isolation.**
@@ -220,11 +275,17 @@ Not run in production: S09 (its recall posts in `category-strategy`, which is no
 
 ## Remaining issues
 
-- **S06 is intermittent and unexplained.** On staging it failed in the second acceptance run of the last two chains. When it fails, Gemini lists the gaps and leaves out the score change. Offline replays of the failed `edbdfb2` turn never fail (0/24, plus 0/12 of the earlier failed turn), so the cause is still open. What can be missing is part of the answer; facts shown are always checked.
+- **S06 in production.** Production (`edbdfb2`) does not have the completeness review, so it can still stop after the gaps. The fix is on staging (`e1fdb8a`). Why live runs stop early when replays never do is still unexplained.
+- **C03 on both.** A follow-up can be answered from an earlier AI message without a fetch, and then falls back. It failed live in 2 of 9 chains and offline in about 1 in 4. A measured fix (a note naming the unverified codes) is ready but not shipped.
+- **The review's false positives.** In chain 1, the review asked for one more round in about 1 in 15 reviewed turns (S05, S09's Valley check, and S06 after the calculation). In the 10 S06-only runs it did so in 5 of 10. Those extra rounds changed no answer, but each cost about 4–6 s. The next step is to log what the review reports missing, then tighten the review or skip it when the last round already called the tools that cover the request.
 - **Other Gemini nondeterminism seen once.** C03 (a follow-up fell back, `5a82e6e`) and A02 (4 typing frames arrived more than 1 s after leaving a room, `fec3b9e`, right after an S19 restart). A02's control saw only 1 frame in 4 s, so this looks like delayed delivery rather than a leak, but the test cannot tell the two apart. Neither recurred in the next two chains.
 - **The `say` check is a heuristic.** It is conservative. When it rejects text, the user sees a neutral fallback or "I left out part of my reply…". It may still let through harmless paraphrase, or block a legitimate phrase.
 - **Wording polish.** The C04 fallback is generic. Catalog lists often repeat the margin class on a second line for each code. Redundant, not wrong.
-- **QA data accumulates.** Staging gains chats and memories every run, and production gains QA memories from S10 in the Northside tenant, which every Northside user can search. There is no archive or delete for chats or memories.
+- **QA memories in production.** A read-only listing (`teamchat_api`, READ ONLY, `app.tenant_id` set; details in the git-ignored `audit/gonzalo-2026-10-14/QA_MEMORIES_PRIVATE.md`) found 37 memories in Northside beyond the 4 seeded.
+  - All 37 came from QA prompts, none from a person using the product.
+  - 35 are attributed to `northside.buyer1`, the reviewer's account, because production acceptance on 11 October signed in as it. All 35 were created on 11 October, none during the reviewer's 14 October session. The other 2 are by `northside.analyst3` (Gate 5).
+  - Memory search is tenant-wide. None of the reviewer's 7 recorded prompts brings one into the top 5, but generic recall questions do. "Who is our escalation contact?" returns 4, and "What did we decide about the supplier dispute?" returns 5, shown as "Recorded by Northside Buyer One".
+  - Nothing was deleted. Staging also accumulates chats and memories every run, and there is no archive or delete for either.
 - **A retried turn can diverge from its persisted plan.** Tool records are fenced and replayed by operation ID, but a second Gemini call may choose different tools.
 - **Shared instance.** Staging shares the production Cloud SQL instance (documented above).
 - **Production hardening, unchanged.** `CONNECT` on `teamchat` is still granted to `PUBLIC`. Cloud SQL has automated backups disabled, a public IP and unencrypted connections allowed.
@@ -240,3 +301,5 @@ None of these has been done.
 4. **PR #2.** Close it as superseded.
 5. **Reply to Gonzalo.** Review and send it yourself. A suggested note is in `audit/gonzalo-2026-10-14/SUGGESTED_GMAIL_REPLY_PRIVATE.md`; it predates the production rollout, so update it first. Nothing has been sent to anyone at Controlease.
 6. **The owner credential.** Keep, rotate or delete Keychain `teamchat-ai-prod-postgres-owner` (see "Remaining issues").
+7. **QA memories in production.** Decide whether to delete the 37 QA memories, 35 of them attributed to the reviewer's account. The list is in `audit/gonzalo-2026-10-14/QA_MEMORIES_PRIVATE.md`. There is no delete path in the app, so this would be an owner-run SQL change; it has not been done.
+8. **Next rollout.** Authorize the C03 note and a new three-chain run on one commit (with `e1fdb8a`'s review), then Gate 4/5, or keep production on `edbdfb2`.
