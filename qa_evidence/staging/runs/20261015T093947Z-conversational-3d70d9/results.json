@@ -1,0 +1,89 @@
+{
+ "schemaVersion": 1,
+ "suite": "conversational",
+ "runId": "20261015T093947Z-conversational-3d70d9",
+ "environment": "staging: https://focus-clean-4b9f4--staging-yxk0bcnc.web.app + https://teamchat-api-staging-1068908463902.us-central1.run.app",
+ "startedAt": "2026-10-15T09:39:47.816Z",
+ "finishedAt": "2026-10-15T09:40:05.666Z",
+ "harness": {
+  "gitHead": "b110e54c2c4be295aa41f9a609373b4f5d8489b7",
+  "dirty": true,
+  "fingerprint": "fdce17f0866137d06de1f0d8f9fca7cc19b20d478d1b7b99ace42b58b6a1b4be",
+  "files": [
+   "scripts/acceptance/common.ts",
+   "scripts/acceptance/live-client.ts",
+   "scripts/acceptance/run-conversational.ts",
+   "scripts/acceptance/target.ts",
+   "scripts/evidence/lib.ts"
+  ]
+ },
+ "source": {
+  "sha": "b110e54c2c4be295aa41f9a609373b4f5d8489b7"
+ },
+ "deployment": {
+  "apiRevision": "teamchat-api-staging-00022-k44",
+  "apiDigest": "sha256:2e9b526498e7ae37e44cf03176dad0c75b4c2caf12ba2533bb77b5d1a01ac5cd",
+  "workerRevision": "teamchat-worker-staging-00022-49h",
+  "workerDigest": "sha256:91c34fef2835d36526a5d4544d524ef7f60079c4c203e53b9a7b3c234bc5185a",
+  "hostingVersion": "sites/focus-clean-4b9f4/versions/6bdb55d50b89bb3a"
+ },
+ "tests": [
+  {
+   "id": "C03",
+   "title": "A follow-up question is understood from the conversation, and every code shown was fetched",
+   "requirementIds": [
+    "GONZALO"
+   ],
+   "status": "PASS",
+   "startedAt": "2026-10-15T09:39:47.884Z",
+   "finishedAt": "2026-10-15T09:40:05.664Z",
+   "details": {
+    "timing": {
+     "first": {
+      "firstSegmentS": 6.241,
+      "terminalS": 7.245
+     },
+     "followUp": {
+      "firstSegmentS": 4.895,
+      "terminalS": 4.958
+     }
+    }
+   },
+   "assertions": [
+    {
+     "name": "both turns completed",
+     "pass": true,
+     "expected": "ai_complete",
+     "actual": [
+      "ai_complete",
+      "ai_complete"
+     ]
+    },
+    {
+     "name": "the follow-up answer names the low-noise code APP-100.19",
+     "pass": true,
+     "expected": "APP-100.19",
+     "actual": "APP-100.19 is “Portable air conditioners, low-noise” (Portable air conditioners, Appliances). It is in margin class 318."
+    },
+    {
+     "name": "every code shown was fetched by a tool in this conversation",
+     "pass": true,
+     "expected": "all fetched",
+     "actual": []
+    }
+   ],
+   "artifacts": [
+    {
+     "path": "qa_evidence/staging/runs/20261015T093947Z-conversational-3d70d9/C03/c03-first.json",
+     "sha256": "dbd1f6b378166ca2aeff9861e64ddd949e2937d4d8d2b853d38a8dcd96f59047",
+     "description": "c03-first: prompt, tools, shown segments, latency"
+    },
+    {
+     "path": "qa_evidence/staging/runs/20261015T093947Z-conversational-3d70d9/C03/c03-follow-up.json",
+     "sha256": "1f9605176e6808c34a15658049f7d0610658cb1388e12f563596a67efdf3dd28",
+     "description": "c03-follow-up: prompt, tools, shown segments, latency"
+    }
+   ]
+  }
+ ]
+}

@@ -1,43 +1,43 @@
 {
- "capturedAt": "2026-10-15T07:54:33.095Z",
+ "capturedAt": "2026-10-15T09:39:33.953Z",
  "source": {
-  "sha": "e1fdb8ab1a165d2159745d5a75f0247b22bc2806",
-  "applicationPathsTreeHash": "2239eb3e5a13344008c8577c6603bc4561028e648f82e7e9d9b283bb5a59a04a",
+  "sha": "b110e54c2c4be295aa41f9a609373b4f5d8489b7",
+  "applicationPathsTreeHash": "e91d2304e9ef22786bc4a9d4dba69ecc80c287f611ded66b6e33c8382b129955",
   "repository": "https://github.com/engasm89/teamchat-ai",
   "cleanClone": "git clone checked out at the SHA, no tracked modifications"
  },
  "api": {
   "service": "teamchat-api-staging",
-  "revision": "teamchat-api-staging-00018-f2b",
-  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api@sha256:ac35940b7d5787abe4c311708e1c8b5c5e22858b33a8d6fa8c983271a264cbe0",
-  "digest": "sha256:ac35940b7d5787abe4c311708e1c8b5c5e22858b33a8d6fa8c983271a264cbe0",
+  "revision": "teamchat-api-staging-00022-k44",
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/api@sha256:2e9b526498e7ae37e44cf03176dad0c75b4c2caf12ba2533bb77b5d1a01ac5cd",
+  "digest": "sha256:2e9b526498e7ae37e44cf03176dad0c75b4c2caf12ba2533bb77b5d1a01ac5cd",
   "labels": {
-   "org.opencontainers.image.revision": "e1fdb8ab1a165d2159745d5a75f0247b22bc2806",
+   "org.opencontainers.image.revision": "b110e54c2c4be295aa41f9a609373b4f5d8489b7",
    "org.opencontainers.image.source": "https://github.com/engasm89/teamchat-ai",
    "org.opencontainers.image.title": "teamchat-api"
   },
   "cmd": "node --experimental-strip-types src/server/start.ts",
-  "buildId": "cc5c7bfe-64aa-47a9-8917-3c6eea5dbbaf"
+  "buildId": "c693e8aa-1207-4ca4-93d3-0c254aedb4a3"
  },
  "worker": {
   "service": "teamchat-worker-staging",
-  "revision": "teamchat-worker-staging-00018-9hf",
-  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker@sha256:338d4c484988e0c9e8c3ea1cdcf8d79a532d134992fb00912e9b1c17a57e8a4a",
-  "digest": "sha256:338d4c484988e0c9e8c3ea1cdcf8d79a532d134992fb00912e9b1c17a57e8a4a",
+  "revision": "teamchat-worker-staging-00022-49h",
+  "image": "us-central1-docker.pkg.dev/focus-clean-4b9f4/teamchat-repo/worker@sha256:91c34fef2835d36526a5d4544d524ef7f60079c4c203e53b9a7b3c234bc5185a",
+  "digest": "sha256:91c34fef2835d36526a5d4544d524ef7f60079c4c203e53b9a7b3c234bc5185a",
   "labels": {
-   "org.opencontainers.image.revision": "e1fdb8ab1a165d2159745d5a75f0247b22bc2806",
+   "org.opencontainers.image.revision": "b110e54c2c4be295aa41f9a609373b4f5d8489b7",
    "org.opencontainers.image.source": "https://github.com/engasm89/teamchat-ai",
    "org.opencontainers.image.title": "teamchat-worker"
   },
   "cmd": "node --experimental-strip-types src/worker/start.ts",
-  "buildId": "cc5c7bfe-64aa-47a9-8917-3c6eea5dbbaf"
+  "buildId": "c693e8aa-1207-4ca4-93d3-0c254aedb4a3"
  },
  "build": {
-  "id": "cc5c7bfe-64aa-47a9-8917-3c6eea5dbbaf",
-  "createTime": "2026-10-15T07:51:08.121100027Z",
-  "source": "gs://focus-clean-4b9f4_cloudbuild/source/1792050634.609002-88b482ccec844df3b37ea9b182657ce7.tgz",
+  "id": "c693e8aa-1207-4ca4-93d3-0c254aedb4a3",
+  "createTime": "2026-10-15T09:32:59.918774146Z",
+  "source": "gs://focus-clean-4b9f4_cloudbuild/source/1792056760.650025-94317c576b9a4d1697103beae2676caf.tgz",
   "substitutions": {
-   "_GIT_SHA": "e1fdb8ab1a165d2159745d5a75f0247b22bc2806"
+   "_GIT_SHA": "b110e54c2c4be295aa41f9a609373b4f5d8489b7"
   }
  },
  "hosting": {
@@ -104,7 +104,7 @@
      "stores.json": "0b6b67f3a555cfaab953659d8218c2e81186fd02cc59469104ca44652ae29cf1",
      "team_memory_seed.json": "d6c244300072bcb8731b927a24f25b7ef93c2aaae04012896919e2166c27bca1"
     },
-    "memories": 48,
+    "memories": 69,
     "memoriesWithout768Embedding": 0
    },
    "valley-home-goods": {
