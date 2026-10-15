@@ -110,10 +110,11 @@ const scenarios:Scenario[]=[
   const chat=await newChat("n1",`Who said what ${tag("c02")}`,false);if(chat.status!==201)throw Error(`create ${chat.status}`);
   const room=chat.json.room.room_id;const a=await client("n1",room),b=await client("n2",room);
   const line=`I'll draft the supplier email for the hiking range ${tag("x")}`;
-  await a.post(room,"Morning! Can someone own the supplier follow-up?");await b.post(room,line);await sleep(800);
+  const plain=[await a.post(room,"Morning! Can someone own the supplier follow-up?"),await b.post(room,line)];await sleep(800);
   const {turn,timing}=await ask(t,a,room,"@AI what did my colleague just say they'd do?","c02");
   const leaked=await noUid(turn);
   t.detail("timing",timing);
+  t.assert("plain messages in a team chat start no AI turn (only @AI does)",plain.every(p=>!p.turnId),"no turn",plain.map(p=>p.turnId??null));
   t.assert("turn completed",turn.terminal?.type==="ai_complete","ai_complete",turn.terminal?.type);
   t.assert("answer attributes the message to Northside Buyer Two by name",shown(turn).includes(NAMES.n2),NAMES.n2,shown(turn));
   t.assert("answer quotes the colleague's words",shown(turn).includes(line),line,shown(turn));
