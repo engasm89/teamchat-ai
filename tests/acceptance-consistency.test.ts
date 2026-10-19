@@ -46,6 +46,7 @@ test("wrong superseded or retained sets are flagged",()=>{
  assert.deepEqual(rules("Superseded classes: 1003, 506, 318."),["wrong superseded set"]);
  assert.deepEqual(rules("Retained classes: 1001, 1101."),["wrong retained set"]);
  assert.deepEqual(rules("Class 318 is superseded."),["wrong superseded set"]);
+ assert.deepEqual(rules("Classes 1003 and 318 are superseded."),["wrong superseded set"]);
  assert.deepEqual(rules("APP-100.12 has been superseded at ST-4003."),[]);
  assert.deepEqual(rules("Some classes are superseded.",S06),["claims supersession"]);
 });
