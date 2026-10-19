@@ -66,8 +66,9 @@ function sentenceContradictions(s:string,calc:UpliftResult):Contradiction[]{
  if(retainedList&&!sameSet(retainedShown,retained))
   flag("wrong retained set",`verified: [${retained.join(", ")}], shown: [${retainedShown.join(", ")}]`);
  if(mentionsSupersession&&!supersededList&&!retainedList&&!NEGATION.test(s)){
-  const named=classesIn(s);
-  if(named.length&&!named.some(c=>removed.includes(c)))
+  const subject=s.split(/\b(?:is|are)\s+superseded\b/i)[0]??s;
+  const named=classesIn(subject);
+  if(named.length&&named.some(c=>!removed.includes(c)))
    flag("wrong superseded set",`names classes [${named.join(", ")}] as superseded; verified: [${removed.join(", ")}]`);
   if(!removed.length&&!named.length&&CLAIMS_SUPERSESSION.test(s))
    flag("claims supersession","verified result supersedes no class");

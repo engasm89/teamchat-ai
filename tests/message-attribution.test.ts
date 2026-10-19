@@ -48,6 +48,7 @@ test("a tool-less draft that reports what someone said goes to compose, never st
  assert.equal(route("They'll handle the supplier follow-up."),"compose");
  assert.equal(route("You said you'd pull the store list."),"compose");
  assert.equal(route("Here's what your colleague said:"),"compose");
+ assert.equal(route("Your colleague said:"),"compose");
  // Small talk, including greeting the requester by name, is still shown directly.
  assert.equal(route("Hi! I'm doing well, thanks for asking. How can I help today?"),"direct");
  assert.equal(route("Hi Northside Buyer One! Let me know if you'd like anything."),"direct");
