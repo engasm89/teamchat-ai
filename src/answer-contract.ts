@@ -159,6 +159,9 @@ const CAPABILITY:Record<string,string>={
  search_memory:"find decisions your team recorded, with who recorded them and when",
  save_memory:"save a decision to shared memory when you tick the consent box"};
 
+/** Generic framing that may introduce server-rendered message_quote facts. */
+const ATTRIBUTION_INTRO=/^\s*(?:here(?:\'s| is)|below (?:is|are)|the following (?:is|are))\b[^.!?]*:\s*$/i;
+
 /** Check one proposed segment. Never throws on model input. */
 export function checkSegment(raw:unknown,ctx:{sources:TurnSources;messages:readonly HistoryMessage[];vocabulary:WorkspaceVocabulary}):SegmentCheck{
  if(!isRec(raw))return {ok:false,reason:"not an object"};
@@ -169,7 +172,7 @@ export function checkSegment(raw:unknown,ctx:{sources:TurnSources;messages:reado
   if(s.predicate!=null&&s.predicate!==""||s.ref!=null&&s.ref!=="")return {ok:false,reason:"say with fact fields"};
   const check=ctx.vocabulary.checkSay(s.text);
   if(!check.ok)return check;
-  if(ctx.vocabulary.attributes(s.text)&&!/:\s*$/.test(s.text))return {ok:false,reason:"unquoted attribution in say"};
+  if(ctx.vocabulary.attributes(s.text)&&!ATTRIBUTION_INTRO.test(s.text))return {ok:false,reason:"unquoted attribution in say"};
   const consistent=checkSayAgainstSources(s.text,ctx.sources);
   return consistent.ok?{ok:true,segment:{kind:"say",rendered:s.text.trim(),refs:[],sources:[]}}:consistent;
  }
